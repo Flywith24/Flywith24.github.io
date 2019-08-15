@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 杨云召 | 博客
 subtitle:
 description: 不人云亦云，只求接近真相
 keywords:
@@ -80,7 +80,7 @@ search:
   field: post
   format: html
   limit: 10000
-  
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
