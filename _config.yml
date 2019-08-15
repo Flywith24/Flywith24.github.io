@@ -5,10 +5,10 @@
 # Site
 title: Hexo
 subtitle:
-description:
+description: 不人云亦云，只求接近真相
 keywords:
-author: John Doe
-language: en
+author: 杨云召
+language: zh-CN
 timezone:
 
 # URL
@@ -75,6 +75,12 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: next
 
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+  
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
