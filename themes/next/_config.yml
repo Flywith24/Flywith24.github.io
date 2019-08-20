@@ -193,6 +193,9 @@ social:
   GitHub: https://github.com/Flywith24 || github
   E-Mail: mailto:youngyunzhao@163.com || envelope
   Weibo: https://weibo.com/youngyunzhao || weibo
+  简书: https://www.jianshu.com/u/3d5ad6043d66 || heartbeat
+  掘金: https://juejin.im/user/57c7f6870a2b58006b1cfd6c || spinner
+  SegmentFault: https://segmentfault.com/u/fly_with24 || meh-o
   #Google: https://plus.google.com/yourname || google
   Twitter: https://twitter.com/lovekobebryant8 || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
@@ -204,7 +207,7 @@ social:
 
 social_icons:
   enable: true
-  icons_only: true
+  icons_only: false
   transition: false
 
 # Blog rolls
