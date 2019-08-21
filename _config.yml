@@ -109,5 +109,7 @@ live2d:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:Flywith24/Flywith24.github.io.git
+  repo: 
+    github: git@github.com:Flywith24/Flywith24.github.io.git
+    gitee: git@gitee.com:flywith24/flywith24.git
   branch: master
