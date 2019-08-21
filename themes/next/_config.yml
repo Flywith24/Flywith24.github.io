@@ -171,9 +171,9 @@ menu_settings:
 
 # Schemes
 scheme: Muse
-#scheme: Mist
-#scheme: Pisces
-#scheme: Gemini
+# scheme: Mist
+# scheme: Pisces
+# scheme: Gemini
 
 
 # ---------------------------------------------------------------
@@ -433,11 +433,11 @@ codeblock:
   highlight_theme: normal
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Show text copy result.
-    show_result: false
+    show_result: true
     # Available values: default | flat | mac
-    style:
+    style: default
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:

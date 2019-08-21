@@ -87,6 +87,12 @@ search:
   format: html
   limit: 10000
 
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+  
 live2d:
   enable: true
   scriptFrom: local

@@ -29,3 +29,41 @@ tags:
 4. 点击下载，同时将已关机的设备连接电脑
 5. 等待红条，绿条，黄条走完烧录成功
 
+### 3. ROM写号
+1. 打开 `SN Writer.exe`
+2. 点击 `System Config` 配置欲写哪些号，点击AP_DB进行配置文件，点击 `Save`
+3. 点击 `Start` 将关机的设备连入电脑
+
+### 4. 源码检出
+```
+repo-local init -u git://{ip}/shupai_android7.1/manifests.git && repo-local sync -j8 && repo-local start --all master
+```
+{ip} 使用源码地址替换
+
+### 5. 开机动画
+`/system/media/`
+
+### 6. 重新打包 `System` 生成镜像
+```
+make -j8 snod 
+```
+
+### 7. 对 `Settings` 部分的修改
+1. 移除某项（removePreference方法）
+2. 禁用某项 （配置enabled属性）
+3. 隐藏 `Settings` 主界面选项：`TileUtils`
+
+### 8. 三大金刚键
+1. `HOME` 和  `BACK`
+`PhoneWindowManager` 类 `interceptKeyBeforeDispatching` 方法
+修改 `KEYCODE_HOME`  `KEYCODE_BACK` case 中的逻辑 
+2. `RECENT`
+`src/com/android/systemui/recents/RecentsImpl` 类 `startRecentsActivity` 方法
+
+### 9. 预装应用
+`device/mediatek/common device.mk`
+
+### 10. 关机 重启操作
+```
+base/services/core/java/com/android/server/policy/GloablActions PowerAction
+```
