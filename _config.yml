@@ -82,7 +82,7 @@ symbols_count_time:
   total_time: true
 
 search:
-  path: search.xml
+  path: ./public/search.xml
   field: post
   format: html
   limit: 10000
@@ -97,7 +97,16 @@ live2d:
   debug: false
   model:
     # use: live2d-widget-model-wanko
-    use: live2d-widget-model-chitose
+    #use: live2d-widget-model-chitose
+    #use: live2d-widget-model-epsilon2_1
+    #use: live2d-widget-model-gf
+    #use: live2d-widget-model-haruto
+    # use: live2d-widget-model-hibiki
+    # use: live2d-widget-model-izumi
+    # use: live2d-widget-model-koharu
+    # use: live2d-widget-model-miku
+    use: live2d-widget-model-shizuku
+
   display:
     position: left
     width: 150
