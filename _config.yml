@@ -108,7 +108,7 @@ live2d:
     use: live2d-widget-model-shizuku
 
   display:
-    position: left
+    position: right
     width: 150
     height: 300
   mobile:
