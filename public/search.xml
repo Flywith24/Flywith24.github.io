@@ -13,14 +13,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F08%2F15%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[多个项目添加依赖同一个模块]]></title>
     <url>%2F2019%2F04%2F13%2F%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97%2F</url>
-    <content type="text"><![CDATA[android Studio 中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下 新建项目 TestBase，在其 app build.gradle 中将 apply plugin: &#39;com.android.application&#39; 改为apply plugin: &#39;com.android.library&#39; 删除applicationId 配置项，将module名修改为baselib。 新建项目 TestA 在其settings.gradle 文件中加入下列代码。 123include ':app'include ':baselib'project(':baselib').projectDir=new File("../TestBase", 'baselib') 引用依赖时正常引用即可 1implementation project(&apos;:baselib&apos;) 同步gradle ，此时我们发现baselib出现在TestA项目中。 打开TestA 项目文件夹，我们发现了 baselib 文件夹，下面只有一个baselib.iml文件 在baselib中加入Utils 工具类 切换到TestBase中查看，代码是相同的。 这样就达到了baselib被修改后所有引用baselib的项目会同步变化。 git 同步管理 上述操作都是基于本地的，那么如何加入git管理呢 将TestA和TestBase分别传至github 在TestA项目中打开settings，找到如下位置并将TestBase加入到git管理 然后就可以同步管理这两个项目啦 参考：https://www.jianshu.com/p/47156a6be8cehttps://blog.csdn.net/saintcs/article/details/78567612 123public void main(String[] args)&#123; //todo&#125;]]></content>
+    <content type="text"><![CDATA[android Studio 中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下 新建项目 TestBase，在其 app build.gradle 中将 apply plugin: &#39;com.android.application&#39; 改为apply plugin: &#39;com.android.library&#39; 删除applicationId 配置项，将module名修改为baselib。 新建项目 TestA 在其settings.gradle 文件中加入下列代码。 123include ':app'include ':baselib'project(':baselib').projectDir=new File("../TestBase", 'baselib') 引用依赖时正常引用即可 1implementation project(&apos;:baselib&apos;) 同步gradle ，此时我们发现baselib出现在TestA项目中。 打开TestA 项目文件夹，我们发现了 baselib 文件夹，下面只有一个baselib.iml文件 在baselib中加入Utils 工具类 切换到TestBase中查看，代码是相同的。 这样就达到了baselib被修改后所有引用baselib的项目会同步变化。 git 同步管理 上述操作都是基于本地的，那么如何加入git管理呢 将TestA和TestBase分别传至github 在TestA项目中打开settings，找到如下位置并将TestBase加入到git管理 然后就可以同步管理这两个项目啦 参考：https://www.jianshu.com/p/47156a6be8ce[https://blog.csdn.net/saintcs/article/details/78567612]]></content>
       <categories>
         <category>app</category>
       </categories>
