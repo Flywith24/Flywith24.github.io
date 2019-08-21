@@ -64,13 +64,13 @@
   };
 </script>
 
-  <meta name="description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下  新建项目 TestBase，在其 app buil">
+  <meta name="description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
 <meta name="keywords" content="Android Studio,app,gradle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多个项目添加依赖同一个模块">
 <meta property="og:url" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/index.html">
 <meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下  新建项目 TestBase，在其 app buil">
+<meta property="og:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TesA%E5%8E%9F%E7%9B%AE%E5%BD%95.png">
@@ -79,10 +79,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/%E6%B7%BB%E5%8A%A0git.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/gitlog.png">
-<meta property="og:updated_time" content="2019-08-21T07:23:19.067Z">
+<meta property="og:updated_time" content="2019-08-21T07:36:07.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多个项目添加依赖同一个模块">
-<meta name="twitter:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下  新建项目 TestBase，在其 app buil">
+<meta name="twitter:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png">
   <link rel="canonical" href="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/">
 
@@ -357,7 +357,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-21 15:23:19" itemprop="dateModified" datetime="2019-08-21T15:23:19+08:00">2019-08-21</time>
+                <time title="修改时间：2019-08-21 15:36:07" itemprop="dateModified" datetime="2019-08-21T15:36:07+08:00">2019-08-21</time>
               </span>
             
           
@@ -402,7 +402,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>913</span>
+              <span>965</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -429,6 +429,8 @@
 <p>android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug</p>
 <p>因此我们需要引用module ，而不是复制module，实现方法如下</p>
 </blockquote>
+<a id="more"></a>
+
 <p>新建项目 <code>TestBase</code>，在其 <code>app build.gradle</code> 中将 <code>apply plugin: &#39;com.android.application&#39;</code> 改为<code>apply plugin: &#39;com.android.library&#39;</code> 删除<code>applicationId</code> 配置项，将<code>module</code>名修改为<code>baselib</code>。</p>
 <p>新建项目 <code>TestA</code> 在其<code>settings.gradle</code> 文件中加入下列代码。</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">':app'</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">':baselib'</span></span><br><span class="line"><span class="keyword">project</span>(<span class="string">':baselib'</span>).projectDir=<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"../TestBase"</span>, <span class="string">'baselib'</span>)</span><br></pre></td></tr></table></figure>
@@ -452,7 +454,9 @@
 <p>在<code>TestA</code>项目中打开<code>settings</code>，找到如下位置并将<code>TestBase</code>加入到<code>git</code>管理</p>
 <p><img src="/2019/04/13/多个项目添加依赖同一个模块/%E6%B7%BB%E5%8A%A0git.png" alt="添加git.png"></p>
 <p>然后就可以同步管理这两个项目啦<br><img src="/2019/04/13/多个项目添加依赖同一个模块/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png" alt="同步管理.png"><br><img src="/2019/04/13/多个项目添加依赖同一个模块/gitlog.png" alt="git log.png"></p>
-<p>参考：<br><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br>[<a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>
+<p>参考：<br><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br><a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">	<span class="comment">//todo</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
