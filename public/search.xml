@@ -58,6 +58,31 @@
     </entry>
     
     
+    
+    <entry>
+      <title>Mac下Android反编译初探</title>
+      <link href="/2017/07/06/Mac%E4%B8%8BAndroid%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%9D%E6%8E%A2/"/>
+      <url>/2017/07/06/Mac%E4%B8%8BAndroid%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%9D%E6%8E%A2/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>工作第四天，被要求学习逆向开发方面的知识，于是先将自己之前写的未经混淆的apk反编译，记录之。</p></blockquote><p><a href="http://blog.csdn.net/wj_november/article/details/51527286" target="_blank" rel="noopener">感谢该博文提供的思路</a></p><a id="more"></a><h3 id="1-工具准备"><a href="#1-工具准备" class="headerlink" title="1. 工具准备"></a>1. 工具准备</h3><p><img src="http://upload-images.jianshu.io/upload_images/3155702-569189364ef992cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="工具"></p><p>需要的三件套，<a href="http://download.csdn.net/detail/wj_november/9657372" target="_blank" rel="noopener">下载请戳</a></p><ol><li>AndroidCrackTool 用于反编译apk文件<br>与直接解压apk不同，用该工具获得的文件资源可以直接打开阅读，而直接解压得到的是字节码。</li><li>dex2jar 用于将.dex文件转为jar文件<br> 传统的Java程序经过编译，生成Java字节码保存在class文件中，Java虚拟机通过解码class文件中的内容来运行程序。而Dalvik虚拟机运行的是Davik字节码，所有的Davik字节码由Java字节码转换而来，并被打包到一个DEX（Dalvik Executable）可执行文件中，Dalvik虚拟机通过解释DEX文件来执行这些字节码。</li><li>jd-gui 用于阅读源码</li></ol><h3 id="2-开始工作"><a href="#2-开始工作" class="headerlink" title="2. 开始工作"></a>2. 开始工作</h3><p>使用AndroidCrackTool反编译apk，设置好目录点击执行按钮，出现end字样即成功。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-9dde0fe67fd84a07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="反编译apk"><br>在这里可以查看一些资源文件</p><p><img src="http://upload-images.jianshu.io/upload_images/3155702-33d7aeb6f6b20770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="查看资源文件"><br>将apk以普通解压的方式解压出来，找到其中的classes.dex文件，<br><img src="http://upload-images.jianshu.io/upload_images/3155702-46a0928132602efb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="classes.dex位置"><br>将其复制到dex2jar目录，使用终端进入dex2jar目录并执行如下命令。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh dex2jar.sh classes.dex</span><br></pre></td></tr></table></figure><p>可以看到在dex2jar目录下生成了classes_dex2jar.jar的文件。</p><p><img src="http://upload-images.jianshu.io/upload_images/3155702-a489b4dd84c84ecd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="终端下操作"></p><p><img src="http://upload-images.jianshu.io/upload_images/3155702-6c746a8c946c3275.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="生成的classes_dex2jar.jar"><br>使用  jd-gui打开classes_dex2jar.jar即可看到源码，可以看到我的apk并没有混淆，所以名字都是正常的命名，经过混淆的名字大都是些字母。</p><p><img src="http://upload-images.jianshu.io/upload_images/3155702-b7afdfda627a9e6b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阅读源码"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> app </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 反编译 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
