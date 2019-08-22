@@ -64,27 +64,26 @@
   };
 </script>
 
-  <meta name="description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
-<meta name="keywords" content="Android Studio,app,gradle">
+  <meta name="description" content="这学期计算机网络课程有一个课程设计，要求使用Python写一个小程序。之前也没接触过Python，从优达学城里看到一个关于Python的课程，在此记录。">
+<meta name="keywords" content="python,爬虫">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多个项目添加依赖同一个模块">
-<meta property="og:url" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/index.html">
+<meta property="og:title" content="0.从零开始，Python的安装">
+<meta property="og:url" content="http://yoursite.com/2017/06/05/0-从零开始，Python的安装/index.html">
 <meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
+<meta property="og:description" content="这学期计算机网络课程有一个课程设计，要求使用Python写一个小程序。之前也没接触过Python，从优达学城里看到一个关于Python的课程，在此记录。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TesA%E5%8E%9F%E7%9B%AE%E5%BD%95.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/baselib.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/baselib.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/%E6%B7%BB%E5%8A%A0git.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png">
-<meta property="og:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/gitlog.png">
-<meta property="og:updated_time" content="2019-08-21T07:41:52.373Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-837d626cf0404cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-1ce43800911a180c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-9bccbfe4b2d0e766.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-746f86c26858feec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-327506f6845e4d77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-f5b789535b05b7ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-08-22T09:13:06.227Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多个项目添加依赖同一个模块">
-<meta name="twitter:description" content="android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png">
-  <link rel="canonical" href="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/">
+<meta name="twitter:title" content="0.从零开始，Python的安装">
+<meta name="twitter:description" content="这学期计算机网络课程有一个课程设计，要求使用Python写一个小程序。之前也没接触过Python，从优达学城里看到一个关于Python的课程，在此记录。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3155702-837d626cf0404cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  <link rel="canonical" href="http://yoursite.com/2017/06/05/0-从零开始，Python的安装/">
 
 
 <script id="page-configurations">
@@ -98,7 +97,7 @@
   };
 </script>
 
-  <title>多个项目添加依赖同一个模块 | 杨云召 | 博客</title>
+  <title>0.从零开始，Python的安装 | 杨云召 | 博客</title>
   
 
 
@@ -293,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/多个项目添加依赖同一个模块/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/05/0-从零开始，Python的安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -307,7 +306,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">多个项目添加依赖同一个模块
+          <h1 class="post-title" itemprop="name headline">0.从零开始，Python的安装
 
             
           </h1>
@@ -324,7 +323,7 @@
                 
               
 
-              <time title="创建时间：2019-04-13 15:05:24" itemprop="dateCreated datePublished" datetime="2019-04-13T15:05:24+08:00">2019-04-13</time>
+              <time title="创建时间：2017-06-05 21:09:00" itemprop="dateCreated datePublished" datetime="2017-06-05T21:09:00+08:00">2017-06-05</time>
             </span>
           
             
@@ -335,7 +334,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-21 15:41:52" itemprop="dateModified" datetime="2019-08-21T15:41:52+08:00">2019-08-21</time>
+                <time title="修改时间：2019-08-22 17:13:06" itemprop="dateModified" datetime="2019-08-22T17:13:06+08:00">2019-08-22</time>
               </span>
             
           
@@ -345,7 +344,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
 
                 
                 
@@ -365,8 +364,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/04/13/多个项目添加依赖同一个模块/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/13/多个项目添加依赖同一个模块/" itemprop="commentCount"></span>
+    <a title="valine" href="/2017/06/05/0-从零开始，Python的安装/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/06/05/0-从零开始，Python的安装/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -380,7 +379,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>913</span>
+              <span>922</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -404,35 +403,31 @@
 
       
         <blockquote>
-<p>android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug</p>
-<p>因此我们需要引用module ，而不是复制module，实现方法如下</p>
+<p>这学期计算机网络课程有一个课程设计，要求使用Python写一个小程序。之前也没接触过Python，从优达学城里看到一个关于Python的课程，在此记录。</p>
 </blockquote>
 <a id="more"></a>
 
-<p>新建项目 <code>TestBase</code>，在其 <code>app build.gradle</code> 中将 <code>apply plugin: &#39;com.android.application&#39;</code> 改为<code>apply plugin: &#39;com.android.library&#39;</code> 删除<code>applicationId</code> 配置项，将<code>module</code>名修改为<code>baselib</code>。</p>
-<p>新建项目 <code>TestA</code> 在其<code>settings.gradle</code> 文件中加入下列代码。</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">':app'</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">':baselib'</span></span><br><span class="line"><span class="keyword">project</span>(<span class="string">':baselib'</span>).projectDir=<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"../TestBase"</span>, <span class="string">'baselib'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Windows安装"><a href="#Windows安装" class="headerlink" title="Windows安装"></a>Windows安装</h3><p>下载地址：<a href="https://www.python.org/downloads/" target="_blank" rel="noopener">https://www.python.org/downloads/</a></p>
+<hr>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-837d626cf0404cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="安装步骤1"></p>
+<p>确保安装了 pip 并且 Python 添加到了你的 PATH。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-1ce43800911a180c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-9bccbfe4b2d0e766.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="安装步骤2"></p>
+<p>要检查安装是否成功，打开 IDLE（Python 安装的一款程序，使你能够轻松地编辑和运行 Python 代码）。</p>
+<p>a) Windows 7（及更早版本）：依次点击“开始”菜单&gt;“所有程序”&gt;“Python 2.7”，最后选择 IDLE (Python GUI)。</p>
+<p>b) Windows 8/10：搜索 IDLE。目前，你可以从屏幕右侧向左滑动或用鼠标点击屏幕的右下角进行搜索。</p>
+<hr>
+<h3 id="MAC安装"><a href="#MAC安装" class="headerlink" title="MAC安装"></a>MAC安装</h3><p>要在 Mac 机器上安装 Python，你可以采用两种方法：在命令行中使用 Homebrew，或在官网上找到普通的 Python 安装程序。</p>
+<p>方法 1：程序包安装程序<br>安装地址：<a href="https://www.python.org/downloads/release/python-2713/" target="_blank" rel="noopener">https://www.python.org/downloads/release/python-2713/</a><br>检查是否安装成功</p>
+<p>a) IDLE 应该位于您的应用程序文件夹中。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-746f86c26858feec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>b)通过按下 ⌘+空格键，打开 Spotlight ，并输入“idle”来查找 IDLE</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-327506f6845e4d77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>以下是它在我们的计算机上运行的屏幕截图！</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-f5b789535b05b7ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>方法 2：Homebrew<br>要通过 Homebrew 安装 Python，只需执行以下两步：</p>
+<p>打开终端，并输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)”。</span><br></pre></td></tr></table></figure>
 
-<p>引用依赖时正常引用即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation project(&apos;:baselib&apos;)</span><br></pre></td></tr></table></figure>
-
-<p>同步<code>gradle</code> ，此时我们发现<code>baselib</code>出现在<code>TestA</code>项目中。</p>
-<p><img src="/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png" alt="TestA目录.png"></p>
-<p>打开<code>TestA</code> 项目文件夹，我们发现了 <code>baselib</code> 文件夹，下面只有一个<code>baselib.iml</code>文件</p>
-<p><img src="/2019/04/13/多个项目添加依赖同一个模块/TesA%E5%8E%9F%E7%9B%AE%E5%BD%95.png" alt="TesA原目录.png"></p>
-<p>在<code>baselib</code>中加入<code>Utils</code> 工具类</p>
-<p><img src="/2019/04/13/多个项目添加依赖同一个模块/baselib.png" alt="baselib.png"></p>
-<p>切换到<code>TestBase</code>中查看，代码是相同的。</p>
-<p><img src="/2019/04/13/多个项目添加依赖同一个模块/baselib.png" alt="TestBase目录.png"></p>
-<p>这样就达到了<code>baselib</code>被修改后所有引用<code>baselib</code>的项目会同步变化。</p>
-<h4 id="git-同步管理"><a href="#git-同步管理" class="headerlink" title="git 同步管理"></a>git 同步管理</h4><blockquote>
-<p>上述操作都是基于本地的，那么如何加入git管理呢</p>
-</blockquote>
-<p>将<code>TestA</code>和<code>TestBase</code>分别传至<code>github</code></p>
-<p>在<code>TestA</code>项目中打开<code>settings</code>，找到如下位置并将<code>TestBase</code>加入到<code>git</code>管理</p>
-<p><img src="/2019/04/13/多个项目添加依赖同一个模块/%E6%B7%BB%E5%8A%A0git.png" alt="添加git.png"></p>
-<p>然后就可以同步管理这两个项目啦<br><img src="/2019/04/13/多个项目添加依赖同一个模块/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png" alt="同步管理.png"><br><img src="/2019/04/13/多个项目添加依赖同一个模块/gitlog.png" alt="git log.png"></p>
-<p>参考：<br><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br>[<a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>
+<p>安装过程中，系统会多次发出提示 。<br>安装完 Homebrew 后，你可以通过在命令行中输入 brew help，验证一切是否正常。现在输入 brew install python 获取 Python 2 的最新版本。这样就可以了！</p>
+<p>通过在命令行里输入 python 即可验证 Python 是否安装正确。系统应该欢迎你使用 Python Shell。</p>
 
     </div>
 
@@ -471,11 +466,9 @@
           
           <div class="post-tags">
             
-              <a href="/tags/Android-Studio/" rel="tag"><i class="fa fa-tag"></i> Android Studio</a>
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
             
-              <a href="/tags/app/" rel="tag"><i class="fa fa-tag"></i> app</a>
-            
-              <a href="/tags/gradle/" rel="tag"><i class="fa fa-tag"></i> gradle</a>
+              <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
             
           </div>
         
@@ -485,18 +478,14 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2017/07/06/Mac下Android反编译初探/" rel="next" title="Mac下Android反编译初探">
-                  <i class="fa fa-chevron-left"></i> Mac下Android反编译初探
-                </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/08/16/【流水账】记录Framework开发的常用指令/" rel="prev" title="【流水账】记录Framework开发的常用指令">
-                  【流水账】记录Framework开发的常用指令 <i class="fa fa-chevron-right"></i>
+                <a href="/2017/06/05/1-1使用函数/" rel="prev" title="1.1使用函数">
+                  1.1使用函数 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -733,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#git-同步管理"><span class="nav-number">1.</span> <span class="nav-text">git 同步管理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows安装"><span class="nav-number">1.</span> <span class="nav-text">Windows安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC安装"><span class="nav-number">2.</span> <span class="nav-text">MAC安装</span></a></li></ol></div>
             
 
           </div>
