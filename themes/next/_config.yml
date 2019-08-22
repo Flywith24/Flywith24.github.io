@@ -155,8 +155,8 @@ menu:
   tags: /tags/ || tags
   categories: /categories/ || th
   archives: /archives/ || archive
-  schedule: /schedule/ || calendar
-  sitemap: /sitemap.xml || sitemap
+  # schedule: /schedule/ || calendar
+  # sitemap: /sitemap.xml || sitemap
   commonweal: /404/ || heartbeat
 
 # Enable / Disable menu icons / item badges.
@@ -217,6 +217,8 @@ links_layout: block
 #links_layout: inline
 links:
   gityuan: http://gityuan.com/android/
+  老罗Android之旅: https://blog.csdn.net/Luoshengyang
+  阿拉神农: https://me.csdn.net/innost
 
 # Sidebar Avatar
 avatar:
