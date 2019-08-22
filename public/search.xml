@@ -1,28 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[【流水账】记录Framework开发的常用指令]]></title>
-    <url>%2F2019%2F08%2F16%2F%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91%E8%AE%B0%E5%BD%95Framework%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。本篇博客是记录一些学习 framework 开发时知识的整理。 1. 源码全盘编译指令 source build/envsetup.sh 输入 lunch 同时选择欲编译的源码 编译指令：make -j32 2&gt;&amp;1 | tee build_20190717_1724.log 编译后out目录可查看编译出的镜像 前两步执行完毕即可执行 mmm 等命令，使用 make clean可以在编译前clean源码，该操作会导致编译时间边长。 2. ROM烧录（mtk） 打开 flash_tool.exe 选择源码的配置文件 切换下载/全部格式化和下 点击下载，同时将已关机的设备连接电脑 等待红条，绿条，黄条走完烧录成功 3. ROM写号 打开 SN Writer.exe 点击 System Config 配置欲写哪些号，点击AP_DB进行配置文件，点击 Save 点击 Start 将关机的设备连入电脑 4. 源码检出1repo-local init -u git://&#123;ip&#125;/shupai_android7.1/manifests.git &amp;&amp; repo-local sync -j8 &amp;&amp; repo-local start --all master {ip} 使用源码地址替换 5. 开机动画/system/media/ 6. 重新打包 System 生成镜像1make -j8 snod 7. 对 Settings 部分的修改 移除某项（removePreference方法） 禁用某项 （配置enabled属性） 隐藏 Settings 主界面选项：TileUtils 8. 三大金刚键 HOME 和 BACKPhoneWindowManager 类 interceptKeyBeforeDispatching 方法修改 KEYCODE_HOME KEYCODE_BACK case 中的逻辑 RECENTsrc/com/android/systemui/recents/RecentsImpl 类 startRecentsActivity 方法 9. 预装应用device/mediatek/common device.mk 10. 关机 重启操作1base/services/core/java/com/android/server/policy/GloablActions PowerAction]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>【流水账】记录Framework开发的常用指令</title>
+      <link href="/2019/08/16/%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91%E8%AE%B0%E5%BD%95Framework%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/"/>
+      <url>/2019/08/16/%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91%E8%AE%B0%E5%BD%95Framework%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。本篇博客是记录一些学习 <code>framework</code> 开发时知识的整理。</p></blockquote><a id="more"></a><h3 id="1-源码全盘编译指令"><a href="#1-源码全盘编译指令" class="headerlink" title="1. 源码全盘编译指令"></a>1. 源码全盘编译指令</h3><ol><li><code>source build/envsetup.sh</code></li><li>输入 <code>lunch</code> 同时选择欲编译的源码</li><li>编译指令：<code>make -j32 2&gt;&amp;1 | tee build_20190717_1724.log</code></li><li>编译后out目录可查看编译出的镜像</li></ol><p>前两步执行完毕即可执行 <code>mmm</code> 等命令，使用 <code>make clean</code>可以在编译前clean源码，该操作会导致编译时间边长。</p><h3 id="2-ROM烧录（mtk）"><a href="#2-ROM烧录（mtk）" class="headerlink" title="2. ROM烧录（mtk）"></a>2. ROM烧录（mtk）</h3><ol><li>打开 <code>flash_tool.exe</code></li><li>选择源码的配置文件</li><li>切换下载/全部格式化和下</li><li>点击下载，同时将已关机的设备连接电脑</li><li>等待红条，绿条，黄条走完烧录成功</li></ol><h3 id="3-ROM写号"><a href="#3-ROM写号" class="headerlink" title="3. ROM写号"></a>3. ROM写号</h3><ol><li>打开 <code>SN Writer.exe</code></li><li>点击 <code>System Config</code> 配置欲写哪些号，点击AP_DB进行配置文件，点击 <code>Save</code></li><li>点击 <code>Start</code> 将关机的设备连入电脑</li></ol><h3 id="4-源码检出"><a href="#4-源码检出" class="headerlink" title="4. 源码检出"></a>4. 源码检出</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo-local init -u git://&#123;ip&#125;/shupai_android7.1/manifests.git &amp;&amp; repo-local sync -j8 &amp;&amp; repo-local start --all master</span><br></pre></td></tr></table></figure><p>{ip} 使用源码地址替换</p><h3 id="5-开机动画"><a href="#5-开机动画" class="headerlink" title="5. 开机动画"></a>5. 开机动画</h3><p><code>/system/media/</code></p><h3 id="6-重新打包-System-生成镜像"><a href="#6-重新打包-System-生成镜像" class="headerlink" title="6. 重新打包 System 生成镜像"></a>6. 重新打包 <code>System</code> 生成镜像</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -j8 snod</span><br></pre></td></tr></table></figure><h3 id="7-对-Settings-部分的修改"><a href="#7-对-Settings-部分的修改" class="headerlink" title="7. 对 Settings 部分的修改"></a>7. 对 <code>Settings</code> 部分的修改</h3><ol><li>移除某项（removePreference方法）</li><li>禁用某项 （配置enabled属性）</li><li>隐藏 <code>Settings</code> 主界面选项：<code>TileUtils</code></li></ol><h3 id="8-三大金刚键"><a href="#8-三大金刚键" class="headerlink" title="8. 三大金刚键"></a>8. 三大金刚键</h3><ol><li><code>HOME</code> 和  <code>BACK</code><br><code>PhoneWindowManager</code> 类 <code>interceptKeyBeforeDispatching</code> 方法<br>修改 <code>KEYCODE_HOME</code>  <code>KEYCODE_BACK</code> case 中的逻辑 </li><li><code>RECENT</code><br><code>src/com/android/systemui/recents/RecentsImpl</code> 类 <code>startRecentsActivity</code> 方法</li></ol><h3 id="9-预装应用"><a href="#9-预装应用" class="headerlink" title="9. 预装应用"></a>9. 预装应用</h3><p><code>device/mediatek/common device.mk</code></p><h3 id="10-关机-重启操作"><a href="#10-关机-重启操作" class="headerlink" title="10. 关机 重启操作"></a>10. 关机 重启操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">base/services/core/java/com/android/server/policy/GloablActions PowerAction</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>ROM</category>
+          
+          <category> ROM </category>
+          
       </categories>
-      <tags>
-        <tag>ROM</tag>
-        <tag>framework</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[多个项目添加依赖同一个模块]]></title>
-    <url>%2F2019%2F04%2F13%2F%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97%2F</url>
-    <content type="text"><![CDATA[android Studio 中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug 因此我们需要引用module ，而不是复制module，实现方法如下 新建项目 TestBase，在其 app build.gradle 中将 apply plugin: &#39;com.android.application&#39; 改为apply plugin: &#39;com.android.library&#39; 删除applicationId 配置项，将module名修改为baselib。 新建项目 TestA 在其settings.gradle 文件中加入下列代码。 123include ':app'include ':baselib'project(':baselib').projectDir=new File("../TestBase", 'baselib') 引用依赖时正常引用即可 1implementation project(&apos;:baselib&apos;) 同步gradle ，此时我们发现baselib出现在TestA项目中。 打开TestA 项目文件夹，我们发现了 baselib 文件夹，下面只有一个baselib.iml文件 在baselib中加入Utils 工具类 切换到TestBase中查看，代码是相同的。 这样就达到了baselib被修改后所有引用baselib的项目会同步变化。 git 同步管理 上述操作都是基于本地的，那么如何加入git管理呢 将TestA和TestBase分别传至github 在TestA项目中打开settings，找到如下位置并将TestBase加入到git管理 然后就可以同步管理这两个项目啦 参考：https://www.jianshu.com/p/47156a6be8ce[https://blog.csdn.net/saintcs/article/details/78567612]]></content>
+      
+      
+        <tags>
+            
+            <tag> ROM </tag>
+            
+            <tag> framework </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>多个项目添加依赖同一个模块</title>
+      <link href="/2019/04/13/%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/"/>
+      <url>/2019/04/13/%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug</p><p>因此我们需要引用module ，而不是复制module，实现方法如下</p></blockquote><a id="more"></a><p>新建项目 <code>TestBase</code>，在其 <code>app build.gradle</code> 中将 <code>apply plugin: &#39;com.android.application&#39;</code> 改为<code>apply plugin: &#39;com.android.library&#39;</code> 删除<code>applicationId</code> 配置项，将<code>module</code>名修改为<code>baselib</code>。</p><p>新建项目 <code>TestA</code> 在其<code>settings.gradle</code> 文件中加入下列代码。</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span> <span class="string">':app'</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">':baselib'</span></span><br><span class="line"><span class="keyword">project</span>(<span class="string">':baselib'</span>).projectDir=<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"../TestBase"</span>, <span class="string">'baselib'</span>)</span><br></pre></td></tr></table></figure><p>引用依赖时正常引用即可</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation project(&apos;:baselib&apos;)</span><br></pre></td></tr></table></figure><p>同步<code>gradle</code> ，此时我们发现<code>baselib</code>出现在<code>TestA</code>项目中。</p><p><img src="/2019/04/13/多个项目添加依赖同一个模块/TestA%E7%9B%AE%E5%BD%95.png" alt="TestA目录.png"></p><p>打开<code>TestA</code> 项目文件夹，我们发现了 <code>baselib</code> 文件夹，下面只有一个<code>baselib.iml</code>文件</p><p><img src="/2019/04/13/多个项目添加依赖同一个模块/TesA%E5%8E%9F%E7%9B%AE%E5%BD%95.png" alt="TesA原目录.png"></p><p>在<code>baselib</code>中加入<code>Utils</code> 工具类</p><p><img src="/2019/04/13/多个项目添加依赖同一个模块/baselib.png" alt="baselib.png"></p><p>切换到<code>TestBase</code>中查看，代码是相同的。</p><p><img src="/2019/04/13/多个项目添加依赖同一个模块/baselib.png" alt="TestBase目录.png"></p><p>这样就达到了<code>baselib</code>被修改后所有引用<code>baselib</code>的项目会同步变化。</p><h4 id="git-同步管理"><a href="#git-同步管理" class="headerlink" title="git 同步管理"></a>git 同步管理</h4><blockquote><p>上述操作都是基于本地的，那么如何加入git管理呢</p></blockquote><p>将<code>TestA</code>和<code>TestBase</code>分别传至<code>github</code></p><p>在<code>TestA</code>项目中打开<code>settings</code>，找到如下位置并将<code>TestBase</code>加入到<code>git</code>管理</p><p><img src="/2019/04/13/多个项目添加依赖同一个模块/%E6%B7%BB%E5%8A%A0git.png" alt="添加git.png"></p><p>然后就可以同步管理这两个项目啦<br><img src="/2019/04/13/多个项目添加依赖同一个模块/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png" alt="同步管理.png"><br><img src="/2019/04/13/多个项目添加依赖同一个模块/gitlog.png" alt="git log.png"></p><p>参考：<br><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br>[<a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>]]></content>
+      
+      
       <categories>
-        <category>app</category>
+          
+          <category> app </category>
+          
       </categories>
-      <tags>
-        <tag>Android Studio</tag>
-        <tag>app</tag>
-        <tag>gradle</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> Android Studio </tag>
+            
+            <tag> app </tag>
+            
+            <tag> gradle </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
