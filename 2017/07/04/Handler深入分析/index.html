@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。">
+<meta name="keywords" content="handler,异步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handler深入分析">
+<meta property="og:url" content="http://yoursite.com/2017/07/04/Handler深入分析/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-2e352e80d8f708cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-3593c9860a191e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-106032139bef8248.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-0fded8b582305652.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-b274968c0d87042d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-b8a37fcc57787a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-9b8b4a3c8f495526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-71885237f2c74d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-4673d3b294d1ff08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-42a0e89fbd6cfe2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-036e11a4312a1dd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-ddcf57bb316f4d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-322cff8f6407b3f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-8092676c88450ad6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-28263341bcc4e038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-8f15bc3b507a098f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-1b8a08501a2a9251.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-c5ef6085b80726ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-dbe0fccf4cc81722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-678aac95b1c8ad85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-ba4cd0593a2e8df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-76f2c74c7c0a3e51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-5797c552356958b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-3d37b2fa8bb03c78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-5cabf5368375e861.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-ad49dc188525989f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-07-03T23:46:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Handler深入分析">
+<meta name="twitter:description" content="在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3155702-2e352e80d8f708cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  <link rel="canonical" href="http://yoursite.com/2017/07/04/Handler深入分析/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Handler深入分析 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/Handler深入分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">Handler深入分析
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-04 07:46:14" itemprop="dateCreated datePublished" datetime="2017-07-04T07:46:14+08:00">2017-07-04</time>
+            </span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/07/04/Handler深入分析/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/07/04/Handler深入分析/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>5.1k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>5 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="1-TreadLocal的使用"><a href="#1-TreadLocal的使用" class="headerlink" title="1. TreadLocal的使用"></a>1. TreadLocal的使用</h3><p>下面我们来写一个小demo，创建两个子线程，在两个子线程中分别为字符串result2，result3赋值，在主线程中调用两个子线程，并且为字符串result1赋值，最后打印输出结果。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-2e352e80d8f708cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="主线程"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-3593c9860a191e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="子线程1"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-106032139bef8248.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="子线程2"></p>
+<p>最后我们看一下打印结果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-0fded8b582305652.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="测试结果"></p>
+<p>很明显，这不是我们想要的结果。看来线程之间相互影响了，那么有没有办法实现上述的功能呢？</p>
+<p>当然有，我们可以使用 TreadLocal</p>
+<blockquote>
+<p>我们可以把TreadLocal看做成一个容器，调用其中的set和get方法，可以设值和取值。下面我们看看是如何实现的。</p>
+</blockquote>
+<p>首先创建一个ThreadLocal对象，并设置泛型为String<br><img src="http://upload-images.jianshu.io/upload_images/3155702-b274968c0d87042d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ThreadLocal"><br>这里不同的是首先将要打印的字串放入ThreadLocal中，然后从ThreadLocal中取出。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-b8a37fcc57787a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="主线程"></p>
+<p>子线程的操作也是类似的。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-9b8b4a3c8f495526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="子线程"></p>
+<p>下面我们看一下打印结果</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-71885237f2c74d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行结果"></p>
+<p>这样就完成了上述功能。那么这里说的ThreadLocal与Handler有什么关系呢？别急，往下看。</p>
+<h3 id="2-在子线程中创建Handelr"><a href="#2-在子线程中创建Handelr" class="headerlink" title="2. 在子线程中创建Handelr"></a>2. 在子线程中创建Handelr</h3><p>我们在子线程中创建一个Handler对象，然后运行程序。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-4673d3b294d1ff08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="子线程中创建Handler对象"></p>
+<p>可以看到运行时出现了异常</p>
+<blockquote>
+<p> java.lang.RuntimeException: Can’t create handler inside thread that has not called Looper.prepare()</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-42a0e89fbd6cfe2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="异常"><br>看字面意思是不能在调用Looper.prepare()之前在线程中创建handler。<br>那么我们在创建handler之前去调用Looper.prepare()。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-036e11a4312a1dd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="调用Looper.prepare()"><br>之后就能成功运行了。</p>
+<p>那么我们来研究一下为什么会这样。<br>鼠标放在Handler()上，win按住control+鼠标左键，Mac按住command+鼠标左键。进入Handler的构造器。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-ddcf57bb316f4d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Handler构造器"><br>点击this</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-322cff8f6407b3f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="更进一步"></p>
+<p>我们找到了源头，如果looper为空则抛出这个异常。</p>
+<p>在这里从looper里取出mQueue赋值给mQueue</p>
+<p>然后我们看一下这个Looper.prepare方法，<br><img src="http://upload-images.jianshu.io/upload_images/3155702-8092676c88450ad6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="prepare"></p>
+<p>上方的注释说得很清楚，在真正开始这个loop之前，该方法为你提供了创建引用这个looper的handelr的机会。在调用完该方法后，应该确保调用了loop()方法，并且使用quit()方法去结束它。</p>
+<p>我们还看到如果多次调用prepare方法会抛出Only one Looper may be created per thread异常。<br>在这里我们看到了熟悉的身影，ThreadLocal。在这里使用ThreadLocal来存looper。</p>
+<p>看到这我们不禁要问，在主线程我们并没有调用prepare方法啊，没错，在主线程使用的是prepareMainLooper<br><img src="http://upload-images.jianshu.io/upload_images/3155702-28263341bcc4e038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="prepareMainLooper"><br>可以看到这个main looper已经被android environment创建了，所以不需要自己调用该方法。</p>
+<p>下面我们来看一下在子线程中创建Handler的标准写法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class ThreadLooper extends Thread &#123;</span><br><span class="line">        public Handler mHandler;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void run() &#123;</span><br><span class="line">            super.run();</span><br><span class="line">            Looper.prepare();</span><br><span class="line">            mHandler = new Handler() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void handleMessage(Message msg) &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            Looper.loop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Message的发送和处理过程"><a href="#3-Message的发送和处理过程" class="headerlink" title="3. Message的发送和处理过程"></a>3. Message的发送和处理过程</h3><p>Handler里提供了几个消息入队的方法</p>
+<blockquote>
+<p>post()<br>postAtTime()<br>postDelayed()<br>postAtFrontOfQueue()<br>sendMessageAtTime(Message msg , long uptimeMillis)</p>
+</blockquote>
+<p>其中post()，postAtTime()，postDelayed()都会直接或间接调用sendMessageAtTime方法。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-8f15bc3b507a098f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="post"><br><img src="http://upload-images.jianshu.io/upload_images/3155702-1b8a08501a2a9251.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="postAtTime"><br><img src="http://upload-images.jianshu.io/upload_images/3155702-c5ef6085b80726ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="postDelayed"><br><img src="http://upload-images.jianshu.io/upload_images/3155702-dbe0fccf4cc81722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sendMessageDelayed"><br>下面我们看一下sendMessageAtTime方法</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-678aac95b1c8ad85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="sendMessageAtTime"></p>
+<p>有两个参数，msg 和uptimeMillis ，如果消息队列为空，则打印警告，同时返回false。反之则调用enqueueMessage方法。</p>
+<p>下面看一下enqueueMessage</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-ba4cd0593a2e8df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="enqueueMessage"><br>这里有两个比较重要的操作。<br>msg.target赋值为this，有两层含义，一是message的来源是当前handler，二是当前的handler来处理消息。<br>将消息加入到消息队列中，既然是队列就有顺序，那么根据什么来判断顺序呢？就是根据uptimeMillis,这个时间，时间短就在前面，长就在后面。</p>
+<p>细心的你可能发现刚刚我提到post()，postAtTime()，postDelayed()都会直接或间接调用sendMessageAtTime方法，那postAtFrontOfQueue()呢？<br>从字面上看该方法是将消息置于消息队列的最前边。是不是这样呢？我们看一下源码。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-76f2c74c7c0a3e51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="postAtFrontOfQueue"><br>这里将入队的时间参数直接写死为0，那么肯定就是消息队列的最前边啦。</p>
+<p>我们再来分析下入队之后的过程，上文提到调用Looper.prepare()方法后应调用Looper.loop()方法开始消息的轮询。那么我们看看loop方法做了些什么。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public static void loop() &#123;</span><br><span class="line">    final Looper me = myLooper();</span><br><span class="line">    if (me == null) &#123;</span><br><span class="line">        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    final MessageQueue queue = me.mQueue;</span><br><span class="line"></span><br><span class="line">    // Make sure the identity of this thread is that of the local process,</span><br><span class="line">    // and keep track of what that identity token actually is.</span><br><span class="line">    Binder.clearCallingIdentity();</span><br><span class="line">    final long ident = Binder.clearCallingIdentity();</span><br><span class="line"></span><br><span class="line">    for (;;) &#123;</span><br><span class="line">        Message msg = queue.next(); // might block</span><br><span class="line">        if (msg == null) &#123;</span><br><span class="line">            // No message indicates that the message queue is quitting.</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // This must be in a local variable, in case a UI event sets the logger</span><br><span class="line">        final Printer logging = me.mLogging;</span><br><span class="line">        if (logging != null) &#123;</span><br><span class="line">            logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +</span><br><span class="line">                    msg.callback + &quot;: &quot; + msg.what);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        final long traceTag = me.mTraceTag;</span><br><span class="line">        if (traceTag != 0 &amp;&amp; Trace.isTagEnabled(traceTag)) &#123;</span><br><span class="line">            Trace.traceBegin(traceTag, msg.target.getTraceName(msg));</span><br><span class="line">        &#125;</span><br><span class="line">        try &#123;</span><br><span class="line">            msg.target.dispatchMessage(msg);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            if (traceTag != 0) &#123;</span><br><span class="line">                Trace.traceEnd(traceTag);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (logging != null) &#123;</span><br><span class="line">            logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Make sure that during the course of dispatching the</span><br><span class="line">        // identity of the thread wasn&apos;t corrupted.</span><br><span class="line">        final long newIdent = Binder.clearCallingIdentity();</span><br><span class="line">        if (ident != newIdent) &#123;</span><br><span class="line">            Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;</span><br><span class="line">                    + Long.toHexString(ident) + &quot; to 0x&quot;</span><br><span class="line">                    + Long.toHexString(newIdent) + &quot; while dispatching to &quot;</span><br><span class="line">                    + msg.target.getClass().getName() + &quot; &quot;</span><br><span class="line">                    + msg.callback + &quot; what=&quot; + msg.what);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        msg.recycleUnchecked();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-5797c552356958b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="looper"><br>首先从ThreadLocal中取出looper并判断是否为空，之后将looper中的消息队列赋值，再然后进入一个死循环，循环内去不断寻找消息队列的下一项，没有消息发生阻塞。</p>
+<p>找到 msg.target.dispatchMessage(msg);这一行，<br>之前我们提到target就是handler对象，这里handler把消息派发出去，接下来就进入消息的处理了。</p>
+<p>进入到msg.target.dispatchMessage方法，<br><img src="http://upload-images.jianshu.io/upload_images/3155702-3d37b2fa8bb03c78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="dispatchMessage"><br>这里分三步<br>1.判断msg的回调是否为空<br> 如果不为空则直接该回调自己处理，反之判断自己的回调</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-5cabf5368375e861.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="message的回调"><br>把Runnable 封装成msg的callback</p>
+<p>2.判断自己的回调是否为空<br>3.调用handleMessage方法</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3155702-ad49dc188525989f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="handleMessage"><br>这里由子类重写来处理message</p>
+<h3 id="4-Handler机制的总结"><a href="#4-Handler机制的总结" class="headerlink" title="4. Handler机制的总结"></a>4. Handler机制的总结</h3><blockquote>
+<p>Thread 负责业务逻辑<br>Handler 负责发送消息和处理消息<br>MessageQueue 负责保存消息<br>Looper 负责轮询消息队列</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/handler/" rel="tag"><i class="fa fa-tag"></i> handler</a>
+            
+              <a href="/tags/异步/" rel="tag"><i class="fa fa-tag"></i> 异步</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/07/06/Mac下Android反编译初探/" rel="prev" title="Mac下Android反编译初探">
+                  Mac下Android反编译初探 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-TreadLocal的使用"><span class="nav-number">1.</span> <span class="nav-text">1. TreadLocal的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在子线程中创建Handelr"><span class="nav-number">2.</span> <span class="nav-text">2. 在子线程中创建Handelr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Message的发送和处理过程"><span class="nav-number">3.</span> <span class="nav-text">3. Message的发送和处理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Handler机制的总结"><span class="nav-number">4.</span> <span class="nav-text">4. Handler机制的总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">8k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7 分钟</span>
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
