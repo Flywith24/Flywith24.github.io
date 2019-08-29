@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="该文总结了 iptables 常用的指令。iptables 详细内容请看双印大佬 iptables 详解系列">
+<meta name="keywords" content="ROM,iptables,framework,网络黑白名单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iptables 常用指令">
+<meta property="og:url" content="http://yoursite.com/2019/08/29/iptabels 常用指令/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="该文总结了 iptables 常用的指令。iptables 详细内容请看双印大佬 iptables 详解系列">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-29T03:01:27.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iptables 常用指令">
+<meta name="twitter:description" content="该文总结了 iptables 常用的指令。iptables 详细内容请看双印大佬 iptables 详解系列">
+  <link rel="canonical" href="http://yoursite.com/2019/08/29/iptabels 常用指令/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>iptables 常用指令 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/iptabels 常用指令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">iptables 常用指令
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-29 10:10:35 / 修改时间：11:01:27" itemprop="dateCreated datePublished" datetime="2019-08-29T10:10:35+08:00">2019-08-29</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ROM/" itemprop="url" rel="index"><span itemprop="name">ROM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/08/29/iptabels 常用指令/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/29/iptabels 常用指令/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>7k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>6 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>该文总结了 <code>iptables</code> 常用的指令。<code>iptables</code> 详细内容请看双印大佬 <a href="http://www.zsythink.net/archives/tag/iptables/page/2/" target="_blank" rel="noopener">iptables 详解系列</a></p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="规则查询"><a href="#规则查询" class="headerlink" title="规则查询"></a>规则查询</h2><h3 id="查看指定表中的规则"><a href="#查看指定表中的规则" class="headerlink" title="查看指定表中的规则"></a>查看指定表中的规则</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -L</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>-t</code> 选项，指定要操作的表，使用 <code>-L</code> 选项，查看-t选项对应的表的规则， <code>-L</code> 选项的意思是，列出规则。所以，上述命令的含义为列出filter表的所有规则。</p>
+<p><code>filter</code> 可替换为 <code>raw</code> <code>mangle</code> <code>nat</code></p>
+<p>如果仅查看 <code>filter</code> 可以省略 <code>-t filter</code> ，当没有使用 <code>-t</code> 选项指定表时，默认为操作 <code>filter</code> 表，即 <code>iptables -L</code> 表示列出 <code>filter</code> 表中的所有规则。</p>
+<h3 id="查看指定表中的指定链的规则"><a href="#查看指定表中的指定链的规则" class="headerlink" title="查看指定表中的指定链的规则"></a>查看指定表中的指定链的规则</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -L INPUT</span><br></pre></td></tr></table></figure>
+
+<p>只查看 <code>filter</code> 表中 <code>INPUT</code> 链的规则</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -vL INPUT</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>-v</code> 查看更多，更详细的信息</p>
+<h3 id="不让ip进行反解"><a href="#不让ip进行反解" class="headerlink" title="不让ip进行反解"></a>不让ip进行反解</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -nvL</span><br></pre></td></tr></table></figure>
+
+<p><code>iptables</code> 默认进行了名称解析，但是在规则非常多的情况下如果进行名称解析，效率会比较低。使用 <code>-n</code> 选项，表示不对 <code>ip</code> 地址进行名称反解，直接显示 <code>ip</code> 地址</p>
+<p>只查看某个链的规则，并且不让 <code>ip</code> 进行反解，<code>iptables -nvL INPUT</code></p>
+<h3 id="显示规则编号"><a href="#显示规则编号" class="headerlink" title="显示规则编号"></a>显示规则编号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables --line-number -nvL INPUT</span><br><span class="line">或</span><br><span class="line">iptables --line -nvL INPUT</span><br></pre></td></tr></table></figure>
+
+<h2 id="规则管理"><a href="#规则管理" class="headerlink" title="规则管理"></a>规则管理</h2><h3 id="添加规则"><a href="#添加规则" class="headerlink" title="添加规则"></a>添加规则</h3><p><font color="#ff0000">注意：添加规则时，规则的顺序非常重要</font></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在指定表的指定链的尾部添加一条规则，-A选项表示在对应链的末尾添加规则</span><br><span class="line">命令语法：iptables -t 表名 -A 链名 匹配条件 -j 动作</span><br><span class="line">示例：iptables -t filter -A OUTPUT -s 192.168.10.225 -j DROP</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 在指定表的指定链的首部添加一条规则，-I选型表示在对应链的开头添加规则</span><br><span class="line">命令语法：iptables -t 表名 -I 链名 匹配条件 -j 动作</span><br><span class="line">示例： iptables -t filter -I OUTPUT -s 192.168.10.225 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 在指定表的指定链的指定位置添加一条规则</span><br><span class="line">命令语法：iptables -t 表名 -I 链名 规则序号 匹配条件 -j 动作</span><br><span class="line">示例： iptables -t filter -I OUTPUT 3 -s 192.168.10.225 -j REJECT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 设置指定表的指定链的默认策略（默认动作），并非添加规则</span><br><span class="line">命令语法：iptables -t 表名 -P 链名 动作</span><br><span class="line">示例：iptables -t filter -P FORWARD ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除规则"><a href="#删除规则" class="headerlink" title="删除规则"></a>删除规则</h3><p><font color="ff0000">注意：如果没有保存规则，删除规则时请慎重</font></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 按照规则序号删除规则，删除指定表的指定链的指定规则，-D选项表示删除对应链中的规则</span><br><span class="line">命令语法：iptables -t 表名 -D 链名 规则序号</span><br><span class="line">示例：iptables -t filter -D INPUT 3</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 按照具体的匹配条件与动作删除规则，删除指定表的指定链的指定规则</span><br><span class="line">命令语法：iptables -t 表名 -D 链名 匹配条件 -j 动作</span><br><span class="line">示例：iptables -t filter -D INPUT -s 192.168.10.225 -j DROP</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 删除指定表的指定链中的所有规则，-F选项表示清空对应链中的规则</span><br><span class="line">命令语法：iptables -t 表名 -F 链名</span><br><span class="line">示例：iptables -t filter -F INPUT</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 删除指定表中的所有规则</span><br><span class="line">命令语法：iptables -t 表名 -F</span><br><span class="line">示例：iptables -t filter -F OUTPUT</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改规则"><a href="#修改规则" class="headerlink" title="修改规则"></a>修改规则</h3><p><font color="ff0000">注意：如果使用-R选项修改规则中的动作，那么必须指明原规则中的原匹配条件，例如源ip，目标ip等</font></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 修改指定表中指定链的指定规则，-R选项表示修改对应链中的规则，使用-R选项时要同时指定对应的链以及规则对应的序号，并且规则中原本的匹配条件不可省略</span><br><span class="line">命令语法：iptables -t 表名 -R 链名 规则序号 规则原本的匹配条件 -j 动作</span><br><span class="line">示例：iptables -t filter -R INPUT 3 -s 192.168.10.225 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>上述示例表示修改 <code>filter</code> 表中 <code>INPUT</code> 链的第3条规则，将这条规则的动作修改为 <code>ACCEPT</code> ， <code>-s</code>  <code>192.168.10.225</code> 为这条规则中原本的匹配条件，如果省略此匹配条件，修改后的规则中的源地址可能会变为 <code>0.0.0.0/0</code></p>
+<p>其他修改规则的方法：先通过编号删除规则，再在原编号位置添加一条规则</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 修改指定表的指定链的默认策略（默认动作），并非修改规则</span><br><span class="line">命令语法：iptables -t 表名 -P 链名 动作</span><br><span class="line">示例：iptables -t filter -P FORWARD ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="保存规则"><a href="#保存规则" class="headerlink" title="保存规则"></a>保存规则</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 保存规则命令，表示将iptables规则保存至/etc/sysconfig/iptables文件中</span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+
+<h2 id="匹配条件"><a href="#匹配条件" class="headerlink" title="匹配条件"></a>匹配条件</h2><h3 id="基本匹配条件"><a href="#基本匹配条件" class="headerlink" title="基本匹配条件"></a>基本匹配条件</h3><p><code>-s</code> 用于匹配报文的源地址,可以同时指定多个源地址，每个 <code>ip</code> 之间用逗号隔开，也可以指定为一个网段</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -s 192.168.10.111,192.168.10.225 -j DROP</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.0/24 -j ACCEPT</span><br><span class="line">iptables -t filter -I INPUT ! -s 192.168.10.0/24 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><code>-d</code> 用于匹配报文的目标地址,可以同时指定多个目标地址，每个 <code>ip</code> 之间用逗号隔开，也可以指定为一个网段</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I OUTPUT -d 192.168.10.111,192.168.10.225 -j DROP</span><br><span class="line">iptables -t filter -I INPUT -d 192.168.10.0/24 -j ACCEPT</span><br><span class="line">iptables -t filter -I INPUT ! -d 192.168.10.0/24 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p><code>-p</code> 用于匹配报文的协议类型,可以匹配的协议类型 <code>tcp</code> 、<code>udp</code> 、<code>udplite</code> 、<code>icmp</code> 、<code>esp</code> 、<code>ah</code> 、<code>sctp</code> 等</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -p tcp -s 192.168.10.146 -j ACCEPT</span><br><span class="line">iptables -t filter -I INPUT ! -p udp -s 192.168.10.146 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<h3 id="扩展匹配条件"><a href="#扩展匹配条件" class="headerlink" title="扩展匹配条件"></a>扩展匹配条件</h3><ol>
+<li><p><code>tcp</code> 扩展模块</p>
+<p><code>-p tcp -m tcp --sport</code> 用于匹配 <code>tcp</code> 协议报文的源端口，可以使用冒号指定一个连续的端口范围<br><code>-p tcp -m tcp --dport</code> 用于匹配 <code>tcp</code> 协议报文的目标端口，可以使用冒号指定一个连续的端口范围</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I OUTPUT -d 192.168.10.225 -p tcp -m tcp --sport 22 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m tcp --dport 22:25 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m tcp --dport :22 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m tcp --dport 80: -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -d 192.168.10.225 -p tcp -m tcp ! --sport 22 -j ACCEPT</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>multiport</code> 扩展模块</p>
+<p><code>-p tcp -m multiport --sports</code> 用于匹配报文的源端口，可以指定离散的多个端口号,端口之间用”逗号”隔开<br><code>-p udp -m multiport --dports</code> 用于匹配报文的目标端口，可以指定离散的多个端口号，端口之间用”逗号”隔开</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I OUTPUT -d 192.168.10.225 -p udp -m multiport --sports 137,138 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m multiport --dports 22,80 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m multiport ! --dports 22,80 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m multiport --dports 80:88 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -s 192.168.10.225 -p tcp -m multiport --dports 22,80:88 -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p><code>udp</code> 模块</p>
+<p><code>--sport</code> 匹配 <code>udp</code> 报文的源地址<br><code>--dport</code> 匹配 <code>udp</code> 报文的目标地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 可以结合multiport模块指定多个离散的端口</span><br><span class="line">iptables -t filter -I INPUT -p udp -m udp --dport 137 -j ACCEPT</span><br><span class="line">iptables -t filter -I INPUT -p udp -m udp --dport 137:157 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="4">
+<li><p><code>icmp</code> 模块</p>
+<p><code>--icmp-type</code> 匹配 <code>icmp</code> 报文的具体类型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -p icmp -m icmp --icmp-type 8/0 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -p icmp --icmp-type 8 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p icmp -m icmp --icmp-type 0/0 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p icmp --icmp-type 0 -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -p icmp --icmp-type "echo-request" -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="5">
+<li><p><code>iprange</code> 模块</p>
+<p><code>--src-range</code> 指定连续的源地址范围<br><code>--dst-range</code> 指定连续的目标地址范围</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -m iprange --src-range 192.168.10.127-192.168.10.146 -j DROP</span><br><span class="line">iptables -t filter -I OUTPUT -m iprange --dst-range 192.168.10.127-192.168.10.146 -j DROP</span><br><span class="line">iptables -t filter -I INPUT -m iprange ! --src-range 192.168.10.127-192.168.10.146 -j DROP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>stirng</code> 模块</p>
+<p><code>--algo</code> 指定对应的匹配算法，可用算法为 <code>bm</code> 、<code>kmp</code>，此选项为必需选项。<br><code>--string</code> 指定需要匹配的字符串</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -p tcp --sport 80 -m string --algo bm --string "baidu" -j REJECT</span><br><span class="line">iptables -t filter -I INPUT -p tcp --sport 80 -m string --algo bm --string "baidu" -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="7">
+<li><p><code>time</code> 模块 </p>
+<p><code>--timestart</code> 用于指定时间范围的开始时间，不可取反<br><code>--timestop</code> 用于指定时间范围的结束时间，不可取反<br><code>--weekdays</code> 用于指定”星期几”，可取反<br><code>--monthdays</code> 用于指定”几号”，可取反<br><code>--datestart</code> 用于指定日期范围的开始日期，不可取反<br><code>--datestop</code> 用于指定日期范围的结束时间，不可取反</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80 -m time --timestart 09:00:00 --timestop 19:00:00 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 443 -m time --timestart 09:00:00 --timestop 19:00:00 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time --weekdays 6,7 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time --monthdays 22,23 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time ! --monthdays 22,23 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time --timestart 09:00:00 --timestop 18:00:00 --weekdays 6,7 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time --weekdays 5 --monthdays 22,23,24,25,26,27,28 -j REJECT</span><br><span class="line">iptables -t filter -I OUTPUT -p tcp --dport 80  -m time --datestart 2017-12-24 --datestop 2017-12-27 -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="8">
+<li><p><code>connlimit</code> 模块</p>
+<p><code>--connlimit-above</code> 单独使用此选项时，表示限制每个 <code>ip</code> 的链接数量。<br><code>--connlimit-mask</code>  此选项不能单独使用，在使用 <code>--connlimit-above</code> 选项时，配合此选项，则可以针对”某类 <code>ip</code> 段内的一定数量的 <code>ip</code> “进行连接数量的限制</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -p tcp --dport 22 -m connlimit --connlimit-above 2 -j REJECT</span><br><span class="line">iptables -I INPUT -p tcp --dport 22 -m connlimit --connlimit-above 20 --connlimit-mask 24 -j REJECT</span><br><span class="line">iptables -I INPUT -p tcp --dport 22 -m connlimit --connlimit-above 10 --connlimit-mask 27 -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="9">
+<li><p><code>limit</code> 模块</p>
+<p><code>--limit-burst</code> 此选项用于指定令牌桶中令牌的最大数量<br><code>--limit</code> 此选项用于指定令牌桶中生成新令牌的频率，可用时间单位有second、minute 、hour、day</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -t filter -I INPUT -p icmp -m limit --limit-burst 3 --limit 10/minute -j ACCEPT</span><br><span class="line">iptables -t filter -A INPUT -p icmp -j REJECT</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h2 id="自定义链"><a href="#自定义链" class="headerlink" title="自定义链"></a>自定义链</h2><h3 id="创建自定义链"><a href="#创建自定义链" class="headerlink" title="创建自定义链"></a>创建自定义链</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在filter表中创建yyz自定义链</span><br><span class="line">iptables -N yyz</span><br></pre></td></tr></table></figure>
+
+<h3 id="引用自定义链"><a href="#引用自定义链" class="headerlink" title="引用自定义链"></a>引用自定义链</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 在OUTPUT链中引用刚才创建的自定义链</span><br><span class="line">iptables -I OUTPUT -j yyz</span><br></pre></td></tr></table></figure>
+
+<h3 id="重命名自定义链"><a href="#重命名自定义链" class="headerlink" title="重命名自定义链"></a>重命名自定义链</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 将yyz自定义链重命名为test</span><br><span class="line">iptabels -E yyz test</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除自定义链"><a href="#删除自定义链" class="headerlink" title="删除自定义链"></a>删除自定义链</h3><p>删除自定义链需要满足两个条件</p>
+<ol>
+<li>自定义链中没有被引用</li>
+<li>自定义链中没有任何规则</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 删除引用计数为0且不包含任何规则的test链</span><br><span class="line">iptabels -X test</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/ROM/" rel="tag"><i class="fa fa-tag"></i> ROM</a>
+            
+              <a href="/tags/iptables/" rel="tag"><i class="fa fa-tag"></i> iptables</a>
+            
+              <a href="/tags/framework/" rel="tag"><i class="fa fa-tag"></i> framework</a>
+            
+              <a href="/tags/网络黑白名单/" rel="tag"><i class="fa fa-tag"></i> 网络黑白名单</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/08/16/【流水账】记录Framework开发的常用指令/" rel="next" title="【流水账】记录Framework开发的常用指令">
+                  <i class="fa fa-chevron-left"></i> 【流水账】记录Framework开发的常用指令
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#规则查询"><span class="nav-number">1.</span> <span class="nav-text">规则查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看指定表中的规则"><span class="nav-number">1.1.</span> <span class="nav-text">查看指定表中的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看指定表中的指定链的规则"><span class="nav-number">1.2.</span> <span class="nav-text">查看指定表中的指定链的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不让ip进行反解"><span class="nav-number">1.3.</span> <span class="nav-text">不让ip进行反解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示规则编号"><span class="nav-number">1.4.</span> <span class="nav-text">显示规则编号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则管理"><span class="nav-number">2.</span> <span class="nav-text">规则管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加规则"><span class="nav-number">2.1.</span> <span class="nav-text">添加规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除规则"><span class="nav-number">2.2.</span> <span class="nav-text">删除规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改规则"><span class="nav-number">2.3.</span> <span class="nav-text">修改规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保存规则"><span class="nav-number">2.4.</span> <span class="nav-text">保存规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配条件"><span class="nav-number">3.</span> <span class="nav-text">匹配条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本匹配条件"><span class="nav-number">3.1.</span> <span class="nav-text">基本匹配条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展匹配条件"><span class="nav-number">3.2.</span> <span class="nav-text">扩展匹配条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义链"><span class="nav-number">4.</span> <span class="nav-text">自定义链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建自定义链"><span class="nav-number">4.1.</span> <span class="nav-text">创建自定义链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用自定义链"><span class="nav-number">4.2.</span> <span class="nav-text">引用自定义链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重命名自定义链"><span class="nav-number">4.3.</span> <span class="nav-text">重命名自定义链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除自定义链"><span class="nav-number">4.4.</span> <span class="nav-text">删除自定义链</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">22 分钟</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
