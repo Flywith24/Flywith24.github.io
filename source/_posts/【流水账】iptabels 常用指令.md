@@ -1,5 +1,5 @@
 ---
-title: iptables 常用指令
+title: 【流水账】iptables 常用指令
 date: 2019-08-29 10:10:35
 categories: 
 - ROM
@@ -8,10 +8,12 @@ tags:
 - iptables
 - framework
 - 网络黑白名单
+- 流水账
 ---
 
-> 该文总结了 `iptables` 常用的指令。`iptables` 详细内容请看双印大佬 [iptables 详解系列](http://www.zsythink.net/archives/tag/iptables/page/2/)
+> 写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 `how to` 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。
 >
+> 该文总结了 `iptables` 常用的指令。`iptables` 详细内容请看双印大佬 [iptables 详解系列](http://www.zsythink.net/archives/tag/iptables/page/2/)
 
 <!-- more-->
 
