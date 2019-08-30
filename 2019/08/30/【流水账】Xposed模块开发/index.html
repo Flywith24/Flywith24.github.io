@@ -64,25 +64,21 @@
   };
 </script>
 
-  <meta name="description" content="1. 安装IDE以及hello world 一个优秀的IDE可以极大地提高工作效率，在这里我选择使用JetBrains公司的PyCharm。是不是有些眼熟？没错，IDEA 和Android Studio就是他们做的，JetBrains出品，必属精品。">
-<meta name="keywords" content="python,爬虫">
+  <meta name="description" content="写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 how to 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。 本篇博客是记录一些学习 Xposed模块开发时知识的整理。">
+<meta name="keywords" content="Hook,Xposed,流水账">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2.1开始第一个爬虫程序">
-<meta property="og:url" content="http://yoursite.com/2017/06/18/2-1开始第一个爬虫程序/index.html">
+<meta property="og:title" content="【流水账】Xposed模块开发">
+<meta property="og:url" content="http://yoursite.com/2019/08/30/【流水账】Xposed模块开发/index.html">
 <meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="1. 安装IDE以及hello world 一个优秀的IDE可以极大地提高工作效率，在这里我选择使用JetBrains公司的PyCharm。是不是有些眼熟？没错，IDEA 和Android Studio就是他们做的，JetBrains出品，必属精品。">
+<meta property="og:description" content="写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 how to 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。 本篇博客是记录一些学习 Xposed模块开发时知识的整理。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-752e691985633d3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-4ffc1a9c05699113.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-a540d17991f6282d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-165b12f5711bcd47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-f03abc16265de8dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-18T02:05:00.000Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/30/【流水账】Xposed模块开发/%E5%85%A5%E5%8F%A3.png">
+<meta property="og:updated_time" content="2019-08-30T10:02:57.924Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2.1开始第一个爬虫程序">
-<meta name="twitter:description" content="1. 安装IDE以及hello world 一个优秀的IDE可以极大地提高工作效率，在这里我选择使用JetBrains公司的PyCharm。是不是有些眼熟？没错，IDEA 和Android Studio就是他们做的，JetBrains出品，必属精品。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3155702-752e691985633d3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-  <link rel="canonical" href="http://yoursite.com/2017/06/18/2-1开始第一个爬虫程序/">
+<meta name="twitter:title" content="【流水账】Xposed模块开发">
+<meta name="twitter:description" content="写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 how to 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。 本篇博客是记录一些学习 Xposed模块开发时知识的整理。">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/30/【流水账】Xposed模块开发/%E5%85%A5%E5%8F%A3.png">
+  <link rel="canonical" href="http://yoursite.com/2019/08/30/【流水账】Xposed模块开发/">
 
 
 <script id="page-configurations">
@@ -96,7 +92,7 @@
   };
 </script>
 
-  <title>2.1开始第一个爬虫程序 | 杨云召 | 博客</title>
+  <title>【流水账】Xposed模块开发 | 杨云召 | 博客</title>
   
 
 
@@ -292,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/2-1开始第一个爬虫程序/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/【流水账】Xposed模块开发/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -306,7 +302,7 @@
       <header class="post-header">
 
         
-          <h2 class="post-title" itemprop="name headline">2.1开始第一个爬虫程序
+          <h2 class="post-title" itemprop="name headline">【流水账】Xposed模块开发
 
             
           </h2>
@@ -324,8 +320,12 @@
                 
               
 
-              <time title="创建时间：2017-06-18 10:05:00" itemprop="dateCreated datePublished" datetime="2017-06-18T10:05:00+08:00">2017-06-18</time>
+              <time title="创建时间：2019-08-30 17:18:57 / 修改时间：18:02:57" itemprop="dateCreated datePublished" datetime="2019-08-30T17:18:57+08:00">2019-08-30</time>
             </span>
+          
+            
+
+            
           
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -333,7 +333,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
 
                 
                 
@@ -361,8 +361,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2017/06/18/2-1开始第一个爬虫程序/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/06/18/2-1开始第一个爬虫程序/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/08/30/【流水账】Xposed模块开发/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/30/【流水账】Xposed模块开发/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -376,7 +376,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>1.3k</span>
+              <span>2.3k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -386,7 +386,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
           
 
@@ -399,45 +399,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="1-安装IDE以及hello-world"><a href="#1-安装IDE以及hello-world" class="headerlink" title="1. 安装IDE以及hello world"></a>1. 安装IDE以及hello world</h3><blockquote>
-<p>一个优秀的IDE可以极大地提高工作效率，在这里我选择使用JetBrains公司的PyCharm。是不是有些眼熟？没错，IDEA 和Android Studio就是他们做的，JetBrains出品，必属精品。</p>
+        <blockquote>
+<p>写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 <code>how to</code> 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。</p>
+<p>本篇博客是记录一些学习 <code>Xposed</code>模块开发时知识的整理。</p>
 </blockquote>
 <a id="more"></a>
 
-<p><a href="https://www.jetbrains.com/pycharm/" target="_blank" rel="noopener">点击进入下载链接</a></p>
-<p>点击download选择相应平台及版本，我这里选择的是社区版。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-752e691985633d3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下载界面"></p>
-<p>安装过程，切换主题，调整字体之类的都跟跟IDEA类似，不需赘述。</p>
-<p>那么开始我们的hello world程序吧。<br>新建一个Python file ，然后写入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print (&quot;hello world&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="开发前的准备工作"><a href="#开发前的准备工作" class="headerlink" title="开发前的准备工作"></a>开发前的准备工作</h3><p>查看 <a href="https://github.com/rovo89/XposedBridge/wiki/Using-the-Xposed-Framework-API" target="_blank" rel="noopener">Xposed-Framework-API</a> 根据文档进行配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">repositories &#123;</span><br><span class="line">    jcenter();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compileOnly <span class="string">'de.robv.android.xposed:api:82'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>第一次运行在工作区右击 run即可</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-4ffc1a9c05699113.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="右击运行"><br>之后就会在Toolbar上显示run按钮了</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-a540d17991f6282d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行截图"><br>很棒有木有</p>
-<h3 id="2-1-先爬他一个网页下来"><a href="#2-1-先爬他一个网页下来" class="headerlink" title="2.1 先爬他一个网页下来"></a>2.1 先爬他一个网页下来</h3><p>敲入如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line"></span><br><span class="line">response = urllib2.urlopen(&quot;http://www.baidu.com&quot;)</span><br><span class="line">print response.read()</span><br></pre></td></tr></table></figure>
+<p><code>AndroidManifest.xml</code> 中 <code>application</code> 标签下加入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 应用为模块 --&gt;</span><br><span class="line">&lt;meta-data</span><br><span class="line">    android:name=<span class="string">"xposedmodule"</span></span><br><span class="line">    android:value=<span class="string">"true"</span> /&gt;</span><br><span class="line">&lt;!-- 版本信息 该版本号与引用的依赖版本相同--&gt;</span><br><span class="line">&lt;meta-data</span><br><span class="line">    android:name=<span class="string">"xposedminversion"</span></span><br><span class="line">    android:value=<span class="string">"82"</span> /&gt;</span><br><span class="line">&lt;!-- 模块描述 --&gt;</span><br><span class="line">&lt;meta-data</span><br><span class="line">    android:name=<span class="string">"xposeddescription"</span></span><br><span class="line">    android:value=<span class="string">"Xposed Test"</span> /&gt;</span><br></pre></td></tr></table></figure>
 
-<p>点击运行，我们可以得到结果</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-165b12f5711bcd47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<p>这个网页的源码被我们爬下来了，是不是很简单！</p>
-<h3 id="2-2-分析代码"><a href="#2-2-分析代码" class="headerlink" title="2.2 分析代码"></a>2.2 分析代码</h3><p>下面我们来分析下这段代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br></pre></td></tr></table></figure>
+<p>创建 <code>Hook</code> 类，该类是 <code>Xposed</code> 的入口类，用于拦截加载的 <code>package</code> ，实现 <code>IXposedHookLoadPackage</code> 接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yyz.xposedtest;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> <span class="keyword">implements</span> <span class="title">IXposedHookLoadPackage</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleLoadPackage</span><span class="params">(XC_LoadPackage.LoadPackageParam lpparam)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    	<span class="comment">// <span class="doctag">TODO:</span> hook逻辑  </span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 
-<p>urllib2库是学习Python爬虫最基本的模块，利用这个模块我们可以得到网页的内容，并对内容用正则表达式提取分析，得到我们想要的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = urllib2.urlopen(&quot;http://www.baidu.com&quot;)</span><br></pre></td></tr></table></figure>
+<p>在 <code>src/main</code> 目录下创建assets目录，在该目录中创建 <code>xposed_ini</code> t文件，写入上面创建的 <code>Xposed</code> 的入口类，如下：</p>
+<p><img src="/2019/08/30/【流水账】Xposed模块开发/%E5%85%A5%E5%8F%A3.png" alt="Xposed模块入口"></p>
+<h3 id="XposedHelpers-常用方法"><a href="#XposedHelpers-常用方法" class="headerlink" title="XposedHelpers 常用方法"></a>XposedHelpers 常用方法</h3><h3 id="findAndHookMethod"><a href="#findAndHookMethod" class="headerlink" title="findAndHookMethod"></a>findAndHookMethod</h3><blockquote>
+<p>Look up a method and hook it. The last argument must be the callback for the hook.</p>
+</blockquote>
+<p>最后一个参数主要有两种</p>
+<p><code>XC_MethodHook</code> 在原有方法逻辑上添加逻辑，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在原有方法逻辑上添加逻辑</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1. 包名 2. classLoader 3. 方法名 4. 参数类型（没有则不添加） 5.Callback</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">XposedHelpers.findAndHookMethod(<span class="string">"cn.bcbook.kaixuetest.MainActivity"</span>,</span><br><span class="line">        lpparam.classLoader, <span class="string">"printViewId"</span>, View.class, <span class="keyword">new</span> XC_MethodHook() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">beforeHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.beforeHookedMethod(param);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="keyword">super</span>.afterHookedMethod(param);</span><br><span class="line">                Log.i(<span class="string">"yyz"</span>, <span class="string">"afterHookedMethod hook success!"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 
-<p>首先我们调用的是urllib2库里面的urlopen方法，传入一个URL，这个网址是百度首页，协议是HTTP协议，urlopen一般接受三个参数，它的参数如下：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-f03abc16265de8dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="urlopen参数"></p>
-<p>第一个参数url即为URL，第二个参数data是访问URL时要传送的数据，第三个timeout是设置超时时间。</p>
-<p>第二三个参数是可以不传送的，data默认为空None，timeout默认为 socket._GLOBAL_DEFAULT_TIMEOUT</p>
-<p>第一个参数URL是必须要传送的，在这个例子里面我们传送了百度的URL，执行urlopen方法之后，返回一个response对象，返回信息便保存在这里面。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print response.read()</span><br></pre></td></tr></table></figure>
+<p><code>XC_MethodReplacement</code> 替换原有方法逻辑，代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//替换原有方法</span></span><br><span class="line">XposedHelpers.findAndHookMethod(<span class="string">"cn.bcbook.kaixuetest.MainActivity"</span>,</span><br><span class="line">        lpparam.classLoader, <span class="string">"printViewId"</span>, View.class, <span class="keyword">new</span> XC_MethodReplacement() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> Object <span class="title">replaceHookedMethod</span><span class="params">(MethodHookParam param)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                Log.i(<span class="string">"yyz"</span>, <span class="string">"hook success!"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 
-<p>response对象有一个read方法，可以返回获取到的网页内容</p>
-<h3 id="2-3-构造Request"><a href="#2-3-构造Request" class="headerlink" title="2.3 构造Request"></a>2.3 构造Request</h3><p>上面的urlopen参数可以传入一个request请求,它其实就是一个Request类的实例，构造时需要传入Url,Data等等的内容。我们可以将上面的代码改写为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import urllib2</span><br><span class="line"></span><br><span class="line">request = urllib2.Request(&quot;http://www.baidu.com&quot;)</span><br><span class="line">response = urllib2.urlopen(request)</span><br><span class="line">print response.read()</span><br></pre></td></tr></table></figure>
-
-<p>运行结果是完全一样的，只不过中间多了一个request对象，推荐大家这么写，因为在构建请求时还需要加入好多内容，通过构建一个request，服务器响应请求得到应答，这样显得逻辑上清晰明确。</p>
 
     </div>
 
@@ -476,9 +464,11 @@
           
           <div class="post-tags">
             
-              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/Hook/" rel="tag"><i class="fa fa-tag"></i> Hook</a>
             
-              <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
+              <a href="/tags/Xposed/" rel="tag"><i class="fa fa-tag"></i> Xposed</a>
+            
+              <a href="/tags/流水账/" rel="tag"><i class="fa fa-tag"></i> 流水账</a>
             
           </div>
         
@@ -488,8 +478,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2017/06/05/1-1使用函数/" rel="next" title="1.1使用函数">
-                  <i class="fa fa-chevron-left"></i> 1.1使用函数
+                <a href="/2019/08/29/【流水账】iptabels 常用指令/" rel="next" title="【流水账】iptables 常用指令">
+                  <i class="fa fa-chevron-left"></i> 【流水账】iptables 常用指令
                 </a>
               
             </div>
@@ -497,10 +487,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2017/06/18/2-2从教务系统查询成绩并计算绩点——山东建筑大学为例/" rel="prev" title="2.2从教务系统查询成绩并计算绩点——山东建筑大学为例">
-                  2.2从教务系统查询成绩并计算绩点——山东建筑大学为例 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -752,7 +738,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装IDE以及hello-world"><span class="nav-number">1.</span> <span class="nav-text">1. 安装IDE以及hello world</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-先爬他一个网页下来"><span class="nav-number">2.</span> <span class="nav-text">2.1 先爬他一个网页下来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-分析代码"><span class="nav-number">3.</span> <span class="nav-text">2.2 分析代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-构造Request"><span class="nav-number">4.</span> <span class="nav-text">2.3 构造Request</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#开发前的准备工作"><span class="nav-number">1.</span> <span class="nav-text">开发前的准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XposedHelpers-常用方法"><span class="nav-number">2.</span> <span class="nav-text">XposedHelpers 常用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#findAndHookMethod"><span class="nav-number">3.</span> <span class="nav-text">findAndHookMethod</span></a></li></ol></div>
             
 
           </div>
