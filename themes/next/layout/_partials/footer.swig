@@ -27,6 +27,7 @@
     #}{{ symbolsCountTotal(site) }}{#
   #}</span>
   {%- endif %}
+
   {%- if config.symbols_count_time.total_time %}
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
@@ -39,5 +40,18 @@
     #}{{ symbolsTimeTotal(site, theme.symbols_count_time.awl, theme.symbols_count_time.wpm, __('symbols_count_time.time_minutes')) }}{#
   #}</span>
   {%- endif %}
+  
+  {% if theme.footer.powered and theme.footer.theme.enable %}
+    <span class="post-meta-divider">|</span>
+  {% endif %}
+
+  {% if theme.footer.theme.enable %}
+    <div class="theme-info">{#
+    #}{{ __('footer.theme') }} &mdash; {#
+    #}<a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">{#
+      #}NexT.{{ theme.scheme }}{#
+    #}</a>{% if theme.footer.theme.version %} v{{ theme.version }}{% endif %}{#
+  #}</div>
+  {% endif %}    
 </div>
 
