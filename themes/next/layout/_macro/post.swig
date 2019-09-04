@@ -249,7 +249,11 @@
         {{ post.content }}
       {%- endif %}
     </div>
-
+    <div>
+    {% if theme.passage_end_tag.enabled and not is_index %}
+      {% include 'passage-end-tag.swig' %}
+    {% endif %}
+    </div>
     {#####################}
     {### END POST BODY ###}
     {#####################}

@@ -1193,3 +1193,7 @@ images: images
 # Online contact 
 daovoice: true
 daovoice_app_id: 7785620b
+
+# 文章结束语
+passage_end_tag:
+  enabled: true
