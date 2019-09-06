@@ -52,6 +52,10 @@
       #}NexT.{{ theme.scheme }}{#
     #}</a>{% if theme.footer.theme.version %}{{ theme.version }}{% endif %}{#
   #}</div>
-  {% endif %}    
+  {% endif %}	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">{#
+      #}鲁公网安备 37011202000904号</a>
 </div>
 
