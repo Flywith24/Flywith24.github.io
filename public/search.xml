@@ -20,9 +20,9 @@
         <category>Xposed</category>
       </categories>
       <tags>
+        <tag>流水账</tag>
         <tag>Hook</tag>
         <tag>Xposed</tag>
-        <tag>流水账</tag>
       </tags>
   </entry>
   <entry>
@@ -33,9 +33,9 @@
         <category>ROM</category>
       </categories>
       <tags>
-        <tag>流水账</tag>
         <tag>ROM</tag>
         <tag>framework</tag>
+        <tag>流水账</tag>
         <tag>iptables</tag>
         <tag>网络黑白名单</tag>
       </tags>
@@ -48,9 +48,9 @@
         <category>ROM</category>
       </categories>
       <tags>
-        <tag>流水账</tag>
         <tag>ROM</tag>
         <tag>framework</tag>
+        <tag>流水账</tag>
       </tags>
   </entry>
   <entry>

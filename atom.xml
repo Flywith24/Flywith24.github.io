@@ -67,11 +67,11 @@
       <category term="Xposed" scheme="http://yoursite.com/categories/Xposed/"/>
     
     
+      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
+    
       <category term="Hook" scheme="http://yoursite.com/tags/Hook/"/>
     
       <category term="Xposed" scheme="http://yoursite.com/tags/Xposed/"/>
-    
-      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
     
   </entry>
   
@@ -97,11 +97,11 @@
       <category term="ROM" scheme="http://yoursite.com/categories/ROM/"/>
     
     
-      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
-    
       <category term="ROM" scheme="http://yoursite.com/tags/ROM/"/>
     
       <category term="framework" scheme="http://yoursite.com/tags/framework/"/>
+    
+      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
     
       <category term="iptables" scheme="http://yoursite.com/tags/iptables/"/>
     
@@ -131,11 +131,11 @@
       <category term="ROM" scheme="http://yoursite.com/categories/ROM/"/>
     
     
-      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
-    
       <category term="ROM" scheme="http://yoursite.com/tags/ROM/"/>
     
       <category term="framework" scheme="http://yoursite.com/tags/framework/"/>
+    
+      <category term="流水账" scheme="http://yoursite.com/tags/%E6%B5%81%E6%B0%B4%E8%B4%A6/"/>
     
   </entry>
   
