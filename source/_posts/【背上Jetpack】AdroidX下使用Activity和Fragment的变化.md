@@ -19,6 +19,8 @@ tags:
 
 本文中描述的所有功能现在都可以在稳定的 `AndroidX` 软件包中使用，它们在去年均已发布或移至稳定版本。
 
+<!-- more-->
+
 ### 在构造器中传入布局 ID
 
 从 `AndroidX`  `AppCompat 1.1.0` 和 `Fragment 1.1.0` ( 译者注：AppCompat 包含 Fragment，且 Fragment 包含 Activity，详情见[【整理】Jetpack 主要组件的依赖及传递关系](https://juejin.im/post/5e567ee1518825494466a938) )开始，您可以使用将 `layoutId` 作为参数的构造函数：
