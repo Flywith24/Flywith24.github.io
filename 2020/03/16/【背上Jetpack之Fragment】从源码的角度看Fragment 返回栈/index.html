@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="前言 上一篇 我们介绍了 OnBackPressedDispather ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 demo  如果您对 activity 对任务栈和返回栈不是很了解，可以移步  Tasks and the B">
+<meta name="keywords" content="androidx,Jetpack,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="前言 上一篇 我们介绍了 OnBackPressedDispather ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 demo  如果您对 activity 对任务栈和返回栈不是很了解，可以移步  Tasks and the B">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0e912bd4?w=748&h=171&f=png&s=27904">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0f7fecec?w=523&h=207&f=png&s=41693">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0f5fe236?w=425&h=116&f=png&s=19768">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf111e4eca?w=544&h=968&f=gif&s=332027">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf11573c7e?w=544&h=968&f=gif&s=307357">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf128028ab?w=1137&h=1745&f=png&s=148227">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf3c14d698?w=1078&h=1232&f=png&s=120922">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf3e264529?w=1111&h=744&f=png&s=152765">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf4261e2a2?w=582&h=144&f=png&s=16887">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf43057f36?w=792&h=404&f=png&s=74980">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf463c7504?w=818&h=722&f=png&s=108117">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170df028ee01dd57?w=1081&h=713&f=png&s=131939">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf5579b571?w=1319&h=139&f=png&s=46323">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170df06c04191fff?w=972&h=682&f=png&s=132928">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf65e331c7?w=1137&h=1585&f=png&s=127564">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf6fd444f6?w=1138&h=544&f=png&s=96482">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf70da7341?w=642&h=512&f=png&s=71452">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170df0d07750776b?w=801&h=765&f=png&s=137606">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf7443eb77?w=715&h=275&f=png&s=39938">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170df099d16ae502?w=1000&h=425&f=png&s=75605">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf7c970039?w=822&h=233&f=png&s=41860">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf8362798b?w=954&h=194&f=png&s=42041">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9805eb1e?w=796&h=555&f=png&s=94237">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170df0f5d77e3c7f?w=891&h=544&f=png&s=94633">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9a0dfa56?w=548&h=215&f=png&s=28095">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9eb75bde?w=841&h=306&f=png&s=47458">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeafa780da77?w=1844&h=948&f=png&s=634511">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/16/170defa88bc0e5f9?w=488&h=750&f=gif&s=4633102">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200312175950">
+<meta property="og:updated_time" content="2020-03-24T01:27:49.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈">
+<meta name="twitter:description" content="前言 上一篇 我们介绍了 OnBackPressedDispather ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 demo  如果您对 activity 对任务栈和返回栈不是很了解，可以移步  Tasks and the B">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0e912bd4?w=748&h=171&f=png&s=27904">
+  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
+  <link rel="canonical" href="http://yoursite.com/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-16 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-16T00:10:35+08:00">2020-03-16</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:27:49" itemprop="dateModified" datetime="2020-03-24T09:27:49+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>7.5k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>7 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p><a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">上一篇</a> 我们介绍了 <code>OnBackPressedDispather</code> ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 <a href="https://github.com/Flywith24/Flywith24-Fragment-Demo" target="_blank" rel="noopener">demo</a></p>
+</blockquote>
+<p>如果您对 activity 对任务栈和返回栈不是很了解，可以移步  <a href="https://medium.com/androiddevelopers/tasks-and-the-back-stack-dbb7c3b0f6d4" target="_blank" rel="noopener">Tasks and the Back Stack</a></p>
+<a id="more"></a>
+
+<h2 id="小问号你是否有很多朋友？"><a href="#小问号你是否有很多朋友？" class="headerlink" title="小问号你是否有很多朋友？"></a>小问号你是否有很多朋友？</h2><p>在分析源码之前，我们先来思考几个问题。</p>
+<ul>
+<li>返回栈中的元素是什么？</li>
+<li>谁来管理 fragment 的返回栈？</li>
+<li>如何返回？</li>
+</ul>
+<h3 id="返回栈中的元素是什么？"><a href="#返回栈中的元素是什么？" class="headerlink" title="返回栈中的元素是什么？"></a>返回栈中的元素是什么？</h3><p>返回栈，顾名思义，是一个栈结构。所以我们要搞清楚，这个栈结构到底存的是什么。</p>
+<p>我们都知道，使用 fragment 的返回栈需要调用 <code>addToBackStack(&quot;&quot;)</code> 方法</p>
+<p>在 <a href="https://juejin.im/post/5e67523551882549003d2c4f" target="_blank" rel="noopener">从源码角度看 Fragment 生命周期</a> 一文中，我们提到了 FragmentTransaction ，它是一个「事务」的模型，事务可以回滚到之前的状态。所以当触发返回操作时，就是将之前提交的事务进行回滚。</p>
+<p><code>FragmentTransaction</code> 的实现类为 <code>BackStackRecord</code> ，所以 <strong>fragment 的返回栈其实存放的就是 BackStackRecord</strong> </p>
+<p>作为返回栈的元素，BackStackRecord 实现了FragmentManager.BackStackEntry 接口</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0e912bd4?w=748&h=171&f=png&s=27904" alt="BackStackRecord"></p>
+<p>从 <code>BackStackRecord</code> 的定义我们可以发现 <code>BackStackRecord</code> 有三种身份</p>
+<ul>
+<li>继承了 <code>FragmentTransaction</code>，即是事务，保存了整个事务的全部操作</li>
+<li>实现了 <code>FragmentManager.BackStackEntry</code> ，作为回退栈的元素</li>
+<li>实现了<code>OpGenerator</code> ，可以生成 <code>BackStackRecord</code> 列表，后文详细介绍</li>
+</ul>
+<h3 id="谁来管理-fragment-的返回栈？"><a href="#谁来管理-fragment-的返回栈？" class="headerlink" title="谁来管理 fragment 的返回栈？"></a>谁来管理 fragment 的返回栈？</h3><p>我们已经知道 fragment 的返回栈其实存放的是 BackSrackRecord , 那么谁来管理 fragment 的返回栈？</p>
+<p><code>FragmentManager</code> 用于管理 fragment ，所以 <strong>fragment 返回栈也应该由 FragmentManager 管理</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//FragmentManager.java</span></span><br><span class="line">ArrayList&lt;BackStackRecord&gt; mBackStack;</span><br></pre></td></tr></table></figure>
+
+<p>其实触发 fragment 的返回逻辑有两种途径</p>
+<ul>
+<li><p>开发主动调用 fragment 的返回方法</p>
+</li>
+<li><p>用户按返回键触发</p>
+</li>
+</ul>
+<p>后文我们会从这两个角度分析一下 fragment 中的返回栈逻辑究竟是怎样的</p>
+<h3 id="如何返回？"><a href="#如何返回？" class="headerlink" title="如何返回？"></a>如何返回？</h3><p>我们已经知道返回栈中的元素是 <code>BackStackRecord</code> ，也清楚了是 <code>FragmentManager</code> 来管理返回栈。那么如果让我们来实现「返回」逻辑，应该如何做？</p>
+<p>首先我们要清楚所谓的「返回」是对事务的回滚，即 <strong>对 commit 事务的内部逻辑执行相应的「逆操作」</strong>。</p>
+<p>例如</p>
+<p>addFragment←→removeFragment</p>
+<p>showFragment←→hideFragment</p>
+<p>attachFragment←→detachFragment</p>
+<p>有的小伙伴可能会疑惑 replace 呢？</p>
+<p><code>expandReplaceOps</code> 方法会把 replace 替换(目标 fragment 已经被 add )成相应的 remove 和 add 两个操作，或者(目标 fragment 没有被 add )只替换成 add 操作</p>
+<h2 id="popBackStack-系列方法"><a href="#popBackStack-系列方法" class="headerlink" title="popBackStack 系列方法"></a>popBackStack 系列方法</h2><p><code>FragmentManager</code> 中提供了<code>popBackStack</code> 系列方法</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0f7fecec?w=523&h=207&f=png&s=41693" alt="popBackStack系列方法"></p>
+<p>是否觉得很眼熟？提交事务也有类似的api，commit 系列方法</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf0f5fe236?w=425&h=116&f=png&s=19768" alt="commit系列方法"></p>
+<p>这里分别提供了同步和异步的方法，可能有读者会疑惑，同样是对事务的操作，一个为提交，一个为回滚，为什么一个封装到了 <code>FragmentManager</code> 中，一个却在 <code>FragmentTransaction</code> 中。既然都是对事务的操作，应该都放在FragmentManager 中。我认为可能为了api使用的方便，使得 <code>FragmentManager</code> 开启事务的链式调用一气呵成。各位有什么想法欢迎在评论区留言。</p>
+<p>这里主要介绍一下 popBackStack(String name, int flag)</p>
+<p>name 为 addToBackStack(String name) 的参数，通过 name 能找到回退栈的特定元素，flag可以为 0 或者<code>FragmentManager.POP_BACK_STACK_INCLUSIVE</code>，0 表示只弹出该元素以上的所有元素，<code>POP_BACK_STACK_INCLUSIVE</code> 表示弹出包含该元素及以上的所有元素。这里说的弹出所有元素包含回退这些事务。如果这么说比较抽象的话，看图</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//flag 传入0，弹出 ♥2 上的所有元素</span></span><br><span class="line">childFragmentManager.popBackStack(<span class="string">"♥"</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf111e4eca?w=544&h=968&f=gif&s=332027" alt="flag为0"></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//flag 为 POP_BACK_STACK_INCLUSIVE 弹出包括该元素及及以上的元素</span></span><br><span class="line">childFragmentManager.popBackStack(<span class="string">"♥"</span>,  androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf11573c7e?w=544&h=968&f=gif&s=307357" alt="flag为1"></p>
+<h2 id="走进源码"><a href="#走进源码" class="headerlink" title="走进源码"></a>走进源码</h2><h3 id="1-popBackStack-逻辑"><a href="#1-popBackStack-逻辑" class="headerlink" title="1. popBackStack() 逻辑"></a>1. popBackStack() 逻辑</h3><p>在分析返回栈源码之前我们回顾一下 FragmentManager 提交事务到 fragment 各个生命周期的流程</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf128028ab?w=1137&h=1745&f=png&s=148227" alt="异步"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf3c14d698?w=1078&h=1232&f=png&s=120922" alt="commitNow"></p>
+<p>下面我们看看 popBackStack 的源码</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf3e264529?w=1111&h=744&f=png&s=152765" alt="popBackStack源码"></p>
+<p>等等，这个 enqueueAction 有些眼熟…</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf4261e2a2?w=582&h=144&f=png&s=16887" alt="commit"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf43057f36?w=792&h=404&f=png&s=74980" alt="commitInternal"></p>
+<p>看来提交事务和回滚事务的流程基本是相同的，只是传递的 action 不同</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf463c7504?w=818&h=722&f=png&s=108117" alt="enqueueAction"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170df028ee01dd57?w=1081&h=713&f=png&s=131939" alt="OpGenerator"></p>
+<p>由源码可知，<code>OpGenerator</code> 是一个接口，其内只有一个 <code>generateOps</code> 方法，用于生成事务列表以及对应的该事务是否是弹出的。有两个实现类</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf5579b571?w=1319&h=139&f=png&s=46323" alt="OpGenerator实现类"></p>
+<p>由此可见 commit 调用的为 <code>BackStackRecord</code> 的 <code>generateOps</code> 方法，<code>popBackStack</code> 调用的是 <code>PopBackStackState</code> 中的  <code>generateOps</code> </p>
+<p>前者的逻辑很简单，向 records list 中添加数据， isRecordPop list 全部传入 false</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">records.add(<span class="keyword">this</span>);</span><br><span class="line">isRecordPop.add(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>后者的逻辑稍微复杂些，其内部调用了 <code>popBackStackState</code> 方法</p>
+<p>如果是 <code>popBackStack</code> 方法 ，则将 <code>FragmentManager</code> 的返回栈列表（<code>mBackStack</code>）的栈顶移除， <code>isRecordPop</code> list 全部传入 true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> last = mBackStack.size() - <span class="number">1</span>;</span><br><span class="line">records.add(mBackStack.remove(last));</span><br><span class="line">isRecordPop.add(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p>如果传入的 name 或 id 有值，且 flag 为 0，则找到返回栈（倒序遍历）中第一个符合 name 或 id 的位置，并将该位置上方的所有 <code>BackStackRecord</code> 并添加到 <code>record</code> list 中，同时 <code>isRecordPop</code> list 全部传入 true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">index = mBackStack.size() - <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (index &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    BackStackRecord bss = mBackStack.get(index);</span><br><span class="line">    <span class="keyword">if</span> (name != <span class="keyword">null</span> &amp;&amp; name.equals(bss.getName())) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (id &gt;= <span class="number">0</span> &amp;&amp; id == bss.mIndex) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    index--;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = mBackStack.size() - <span class="number">1</span>; i &gt; index; i--) &#123;</span><br><span class="line">  records.add(mBackStack.remove(i));</span><br><span class="line">  isRecordPop.add(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果传入的 name 或 id 有值，且 flag 为 <code>POP_BACK_STACK_INCLUSIVE</code>，则在上一条获取位置的基础上继续遍历，直至栈底或者遇到不匹配的跳出循环，接着出栈所有 <code>BackStackRecord</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index 操作与上方相同，先找到返回栈（倒序遍历）中第一个符合 name 或 id 的位置</span></span><br><span class="line"><span class="keyword">if</span> ((flags &amp; POP_BACK_STACK_INCLUSIVE) != <span class="number">0</span>) &#123;</span><br><span class="line">    index--;</span><br><span class="line">    <span class="comment">// 继续遍历 mBackStack 直至栈底或者遇到不匹配的跳出循环</span></span><br><span class="line">    <span class="keyword">while</span> (index &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        BackStackRecord bss = mBackStack.get(index);</span><br><span class="line">        <span class="keyword">if</span> ((name != <span class="keyword">null</span> &amp;&amp; name.equals(bss.getName()))</span><br><span class="line">                || (id &gt;= <span class="number">0</span> &amp;&amp; id == bss.mIndex)) &#123;</span><br><span class="line">            index--;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后续出栈逻辑与上方相同</span></span><br></pre></td></tr></table></figure>
+
+<p>可以配合上面的动图理解</p>
+<p>入栈和出栈后续的逻辑大体是相同的，只是根据 isPop 的正负出现了分支，出栈调用的是 executePopOps</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170df06c04191fff?w=972&h=682&f=png&s=132928" alt></p>
+<p>上文我们有提到，「返回」逻辑实际上就是执行提交事务内部操作逻辑的「逆操作」</p>
+<p>那么接下的逻辑就很清晰了，根据不同的 mCmd 执行相应的逆操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">executePopOps</span><span class="params">(<span class="keyword">boolean</span> moveToState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> opNum = mOps.size() - <span class="number">1</span>; opNum &gt;= <span class="number">0</span>; opNum--) &#123;</span><br><span class="line">        <span class="keyword">final</span> Op op = mOps.get(opNum);</span><br><span class="line">        Fragment f = op.mFragment;</span><br><span class="line">        <span class="keyword">switch</span> (op.mCmd) &#123;</span><br><span class="line">            <span class="keyword">case</span> OP_ADD:</span><br><span class="line">                mManager.removeFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_REMOVE:</span><br><span class="line">                mManager.addFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_HIDE:</span><br><span class="line">                mManager.showFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_SHOW:</span><br><span class="line">                mManager.hideFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_DETACH:</span><br><span class="line">                mManager.attachFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_ATTACH:</span><br><span class="line">                mManager.detachFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_SET_PRIMARY_NAV:</span><br><span class="line">                mManager.setPrimaryNavigationFragment(<span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_UNSET_PRIMARY_NAV:</span><br><span class="line">                mManager.setPrimaryNavigationFragment(f);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> OP_SET_MAX_LIFECYCLE:</span><br><span class="line">                mManager.setMaxLifecycle(f, op.mOldMaxState);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Unknown cmd: "</span> + op.mCmd);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!mReorderingAllowed &amp;&amp; op.mCmd != OP_REMOVE &amp;&amp; f != <span class="keyword">null</span>) &#123;</span><br><span class="line">            mManager.moveFragmentToExpectedState(f);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!mReorderingAllowed &amp;&amp; moveToState) &#123;</span><br><span class="line">        mManager.moveToState(mManager.mCurState, <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>后面的逻辑就完全一样了</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf65e331c7?w=1137&h=1585&f=png&s=127564" alt="popBackStack"></p>
+<h3 id="2-fragment-是怎样拦截-activity-的返回逻辑的？"><a href="#2-fragment-是怎样拦截-activity-的返回逻辑的？" class="headerlink" title="2. fragment 是怎样拦截 activity 的返回逻辑的？"></a>2. fragment 是怎样拦截 activity 的返回逻辑的？</h3><p>在 <a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">【背上Jetpack之OnBackPressedDispatcher】Fragment 返回栈预备篇</a> 一文中我们介绍了 <code>OnBackPressedDispatcher</code> </p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf6fd444f6?w=1138&h=544&f=png&s=96482" alt="ComponetActivity"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf70da7341?w=642&h=512&f=png&s=71452" alt></p>
+<p>activity 的 <code>onBackPressed</code> 的逻辑主要分为两部分，判断所有注册的 <code>OnBackPressedCallback</code> 是否有 enabled 的，如果有则拦截，不执行后续逻辑；</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170df0d07750776b?w=801&h=765&f=png&s=137606" alt="fragment 拦截返回逻辑"></p>
+<p>否则着执行 mFallbackOnBackPressed.run() ，其内部逻辑为调用 ComponentActivity 父类的 <code>onBackPressed</code> 方法</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf7443eb77?w=715&h=275&f=png&s=39938" alt></p>
+<p><strong>所以我们只需看 mOnBackPressedCallbacks（ArrayDeque&lt;OnBackPressedCallback） 是怎样被添加的以及 isEnabled 何时赋值为 true</strong></p>
+<p>经过查找我们发现它是在 FragmentManager 的 attachController 调用 <code>addCallback</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mOnBackPressedDispatcher.addCallback(owner,mOnBackPressedCallback)</span><br></pre></td></tr></table></figure>
+
+<p>进而执行了</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170df099d16ae502?w=1000&h=425&f=png&s=75605" alt><br><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf7c970039?w=822&h=233&f=png&s=41860" alt></p>
+<p>而 <code>mOnBackPressedCallback</code> 在初始化时 enabled 赋值为 false </p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf8362798b?w=954&h=194&f=png&s=42041" alt="mOnBackPressedCallback"></p>
+<p><code>isEnadbled</code> 会在返回栈数量大于 0 且其 mParent 为 <code>PrimaryNavigation</code> 时赋值为true</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9805eb1e?w=796&h=555&f=png&s=94237" alt></p>
+<p>而返回栈（<code>mBackStack</code>）的赋值在 <code>BackStackRecord</code> 的 <code>generateOps</code> 方法中，且是否添加到返回栈由 <code>mAddToBackStack</code> 这个布尔类型的属性控制</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170df0f5d77e3c7f?w=891&h=544&f=png&s=94633" alt></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9a0dfa56?w=548&h=215&f=png&s=28095" alt></p>
+<p><strong>mAddToBackStack 的赋值在 addToBackStack 方法中，这也解释了为何调用 addToBackStack 方法就能将事务加入返回栈</strong></p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeaf9eb75bde?w=841&h=306&f=png&s=47458" alt></p>
+<blockquote>
+<p> 我们来总结一下，fragment 拦截 activity 返回栈是通过 <code>OnBackPressedDispatcher</code> 实现的，如果开启事务调用了 <code>addToBackStack</code> 方法，则 <code>mOnBackPressedCallback</code> 的 <code>isEnabled</code> 属性会赋值为 true，进而起到拦截 activity 返回逻辑的作用。拦截后执行 <code>popBackStackImmediate</code> 方法</p>
+<p>而 popBackStack系列方法会调用 popBackStackState 构造 <code>records</code> 和 <code>isRecordPop</code> 列表，<code>isRecordPop</code> 的内部元素的值均为true 后续流程和提交事务是一样的，根据 <code>isRecordPop</code> 值的不同选择执行 <code>executePopOps</code> 或 <code>executeOps</code> 方法</p>
+</blockquote>
+<h2 id="单返回栈和多返回栈的实现"><a href="#单返回栈和多返回栈的实现" class="headerlink" title="单返回栈和多返回栈的实现"></a>单返回栈和多返回栈的实现</h2><p><a href="https://medium.com/@ianhlake" target="_blank" rel="noopener">Ian Lake</a> 在 <a href="https://www.youtube.com/watch?v=RS1IACnZLy4" target="_blank" rel="noopener">Fragments: Past, Present, and Future (Android Dev Summit ‘19)</a> </p>
+<p>有提到未来会提供多返回栈的 api</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/15/170deeafa780da77?w=1844&h=948&f=png&s=634511" alt></p>
+<p>那么以现有的 api 如何实现多返回栈呢？</p>
+<p>首先我要弄清楚怎样才会有多返回栈，根据上文我们知道 <code>FragmentManager</code> 内部持有<code>mBackStack</code> list，这对应着一个返回栈，<strong>如果想要实现多返回栈，则需要多个 FragmentManager</strong>，而多 <code>FragmentManager</code> 则对应多个 fragment</p>
+<p>因此我们可以创建多个宿主 frament 作为导航 fragment 这样就可以用不同的宿主 fragment 的 独立的<code>FragmentManager</code> 分别管理各自的返回栈，如果这样说比较抽象，可以参考下图</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/3/16/170defa88bc0e5f9?w=488&h=750&f=gif&s=4633102" alt></p>
+<p>图中有四个返回栈，其中最外部有一个宿主 fragment ，内部有四个负责导航的 fragment 管理其内部的返回栈，外部的宿主负责协调各个返回栈为空后如何切换至其他返回栈</p>
+<p>单返回栈就很容易了，我们只需在同一个 <code>FragmentManager</code> 上添加返回栈即可</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200312175950" alt></p>
+<p>详情参照 <a href="https://github.com/Flywith24/Flywith24-Fragment-Demo" target="_blank" rel="noopener">demo</a></p>
+<hr>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
+<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
+            
+              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
+            
+              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/14/【背上Jetpack之Fragment】Fragment返回栈预备篇 OnBackPressedDispatcher/" rel="next" title="【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher">
+                  <i class="fa fa-chevron-left"></i> 【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/19/【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析/" rel="prev" title="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析">
+                  【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小问号你是否有很多朋友？"><span class="nav-number">2.</span> <span class="nav-text">小问号你是否有很多朋友？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#返回栈中的元素是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">返回栈中的元素是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谁来管理-fragment-的返回栈？"><span class="nav-number">2.2.</span> <span class="nav-text">谁来管理 fragment 的返回栈？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何返回？"><span class="nav-number">2.3.</span> <span class="nav-text">如何返回？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#popBackStack-系列方法"><span class="nav-number">3.</span> <span class="nav-text">popBackStack 系列方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#走进源码"><span class="nav-number">4.</span> <span class="nav-text">走进源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-popBackStack-逻辑"><span class="nav-number">4.1.</span> <span class="nav-text">1. popBackStack() 逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-fragment-是怎样拦截-activity-的返回逻辑的？"><span class="nav-number">4.2.</span> <span class="nav-text">2. fragment 是怎样拦截 activity 的返回逻辑的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单返回栈和多返回栈的实现"><span class="nav-number">5.</span> <span class="nav-text">单返回栈和多返回栈的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于我"><span class="nav-number">6.</span> <span class="nav-text">关于我</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">119k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:48</span>
+  
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+  	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+            
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        //if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/03/16/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BB%8E%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E7%9C%8BFragment%20%E8%BF%94%E5%9B%9E%E6%A0%88/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/19/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BViewModel%E3%80%91%E7%BB%9D%E4%B8%8D%E4%B8%A2%E5%A4%B1%E7%9A%84%E7%8A%B6%E6%80%81%20androidx%20SaveState%20ViewModel-SaveState%20%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/23/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BViewModel%E3%80%91%E5%8D%B3%E4%BD%BF%E6%82%A8%E4%B8%8D%E4%BD%BF%E7%94%A8MVVM%E4%B9%9F%E8%A6%81%E4%BA%86%E8%A7%A3ViewModel%20ViewModel%E7%9A%84%E8%81%8C%E8%83%BD%E8%BE%B9%E7%95%8C/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/14/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91Fragment%E8%BF%94%E5%9B%9E%E6%A0%88%E9%A2%84%E5%A4%87%E7%AF%87%20OnBackPressedDispatcher/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/10/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E7%9C%8BFragment%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%8F%8A%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%20%E5%9F%BA%E4%BA%8EAndroidX%20Fragment1.2.2/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/02/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9A%E7%94%A8Fragment%E5%90%97%EF%BC%9FFragment%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8Aandroidx%E4%B8%8BFragment%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B0%E5%A7%BF%E5%8A%BF/</loc>
+    <lastmod>2020-03-24</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/02/29/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E3%80%91AdroidX%E4%B8%8B%E4%BD%BF%E7%94%A8Activity%E5%92%8CFragment%E7%9A%84%E5%8F%98%E5%8C%96/</loc>
     <lastmod>2020-03-24</lastmod>
   </url>  <url>
