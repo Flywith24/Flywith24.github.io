@@ -1,5 +1,5 @@
 ---
-title: 【背上Jetpack】AdroidX下使用Activity和Fragment的变化
+title: 【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势
 date: 2020-03-02 00:10:35
 categories: 
 - Jetpack
