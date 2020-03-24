@@ -1,0 +1,67 @@
+Display #0 (activities from top to bottom):
+
+  Stack #3: type=standard mode=fullscreen
+    Task id #4
+
+    Running activities (most recent first):
+      TaskRecord{718157f #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+        Run #3: ActivityRecord{137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+        Run #2: ActivityRecord{648188e u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+        Run #1: ActivityRecord{f39ebe9 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+        Run #0: ActivityRecord{f02fff8 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4}
+
+    mResumedActivity: ActivityRecord{137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+    mLastPausedActivity: ActivityRecord{648188e u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+
+  Stack #0: type=home mode=fullscreen
+    Task id #1
+
+    Running activities (most recent first):
+      TaskRecord{2094d95 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1}
+        Run #0: ActivityRecord{a7fed1a u0 com.miui.home/.launcher.Launcher t1}
+
+    mLastPausedActivity: ActivityRecord{a7fed1a u0 com.miui.home/.launcher.Launcher t1}
+
+  Stack #2: type=standard mode=fullscreen
+    Task id #3
+    
+    Running activities (most recent first):
+      TaskRecord{9d79eaa #3 A=com.kunminx.task.c U=0 StackId=2 sz=2}
+        Run #1: ActivityRecord{15d3e09 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+        Run #0: ActivityRecord{20d177c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3}
+
+    mLastPausedActivity: ActivityRecord{15d3e09 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+
+  Stack #1: type=standard mode=fullscreen
+  isSleeping=false
+  mBounds=Rect(0, 0 - 0, 0)
+
+    Task id #2
+
+    Running activities (most recent first):
+      TaskRecord{e526e38 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2}
+        Run #1: ActivityRecord{19055b2 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2}
+        Run #0: ActivityRecord{5a647a6 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2}
+
+    mLastPausedActivity: ActivityRecord{19055b2 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2}
+
+  ResumedActivity: ActivityRecord{137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+  mFocusedStack=ActivityStack{dfe2e11 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks} mLastFocusedStack=ActivityStack{dfe2e11 stackId=3 type=standard mode=fullscreen visib
+le=true translucent=false, 1 tasks}
+  mCurTaskIdForUser={0=4}
+  mUserStackInFront={}
+  displayId=0 stacks=4
+   mHomeStack=ActivityStack{968fb76 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks}
+  isHomeRecentsComponent=false  KeyguardController:
+    mKeyguardShowing=false
+    mAodShowing=false
+    mKeyguardGoingAway=false
+    mOccluded=false
+    mDismissingKeyguardActivity=null
+    mDismissalRequested=false
+    mVisibilityTransactionDepth=0
+  LockTaskController
+    mLockTaskModeState=NONE
+    mLockTaskModeTasks=
+    mLockTaskPackages (userId:packages)=
+      u0:[]

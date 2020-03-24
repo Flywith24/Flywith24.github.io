@@ -1,0 +1,491 @@
+sagit:/ $ dumpsys activity activities
+ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)
+Display #0 (activities from top to bottom):
+
+  Stack #2: type=standard mode=fullscreen
+  isSleeping=false
+  mBounds=Rect(0, 0 - 0, 0)
+    Task id #3
+    mBounds=Rect(0, 0 - 0, 0)
+    mMinWidth=-1
+    mMinHeight=-1
+    mLastNonFullscreenBounds=null
+    * TaskRecord{4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3}
+      userId=0 effectiveUid=u0a194 mCallingUid=u0a194 mUserSetupComplete=true mCallingPackage=com.kunminx.relearn_android
+      affinity=com.kunminx.task.c
+      intent={flg=0x10000000 cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity}
+      realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity
+      autoRemoveRecents=false isPersistable=true numFullscreen=3 activityType=1
+      rootWasReset=false mNeverRelinquishIdentity=true mReuseTask=false mLockTaskAuth=LOCK_TASK_AUTH_PINNABLE
+      Activities=[ActivityRecord{999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3}, ActivityRecord{93c0c72 u0 com.kunminx.relearn_android/com.ku
+nminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}, ActivityRecord{55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}]
+      askedCompatMode=false inRecents=true isAvailable=true
+      mRootProcess=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+      stackId=2
+      hasBeenVisible=true mResizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION mSupportsPictureInPicture=false isResizeable=true supportsSplitScreenWindowingMode=true lastActiveTime=1086528 (inactive for 17
+s)
+      * Hist #2: ActivityRecord{55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+          packageName=com.kunminx.relearn_android_2 processName=com.kunminx.relearn_android_2
+          launchedFromUid=10193 launchedFromPackage=com.kunminx.relearn_android_2 userId=0
+          app=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+          Intent { flg=0x10400000 cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity }
+          frontOfTask=false task=TaskRecord{4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3}
+          taskAffinity=com.kunminx.task.c
+          realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity
+          baseDir=/data/app/com.kunminx.relearn_android_2-oRiOw4UI48ZQor9oXXTwHw==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android_2
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=1 lastLaunchTime=-2m41s464ms
+          haveState=false icicle=null
+          state=RESUMED stopped=false delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=true mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=2
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=true lastVisibleTime=-2m40s510ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity
+      * Hist #1: ActivityRecord{93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+          packageName=com.kunminx.relearn_android processName=com.kunminx.relearn_android
+          launchedFromUid=10194 launchedFromPackage=com.kunminx.relearn_android userId=0
+          app=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+          Intent { flg=0x10000000 cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity }
+          frontOfTask=false task=TaskRecord{4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3}
+          taskAffinity=com.kunminx.task.c
+          realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity
+          baseDir=/data/app/com.kunminx.relearn_android-1KSjWj6lyC_EnIlde-bbMg==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-17m49s814ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=2
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-17m49s137ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity
+      * Hist #0: ActivityRecord{999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3}
+          packageName=com.kunminx.relearn_android processName=com.kunminx.relearn_android
+          launchedFromUid=10194 launchedFromPackage=com.kunminx.relearn_android userId=0
+          app=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+          Intent { flg=0x10000000 cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity }
+          frontOfTask=true task=TaskRecord{4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3}
+          taskAffinity=com.kunminx.task.c
+          realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity
+          baseDir=/data/app/com.kunminx.relearn_android-1KSjWj6lyC_EnIlde-bbMg==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-17m51s54ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_REMOVED
+          fullscreen=true noDisplay=false immersive=false launchMode=2
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-17m50s207ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity
+
+    Running activities (most recent first):
+      TaskRecord{4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3}
+        Run #2: ActivityRecord{55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+        Run #1: ActivityRecord{93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+        Run #0: ActivityRecord{999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3}
+
+    mResumedActivity: ActivityRecord{55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+
+  Stack #3: type=standard mode=fullscreen
+  isSleeping=false
+  mBounds=Rect(0, 0 - 0, 0)
+
+    Task id #4
+    mBounds=Rect(0, 0 - 0, 0)
+    mMinWidth=-1
+    mMinHeight=-1
+    mLastNonFullscreenBounds=null
+    * TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+      userId=0 effectiveUid=u0a193 mCallingUid=u0a28 mUserSetupComplete=true mCallingPackage=com.miui.home
+      affinity=com.kunminx.relearn_android_2
+      intent={act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity}
+      realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity
+      autoRemoveRecents=false isPersistable=true numFullscreen=4 activityType=1
+      rootWasReset=true mNeverRelinquishIdentity=true mReuseTask=false mLockTaskAuth=LOCK_TASK_AUTH_PINNABLE
+      Activities=[ActivityRecord{ff57abb u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4}, ActivityRecord{7b21450 u0 com.kunminx.relearn_android_2/com.kunminx.basicfactte
+sting.test03_task_test.StandardOneActivity t4}, ActivityRecord{bdb3180 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}, ActivityRecord{1838862 u0 com
+.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}]
+      askedCompatMode=false inRecents=true isAvailable=true
+      mRootProcess=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+      stackId=3
+      hasBeenVisible=true mResizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION mSupportsPictureInPicture=false isResizeable=true supportsSplitScreenWindowingMode=true lastActiveTime=942296 (inactive for 161
+s)
+      * Hist #3: ActivityRecord{1838862 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+          packageName=com.kunminx.relearn_android_2 processName=com.kunminx.relearn_android_2
+          launchedFromUid=10193 launchedFromPackage=com.kunminx.relearn_android_2 userId=0
+          app=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+          Intent { cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity }
+          frontOfTask=false task=TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+          taskAffinity=com.kunminx.task.a
+          realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity
+          baseDir=/data/app/com.kunminx.relearn_android_2-oRiOw4UI48ZQor9oXXTwHw==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android_2
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-2m44s399ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-2m43s739ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity
+      * Hist #2: ActivityRecord{bdb3180 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+          packageName=com.kunminx.relearn_android_2 processName=com.kunminx.relearn_android_2
+          launchedFromUid=10193 launchedFromPackage=com.kunminx.relearn_android_2 userId=0
+          app=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+          Intent { cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity }
+          frontOfTask=false task=TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+          taskAffinity=com.kunminx.relearn_android_2
+          realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+          baseDir=/data/app/com.kunminx.relearn_android_2-oRiOw4UI48ZQor9oXXTwHw==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android_2
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-2m46s359ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-2m45s680ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+      * Hist #1: ActivityRecord{7b21450 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+          packageName=com.kunminx.relearn_android_2 processName=com.kunminx.relearn_android_2
+          launchedFromUid=10193 launchedFromPackage=com.kunminx.relearn_android_2 userId=0
+          app=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+          Intent { cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity }
+          frontOfTask=false task=TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+          taskAffinity=com.kunminx.relearn_android_2
+          realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+          baseDir=/data/app/com.kunminx.relearn_android_2-oRiOw4UI48ZQor9oXXTwHw==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android_2
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-2m56s354ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-2m55s661ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+      * Hist #0: ActivityRecord{ff57abb u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4}
+          packageName=com.kunminx.relearn_android_2 processName=com.kunminx.relearn_android_2
+          launchedFromUid=10028 launchedFromPackage=com.miui.home userId=0
+          app=ProcessRecord{ef5a7c5 9377:com.kunminx.relearn_android_2/u0a193}
+          Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity bnds=[829,651][997,8
+19] (has extras) }
+          frontOfTask=true task=TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+          taskAffinity=com.kunminx.relearn_android_2
+          realActivity=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity
+          baseDir=/data/app/com.kunminx.relearn_android_2-oRiOw4UI48ZQor9oXXTwHw==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android_2
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-2m58s521ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1916]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_REMOVED
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-2m58s97ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity
+
+    Running activities (most recent first):
+      TaskRecord{f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4}
+        Run #3: ActivityRecord{1838862 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+        Run #2: ActivityRecord{bdb3180 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+        Run #1: ActivityRecord{7b21450 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4}
+        Run #0: ActivityRecord{ff57abb u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4}
+
+    mLastPausedActivity: ActivityRecord{1838862 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4}
+
+  Stack #0: type=home mode=fullscreen
+  isSleeping=false
+  mBounds=Rect(0, 0 - 0, 0)
+
+    Task id #1
+    mBounds=Rect(0, 0 - 0, 0)
+    mMinWidth=-1
+    mMinHeight=-1
+    mLastNonFullscreenBounds=null
+    * TaskRecord{94a7a01 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1}
+      userId=0 effectiveUid=u0a28 mCallingUid=0 mUserSetupComplete=true mCallingPackage=null
+      intent={act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.miui.home/.launcher.Launcher}
+      realActivity=com.miui.home/.launcher.Launcher
+      autoRemoveRecents=false isPersistable=false numFullscreen=1 activityType=2
+      rootWasReset=false mNeverRelinquishIdentity=true mReuseTask=false mLockTaskAuth=LOCK_TASK_AUTH_PINNABLE
+      Activities=[ActivityRecord{7d6409 u0 com.miui.home/.launcher.Launcher t1}]
+      askedCompatMode=false inRecents=true isAvailable=true
+      stackId=0
+      hasBeenVisible=true mResizeMode=RESIZE_MODE_UNRESIZEABLE mSupportsPictureInPicture=false isResizeable=false supportsSplitScreenWindowingMode=false lastActiveTime=925179 (inactive for 178s)
+      * Hist #0: ActivityRecord{7d6409 u0 com.miui.home/.launcher.Launcher t1}
+          packageName=com.miui.home processName=com.miui.home
+          launchedFromUid=0 launchedFromPackage=null userId=0
+          app=ProcessRecord{322b548 2686:com.miui.home/u0a28}
+          Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.miui.home/.launcher.Launcher }
+          frontOfTask=true task=TaskRecord{94a7a01 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1}
+          taskAffinity=null
+          realActivity=com.miui.home/.launcher.Launcher
+          baseDir=/data/app/com.miui.home-go7qEi0OTDQyzniqBzGnBw==/base.apk
+          dataDir=/data/user/0/com.miui.home
+          stateNotNeeded=true componentSpecified=false mActivityType=home
+          compat={480dpi} labelRes=0x7f0f0045 icon=0x7f080069 theme=0x7f10000d
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=home} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=home} s.6 themeChanged=0 themeChangedFlags=0}
+          OverrideConfiguration={0.0 ?mcc?mnc ?localeList ?layoutDir ?swdp ?wdp ?hdp ?density ?lsize ?long ?ldr ?wideColorGamut ?orien ?uimode ?night ?touch ?keyb/?/? ?nav/? winConfig={ mBounds=Rect(0, 0
+- 0, 0) mAppBounds=null mWindowingMode=undefined mActivityType=home} themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ffe6e6e6
+           backgroundColor=ff000000
+           statusBarColor=ff000000
+           navigationBarColor=0
+          launchFailed=false launchCount=1 lastLaunchTime=-18m10s879ms
+          haveState=false icicle=null
+          state=PAUSED stopped=false delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=true mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=2
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=home
+          waitingVisible=false nowVisible=true lastVisibleTime=-18m9s36ms
+          connections=[ConnectionRecord{facd01d u0 CR com.android.systemui/.fsgesture.FsGestureService:@6b34fe1}, ConnectionRecord{5b5c106 u0 CR com.android.systemui/.fsgesture.FsGestureService:@6b34fe1}]
+          resizeMode=RESIZE_MODE_UNRESIZEABLE
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.miui.home/.launcher.Launcher
+
+    Running activities (most recent first):
+      TaskRecord{94a7a01 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1}
+        Run #0: ActivityRecord{7d6409 u0 com.miui.home/.launcher.Launcher t1}
+
+    mLastPausedActivity: ActivityRecord{7d6409 u0 com.miui.home/.launcher.Launcher t1}
+
+  Stack #1: type=standard mode=fullscreen
+  isSleeping=false
+  mBounds=Rect(0, 0 - 0, 0)
+
+    Task id #2
+    mBounds=Rect(0, 0 - 0, 0)
+    mMinWidth=-1
+    mMinHeight=-1
+    mLastNonFullscreenBounds=null
+    * TaskRecord{d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2}
+      userId=0 effectiveUid=u0a194 mCallingUid=u0a28 mUserSetupComplete=true mCallingPackage=com.miui.home
+      affinity=com.kunminx.relearn_android
+      intent={act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity}
+      realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity
+      autoRemoveRecents=false isPersistable=true numFullscreen=2 activityType=1
+      rootWasReset=true mNeverRelinquishIdentity=true mReuseTask=false mLockTaskAuth=LOCK_TASK_AUTH_PINNABLE
+      Activities=[ActivityRecord{d76e9a5 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2}, ActivityRecord{8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttestin
+g.test03_task_test.StandardOneActivity t2}]
+      askedCompatMode=false inRecents=true isAvailable=true
+      mRootProcess=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+      stackId=1
+      hasBeenVisible=true mResizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION mSupportsPictureInPicture=false isResizeable=true supportsSplitScreenWindowingMode=true lastActiveTime=32708 (inactive for 1071
+s)
+      * Hist #1: ActivityRecord{8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2}
+          packageName=com.kunminx.relearn_android processName=com.kunminx.relearn_android
+          launchedFromUid=10194 launchedFromPackage=com.kunminx.relearn_android userId=0
+          app=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+          Intent { cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity }
+          frontOfTask=false task=TaskRecord{d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2}
+          taskAffinity=com.kunminx.relearn_android
+          realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+          baseDir=/data/app/com.kunminx.relearn_android-1KSjWj6lyC_EnIlde-bbMg==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-17m55s772ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1888]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_NOT_SHOWN
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-17m54s983ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity
+      * Hist #0: ActivityRecord{d76e9a5 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2}
+          packageName=com.kunminx.relearn_android processName=com.kunminx.relearn_android
+          launchedFromUid=10028 launchedFromPackage=com.miui.home userId=0
+          app=ProcessRecord{9c1990b 5904:com.kunminx.relearn_android/u0a194}
+          Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity bnds=[82,926][250,1094
+] (has extras) }
+          frontOfTask=true task=TaskRecord{d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2}
+          taskAffinity=com.kunminx.relearn_android
+          realActivity=com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity
+          baseDir=/data/app/com.kunminx.relearn_android-1KSjWj6lyC_EnIlde-bbMg==/base.apk
+          dataDir=/data/user/0/com.kunminx.relearn_android
+          stateNotNeeded=false componentSpecified=true mActivityType=standard
+          compat={480dpi} labelRes=0x7f0e001b icon=0x7f0c0000 theme=0x7f0f0007
+          mLastReportedConfigurations:
+           mGlobalConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 0, 0) mAppBounds=Rect(0, 0 - 1080, 1920) mWindowing
+Mode=fullscreen mActivityType=undefined} s.6 themeChanged=0 themeChangedFlags=0}
+           mOverrideConfig={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920) mW
+indowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          CurrentConfiguration={1.0 ?mcc?mnc [zh_CN] ldltr sw360dp w360dp h616dp 480dpi nrml long port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 1920) mAppBounds=Rect(0, 0 - 1080, 1920
+) mWindowingMode=fullscreen mActivityType=standard} s.6 themeChanged=0 themeChangedFlags=0}
+          taskDescription: label="null" icon=null iconResource=0 iconFilename=null primaryColor=ff6f0aee
+           backgroundColor=fffafafa
+           statusBarColor=ff6f0aee
+           navigationBarColor=ffffffff
+          launchFailed=false launchCount=0 lastLaunchTime=-17m58s200ms
+          haveState=true icicle=Bundle[mParcelledData.dataSize=1916]
+          state=STOPPED stopped=true delayedResume=false finishing=false
+          keysPaused=false inHistory=true visible=false mIsCastMode=false mIsLastFrame=false sleeping=false idle=true mStartingWindowState=STARTING_WINDOW_REMOVED
+          fullscreen=true noDisplay=false immersive=false launchMode=0
+          frozenBeforeDestroy=false forceNewConfig=false
+          mActivityType=standard
+          waitingVisible=false nowVisible=false lastVisibleTime=-17m57s547ms
+          resizeMode=RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION
+          mLastReportedMultiWindowMode=false mLastReportedPictureInPictureMode=false
+          realComponentName=com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity
+
+    Running activities (most recent first):
+      TaskRecord{d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2}
+        Run #1: ActivityRecord{8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2}
+        Run #0: ActivityRecord{d76e9a5 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2}
+
+    mLastPausedActivity: ActivityRecord{8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2}
+
+  ResumedActivity: ActivityRecord{55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3}
+  mFocusedStack=ActivityStack{3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks} mLastFocusedStack=ActivityStack{3a870a6 stackId=2 type=standard mode=fullscreen visib
+le=true translucent=false, 1 tasks}
+  mCurTaskIdForUser={0=4}
+  mUserStackInFront={}
+  displayId=0 stacks=4
+   mHomeStack=ActivityStack{76ebae7 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks}
+  isHomeRecentsComponent=false  KeyguardController:
+    mKeyguardShowing=false
+    mAodShowing=false
+    mKeyguardGoingAway=false
+    mOccluded=false
+    mDismissingKeyguardActivity=null
+    mDismissalRequested=false
+    mVisibilityTransactionDepth=0
+  LockTaskController
+    mLockTaskModeState=NONE
+    mLockTaskModeTasks=
+    mLockTaskPackages (userId:packages)=
+      u0:[]
