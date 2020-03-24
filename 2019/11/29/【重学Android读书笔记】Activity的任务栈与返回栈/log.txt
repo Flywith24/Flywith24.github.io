@@ -1,0 +1,74 @@
+2019-11-28 14:42:46.467 30140-30147/? E/art: Failed sending reply to debugger: Broken pipe
+2019-11-28 14:42:46.575 30140-30140/? E/whdx-MdmApplication: MdmApplication:onCreate() 
+2019-11-28 14:42:46.618 30140-30140/? E/whdx-MPUSH: checkActiveAndStart, userId is null
+2019-11-28 14:42:47.183 30140-30140/? E/=====: 7.0以上
+2019-11-28 14:42:47.187 30140-30140/? E/=====: 7.0以上1
+2019-11-28 14:42:47.193 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.196 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.204 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.208 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.222 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.225 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.233 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.242 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.261 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.265 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.287 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.290 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.308 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.312 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.328 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.332 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.350 30140-30181/? E/=====: 7.0以上
+2019-11-28 14:42:47.353 30140-30181/? E/=====: 7.0以上1
+2019-11-28 14:42:47.963 30140-30181/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:47.966 30140-30181/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.406 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.411 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.424 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.429 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.440 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.443 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.449 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.453 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.466 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.468 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.478 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.479 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.512 30140-30140/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.508 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.515 30140-30140/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.521 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.543 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.560 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.595 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:48.611 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:48.641 30140-30140/cn.whdx.mdm E/AndroidRuntime: FATAL EXCEPTION: main
+    Process: cn.whdx.mdm, PID: 30140
+    java.lang.RuntimeException: Unable to start receiver cn.whdx.mdm.receiver.AppInstallListenerReceiver: java.lang.NullPointerException: zxkExecutorService is not started, please execute the ZxkSDK.init() method !
+        at android.app.ActivityThread.handleReceiver(ActivityThread.java:3197)
+        at android.app.ActivityThread.-wrap18(ActivityThread.java)
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1628)
+        at android.os.Handler.dispatchMessage(Handler.java:110)
+        at android.os.Looper.loop(Looper.java:203)
+        at android.app.ActivityThread.main(ActivityThread.java:6379)
+        at java.lang.reflect.Method.invoke(Native Method)
+        at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1084)
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:945)
+     Caused by: java.lang.NullPointerException: zxkExecutorService is not started, please execute the ZxkSDK.init() method !
+        at com.zxk.library.ZxkSDK.queryInstallWhiteList(ZxkSDK.java:376)
+        at cn.whdx.middle_layer.services.AppService.queryInstallWhiteList(AppService.java:56)
+        at cn.whdx.mdm.utils.MdmUtil.getAppInstallWhitelistFunction(MdmUtil.java:593)
+        at cn.whdx.mdm.receiver.AppInstallListenerReceiver.onReceive(AppInstallListenerReceiver.java:63)
+        at android.app.ActivityThread.handleReceiver(ActivityThread.java:3190)
+        at android.app.ActivityThread.-wrap18(ActivityThread.java) 
+        at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1628) 
+        at android.os.Handler.dispatchMessage(Handler.java:110) 
+        at android.os.Looper.loop(Looper.java:203) 
+        at android.app.ActivityThread.main(ActivityThread.java:6379) 
+        at java.lang.reflect.Method.invoke(Native Method) 
+        at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1084) 
+        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:945) 
+2019-11-28 14:42:49.357 30140-30313/cn.whdx.mdm E/=====: 7.0以上
+2019-11-28 14:42:49.359 30140-30313/cn.whdx.mdm E/=====: 7.0以上1
+2019-11-28 14:42:55.881 30140-30158/cn.whdx.mdm E/whdx-MdmApplication: Error: zxkExecutorService is not started, please execute the ZxkSDK.init() method !
