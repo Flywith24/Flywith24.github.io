@@ -1,6 +1,6 @@
 ---
 title: 【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？
-date: 2020-03-14 00:10:35
+date: 2020-04-09 00:10:35
 categories: 
 - Jetpack
 tags: 
