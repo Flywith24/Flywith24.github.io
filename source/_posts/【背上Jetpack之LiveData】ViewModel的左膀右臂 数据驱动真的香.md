@@ -6,7 +6,7 @@
 
 \---
 
-title: 【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香
+title:【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香
 
 date: 2020-03-31 00:10:35
 
