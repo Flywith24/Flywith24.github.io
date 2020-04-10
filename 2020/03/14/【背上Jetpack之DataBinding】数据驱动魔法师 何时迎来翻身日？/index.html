@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="LiveData 篇 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码">
+<meta name="keywords" content="androidx,Jetpack,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？">
+<meta property="og:url" content="http://yoursite.com/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="LiveData 篇 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402101727.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402165235.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402115116.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402162010.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402161451.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409114053.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409145551.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200410160031.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409161036.jpg">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409110254.gif">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409112128.jpg">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409163420.jpg">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409163541.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409170514.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409171139.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409171316.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409171554.jpg">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409171843.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200409172613.png">
+<meta property="og:updated_time" content="2020-04-10T08:46:54.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？">
+<meta name="twitter:description" content="LiveData 篇 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码">
+<meta name="twitter:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif">
+  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
+  <link rel="canonical" href="http://yoursite.com/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？ | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-14 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-14T00:10:35+08:00">2020-03-14</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-10 16:46:54" itemprop="dateModified" datetime="2020-04-10T16:46:54+08:00">2020-04-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/14/【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>16k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>14 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p><a href="https://juejin.im/post/5e834bb5f265da480d61668d" target="_blank" rel="noopener">LiveData 篇</a> 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了</p>
+</blockquote>
+<a id="more"></a>
+
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif" alt="他来了他来了"></p>
+<p>他来了他来了，他欢快地走来了</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200402101727.png" alt="DataBinding"></p>
+<p>然而，很多开发者对 DataBinding 存在偏见，「DataBinding 不是个好东西，在声明式编程中书写 UI 逻辑，既不可调试，也不便于察觉和追踪，万一出现问题就麻烦了。」</p>
+ <img src="https://gitee.com/flywith24/Album/raw/master/img/20200402165235.png" style="zoom:200%;">
+
+<p>本文主要介绍 DataBinding 的解决的问题以及其背后的逻辑，带您对 DataBinding 有一个感性的认识。本文末尾会对各个 findViewById 的替代方案进行对比</p>
+<p>DataBinding 的相关资源</p>
+<ul>
+<li><a href="https://developer.android.com/topic/libraries/data-binding" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="https://codelabs.developers.google.com/codelabs/android-databinding/#0" target="_blank" rel="noopener">codelab</a></li>
+<li><a href="https://github.com/android/databinding-samples" target="_blank" rel="noopener">官方示例</a></li>
+</ul>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 数据驱动魔法师</span></h2>
+
+<p>DataBinding 允许使用声明性格式而不是通过编程方式将布局中的 UI 组件与数据源绑定</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// before</span></span><br><span class="line">TextView textView = findViewById(R.id.sample_text);</span><br><span class="line">textView.setText(viewModel.getUserName());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"@&#123;viewmodel.userName&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过在布局文件中绑定组件，您可以删除 activity 中的许多设置 UI 调用，从而使它们更易于维护。 这也可以提高应用程序的性能，并有助于防止内存泄漏和空指针异常</p>
+<blockquote>
+<p>如果仅替换 findViewById 而不需要数据的绑定，可以使用 ViewBinding，它使用起来更简单，性能也更好。</p>
+<p>使用方法参见 <a href="https://juejin.im/post/5e4806f3e51d4526c550a2ef" target="_blank" rel="noopener">[译]深入研究ViewBinding 在 include, merge, adapter, fragment, activity 中使用</a></p>
+</blockquote>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> DataBinding 基础</span></h2>
+
+<p>详细内容参见 <a href="https://developer.android.com/topic/libraries/data-binding" target="_blank" rel="noopener">官方文档</a> ，这里只简单介绍 DataBinding</p>
+<h3 id="DataBinding-引入"><a href="#DataBinding-引入" class="headerlink" title="DataBinding 引入"></a>DataBinding 引入</h3><p>app build.gradle 中加入 </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    dataBinding &#123;</span><br><span class="line">        enabled = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Android Studio 4.0</span></span><br><span class="line">android &#123;</span><br><span class="line">    ...</span><br><span class="line">    buildFeatures &#123;</span><br><span class="line">        dataBinding = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>必须在 app module 中声明，声明后其他子 module 可直接使用 DataBinding</p>
+</blockquote>
+<p>使用 DataBinding 无需开发者手动引入库，android build gradle plugin 内部已经引入了</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200402115116.png" alt></p>
+<p>DataBinding 中使用了注解，因此在构建速度上比 ViewBinding 差些（不过功能这么强大要啥自行车）</p>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>DataBinding 布局文件略有不同，它们以 layout 的根标记开始，后跟一个 data 元素和一个 view 根元素。 view 元素是您的根将位于非绑定布局文件中的元素。 以下代码显示了一个示例布局文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">layout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">variable</span></span></span><br><span class="line"><span class="tag">            <span class="attr">name</span>=<span class="string">"viewmodel"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">type</span>=<span class="string">"com.myapp.data.ViewModel"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ConstraintLayout...</span> /&gt;</span> <span class="comment">&lt;!-- UI layout's root element --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成绑定类"><a href="#生成绑定类" class="headerlink" title="生成绑定类"></a>生成绑定类</h3><p>DataBinding 会为每个在布局声明 layout 标签的 xml 布局文件生成一个绑定类。 默认情况下，类的名称基于布局文件的名称。 上面的布局文件名是 activity_main.xml，因此相应的生成类是 ActivityMainBinding。 此类包含从布局属性（例如，viewmodel 变量）到布局视图的所有绑定，并且知道如何为绑定表达式分配值</p>
+<h3 id="配置绑定"><a href="#配置绑定" class="headerlink" title="配置绑定"></a>配置绑定</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    <span class="comment">// before</span></span><br><span class="line">    <span class="comment">// setContentView(R.layout.activity_main)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// after</span></span><br><span class="line">    val binding : ActivityMainBinding =</span><br><span class="line">    DataBindingUtil.setContentView(<span class="keyword">this</span>, R.layout.activity_main)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 使用DataBinding 解决的问题及实现原理</span></h2>
+
+
+
+<p>不知道你是否有这些烦恼：activity 和 fragment 中有着大量的模板代码，即使使用 ButterKnife 等工具写起代码来也很繁琐。而且 View id 与 View 的类型不匹配时，只有在运行期才能发现；旋转屏幕后如果新的布局中不存在之前 id 的 view ，可能还导致空指针异常；项目中使用各类 bus 通知 UI 刷新，但是有时 UI 的显示并不符合预期，而排查起来特别困难，因为数据源很多…</p>
+<p>不要慌，DataBinding 可以解决以下问题</p>
+<ul>
+<li><p>替换 findViewById ，减少模板代码</p>
+</li>
+<li><p>解决类型安全问题</p>
+</li>
+<li><p>解决空安全问题</p>
+</li>
+<li><p>保证了数据的一致性</p>
+</li>
+</ul>
+<h3 id="魔法的背后"><a href="#魔法的背后" class="headerlink" title="魔法的背后"></a>魔法的背后</h3><p>com.android.tools.build:gradle 插件中封装了 DataBinding 的魔法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200402162010.png" alt></p>
+<p>查看 com.android.tools.build:gradle:3.6.2 的源码，找到 DataBinding 配置项的类 DataBindingOptions</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DataBindingOptions.java</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// DataBinding 是否开启，对应上面在 build.gradle 中的配置</span></span><br><span class="line">    <span class="keyword">return</span> enabled;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它的调用者很多，在 TaskManager 中的 createDataBindingTasksIfNecessary</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TaskManager </span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">createDataBindingTasksIfNecessary</span><span class="params">(@NonNull VariantScope scope)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 是否开启 DataBinding</span></span><br><span class="line">    <span class="keyword">boolean</span> dataBindingEnabled = extension.getDataBinding().isEnabled();</span><br><span class="line">    <span class="keyword">boolean</span> viewBindingEnabled = extension.getViewBinding().isEnabled();</span><br><span class="line">    <span class="keyword">if</span> (!dataBindingEnabled &amp;&amp; !viewBindingEnabled) &#123;</span><br><span class="line">        <span class="comment">// DataBinding 和 ViewBinding 均未开启则直接 return</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    createDataBindingMergeBaseClassesTask(scope);</span><br><span class="line">    createDataBindingMergeArtifactsTask(scope);</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="comment">// 构建 DataBinding 相应绑定类</span></span><br><span class="line">    taskFactory.register(<span class="keyword">new</span> DataBindingGenBaseClassesTask.CreationAction(scope));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// CreationAction</span></span><br><span class="line"><span class="function">override fun <span class="title">handleProvider</span><span class="params">(taskProvider: TaskProvider&lt;out DataBindingGenBaseClassesTask&gt;)</span> </span>&#123;</span><br><span class="line">    variantScope.artifacts.producesDir(</span><br><span class="line">        <span class="comment">// DATA_BINDING_BASE_CLASS_SOURCE_OUT</span></span><br><span class="line">        InternalArtifactType.DATA_BINDING_BASE_CLASS_SOURCE_OUT,</span><br><span class="line">        BuildArtifactsHolder.OperationType.INITIAL,</span><br><span class="line">        taskProvider,</span><br><span class="line">        DataBindingGenBaseClassesTask::sourceOutFolder</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到生成 DataBinding 绑定类的 task 为 DataBindingGenBaseClassesTask，而InternalArtifactType.DATA_BINDING_BASE_CLASS_SOURCE_OUT 则对应着 build 目录生成的 DataBinding 类的</p>
+<p>data_binding_base_class_source_out 目录</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200402161451.png" alt></p>
+<p>这里可以简单看一下，感兴趣的小伙伴可以自己查看源码</p>
+<h3 id="DataBinding-如何解决上述问题的"><a href="#DataBinding-如何解决上述问题的" class="headerlink" title="DataBinding 如何解决上述问题的"></a>DataBinding 如何解决上述问题的</h3><p>我们可以查看 DataBinding 生成的绑定类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentSingleChildBinding</span> <span class="keyword">implements</span> <span class="title">ViewBinding</span> </span>&#123;</span><br><span class="line">  <span class="comment">// NonNull 注解标记</span></span><br><span class="line">  <span class="comment">// 如果存在不同配置的不同布局文件（如横竖屏）且该控件不是存在于所有布局，该处使用 Nullable注解标记</span></span><br><span class="line">  <span class="meta">@NonNull</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> MaterialButton button;</span><br><span class="line">    </span><br><span class="line">  <span class="comment">// 省略...</span></span><br><span class="line">    </span><br><span class="line">  <span class="meta">@NonNull</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> FragmentSingleChildBinding <span class="title">bind</span><span class="params">(@NonNull View rootView)</span> </span>&#123;</span><br><span class="line">    String missingId;</span><br><span class="line">    missingId: &#123;</span><br><span class="line">      <span class="comment">//其内部也是使用 findViewById</span></span><br><span class="line">      MaterialButton button = rootView.findViewById(R.id.button);</span><br><span class="line">      <span class="keyword">if</span> (button == <span class="keyword">null</span>) &#123;</span><br><span class="line">        missingId = <span class="string">"button"</span>;</span><br><span class="line">        <span class="keyword">break</span> missingId;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> FragmentSingleChildBinding((MaterialButton) rootView, button);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Missing required view with ID: "</span>.concat(missingId));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Binding 类内部的也是使用 findViewById ，因此 DataBinding 可以代替 findViewById ，并且减少模板代码</p>
+</li>
+<li><p>View 控件变量类型是固定的，因此不会出现类型安全问题</p>
+</li>
+<li><p>View 控件变量由空/非空注解修饰，（如果为 Nullable java 中会有 lint 警告，而 kotlin 直接调用时无法通过编译的）因此 不会出现空安全问题</p>
+</li>
+<li><p>通过声明式的配置，UI 完全来自唯一可信的数据源配置，保证了数据的一致性</p>
+</li>
+</ul>
+<blockquote>
+<p>注意：以上分析同样适用于 ViewBinding</p>
+</blockquote>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 感受魔法的魅力</span></h2>
+
+<p>这里简单展示一下 DataBinding 的「魔法」</p>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">layout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">   <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:id</span>=<span class="string">"@+id/firstName"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           /&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:id</span>=<span class="string">"@+id/lastName"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           /&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Before Data Binding</span></span><br><span class="line">		<span class="comment">//setContentView(R.layout.activity_main);</span></span><br><span class="line">        </span><br><span class="line">		<span class="comment">//TextView firstName = (TextView) findViewById(R.id.firstName);</span></span><br><span class="line">		<span class="comment">//TextView lastName = (TextView) findViewById(R.id.lastName);</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//firstName.setText("xxx");</span></span><br><span class="line">		<span class="comment">//lastName.setText("xxx");</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// After Data Binding</span></span><br><span class="line">        ActivityMainBinding binding = DataBindingUtil.setContentView(<span class="keyword">this</span>, R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        binding.firstName.setText(<span class="string">"xxx"</span>);</span><br><span class="line">        binding.lastName.setText(<span class="string">"xxx"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面展示了 DataBinding 的基础操作（单纯的替换 findViewById），如果仅使用 DataBinding 这部分功能，可以考虑使用 ViewBinding</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409114053.png" alt></p>
+<h3 id="绑定数据"><a href="#绑定数据" class="headerlink" title="绑定数据"></a>绑定数据</h3><p>在之前的布局的基础上绑定数据</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">layout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">data</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">variable</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">type</span>=<span class="string">"com.example.User"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">data</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:orientation</span>=<span class="string">"vertical"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">       <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">TextView</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">android:id</span>=<span class="string">"@+id/firstName"</span>      </span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:text</span>=<span class="string">"@&#123;user.firstName&#125;"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">TextView</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">android:id</span>=<span class="string">"@+id/lastName"</span>      </span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">android:text</span>=<span class="string">"@&#123;user.lastName&#125;"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        ActivityMainBinding binding = DataBindingUtil.setContentView(<span class="keyword">this</span>, R.layout.activity_main);</span><br><span class="line">		binding.user = <span class="keyword">new</span> User(<span class="string">"xxx"</span>,<span class="string">"xxx"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方式也可以用在 recyclerview adapter 中，adapter 中的代码大大减少</p>
+<h3 id="Binding-Adapter"><a href="#Binding-Adapter" class="headerlink" title="Binding Adapter"></a>Binding Adapter</h3><p>您可能会好奇配置 <code>android:text=&quot;@{user.firstName}</code> 后内部发生了什么</p>
+<p>DataBinding 中使用 <code>Binding Adapter</code> 来处理，它主要处理「属性」和「事件」，前者如  <code>setText()</code> ，后者如 <code>setOnClickListener()</code>。上面的 <code>android:text</code> 实际上调用的是下面的方法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409145551.png" alt></p>
+<p>DataBinding 中提供了很多 <code>Binding Adapter</code></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200410160031.png" alt></p>
+<p>如果官方提供的 <code>Binding Adapter</code> 不满足您的需求，您还可以自定义 <code>Binding Adapter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@BindingAdapter</span>(&#123;<span class="string">"imageUrl"</span>, <span class="string">"error"</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadImage</span><span class="params">(ImageView view, String url, Drawable error)</span> </span>&#123;</span><br><span class="line">  Glide.with(view).load(url).error(error).into(view);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ImageView</span> <span class="attr">app:imageUrl</span>=<span class="string">"@&#123;venue.imageUrl&#125;"</span> <span class="attr">app:error</span>=<span class="string">"@&#123;@drawable/venueError&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="DadaBinding-LiveData"><a href="#DadaBinding-LiveData" class="headerlink" title="DadaBinding + LiveData"></a>DadaBinding + LiveData</h3><p>要将 LiveData 与 DataBinding 一起使用，需要指定生命周期所有者来定义 LiveData 对象的范围</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewModelActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        UserBinding binding = DataBindingUtil.setContentView(<span class="keyword">this</span>, R.layout.user);</span><br><span class="line"></span><br><span class="line">        binding.setLifecycleOwner(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h3><p>使用单向 DataBinding，可以在属性上设置一个值，并设置一个对该属性的更改做出反应的监听器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">CheckBox</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/rememberMeCheckBox"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:checked</span>=<span class="string">"@&#123;viewmodel.rememberMe&#125;"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:onCheckedChanged</span>=<span class="string">"@&#123;viewmodel.rememberMeChanged&#125;"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用双向绑定可以简化该过程</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">CheckBox</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/rememberMeCheckBox"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:checked</span>=<span class="string">"@=&#123;viewmodel.rememberMe&#125;"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>@={}</code> 接收对该属性的数据更改，并同时监听用户更新（注意，这里有 <code>=</code> ）</p>
+<p>那么究竟什么是双向绑定呢？</p>
+<p>所谓的「数据驱动」就是数据驱动视图的变化，而 DataBinding 的单向绑定就是如此。反过来讲，有些时候我们需要视图来驱动数据的变化（例如当我们在 EditText 上输入了文字，我们希望对应的 ViewModel 的 LiveData 的值能够及时响应该变化）</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409161036.jpg" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409110254.gif" alt></p>
+<p>如图，绿色部分为独立的 fragment ，内部存在两个 TextView，用于显示外部 fragment EditText 输入的文字</p>
+<p>如果实现上述功能，传统做法可能是使用 activity 级别的 ViewModel 进行两个 fragment 之间的通信，通过监听 EditText 文字的变化改变 ViewModel 中 LiveData 的值，并在绿色 fragment 中观察 LiveData 并显示到 TextView 中</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalViewModel</span> : <span class="type">ViewModel</span></span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> firstName = MutableLiveData&lt;String&gt;()</span><br><span class="line">    <span class="keyword">val</span> lastName = MutableLiveData&lt;String&gt;()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalDetailFragment</span> : <span class="type">Fragment</span></span>(R.layout.fragment_normal_detail) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mViewModel <span class="keyword">by</span> activityViewModels&lt;NormalViewModel&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewCreated</span><span class="params">(view: <span class="type">View</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        mViewModel.firstName.observe(viewLifecycleOwner) &#123;</span><br><span class="line">            tvFirstName.text = it</span><br><span class="line">        &#125;</span><br><span class="line">        mViewModel.lastName.observe(viewLifecycleOwner) &#123;</span><br><span class="line">            tvLastName.text = it</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalFragment</span> : <span class="type">Fragment</span></span>(R.layout.fragment_normal) &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> mViewModel <span class="keyword">by</span> activityViewModels&lt;NormalViewModel&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onViewCreated</span><span class="params">(view: <span class="type">View</span>, savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        etFirstName.addTextChangedListener &#123;</span><br><span class="line">            mViewModel.firstName.value = it.toString()</span><br><span class="line">        &#125;</span><br><span class="line">        etLastName.addTextChangedListener &#123;</span><br><span class="line">            mViewModel.lastName.value = it.toString()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得益于 kotlin ，上面的代码以及很简洁了，如果使用 java 代码片段只会更长。</p>
+<p>不过使用 DataBinding，还可以更简洁</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.google.android.material.textview.MaterialTextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/tvFirstName"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"@&#123;vm.firstName&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">com.google.android.material.textview.MaterialTextView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/tvLastName"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"@&#123;vm.lastName&#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.google.android.material.textfield.TextInputEditText</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/etFirstName"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"@=&#123;vm.firstName&#125;"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">com.google.android.material.textfield.TextInputEditText</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/etLastName"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:text</span>=<span class="string">"@=&#123;vm.lastName&#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>只需配置好双向绑定（EditText 驱动 ViewModel 的 LiveData 的值变化，ViewModel 再驱动 TextView 显示数据），并在 fragment 通过固定的模板代码设置好 ViewModel 即可</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409112128.jpg" alt></p>
+<p>这里的魔法还是来自 Binding Adapter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TextViewBindingAdapter.java</span></span><br><span class="line"><span class="meta">@BindingAdapter</span>(value = &#123;<span class="string">"android:beforeTextChanged"</span>, <span class="string">"android:onTextChanged"</span>,</span><br><span class="line">        <span class="string">"android:afterTextChanged"</span>, <span class="string">"android:textAttrChanged"</span>&#125;, requireAll = <span class="keyword">false</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setTextWatcher</span><span class="params">(TextView view, <span class="keyword">final</span> BeforeTextChanged before,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">final</span> OnTextChanged on, <span class="keyword">final</span> AfterTextChanged after,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">final</span> InverseBindingListener textAttrChanged)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> TextWatcher newValue;</span><br><span class="line">    <span class="keyword">if</span> (before == <span class="keyword">null</span> &amp;&amp; after == <span class="keyword">null</span> &amp;&amp; on == <span class="keyword">null</span> &amp;&amp; textAttrChanged == <span class="keyword">null</span>) &#123;</span><br><span class="line">        newValue = <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        newValue = <span class="keyword">new</span> TextWatcher() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">beforeTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> count, <span class="keyword">int</span> after)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (before != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    before.beforeTextChanged(s, start, count, after);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTextChanged</span><span class="params">(CharSequence s, <span class="keyword">int</span> start, <span class="keyword">int</span> before, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (on != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    on.onTextChanged(s, start, before, count);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (textAttrChanged != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//通知发生变化</span></span><br><span class="line">                    textAttrChanged.onChange();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterTextChanged</span><span class="params">(Editable s)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (after != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    after.afterTextChanged(s);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> TextWatcher oldValue = ListenerUtil.trackListener(view, newValue, R.id.textWatcher);</span><br><span class="line">    <span class="keyword">if</span> (oldValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">        view.removeTextChangedListener(oldValue);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (newValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">        view.addTextChangedListener(newValue);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里使用 InverseBindingListener （调用 <code>textAttrChanged.onChange()</code>）来通知 LiveData 数据发生变化</p>
+<p>而变化后的值 通过 @InverseBindingAdapter 注解标记的方法处理，这里的 event 与上面的标记匹配（<code>android:textAttrChanged</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TextViewBindingAdapter.java</span></span><br><span class="line"><span class="meta">@InverseBindingAdapter</span>(attribute = <span class="string">"android:text"</span>, event = <span class="string">"android:textAttrChanged"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getTextString</span><span class="params">(TextView view)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> view.getText().toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>view 层变化通知数据变化，数据变化再通知 view 层变化，仿佛是个套娃</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409163420.jpg" alt></p>
+<p>因此避免这种死循环十分重要，setText 方法判断了新旧值是否相等来避免死循环</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409163541.png" alt></p>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 总结</span></h2>
+
+<p>DataBinding 主要提供两部分功能</p>
+<ul>
+<li>替换 findViewById ，如果只用这部分功能可以使用 ViewBinding</li>
+<li>进行 data 和 UI 的绑定，使用「数据驱动」的思想解决了视图的一致性问题</li>
+</ul>
+<h3 id="各种-findViewById-替代方案对比"><a href="#各种-findViewById-替代方案对比" class="headerlink" title="各种 findViewById 替代方案对比"></a>各种 findViewById 替代方案对比</h3><ul>
+<li>findViewById </li>
+<li>Butterknife</li>
+<li>Kotlin Synthetics</li>
+<li>Data Binding</li>
+<li>View Binding</li>
+</ul>
+<h4 id="findViewById"><a href="#findViewById" class="headerlink" title="findViewById"></a>findViewById</h4><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409170514.png" alt></p>
+<p>findViewById 有两个问题</p>
+<ol>
+<li>当不能在 Activity/Fragment/ViewGroup 中定位到指定 id 的 View，会在运行期间崩溃，即非空安全</li>
+<li>如果某个 view 为 TextView 类型，而在使用中将其指定为其他类型不会在编译器报错，即非类型安全</li>
+</ol>
+<p>在 compileSdk 的 API 级别 26 中，对该方法的定义稍作更改以消除强制类型转换问题</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409171139.png" alt></p>
+<p>现在，开发人员无需在代码中手动转换 view 类型。 如果您引用 id 指向类型 TextView 的 View 并将其指定为 Button，则 Android SDK 会尝试查找具有提供的 id 的 Button，并且它将返回 Null，因为它将无法找到它</p>
+<p>但是在 Kotlin 中，您仍然需要提供诸如 findViewById<textview>(R.id.txtUsername) 之类的类型。 如果您不检查视图是否具有 null 安全，则可能出现 NullPointerException，但是此方法不会像以前那样抛出ClassCastException</textview></p>
+<h4 id="Butterknife"><a href="#Butterknife" class="headerlink" title="Butterknife"></a>Butterknife</h4><p><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">Butterknife</a> 是 <a href="https://medium.com/u/8ddd94878165?source=post_page-----98b8ef5b9249----------------------" target="_blank" rel="noopener">Jake Wharton</a> 大神写的替代 findViewById 的库，该库使用注解处理并生成 findViewById 代码</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409171316.png" alt></p>
+<p>它具有与 findViewById 几乎相似的问题。 但是，它在运行时添加了null 安全检查以避免 NullPointerException</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409171554.jpg" alt></p>
+<p>由于 DataBinding 和 ViewBinding 的出现，沃神已经宣布弃用该库</p>
+<h4 id="Kotlin-Synthetics"><a href="#Kotlin-Synthetics" class="headerlink" title="Kotlin Synthetics"></a>Kotlin Synthetics</h4><p>Kotlin 引入的最大功能之一是 Kotlin 扩展方法。 在它的帮助下，Kotlin Synthetics 诞生了。 Kotlin Synthetics 通过自动生成的 Kotlin 扩展方法，使开发人员可以从 xml 布局直接访问其内部的 view</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409171843.png" alt></p>
+<p>Kotlin Synthetics 第一次调用 findViewById 方法，然后默认情况下将 view 实例缓存在 HashMap 中。 可以通过Gradle 设置将此缓存配置更改为 SparseArray 或不缓存</p>
+<p>总体而言，Kotlin Synthetics 是一种很好的选择，因为它类型安全，并且通过 Kotlin 的 ？进行空检查。 它不需要开发人员的额外代码。 但这仅适用于 Kotlin 项目</p>
+<p>但是，在使用 Kotlin Synthetics 时遇到了一个小问题。 例如，如果将内容视图设置为布局，然后使用仅存在于其他布局中的 id ，则 IDE 可让您自动完成并添加新的 import 语句。 除非您专门检查以确保其 import 语句仅导入正确的 view，否则没有安全的方法来验证这不会导致运行时问题</p>
+<h4 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h4><p>DataBinding 在功能上比其他方法优越得多，因为它不仅为您提供类型安全和空安全的 view 引用，而且还允许您直接在 xml 布局内使用数据驱动视图变化</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200409172613.png" alt></p>
+<h4 id="ViewBinding"><a href="#ViewBinding" class="headerlink" title="ViewBinding"></a>ViewBinding</h4><p>最近在 Android Studio 3.6 中引入的 ViewBinding 是 DataBinding 库的子集。 由于不需要注解处理，因此可以缩短构建时间。详细的使用可以参见 <a href="https://juejin.im/post/5e4806f3e51d4526c550a2ef" target="_blank" rel="noopener">这篇文章</a></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">findViewById</th>
+<th align="center">Butterknife</th>
+<th align="center">Kotlin Synthetics</th>
+<th align="center">DataBinding</th>
+<th align="center">ViewBinding</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一直空安全</td>
+<td align="center">❌</td>
+<td align="center">部分</td>
+<td align="center">部分</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">类型安全</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">样板代码</td>
+<td align="center"><font color="#CA0C16">多</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+<td align="center"><font color="#B77441">中等</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+</tr>
+<tr>
+<td align="center">构建时间</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">支持语音</td>
+<td align="center">java/kotlin</td>
+<td align="center">java/kotlin</td>
+<td align="center">kotlin</td>
+<td align="center">java/kotlin</td>
+<td align="center">java/kotlin</td>
+</tr>
+</tbody></table>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 关于我</span></h2>
+
+<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<ul>
+<li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
+<li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
+<li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
+</ul>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
+            
+              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
+            
+              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/14/【背上Jetpack之Fragment】Fragment返回栈预备篇 OnBackPressedDispatcher/" rel="next" title="【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher">
+                  <i class="fa fa-chevron-left"></i> 【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/16/【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈/" rel="prev" title="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈">
+                  【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text"> 数据驱动魔法师</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text"> DataBinding 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBinding-引入"><span class="nav-number">2.1.</span> <span class="nav-text">DataBinding 引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布局"><span class="nav-number">2.2.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成绑定类"><span class="nav-number">2.3.</span> <span class="nav-text">生成绑定类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置绑定"><span class="nav-number">2.4.</span> <span class="nav-text">配置绑定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text"> 使用DataBinding 解决的问题及实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#魔法的背后"><span class="nav-number">3.1.</span> <span class="nav-text">魔法的背后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataBinding-如何解决上述问题的"><span class="nav-number">3.2.</span> <span class="nav-text">DataBinding 如何解决上述问题的</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text"> 感受魔法的魅力</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本操作"><span class="nav-number">4.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定数据"><span class="nav-number">4.2.</span> <span class="nav-text">绑定数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binding-Adapter"><span class="nav-number">4.3.</span> <span class="nav-text">Binding Adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DadaBinding-LiveData"><span class="nav-number">4.4.</span> <span class="nav-text">DadaBinding + LiveData</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向绑定"><span class="nav-number">4.5.</span> <span class="nav-text">双向绑定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text"> 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#各种-findViewById-替代方案对比"><span class="nav-number">5.1.</span> <span class="nav-text">各种 findViewById 替代方案对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#findViewById"><span class="nav-number">5.1.1.</span> <span class="nav-text">findViewById</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Butterknife"><span class="nav-number">5.1.2.</span> <span class="nav-text">Butterknife</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin-Synthetics"><span class="nav-number">5.1.3.</span> <span class="nav-text">Kotlin Synthetics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataBinding"><span class="nav-number">5.1.4.</span> <span class="nav-text">DataBinding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewBinding"><span class="nav-number">5.1.5.</span> <span class="nav-text">ViewBinding</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text"> 关于我</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">145k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:11</span>
+  
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+  	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+            
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        //if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
