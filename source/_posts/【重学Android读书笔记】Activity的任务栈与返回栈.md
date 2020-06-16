@@ -379,6 +379,10 @@ Display #0 (activities from top to bottom):
 
 可以看出这里 `app2` 启动`SingleTaskTwoActivity` 的确是自己的 `activity`
 
+![](https://gitee.com/flywith24/Album/raw/master/img/20200616181623.png)
+
+![](https://gitee.com/flywith24/Album/raw/master/img/20200616181658.png)
+
 **那么它为什么和`app1` 中的  `SingleTaskTwoActivity`  是同一个 `TaskRecord` 呢？**
 
 ```xml
@@ -397,6 +401,10 @@ Display #0 (activities from top to bottom):
 #### 拓展
 
 我试了以下 `app2` 中启动 `app1` 中的Activity的情况
+
+![](https://gitee.com/flywith24/Album/raw/master/img/20200616181712.png)
+
+![](https://gitee.com/flywith24/Album/raw/master/img/20200616181808.png)
 
 `app1` 依次启动 `StandardOneActivity` -< `SingleTaskOneActivity`  -< `SingleTaskTwoActivity`  -< ` SingleTaskAActivity`
 
