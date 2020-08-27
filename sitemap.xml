@@ -16,70 +16,70 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/31/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BLiveData%E3%80%91ViewModel%E7%9A%84%E5%B7%A6%E8%86%80%E5%8F%B3%E8%87%82%20%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9C%9F%E7%9A%84%E9%A6%99/</loc>
+    <loc>http://yoursite.com/2020/03/31/Jetpack-LiveData/</loc>
     
     <lastmod>2020-04-20T09:10:31.725Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/09/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BDataBinding%E3%80%91%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E9%AD%94%E6%B3%95%E5%B8%88%20%E4%BD%95%E6%97%B6%E8%BF%8E%E6%9D%A5%E7%BF%BB%E8%BA%AB%E6%97%A5%EF%BC%9F/</loc>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-DataBinding/</loc>
     
     <lastmod>2020-04-10T08:49:44.485Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/30/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BLifecycle%E3%80%91%E4%B8%87%E7%89%A9%E5%9F%BA%E4%BA%8ELifecycle%20%E9%BB%98%E9%BB%98%E6%97%A0%E9%97%BB%E5%A4%A7%E4%BD%9C%E7%94%A8/</loc>
+    <loc>http://yoursite.com/2020/03/30/Jetpack-Lifecycle/</loc>
     
     <lastmod>2020-04-10T08:45:39.764Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/16/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BB%8E%E6%BA%90%E7%A0%81%E7%9A%84%E8%A7%92%E5%BA%A6%E7%9C%8BFragment%20%E8%BF%94%E5%9B%9E%E6%A0%88/</loc>
+    <loc>http://yoursite.com/2020/03/16/Jetpack-fragment-back-stack/</loc>
     
     <lastmod>2020-03-24T01:27:49.102Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/19/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BViewModel%E3%80%91%E7%BB%9D%E4%B8%8D%E4%B8%A2%E5%A4%B1%E7%9A%84%E7%8A%B6%E6%80%81%20androidx%20SaveState%20ViewModel-SaveState%20%E5%88%86%E6%9E%90/</loc>
+    <loc>http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/</loc>
     
     <lastmod>2020-03-24T01:27:06.469Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/23/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BViewModel%E3%80%91%E5%8D%B3%E4%BD%BF%E6%82%A8%E4%B8%8D%E4%BD%BF%E7%94%A8MVVM%E4%B9%9F%E8%A6%81%E4%BA%86%E8%A7%A3ViewModel%20ViewModel%E7%9A%84%E8%81%8C%E8%83%BD%E8%BE%B9%E7%95%8C/</loc>
+    <loc>http://yoursite.com/2020/03/23/Jetpack-ViewModel/</loc>
     
     <lastmod>2020-03-24T01:26:41.168Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/14/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91Fragment%E8%BF%94%E5%9B%9E%E6%A0%88%E9%A2%84%E5%A4%87%E7%AF%87%20OnBackPressedDispatcher/</loc>
+    <loc>http://yoursite.com/2020/03/14/Jetpack-OnBackPressedDispatcher/</loc>
     
     <lastmod>2020-03-24T01:19:53.334Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/10/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BB%8E%E6%BA%90%E7%A0%81%E8%A7%92%E5%BA%A6%E7%9C%8BFragment%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%8F%8A%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%20%E5%9F%BA%E4%BA%8EAndroidX%20Fragment1.2.2/</loc>
+    <loc>http://yoursite.com/2020/03/10/Jetpack-fragment-lifecycle/</loc>
     
     <lastmod>2020-03-24T01:19:13.928Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/02/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E4%B9%8BFragment%E3%80%91%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9A%E7%94%A8Fragment%E5%90%97%EF%BC%9FFragment%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8Aandroidx%E4%B8%8BFragment%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B0%E5%A7%BF%E5%8A%BF/</loc>
+    <loc>http://yoursite.com/2020/03/02/Jetpack-fragment/</loc>
     
     <lastmod>2020-03-24T01:17:29.335Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/02/29/%E3%80%90%E8%83%8C%E4%B8%8AJetpack%E3%80%91AdroidX%E4%B8%8B%E4%BD%BF%E7%94%A8Activity%E5%92%8CFragment%E7%9A%84%E5%8F%98%E5%8C%96/</loc>
+    <loc>http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/</loc>
     
     <lastmod>2020-03-24T01:12:04.110Z</lastmod>
     
@@ -100,28 +100,28 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/04/13/%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/</loc>
+    <loc>http://yoursite.com/2019/04/13/multi-project-one-module/</loc>
     
     <lastmod>2019-12-02T09:45:48.739Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/08/16/%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91%E8%AE%B0%E5%BD%95Framework%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</loc>
+    <loc>http://yoursite.com/2019/08/16/framework-op/</loc>
     
     <lastmod>2019-12-02T09:45:48.662Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/08/29/%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91iptabels%20%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</loc>
+    <loc>http://yoursite.com/2019/08/29/iptabels/</loc>
     
     <lastmod>2019-12-02T09:45:48.640Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/08/30/%E3%80%90%E6%B5%81%E6%B0%B4%E8%B4%A6%E3%80%91Xposed%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91/</loc>
+    <loc>http://yoursite.com/2019/08/30/Xposed/</loc>
     
     <lastmod>2019-12-02T09:45:48.614Z</lastmod>
     
@@ -135,49 +135,49 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/29/%E3%80%90%E9%87%8D%E5%AD%A6Android%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E3%80%91Activity%E7%9A%84%E4%BB%BB%E5%8A%A1%E6%A0%88%E4%B8%8E%E8%BF%94%E5%9B%9E%E6%A0%88/</loc>
+    <loc>http://yoursite.com/2019/11/29/relearn-task-back-stack/</loc>
     
     <lastmod>2019-11-29T09:42:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/07/06/Mac%E4%B8%8BAndroid%E5%8F%8D%E7%BC%96%E8%AF%91%E5%88%9D%E6%8E%A2/</loc>
+    <loc>http://yoursite.com/2017/07/06/Mac-decompile/</loc>
     
     <lastmod>2017-07-06T08:46:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/07/04/Handler%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90/</loc>
+    <loc>http://yoursite.com/2017/07/04/Handler/</loc>
     
     <lastmod>2017-07-03T23:46:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/18/2-2%E4%BB%8E%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9F%A5%E8%AF%A2%E6%88%90%E7%BB%A9%E5%B9%B6%E8%AE%A1%E7%AE%97%E7%BB%A9%E7%82%B9%E2%80%94%E2%80%94%E5%B1%B1%E4%B8%9C%E5%BB%BA%E7%AD%91%E5%A4%A7%E5%AD%A6%E4%B8%BA%E4%BE%8B/</loc>
+    <loc>http://yoursite.com/2017/06/18/2-2-grade/</loc>
     
     <lastmod>2017-06-18T15:57:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/18/2-1%E5%BC%80%E5%A7%8B%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB%E7%A8%8B%E5%BA%8F/</loc>
+    <loc>http://yoursite.com/2017/06/18/2-1-first-program/</loc>
     
     <lastmod>2017-06-18T02:05:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/05/1-1%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0/</loc>
+    <loc>http://yoursite.com/2017/06/05/1-1-use-function/</loc>
     
     <lastmod>2017-06-05T13:58:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/05/0-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8CPython%E7%9A%84%E5%AE%89%E8%A3%85/</loc>
+    <loc>http://yoursite.com/2017/06/05/0-indtall-python/</loc>
     
     <lastmod>2017-06-05T13:09:00.000Z</lastmod>
     

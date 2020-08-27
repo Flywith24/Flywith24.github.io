@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="原文：How AndroidX changes the way we work with Activities and Fragments 作者：Miłosz Lewandowski 译者：Fly_with24  过去的一段时间，AndroidX 软件包下的 Activity/Fragmet 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程">
+<meta name="keywords" content="androidx,Jetpack,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【背上Jetpack】AdroidX下使用Activity和Fragment的变化">
+<meta property="og:url" content="http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="原文：How AndroidX changes the way we work with Activities and Fragments 作者：Miłosz Lewandowski 译者：Fly_with24  过去的一段时间，AndroidX 软件包下的 Activity/Fragmet 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-24T01:12:04.110Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【背上Jetpack】AdroidX下使用Activity和Fragment的变化">
+<meta name="twitter:description" content="原文：How AndroidX changes the way we work with Activities and Fragments 作者：Miłosz Lewandowski 译者：Fly_with24  过去的一段时间，AndroidX 软件包下的 Activity/Fragmet 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程">
+  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
+  <link rel="canonical" href="http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【背上Jetpack】AdroidX下使用Activity和Fragment的变化 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">【背上Jetpack】AdroidX下使用Activity和Fragment的变化
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-29 00:10:35" itemprop="dateCreated datePublished" datetime="2020-02-29T00:10:35+08:00">2020-02-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:12:04" itemprop="dateModified" datetime="2020-03-24T09:12:04+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/02/29/Jetpack-androidx-activity-fragment/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack】AdroidX下使用Activity和Fragment的变化" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/29/Jetpack-androidx-activity-fragment/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/29/Jetpack-androidx-activity-fragment/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>6k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>5 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>原文：<a href="https://medium.com/@miloszlewandowski/how-androidx-changes-the-way-we-work-with-activities-and-fragments-73b88d157678" target="_blank" rel="noopener">How AndroidX changes the way we work with Activities and Fragments</a></p>
+<p>作者：<a href="https://medium.com/@miloszlewandowski" target="_blank" rel="noopener">Miłosz Lewandowski</a></p>
+<p>译者：<a href="http://www.yangyunzhao.com/" target="_blank" rel="noopener">Fly_with24</a></p>
+</blockquote>
+<p>过去的一段时间，<code>AndroidX</code> 软件包下的 <code>Activity/Fragmet</code> 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程规则和模式。</p>
+<p>本文中描述的所有功能现在都可以在稳定的 <code>AndroidX</code> 软件包中使用，它们在去年均已发布或移至稳定版本。</p>
+<a id="more"></a>
+
+<h3 id="在构造器中传入布局-ID"><a href="#在构造器中传入布局-ID" class="headerlink" title="在构造器中传入布局 ID"></a>在构造器中传入布局 ID</h3><p>从 <code>AndroidX</code>  <code>AppCompat 1.1.0</code> 和 <code>Fragment 1.1.0</code> ( 译者注：AppCompat 包含 Fragment，且 Fragment 包含 Activity，详情见<a href="https://juejin.im/post/5e567ee1518825494466a938" target="_blank" rel="noopener">【整理】Jetpack 主要组件的依赖及传递关系</a> )开始，您可以使用将 <code>layoutId</code> 作为参数的构造函数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> : <span class="type">AppCompatActivity</span></span>(R.layout.my_activity)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragmentActivity</span>: <span class="type">FragmentActivity</span></span>(R.layout.my_fragment_activity)</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> : <span class="type">Fragment</span></span>(R.layout.my_fragment)</span><br></pre></td></tr></table></figure>
+
+<p>这种方法可以减少 <code>Activity/Fragment</code> 中方法重写的数量，并使类更具可读性。 无需在 <code>Activity</code> 中重写 <code>onCreate()</code> 即可调用 <code>setContentView()</code> 方法。 另外，无需手动在<code>Fragment</code> 中重写 <code>onCreateView</code> 即可手动调用 <code>Inflater</code> 来扩展视图。</p>
+<h3 id="扩展-Activity-Fragment-的灵活性"><a href="#扩展-Activity-Fragment-的灵活性" class="headerlink" title="扩展 Activity/Fragment 的灵活性"></a>扩展 <code>Activity/Fragment</code> 的灵活性</h3><p>借助 <code>AndroidX</code> 新的 API ，可以减少在 <code>Activity/Fragment</code> 处理某些功能的情况。通常，您可以获取提供某些功能的对象并向其注册您的处理逻辑，而不是重写 <code>Activity / Fragment</code> 中的方法。 这样，您现在可以在屏幕上组成几个独立的类，获得更高的灵活性，复用代码，并且通常在不引入自己的抽象的情况下，对代码结构具有更多控制。 让我们看看这在两个示例中如何工作。</p>
+<h4 id="1-OnBackPressedDispatcher"><a href="#1-OnBackPressedDispatcher" class="headerlink" title="1. OnBackPressedDispatcher"></a>1. OnBackPressedDispatcher</h4><p>有时，您需要阻止用户返回上一级。 在这种情况下，您需要在 <code>Activity</code> 中重写 <code>onBackPressed()</code> 方法。 但是，当您使用 <code>Fragment</code> 时，没有直接的方法来拦截返回。 在 <code>Fragment</code> 类中没有可用的 <code>onBackPressed()</code> 方法，这是为了防止同时存在多个 <code>Fragment</code> 时发生意外行为。</p>
+<p>但是，从 <code>AndroidX</code> <code>Activity 1.0.0</code> 开始，您可以使用 <code>OnBackPressedDispatcher</code> 在您可以访问该 <code>Activity</code> 的代码的任何位置（例如，在 <code>Fragment</code> 中）注册 <code>OnBackPressedCallback</code>。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onAttach</span><span class="params">(context: <span class="type">Context</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onAttach(context)</span><br><span class="line">    <span class="keyword">val</span> callback = <span class="keyword">object</span> : OnBackPressedCallback(<span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">handleOnBackPressed</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// Do something</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    requireActivity().onBackPressedDispatcher.addCallback(<span class="keyword">this</span>, callback)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>您可能会在这里注意到另外两个有用的功能：</p>
+<ul>
+<li><code>OnBackPressedCallback</code> 的构造函数中的布尔类型的参数有助于根据当前状态动态 打开/关闭按下的行为</li>
+<li><code>addCallback()</code> 方法的可选第一个参数是 <code>LifecycleOwner</code>，以确保仅在您的生命周期感知对象（例如，<code>Fragment</code>）至少处于 <code>STARTED</code> 状态时才使用回调。</li>
+</ul>
+<p>通过使用 <code>OnBackPressedDispatcher</code> ，您不仅可以获得在 <code>Activity</code> 之外处理返回键的便捷方式。 根据您的需要，您可以在任意位置定义 <code>OnBackPressedCallback</code>，使其可复用，或根据应用程序的架构进行任何操作。 您不再需要重写<code>Activity</code> 中的 <code>onBackPressed</code> 方法，也不必提供自己的抽象的来实现需求的代码。</p>
+<h4 id="2-SavedStateRegistry"><a href="#2-SavedStateRegistry" class="headerlink" title="2. SavedStateRegistry"></a>2. SavedStateRegistry</h4><p>如果您希望 <code>Activity</code> 在终止并重启后恢复之前的状态，则可能要使用 <code>saved state</code> 功能。 过去，您需要在 <code>Activity</code> 中重写两个方法：<code>onSaveInstanceState</code> 和 <code>onRestoreInstanceState</code>。 您还可以在 <code>onCreate</code> 方法中访问恢复的状态。 同样，在 <code>Fragment</code> 中，您可以使用<code>onSaveInstanceState</code> 方法（并且可以在 <code>onCreate</code>，<code>onCreateView</code> 和<code>onActivityCreated</code>方法中恢复状态）。</p>
+<p>从 <code>AndroidX</code>  <code>SavedState 1.0.0</code>（它是 <code>AndroidX</code> <code>Activity</code> 和 <code>AndroidX</code>  <code>Fragment</code> 内部的依赖。译者注：您不需要单独声明它）开始，您可以访问 <code>SavedStateRegistry</code>，它使用了与前面描述的 <code>OnBackPressedDispatcher</code> 类似的机制：您可以从 <code>Activity / Fragment</code> 中获取 <code>SavedStateRegistry</code>，然后 注册您的 <code>SavedStateProvider</code>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">val</span> MY_SAVED_STATE_KEY = <span class="string">"my_saved_state"</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">val</span> SOME_VALUE_KEY = <span class="string">"some_value"</span></span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> someValue: String</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">val</span> savedStateProvider = SavedStateRegistry.SavedStateProvider &#123;    </span><br><span class="line">    Bundle().apply &#123;</span><br><span class="line">      putString(SOME_VALUE_KEY, someValue)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;    </span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line">    savedStateRegistry</span><br><span class="line">      .registerSavedStateProvider(MY_SAVED_STATE_KEY, savedStateProvider)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">someMethod</span><span class="params">()</span></span> &#123;</span><br><span class="line">    someValue = savedStateRegistry</span><br><span class="line">      .consumeRestoredStateForKey(MY_SAVED_STATE_KEY)</span><br><span class="line">      ?.getString(SOME_VALUE_KEY)</span><br><span class="line">      ?: <span class="string">""</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如您所见，<code>SavedStateRegistry</code> 强制您将密钥用于数据。 这样可以防止您的数据被 attach 到同一个 <code>Activity/Fragment</code>的另一个 <code>SavedStateProvider</code> 破坏。 就像在 <code>OnBackPressedDispatcher</code> 中一样，您可以例如将 <code>SavedStateProvider</code> 提取到另一个类，通过使用所需的任何逻辑使其与数据一起使用，从而在应用程序中实现清晰的保存状态行为。</p>
+<p>此外，如果您在应用程序中使用 <code>ViewModel</code>，请考虑使用 <code>AndroidX</code>  <code>ViewModel-SavedState</code> 使你的<code>ViewModel</code> 可以保存其状态。 为了方便起见，从 <code>AndroidX</code>  <code>Activity 1.1.0</code> 和 <code>AndroidX</code> <code>Fragment 1.2.0</code> 开始，启用 <code>SavedState</code> 的<code>SavedStateViewModelFactory</code> 是在获取 <code>ViewModel</code> 的所有方式中使用的默认工厂：委托 <code>ViewModelProvider</code> 构造函数和 <code>ViewModelProviders.of()</code> 方法。</p>
+<h3 id="FragmentFactory"><a href="#FragmentFactory" class="headerlink" title="FragmentFactory"></a>FragmentFactory</h3><p><code>Fragment</code> 最常提及的问题之一是不能使用带有参数的构造函数。 例如，如果您使用 <code>Dagger2</code> 进行依赖项注入，则无法使用 <code>Inject</code> 注解 <code>Fragment</code> 构造函数并指定参数。 现在，您可以通过指定 <code>FragmentFactory</code> 类来减少 <code>Fragment</code> 创建过程中的类似问题。 通过在 <code>FragmentManager</code> 中注册 <code>FragmentFactory</code>，可以重写实例化 <code>Fragment</code> 的默认方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragmentFactory</span> : <span class="type">FragmentFactory</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">instantiate</span><span class="params">(classLoader: <span class="type">ClassLoader</span>, className: <span class="type">String</span>)</span></span>: Fragment &#123;</span><br><span class="line">    <span class="comment">// Call loadFragmentClass() to obtain the Class object</span></span><br><span class="line">    <span class="keyword">val</span> fragmentClass = loadFragmentClass(classLoader, className)</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Now you can use className/fragmentClass to determine your prefered way </span></span><br><span class="line">    <span class="comment">// of instantiating the Fragment object and just do it here.</span></span><br><span class="line">        </span><br><span class="line">    <span class="comment">// Or just call regular FragmentFactory to instantiate the Fragment using</span></span><br><span class="line">    <span class="comment">// no arguments constructor</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.instantiate(classLoader, className)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如您所见，该API非常通用，因此您可以执行想要创建 <code>Fragment</code> 实例的所有操作。 回到 <code>Dagger2</code> 示例，例如，您可以注入<code>FragmentFactory Provider &lt;Fragment&gt;</code> 并使用它来获取 <code>Fragment</code> 对象。</p>
+<h3 id="测试-Fragment"><a href="#测试-Fragment" class="headerlink" title="测试 Fragment"></a>测试 Fragment</h3><p>从<code>AndroidX</code>  <code>Fragment 1.1.0</code> 开始，可以使用 <code>Fragment</code> 测试组件提供 <code>FragmentScenario</code> 类，该类可以帮助在测试中实例化 <code>Fragment</code> 并进行单独测试：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// To launch a Fragment with a user interface:</span></span><br><span class="line"><span class="keyword">val</span> scenario = launchFragmentInContainer&lt;FirstFragment&gt;()</span><br><span class="line">        </span><br><span class="line"><span class="comment">// To launch a headless Fragment:</span></span><br><span class="line"><span class="keyword">val</span> scenario = launchFragment&lt;FirstFragment&gt;()</span><br><span class="line">        </span><br><span class="line"><span class="comment">// To move the fragment to specific lifecycle state:</span></span><br><span class="line">scenario.moveToState(CREATED)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now you can e.g. perform actions using Espresso:</span></span><br><span class="line">onView(withId(R.id.refresh)).perform(click())</span><br><span class="line"></span><br><span class="line"><span class="comment">// To obtain a Fragment instance:</span></span><br><span class="line">scenario.onFragment &#123; fragment -&gt;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="More-Kotlin"><a href="#More-Kotlin" class="headerlink" title="More Kotlin!"></a>More Kotlin!</h3><p>很高兴看到 <code>-ktx</code> <code>AndroidX</code> 软件包中提供了许多有用的 <code>Kotlin</code> 扩展方法，并且定期添加了新的方法。 例如，在<code>AndroidX</code> <code>Fragment-KTX 1.2.0</code> 中，使用片段化类型的扩展名可用于 <code>FragmentTransaction</code> 上的 <code>replace()</code> 方法。 将其与 <code>commit()</code> 扩展方法结合使用，我们可以获得以下代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Before</span></span><br><span class="line">supportFragmentManager</span><br><span class="line">  .beginTransaction()</span><br><span class="line">  .add(R.id.container, MyFragment::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>, <span class="type">null)</span></span></span><br><span class="line">  .commit()</span><br><span class="line"></span><br><span class="line"><span class="comment">// After</span></span><br><span class="line">supportFragmentManager.commit &#123;</span><br><span class="line">  replace&lt;MyFragment&gt;(R.id.container)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="FragmentContainerView"><a href="#FragmentContainerView" class="headerlink" title="FragmentContainerView"></a>FragmentContainerView</h3><p>一件小而重要的事情。 如果您将 <code>FrameLayout</code> 用作 <code>Fragment</code> 的容器，则应改用 <code>FragmentContainerView</code> 。 它修复了一些动画 z轴索引顺序问题和窗口插入调度。 从 <code>AndroidX</code> <code>Fragment 1.2.0</code> 开始可以使用 <code>FragmentContainerView</code>。</p>
+<hr>
+<h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><hr>
+<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
+            
+              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
+            
+              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/29/relearn-task-back-stack/" rel="next" title="【重学Android读书笔记】Activity的任务栈与返回栈">
+                  <i class="fa fa-chevron-left"></i> 【重学Android读书笔记】Activity的任务栈与返回栈
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/01/Jetpack-dependencies/" rel="prev" title="【背上Jetpack】Jetpack 主要依赖关系">
+                  【背上Jetpack】Jetpack 主要依赖关系 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在构造器中传入布局-ID"><span class="nav-number">1.</span> <span class="nav-text">在构造器中传入布局 ID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展-Activity-Fragment-的灵活性"><span class="nav-number">2.</span> <span class="nav-text">扩展 Activity/Fragment 的灵活性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-OnBackPressedDispatcher"><span class="nav-number">2.1.</span> <span class="nav-text">1. OnBackPressedDispatcher</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-SavedStateRegistry"><span class="nav-number">2.2.</span> <span class="nav-text">2. SavedStateRegistry</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FragmentFactory"><span class="nav-number">3.</span> <span class="nav-text">FragmentFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试-Fragment"><span class="nav-number">4.</span> <span class="nav-text">测试 Fragment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#More-Kotlin"><span class="nav-number">5.</span> <span class="nav-text">More Kotlin!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FragmentContainerView"><span class="nav-number">6.</span> <span class="nav-text">FragmentContainerView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于我"><span class="nav-number">7.</span> <span class="nav-text">关于我</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">179k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:42</span>
+  
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+  	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+            
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        //if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

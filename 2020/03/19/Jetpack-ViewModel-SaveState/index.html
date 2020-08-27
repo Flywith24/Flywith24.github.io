@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="前言 大家都知道 activity 有着一套 onSaveInstanceState-onRestoreInstanceState 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验 在 androidx 下，提供了 SavedState 库帮助 activity 和 fragment 处理状态保存和恢复  本文默认您对状态保存机制有一定了解，这部分内容请移步 Sa">
+<meta name="keywords" content="androidx,Jetpack,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析">
+<meta property="og:url" content="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="前言 大家都知道 activity 有着一套 onSaveInstanceState-onRestoreInstanceState 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验 在 androidx 下，提供了 SavedState 库帮助 activity 和 fragment 处理状态保存和恢复  本文默认您对状态保存机制有一定了解，这部分内容请移步 Sa">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318211230.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318211823.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318211806.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318213053.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318213151.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318215718.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318215746.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319115543.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319140343.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319140801.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319142729.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319165450.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319174431.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319231231.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200319231451.png">
+<meta property="og:updated_time" content="2020-03-24T01:27:06.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析">
+<meta name="twitter:description" content="前言 大家都知道 activity 有着一套 onSaveInstanceState-onRestoreInstanceState 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验 在 androidx 下，提供了 SavedState 库帮助 activity 和 fragment 处理状态保存和恢复  本文默认您对状态保存机制有一定了解，这部分内容请移步 Sa">
+<meta name="twitter:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200318211230.png">
+  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
+  <link rel="canonical" href="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-19 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-19T00:10:35+08:00">2020-03-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:27:06" itemprop="dateModified" datetime="2020-03-24T09:27:06+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/19/Jetpack-ViewModel-SaveState/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/19/Jetpack-ViewModel-SaveState/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/19/Jetpack-ViewModel-SaveState/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>12k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>11 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家都知道 activity 有着一套 <code>onSaveInstanceState-onRestoreInstanceState</code> 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验</p>
+<p>在 androidx 下，提供了 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库帮助 activity 和 fragment 处理状态保存和恢复</p>
+</blockquote>
+<p>本文默认您对状态保存机制有一定了解，这部分内容请移步 <a href="https://developer.android.com/topic/libraries/architecture/saving-states" target="_blank" rel="noopener">Saving UI States</a></p>
+<p>此外，关于 android 下的进程管理，推荐 Ian Lake 的 <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
+<p>本文介绍了 androidx 下 <code>SavedState</code> 如何帮助 activity 和 fragment 处理状态的保存和恢复，同时介绍 <code>viewmodel-savedstate</code> 库，以及在开发过程中正确使用状态保存的姿势</p>
+<a id="more"></a>
+
+<h2 id="软件工程中没有什么是中间层解决不了的"><a href="#软件工程中没有什么是中间层解决不了的" class="headerlink" title="软件工程中没有什么是中间层解决不了的"></a>软件工程中没有什么是中间层解决不了的</h2><p>在分析 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库之前我们需要简单聊一聊 <code>ComponentActivity</code></p>
+<p>androidx activity 1.0.0 时，<code>ComponentActivity</code> 成为了 <code>FragmentActivity</code> 和 <code>AppCompatActivity</code> 的基类。</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318211230.png" alt="androidx activity 1.0.0 "></p>
+<p>俗话说「百因必有果」，带着强烈的好奇心，我查了一下 ComponentActivity 引入的原因。</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318211823.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318211806.png" alt></p>
+<p>可以看到 <code>ComponentActivity</code> 继承了 androidx.core.app.ComponentActivity(在fragment库中)，并且最初仅实现了<code>LifecycleOwner</code> 接口</p>
+<p>我们创建的 activity 的继承关系现在变成了这样：</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318213053.png" alt></p>
+<p>那么回到最初的问题，为什么要引入 <code>ComponentActivity</code> ？其实看看现在 <code>ComponentActivity</code> 的类结构答案就很清楚了</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318213151.png" alt></p>
+<p><code>ComponentActivity</code> 实现了五个接口，代表着其除了 activity 还充当着五种角色。本着职能单一原则，官方通过建立一个中间层将部分功能分别交于专门的类来负责，OnBackPressedDispatcherOwner 就是我们讲 fragment 返回栈（<a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">【背上Jetpack之OnBackPressedDispatcher】Fragment 返回栈预备篇</a>）时提到的结构，而其中的 <code>SavedStateRegistryOwner</code> 则是我们今天要讲的主角  <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 中的成员</p>
+<h2 id="SavedState"><a href="#SavedState" class="headerlink" title="SavedState"></a>SavedState</h2><p>引入 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">"androidx.savedstate:savedstate:1.0.0"</span></span><br></pre></td></tr></table></figure>
+
+<p>其实您不需要显示地声明，因为 activity 库内部已经引入了。jetpack 组件依赖关系可参考 <a href="https://juejin.im/post/5e567ee1518825494466a938" target="_blank" rel="noopener">【背上Jetpack】Jetpack 主要组件的依赖及传递关系</a></p>
+<p>这是一个很小的库</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318215718.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200318215746.png" alt></p>
+<blockquote>
+<p>图片来自 <a href="https://proandroiddev.com/viewmodels-state-persistence-savedstate-54d015acad82" target="_blank" rel="noopener">Android ViewModels: State persistence — SavedState</a></p>
+</blockquote>
+<h3 id="SavedStateProvider"><a href="#SavedStateProvider" class="headerlink" title="SavedStateProvider"></a>SavedStateProvider</h3><p>保存状态的组件，此状态将在以后恢复并使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SavedStateProvider</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">Bundle <span class="title">saveState</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SavedStateRegistry"><a href="#SavedStateRegistry" class="headerlink" title="SavedStateRegistry"></a>SavedStateRegistry</h3><p>管理 <code>SavedStateProvider</code> 列表的组件，此注册表绑定了其所有者的生命周期（即 activity 或 fragment）。每次创建生命周期所有者都会创建一个新的实例</p>
+<p>创建注册表的所有者后（例如，在调用 activity 的 <code>onCreate(savedInstanceState)</code> 方法之后），将调用其 <code>performRestore(state)</code> 方法，以恢复系统杀死其所有者之前保存的任何状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performRestore</span><span class="params">(@NonNull Lifecycle lifecycle, @Nullable Bundle savedState)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">if</span> (savedState != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mRestoredState = savedState.getBundle(SAVED_COMPONENTS_KEY);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>每个注册表的 <code>SavedStateProvider</code> 都由用于注册它的唯一密钥标识</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> SafeIterableMap&lt;String, SavedStateProvider&gt; mComponents = <span class="keyword">new</span> SafeIterableMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerSavedStateProvider</span><span class="params">(@NonNull String key, @NonNull SavedStateProvider provider)</span> </span>&#123;</span><br><span class="line">    SavedStateProvider previous = mComponents.putIfAbsent(key, provider);</span><br><span class="line">    <span class="keyword">if</span> (previous != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"SavedStateProvider with the given key is already registered"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unregisterSavedStateProvider</span><span class="params">(@NonNull String key)</span> </span>&#123;</span><br><span class="line">    mComponents.remove(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一旦完成注册，就可以通过<code>consumeRestoredStateForKey(key)</code> 来使用特定密钥的还原状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Bundle <span class="title">consumeRestoredStateForKey</span><span class="params">(@NonNull String key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mRestoredState != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Bundle result = mRestoredState.getBundle(key);</span><br><span class="line">        <span class="comment">//调用后就会清空，第二次调用返回null</span></span><br><span class="line">        mRestoredState.remove(key);</span><br><span class="line">        <span class="keyword">if</span> (mRestoredState.isEmpty()) &#123;</span><br><span class="line">            mRestoredState = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请注意，此方法检索保存的状态，然后清除其内部引用，这意味着用相同的键调用它两次将在第二次调用中返回 null</p>
+<p>一旦注册表恢复了其保存状态，则由提供者决定是否要求其恢复的数据。 如果没有，下次注册表的所有者被系统杀死时，未使用的还原数据将再次保存到保存状态</p>
+</blockquote>
+<p>已注册的 provider 能够在其所有者被系统杀死之前保存状态。 发生这种情况时，将调用其 <code>Bundle saveState()</code> 方法。 对于每个已注册的 <code>SavedStateProvider</code>，都可以像这样保存状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">savedState.putBundle(savedStateProviderKey, savedStateProvider.saveState());</span><br></pre></td></tr></table></figure>
+
+<p><code>performSave(outBundle)</code> 方法的源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performSave</span><span class="params">(@NonNull Bundle outBundle)</span> </span>&#123;</span><br><span class="line">    Bundle components = <span class="keyword">new</span> Bundle();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 1.保存未使用的状态</span></span><br><span class="line">    <span class="keyword">if</span> (mRestoredState != <span class="keyword">null</span>) &#123;</span><br><span class="line">        components.putAll(mRestoredState);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 通过 SavedStateProvider 保存状态</span></span><br><span class="line">    <span class="keyword">for</span> (Iterator&lt;Map.Entry&lt;String, SavedStateProvider&gt;&gt; it = mComponents.iteratorWithAdditions(); it.hasNext(); ) &#123;</span><br><span class="line">        Map.Entry&lt;String, SavedStateProvider&gt; entry1 = it.next();</span><br><span class="line">        components.putBundle(entry1.getKey(), entry1.getValue().saveState());</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 将bundle 保存到 outBundle 对象中</span></span><br><span class="line">    outBundle.putBundle(SAVED_COMPONENTS_KEY, components);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行状态保存将所有未使用的状态与注册表提供的状态合并。 此 outBundle 是 activity 的 <code>onSaveInstanceState</code> 中传入的 bundle 。</p>
+<h3 id="SavedStateRegistryController"><a href="#SavedStateRegistryController" class="headerlink" title="SavedStateRegistryController"></a>SavedStateRegistryController</h3><p>一个包装 <code>SavedStateRegistry</code> 并允许通过其2个主要方法对其进行控制的组件：performRestore(savedState) 和 <code>performSave(outBundle )</code>。 这两个方法将内部通过 <code>SavedStateRegistry</code> 中的方法处理 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SavedStateRegistryController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SavedStateRegistryOwner mOwner;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SavedStateRegistry mRegistry;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performRestore</span><span class="params">(@Nullable Bundle savedState)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        mRegistry.performRestore(lifecycle, savedState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performSave</span><span class="params">(@NonNull Bundle outBundle)</span> </span>&#123;</span><br><span class="line">        mRegistry.performSave(outBundle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SavedStateRegistryOwner"><a href="#SavedStateRegistryOwner" class="headerlink" title="SavedStateRegistryOwner"></a>SavedStateRegistryOwner</h3><p>持有 <code>SavedStateRegistry</code> 的组件。 默认情况下，androidx 包中的<code>ComponentActivity</code> 和 <code>Fragment</code> 都实现此接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SavedStateRegistryOwner</span> <span class="keyword">extends</span> <span class="title">LifecycleOwner</span> </span>&#123;</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">SavedStateRegistry <span class="title">getSavedStateRegistry</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Activity-的状态保存"><a href="#Activity-的状态保存" class="headerlink" title="Activity 的状态保存"></a>Activity 的状态保存</h2><p>这里我们要明确一件事情，activity 保存的状态究竟都有什么？</p>
+<p>这部分内容可以参见 <a href="https://developer.android.com/guide/components/activities/activity-lifecycle.html#saras" target="_blank" rel="noopener">官方文档</a> </p>
+<p>简单来说，<strong>activity 的状态保存分为 view 状态和成员状态</strong></p>
+<p>默认情况下，系统使用 Bundle 实例状态来保存有关 activity 布局中每个 View 对象的信息（例如，输入到 EditText 中的文本值或 recyclerview 的滚动位置）。 因此，如果 activity 实例被销毁并重新创建，则布局状态将恢复为之前的状态，而无需您执行任何代码。（<strong>注意，需要恢复状态的 view 需要配置 id</strong> ）</p>
+<p>这部分逻辑在 activity 中的 <code>onSaveInstanceState</code> 方法内实现</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319115543.png" alt="onSaveInstanceState "></p>
+<blockquote>
+<p>不同平台 <code>onSaveInstanceState</code>  方法的执行时机稍有不同，android P 之前 <code>onSaveInstanceState</code> 执行在 <code>onStop</code> 之前，但不限于在 <code>onPause</code> 之前或之后。android P 及之后该方法在 <code>onStop</code> 后执行</p>
+</blockquote>
+<p>前面我们提到 <code>ComponentActivity</code> 实现了 <code>SavedStateRegistryOwner</code> ，下面我们来看一看 activity 如何利用该库来实现状态的保存与恢复</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComponentActivity</span> <span class="keyword">extends</span> <span class="title">androidx</span>.<span class="title">core</span>.<span class="title">app</span>.<span class="title">ComponentActivity</span> <span class="keyword">implements</span> <span class="title">SavedStateRegistryOwner</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SavedStateRegistryController mSavedStateRegistryController = SavedStateRegistryController.create(<span class="keyword">this</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        mSavedStateRegistryController.performRestore(savedInstanceState);</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(@NonNull Bundle outState)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="comment">//这里先调用父类的 onSaveInstanceState 保存 view 状态</span></span><br><span class="line">        <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">        mSavedStateRegistryController.performSave(outState);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> SavedStateRegistry <span class="title">getSavedStateRegistry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mSavedStateRegistryController.getSavedStateRegistry();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其内部持有 <code>SavedStateRegistryController</code> 的实例 <code>mSavedStateRegistryController</code> ，在 activity 的 <code>onCreate</code> 方法中 通过 controller 的 <code>performRestore</code> 方法来查询已保存的状态，在 <code>onSaveInstanceState</code> 中 使用 controller  的 <code>performSave</code> 方法来保存状态</p>
+<p><strong>除了 view 状态和成员状态，activity 还负责保存其内部的 fragment 的状态</strong>。<code>FragmentActivity</code> 的 <code>onSaveInstanceState</code> 方法有对其内部 fragment 的状态进行保存，并在 onCreate 方法中对已保存的 fragment 进行恢复。这解释了如果操作不当会导致 fragment 重叠的问题</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319140343.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319140801.png" alt></p>
+<h2 id="Fragment-的状态保存"><a href="#Fragment-的状态保存" class="headerlink" title="Fragment 的状态保存"></a>Fragment 的状态保存</h2><p>androidx fragment 使用 <code>FragmentStateManager</code> 来处理 fragment 的状态保存</p>
+<p>其内部有四个保存相关的方法</p>
+<ul>
+<li><code>saveState</code></li>
+<li><code>saveBasicState</code></li>
+<li><code>saveViewState</code></li>
+<li><code>saveInstanceState</code></li>
+</ul>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319142729.png" alt="FragmentStateManager"></p>
+<p>其调用链为 activity 通过 <code>FragmentController</code> 间接 调用 <code>FragmentManager</code> 的 <code>saveAllState</code>，接着依次调用后面的save 方法</p>
+<p>Fragment 的状态保存可分为 view 状态，成员状态，child fragment 状态</p>
+<p>关于 view 状态 , <code>FragmentStateManager</code> 提供了 <code>saveViewSate</code> 方法，它的调用有两处：</p>
+<ol>
+<li>在 activity 或父 fragment 触发状态保存时调用，即上述流程</li>
+<li>在 fragment 即将进入 <code>onDestroyView</code> 生命周期时调用，其位置在 <code>FragmentManager</code> moveToState 方法内部，这解释了为什么加入返回栈的 replace 操作在返回时 view 状态可以自动恢复</li>
+</ol>
+<p>关于成员状态，由 activity 中的状态机制处理，即上节内容</p>
+<p>关于 child  fragment 状态，fragment 的 <code>onCreate</code> 方法会调用 <code>restoreChildFragmentState</code> 来恢复 child  fragment 的状态，并在 <code>FragmentStateManager</code>  中的 <code>saveBasicState</code> 方法中 调用 <code>performSaveInstanceState</code> 来保存 child  fragment 的状态</p>
+<h2 id="Viewmodel-SavedState"><a href="#Viewmodel-SavedState" class="headerlink" title="Viewmodel-SavedState"></a>Viewmodel-SavedState</h2><p>2020-01-22，<code>ViewModel-SavedState 1.0.0</code> 正式版发布，02-05 发布了 <code>2.2.0</code> 正式版</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">"androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>您不需要手动引入该库，因为 fragment 库以及内部引入该库</p>
+</blockquote>
+<p><code>Jetpack MVVM</code> 下 UI State 通常被 <code>ViewModel</code> 持有并存储，因此该模块出现了，配置该模块后，<code>ViewModel</code> 对象将通过其构造函数接收 <code>SavedStateHandle</code> 对象（键值映射），可让您保存状态并查询已保存的状态。 这些值将在系统终止进程后继续存在，并可以通过同一对象使用。</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319165450.png" alt="ViewModel-SavedState"></p>
+<blockquote>
+<p>图片来自 <a href="https://proandroiddev.com/viewmodels-state-persistence-savedstate-54d015acad82" target="_blank" rel="noopener">Android ViewModels: State persistence — SavedState</a></p>
+</blockquote>
+<h3 id="SavedStateHandle"><a href="#SavedStateHandle" class="headerlink" title="SavedStateHandle"></a>SavedStateHandle</h3><p>内部持有已保存状态 key-value 的 map，允许读取和写入状态，这些状态在应用进程被杀死后仍然存在</p>
+<p><code>SavedStateHandle</code> 通过 <code>ViewModel</code> 的构造器传入，下面是其主要的主要的几个方法</p>
+<ul>
+<li>T get(String key)</li>
+<li>MutableLiveData<t> getLiveData(String key)</t></li>
+<li>void set(String key, T value)</li>
+</ul>
+<p><code>SavedStateHandle</code> 还包含 <code>SavedStateProvider</code> 的实例，用于帮助 <code>ViewModel</code> 的 owner 保存状态</p>
+<h3 id="AbstractSavedStateViewModelFactory"><a href="#AbstractSavedStateViewModelFactory" class="headerlink" title="AbstractSavedStateViewModelFactory"></a>AbstractSavedStateViewModelFactory</h3><p>一个实现 <code>ViewModelFactory.KeyedFactory</code> 的 <code>ViewModel Factory</code>，它会创建一个与实例化的请求的 ViewModel 关联的 <code>SavedStateHandle</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractSavedStateViewModelFactory</span> <span class="keyword">extends</span> <span class="title">ViewModelProvider</span>.<span class="title">KeyedFactory</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> SavedStateRegistry mSavedStateRegistry;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Default state used when the saved state is empty</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Bundle mDefaultArgs;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 读取保存的状态</span></span><br><span class="line">        Bundle restoredState = mSavedStateRegistry.consumeRestoredStateForKey(key);</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 创建保存状态的 handle</span></span><br><span class="line">        SavedStateHandle handle = SavedStateHandle.createHandle(restoredState, mDefaultArgs);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ... </span></span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 创建 viewModel</span></span><br><span class="line">        T viewmodel = create(key, modelClass, handle);</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// ... </span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> viewmodel;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="SavedStateViewModelFactory"><a href="#SavedStateViewModelFactory" class="headerlink" title="SavedStateViewModelFactory"></a>SavedStateViewModelFactory</h3><p><code>AbstractSavedStateViewModelFactory</code> 的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SavedStateViewModelFactory</span> <span class="keyword">extends</span> <span class="title">AbstractSavedStateVMFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SavedStateViewModelFactory</span><span class="params">(@NonNull Application application,</span></span></span><br><span class="line"><span class="function"><span class="params">            @NonNull SavedStateRegistryOwner owner)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>(application, owner, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SavedStateViewModelFactory</span><span class="params">(@NonNull Application application, @NonNull SavedStateRegistryOwner owner, @Nullable Bundle defaultArgs)</span> </span>&#123;</span><br><span class="line">        mSavedStateRegistry = owner.getSavedStateRegistry();</span><br><span class="line">        mLifecycle = owner.getLifecycle();</span><br><span class="line">        mDefaultArgs = defaultArgs;</span><br><span class="line">        mApplication = application;</span><br><span class="line">        mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> isAndroidViewModel = AndroidViewModel.class.isAssignableFrom(modelClass);</span><br><span class="line">        Constructor&lt;T&gt; constructor;</span><br><span class="line">        <span class="keyword">if</span> (isAndroidViewModel) &#123;</span><br><span class="line">            constructor = findMatchingConstructor(modelClass, ANDROID_VIEWMODEL_SIGNATURE);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            constructor = findMatchingConstructor(modelClass, VIEWMODEL_SIGNATURE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// doesn't need SavedStateHandle</span></span><br><span class="line">        <span class="keyword">if</span> (constructor == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> mFactory.create(modelClass);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SavedStateHandleController controller = SavedStateHandleController.create(</span><br><span class="line">                mSavedStateRegistry, mLifecycle, key, mDefaultArgs);        </span><br><span class="line">        T viewmodel;</span><br><span class="line">        <span class="keyword">if</span> (isAndroidViewModel) &#123;</span><br><span class="line">            viewmodel = constructor.newInstance(mApplication, controller.getHandle());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            viewmodel = constructor.newInstance(controller.getHandle());</span><br><span class="line">        &#125;</span><br><span class="line">        viewmodel.setTagIfAbsent(TAG_SAVED_STATE_HANDLE_CONTROLLER, controller);</span><br><span class="line">        <span class="keyword">return</span> viewmodel;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319174431.png" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ViewModelProvider(<span class="keyword">this</span>).get(MyViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br></pre></td></tr></table></figure>
+
+<p>在 activity 中创建 ViewModel 实例，传入 this （<code>SavedStateRegistryOwner</code> ）作为参数，该参数可以访问其 <code>SavedStateRegistry</code>，如果没有传入 factory 会通过 activity 重写的 <code>getDefaultViewModelProviderFactory</code> 方法来获取默认的 factory 。然后 factory 将使用保存的状态， 将其包装在 <code>SavedStateHandle</code> 中，并将其传递给 ViewModel。 ViewModel 可以读取和写入该 handle</p>
+<p>当 activity 的 <code>onSaveInstanceState(outState)</code> 方法被调用，其 <code>SavedStateRegistry</code> 的 <code>performSave(outState)</code> 方法将被执行，其内部的所有 <code>SavedStateProvider</code> 的 <code>saveState</code> 方法均被执行，一旦执行完毕，<code>outState</code> 就包含了已保存的状态</p>
+<p>当 app 被重启后，activity 和新的 registry  将被创建，activity 的 <code>onCreate(savedInstanceState)</code> 方法会被调用，然后 registry 的 <code>performRestore(savedInstanceState)</code> 将被调用以便恢复之前保存的状态</p>
+<h2 id="状态保存的正确姿势"><a href="#状态保存的正确姿势" class="headerlink" title="状态保存的正确姿势"></a>状态保存的正确姿势</h2><p><code>ViewModel</code> 构造器加入 <code>SavedStateHandle</code> 参数，并将想要保存的数据使用该 handle 保存</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WithSavedStateViewModel</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> state: SavedStateHandle) : ViewModel() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> key = <span class="string">"key"</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">setValue</span><span class="params">(value: <span class="type">String</span>)</span></span> = state.<span class="keyword">set</span>(key, value)</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">getValue</span><span class="params">()</span></span>: LiveData&lt;String&gt; = state.getLiveData(key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>无需重写 <code>onSaveInstanceState/onRestoreInstanceState</code>  方法</strong></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319231231.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200319231451.png" alt="运行示意图"></p>
+<p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo" target="_blank" rel="noopener">Demo 地址</a></p>
+<blockquote>
+<p>SavedState 仅适合保存轻量级的数据，重量级操作请考虑持sp，数据库等持久化方案</p>
+</blockquote>
+<hr>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
+<p>我是 <a href="http://www.yangyunzhao.com" target="_blank" rel="noopener">Fly_with24</a></p>
+<ul>
+<li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
+<li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
+<li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
+</ul>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
+            
+              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
+            
+              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/16/Jetpack-fragment-back-stack/" rel="next" title="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈">
+                  <i class="fa fa-chevron-left"></i> 【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/23/Jetpack-ViewModel/" rel="prev" title="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界">
+                  【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件工程中没有什么是中间层解决不了的"><span class="nav-number">2.</span> <span class="nav-text">软件工程中没有什么是中间层解决不了的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SavedState"><span class="nav-number">3.</span> <span class="nav-text">SavedState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateProvider"><span class="nav-number">3.1.</span> <span class="nav-text">SavedStateProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateRegistry"><span class="nav-number">3.2.</span> <span class="nav-text">SavedStateRegistry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateRegistryController"><span class="nav-number">3.3.</span> <span class="nav-text">SavedStateRegistryController</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateRegistryOwner"><span class="nav-number">3.4.</span> <span class="nav-text">SavedStateRegistryOwner</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity-的状态保存"><span class="nav-number">4.</span> <span class="nav-text">Activity 的状态保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment-的状态保存"><span class="nav-number">5.</span> <span class="nav-text">Fragment 的状态保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Viewmodel-SavedState"><span class="nav-number">6.</span> <span class="nav-text">Viewmodel-SavedState</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateHandle"><span class="nav-number">6.1.</span> <span class="nav-text">SavedStateHandle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractSavedStateViewModelFactory"><span class="nav-number">6.2.</span> <span class="nav-text">AbstractSavedStateViewModelFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SavedStateViewModelFactory"><span class="nav-number">6.3.</span> <span class="nav-text">SavedStateViewModelFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作流程"><span class="nav-number">6.4.</span> <span class="nav-text">工作流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态保存的正确姿势"><span class="nav-number">7.</span> <span class="nav-text">状态保存的正确姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于我"><span class="nav-number">8.</span> <span class="nav-text">关于我</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">179k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:42</span>
+  
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+  	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+            
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        //if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
