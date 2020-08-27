@@ -582,11 +582,4 @@ val user: LiveData<User> = liveData {
 - 如果想使用实现`LifecycleOwner` 的 `Service` ，需要引入 `lifecycle-service`
 
 
----
-### 关于我
----
-我是 [Fy_with24](http://www.yangyunzhao.com)
-- [掘金](https://juejin.im/user/57c7f6870a2b58006b1cfd6c)
-- [简书](https://www.jianshu.com/u/3d5ad6043d66)
-- [Github](https://github.com/Flywith24)
 
