@@ -332,7 +332,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 10:47:17" itemprop="dateModified" datetime="2020-08-28T10:47:17+08:00">2020-08-28</time>
+                <time title="修改时间：2020-08-28 10:50:23" itemprop="dateModified" datetime="2020-08-28T10:50:23+08:00">2020-08-28</time>
               </span>
             
           
@@ -408,72 +408,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <a id="more"></a>
-
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>环境搭建等内容网上资料很多，这里不再赘述。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>环境搭建等内容网上资料很多，这里不再赘述。</p>
 <p>此处以 Pixel 3a &amp; Android 10 为例介绍如何编译 ROM 包并烧录</p>
 <p>手上没有真机的小伙伴可以选择制作模拟器，本文最后提供了基于 Android 10 编译的自定义 AVD 下载链接</p>
-<h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><p><a href="https://source.android.com/setup/build/initializing" target="_blank" rel="noopener">官方文档</a></p>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>这里推荐使用 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">清华镜像</a></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628155443.png" alt></p>
-<p>下载 <a href="https://mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar" target="_blank" rel="noopener">每月更新的初始化包</a> 并解压</p>
-<h2 id="下载驱动（可选）"><a href="#下载驱动（可选）" class="headerlink" title="下载驱动（可选）"></a>下载驱动（可选）</h2><p>如果要刷到真机上，需要下载相应机型的驱动，进入 <a href="https://developers.google.com/android/drivers" target="_blank" rel="noopener">该链接</a>，选择相应的机型对应的 Android 版本号和驱动</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628160058.png" alt></p>
-<p>我这里选择的是 Android 10.0.0（QQ3A.200605.002.A1）</p>
-<p>将两个驱动文件下载并解压，并执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./extract-qcom-sargo.sh</span><br><span class="line">./extract-google_devices-sargo.sh</span><br></pre></td></tr></table></figure>
-
-<p>点击 Enter 并输入 I ACCEPT 同意 License</p>
-<p>根据 Build 在 <a href="https://source.android.com/setup/start/build-numbers" target="_blank" rel="noopener">该链接</a> 中找到相匹配的分支，本例中对应 <code>android-10.0.0_r39</code></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628160259.png" alt="QQ3A.200605.002.A1 对应的分支"></p>
-<h2 id="选择分支"><a href="#选择分支" class="headerlink" title="选择分支"></a>选择分支</h2><p>执行完上述操作如果直接编译的话实际上是编译的 master 分支，我们还需要切换到想要编译的分支</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b android-10.0.0_r39 --depth=1</span><br><span class="line">repo sync -j8</span><br><span class="line">repo start android-10.0.0_r39 --all</span><br></pre></td></tr></table></figure>
-
-<h2 id="编译与烧写"><a href="#编译与烧写" class="headerlink" title="编译与烧写"></a>编译与烧写</h2><p>在源码目录执行</p>
-<p><code>source build/envsetup.sh</code></p>
-<p><code>lunch</code> 进入菜单</p>
-<p>选择相应的版本</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628162935.png" alt></p>
-<p>我这里选择的是 19</p>
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>接着便可以进行编译了，可以使用 <code>make -j</code> 命令，其中 j 代表的是编译 job 的数量</p>
-<p>执行（我这里指定了生成 log 文件）</p>
-<p><code>make -j32 2&gt;&amp;1 | tee build_20200628_1635.log</code></p>
-<p>编译成功后会出现一个 out 目录，ROM 镜像文件就在此处</p>
-<p>例如我的路径为：<code>~/aosp/out/target/product/sargo</code></p>
-<h2 id="烧写"><a href="#烧写" class="headerlink" title="烧写"></a>烧写</h2><p>设备进入 bootloader 并执行：<code>fastboot flashall -w</code>，其中 -w 代表清空数据</p>
-<p>烧写成功，开机！</p>
-<h2 id="制作自定义-AVD（Android-Virtual-Devices）-系统镜像"><a href="#制作自定义-AVD（Android-Virtual-Devices）-系统镜像" class="headerlink" title="制作自定义 AVD（Android Virtual Devices） 系统镜像"></a>制作自定义 AVD（Android Virtual Devices） 系统镜像</h2><p>很多小伙伴没有相应的真机，不过可以制作出自定义的 AVD 作为模拟器使用。</p>
-<p><code>lunch</code> 进入菜单时选择相应的模拟器，例如选择上图的 24，64 位的通用设备</p>
-<p>想要制作 AVD 系统镜像需要制作附加 <code>sdk</code> 和 <code>sdk_repo</code> 软件包</p>
-<p>执行</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make -j32 sdk sdk_repo</span><br></pre></td></tr></table></figure>
-
-<p>该操作可能会出现异常，例如</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818135050.png" alt></p>
-<p>这是由于没有编译这些工具导致的，解决办法是依次编译这些工具</p>
-<p>依次输入如下命令，后面工具视情况而定</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make libaapt2_jni</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make dmtracedump</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make etc1tool</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make deployagent</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make aapt</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make split-select</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make bcc_compat</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make apksigner</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make dx</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make layoutlib-legacy</span><br></pre></td></tr></table></figure>
-
-<p>编译好相关工具我们再次执行 <code>make -j32 sdk sdk_repo</code></p>
-<p>编译成功后会在 <code>out/host/linux-x86/sdk/aosp_x86_64</code> 目录下生成 <code>sdk-repo-linux-system-images-eng.[username].zip</code> 文件</p>
-<p>按照官方文档中使用镜像的方式我没有成功</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818135851.png" alt></p>
-<p>这里我使用了一个取巧的方式</p>
-<p>我们在 Android Studio 创建 AVD 时可选的镜像一般有三种，这里还是以 Android 10 为例</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818140305.png" alt></p>
-<p>Google Play，Google APIs，和默认的</p>
-<p>它们会下载到 SDK/system-images/android-29 中</p>
-<p>Google APIs 版本对应的目录就是 google_apis</p>
-<p>我们可以将我们编译出的 AVD 镜像 copy 到其中的一个目录</p>
-<p>例如，我将自定义的 AVD 镜像放置在了这里：</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818140734.png" alt></p>
-<p>我们在创建模拟器时选择自定义的 AVD 镜像即可创建出自己编译 ROM  的模拟器</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818141020.png" alt></p>
-<p>这里提供了我编译出来的自定义 AVD，不方便自己编译的小伙伴可以在此处下载</p>
-<p>链接：<a href="https://pan.baidu.com/s/1LIcuycoU4Ou42VsSBM_MuQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1LIcuycoU4Ou42VsSBM_MuQ</a><br>提取码：CAVD</p>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/08/18/Framework-Compile/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>
