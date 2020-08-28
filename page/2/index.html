@@ -284,7 +284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/01/Jetpack-dependencies/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -300,7 +300,7 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2020/03/01/Jetpack-dependencies/" class="post-title-link" itemprop="url">【背上Jetpack】Jetpack 主要依赖关系</a>
+              <a href="/2020/04/29/Jetpack-fragment-setMaxLifecycle/" class="post-title-link" itemprop="url">【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用</a>
             
           </h2>
         
@@ -317,7 +317,7 @@
                 
               
 
-              <time title="创建时间：2020-03-01 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-01T00:10:35+08:00">2020-03-01</time>
+              <time title="创建时间：2020-04-29 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-29T00:10:35+08:00">2020-04-29</time>
             </span>
           
             
@@ -328,7 +328,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-27 17:52:40" itemprop="dateModified" datetime="2020-08-27T17:52:40+08:00">2020-08-27</time>
+                <time title="修改时间：2020-08-28 10:02:34" itemprop="dateModified" datetime="2020-08-28T10:02:34+08:00">2020-08-28</time>
               </span>
             
           
@@ -347,7 +347,7 @@
           
 
           
-            <span id="/2020/03/01/Jetpack-dependencies/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack】Jetpack 主要依赖关系" title="阅读次数">
+            <span id="/2020/04/29/Jetpack-fragment-setMaxLifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -366,8 +366,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/03/01/Jetpack-dependencies/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/01/Jetpack-dependencies/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/04/29/Jetpack-fragment-setMaxLifecycle/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/29/Jetpack-fragment-setMaxLifecycle/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -381,7 +381,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>23k</span>
+              <span>1.6k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -391,7 +391,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>21 分钟</span>
+              <span>1 分钟</span>
             </span>
           
 
@@ -404,13 +404,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>在学习和使用 <code>jetpack</code> 组件时，总是被其 gradle 依赖搞的晕头转向，故在此整理 <code>jetpack</code> 主要组件的依赖，及传递关系</p>
-</blockquote>
+          <p>很多情况下，fragment 的生命周期上限应该低于 FragmentManager/Activity。例如，<code>ViewPager</code> 屏幕外的界面不应被 <code>resumed</code></p>
+<p>理想状态下，可以通过以下 API 实现</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">supportFragmentManager</span><br><span class="line">	  .beginTransaction()</span><br><span class="line">      .setMaxLifecycle(fragment, Lifecycle.State.RESUMED)</span><br><span class="line">      .commit()</span><br></pre></td></tr></table></figure>
+
+<p>将最大生命周期设置为 <code>Lifecycle.State.RESUMED</code> 将有效地消除限制（因为这是最高生命周期状态）</p>
+<p>这将允许废弃 <code>setUserVisibleHint()</code> API</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/03/01/Jetpack-dependencies/#more" rel="contents">
+              <a class="btn" href="/2020/04/29/Jetpack-fragment-setMaxLifecycle/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -443,7 +446,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -459,7 +462,7 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2020/02/29/Jetpack-androidx-activity-fragment/" class="post-title-link" itemprop="url">【背上Jetpack】AdroidX下使用Activity和Fragment的变化</a>
+              <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/" class="post-title-link" itemprop="url">【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置</a>
             
           </h2>
         
@@ -476,7 +479,7 @@
                 
               
 
-              <time title="创建时间：2020-02-29 00:10:35" itemprop="dateCreated datePublished" datetime="2020-02-29T00:10:35+08:00">2020-02-29</time>
+              <time title="创建时间：2020-04-09 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-09T00:10:35+08:00">2020-04-09</time>
             </span>
           
             
@@ -487,7 +490,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:12:04" itemprop="dateModified" datetime="2020-03-24T09:12:04+08:00">2020-03-24</time>
+                <time title="修改时间：2020-08-28 10:13:11" itemprop="dateModified" datetime="2020-08-28T10:13:11+08:00">2020-08-28</time>
               </span>
             
           
@@ -506,7 +509,7 @@
           
 
           
-            <span id="/2020/02/29/Jetpack-androidx-activity-fragment/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack】AdroidX下使用Activity和Fragment的变化" title="阅读次数">
+            <span id="/2020/04/09/Jetpack-Recyclerview-Scoroll/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -525,8 +528,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/02/29/Jetpack-androidx-activity-fragment/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/29/Jetpack-androidx-activity-fragment/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/04/09/Jetpack-Recyclerview-Scoroll/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/Jetpack-Recyclerview-Scoroll/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -540,7 +543,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>6k</span>
+              <span>3.2k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -550,7 +553,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>5 分钟</span>
+              <span>3 分钟</span>
             </span>
           
 
@@ -563,22 +566,78 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>原文：<a href="https://medium.com/@miloszlewandowski/how-androidx-changes-the-way-we-work-with-activities-and-fragments-73b88d157678" target="_blank" rel="noopener">How AndroidX changes the way we work with Activities and Fragments</a></p>
-<p>作者：<a href="https://medium.com/@miloszlewandowski" target="_blank" rel="noopener">Miłosz Lewandowski</a></p>
-<p>译者：<a href="http://www.yangyunzhao.com/" target="_blank" rel="noopener">Fly_with24</a></p>
+          
+            <h2 id="被我忽视的更新"><a href="#被我忽视的更新" class="headerlink" title="被我忽视的更新"></a>被我忽视的更新</h2><p><code>androidx recyclerview 1.2.0-alpha02</code> 版本添加了新功能 <a href="https://developer.android.com/reference/androidx/recyclerview/widget/MergeAdapter" target="_blank" rel="noopener">MergeAdapter</a>，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 <a href="https://juejin.im/post/5e86ffea51882573ba207a19" target="_blank" rel="noopener">【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer</a></p>
+<p>该版本中还有一个改动：<strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，帮助开发者恢复 RecyclerView 的状态</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png" alt="recyclerview update"></p>
+<p>我对这个功能并没有什么感觉。众所周知，Android 中的 View 内部是有着状态保存和恢复的方法的。RecyclerView 也是如此，它可以恢复自身已滚动的位置</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512110411.png" alt="View 内部恢复状态"></p>
+<p>有关状态保存的内容可以参见 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
+<p>真实情况也是如此</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111315.gif" alt="RecyclerView 内部可以恢复滚动位置"></p>
+<h2 id="意外发现"><a href="#意外发现" class="headerlink" title="意外发现"></a>意外发现</h2><p>最近看到 <a href="https://medium.com/@florina.muntenescu?source=post_page-----a8fbdc9a9334----------------------" target="_blank" rel="noopener">Florina Muntenescu</a> 的 <a href="https://medium.com/androiddevelopers/restore-recyclerview-scroll-position-a8fbdc9a9334" target="_blank" rel="noopener">Restore RecyclerView scroll position</a> ，其中介绍了 <strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，这勾起了我的兴趣</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111720.png" alt="意外发现"></p>
+<p>如文中描述，RecyclerView 在 activity/fragment 重建时失去滚动位置是因为 Adapter 中的数据是 <strong>异步</strong> 加载的，当 RecyclerView layout 时数据并没有加载，因此也恢复不了之前的位置状态。一个比较简单的例子是使用 Navigation 组件进行导航，返回时 fragment 中的 RecyclerView 由于再次调用接口获取数据，导致其滑动位置失去</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512113141.gif" alt="延迟加载数据，无法恢复滚动位置"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>有几种方法可以保证 RecyclerView 恢复到正确的滚动位置，最好的办法是借助缓存，ViewModel 或 Repository 中缓存要显示的数据，确保始终在第一个布局传入前在 Adapter 上设置数据。也有一些其他的方案，这些方案要么太复杂，要么不够优雅</p>
+<p><code>recyclerview:1.2.0-alpha02</code> 中的解决方案是提供一个新的 Adapter 方法，该方法允许设置状态恢复策略，它有三个选项</p>
+<ul>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#ALLOW" target="_blank" rel="noopener">ALLOW</a></li>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT_WHEN_EMPTY" target="_blank" rel="noopener">PREVENT_WHEN_EMPTY</a></li>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT" target="_blank" rel="noopener">PREVENT</a></li>
+</ul>
+<h3 id="ALLOW"><a href="#ALLOW" class="headerlink" title="ALLOW"></a>ALLOW</h3><p>这是 <strong>默认</strong> 的状态，它会立即恢复 RecyclerView 的状态，该种策略无法解决延迟加载的数据的问题，可以使用 <code>PREVENT_WHEN_EMPTY</code></p>
+<h3 id="PREVENT-WHEN-EMPTY"><a href="#PREVENT-WHEN-EMPTY" class="headerlink" title="PREVENT_WHEN_EMPTY"></a>PREVENT_WHEN_EMPTY</h3><p>仅当 Adapter 不为空（adapter.getItemCount() &gt; 0）时，才恢复 RecyclerView 状态。 如果您的数据是异步加载的，那么 RecyclerView 会一直等到数据加载完毕，然后状态才能恢复。 如果您有默认 item（例如 Header 或 加载指示器）作为适配器的一部分，则应该使用<code>PREVENT</code> 选项，除非使用 MergeAdapter 添加了默认 item。 MergeAdapter 等待所有适配器准备就绪，然后才恢复状态</p>
+<h3 id="PREVENT"><a href="#PREVENT" class="headerlink" title="PREVENT"></a>PREVENT</h3><p>状态不会恢复，直到配置了 <code>ALLOW</code> 或者 <code>PREVENT_WHEN_EMPTY</code></p>
+<p>使用方式如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY</span><br></pre></td></tr></table></figure>
+
+<p><strong>加入了上面的配置后即使是异步加载数据也能恢复 RecyclerView 的位置</strong></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512114332.gif" alt="设置 PREVENT_WHEN_EMPTY"></p>
+<h2 id="追踪引入过程"><a href="#追踪引入过程" class="headerlink" title="追踪引入过程"></a>追踪引入过程</h2><p>老规矩，我们沿着官方的 commit log 来看看其实现原理</p>
+<p>首先我们看看 <a href="https://issuetracker.google.com/issues/146365793" target="_blank" rel="noopener">IssueTracker 上提的 Feature</a></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512115048.png" alt="IssueTracker"></p>
+<p>表达的意思也很简单，就是当加载异步数据时 RecyclerView 的位置状态无法恢复，Adapter 应该提供相关的解决方案</p>
+<p>有意思的是，实现该功能时还重新实现了前一个版本的逻辑，我在 git commit log 中看到了 revert 操作</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512140140.png" alt="revert操作"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512120004.png" alt></p>
+<p>为了防止 <code>LayoutManager#onRestore</code> 执行多次，没有采用最开始的实现方式。但 Yigit Boyar (这个提交的开发者) 仍然希望使用最开始的实现方式，但是  <code>LayoutManager#onRestoreInstance</code> 的状态时 public ，因此只能选取一个折中的方案</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141210.png" alt="新的实现方案"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141445.png" alt="无奈之举"></p>
+<p>过去，开发者会无意间调用 <code>onRestoreInstanceState(State)</code> 方法。例如，一些开发者已使用它来手动设置自己更新的状态，这样即使在此状态之前已恢复，在此处传递状态也将导致 LayoutManager 接收它并相应地更新其内部状态。因此，即使看起来好像很奇怪，也必须始终调用 <code>requestLayout</code> 来保留功能</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>接下来我们来分析这部分源码，内容很少，所以我们详细看下</p>
+<p>首先是引入 <code>StateRestorationPolicy</code>的枚举</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143600.png" alt></p>
+<p>然后需要提供 <code>setStateRestorationPolicy</code> 和 <code>getStateRestorationPolicy</code> 方法，此时我们还需要一个方法来判断是否要将 SavedState 传递给 LayoutManager</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143459.png" alt></p>
+<p>前面的 <code>setStateRestorationPolicy</code> 方法中 调用了 <code>notifyStateRestorationPolicyChanged</code>，而 <code>notifyStateRestorationPolicyChanged</code> 为静态类 <code>AdapterDataObservable</code> 中的方法，该类中的其他方法我们也很熟悉，均是刷新 Adapter 中数据的方法。</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143858.png" alt="notifyStateRestorationPolicyChanged"></p>
+<p>而 <code>notifyStateRestorationPolicyChanged</code> 中调用了 mObservers list 中元素的 <code>onStateRestorationPolicyChanged</code> 方法，通过源码我们得知该 list 中的元素类型为 <code>AdapterDataObserver</code>，因此还需要在 <code>AdapterDataObserver</code> 中加入 <code>onStateRestorationPolicyChanged</code> 方法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144501.png" alt="onStateRestorationPolicyChanged "></p>
+<p>该方法是个空实现，而 <code>RecyclerViewDataObserver</code> 重写了该方法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144716.png" alt="RecyclerViewDataObserver "></p>
+<p>配置恢复策略以及恢复策略变化时的监听都有了，接下来要做的就是如果之前有待恢复的装则恢复之前的状态</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512145152.png" alt="恢复状态"></p>
+<blockquote>
+<p>注意：发布之前 <code>StateRestorationPolicy</code> 叫做 <code>StateRestorationStrategy</code>，后来命名为 <code>StateRestorationPolicy</code>，alpha 版本的库可能随时更改 API 的命名和删除 API，因此查看这部分源码的同学请注意</p>
 </blockquote>
-<p>过去的一段时间，<code>AndroidX</code> 软件包下的 <code>Activity/Fragmet</code> 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程规则和模式。</p>
-<p>本文中描述的所有功能现在都可以在稳定的 <code>AndroidX</code> 软件包中使用，它们在去年均已发布或移至稳定版本。</p>
-          <!--noindex-->
+<p>至此，相关的源码都在这里了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>StateRestorationPolicy</code> 提供了 RecyclerView 异步加载数据恢复滚动位置的解决方案。原理就是通过配置 <code>StateRestorationPolicy</code> 来改变恢复策略，同时在策略改变时调用 <code>requestLayout</code> 方法。在 <code>dispatchLayoutStep2()</code> (该方法会在 onLayout 和 measure 方法中调用) 方法中恢复状态(如果 <code>canRestoreState()</code> 返回 true)</p>
+<p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo/tree/master/demo_recyclerview_scroll" target="_blank" rel="noopener">demo 地址</a></p>
+<p><strong>一点思考：我们都知道 ViewPager2 是使用 RecyclerView 实现的，那么借助本文介绍的 API 可以做点什么吗？</strong></p>
+<p>欢迎各位小伙伴在评论区留言，说说你的想法</p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200508153754.jpg" alt></p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/02/29/Jetpack-androidx-activity-fragment/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -606,7 +665,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/29/relearn-task-back-stack/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Jetpack-DataBinding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -622,7 +681,7 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2019/11/29/relearn-task-back-stack/" class="post-title-link" itemprop="url">【重学Android读书笔记】Activity的任务栈与返回栈</a>
+              <a href="/2020/04/09/Jetpack-DataBinding/" class="post-title-link" itemprop="url">【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？</a>
             
           </h2>
         
@@ -639,156 +698,7 @@
                 
               
 
-              <time title="创建时间：2019-11-29 17:42:00" itemprop="dateCreated datePublished" datetime="2019-11-29T17:42:00+08:00">2019-11-29</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2019/11/29/relearn-task-back-stack/" class="post-meta-item leancloud_visitors" data-flag-title="【重学Android读书笔记】Activity的任务栈与返回栈" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/11/29/relearn-task-back-stack/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/11/29/relearn-task-back-stack/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>25k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>22 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>订阅 <a href="https://xiaozhuanlan.com/topic/9074561823" target="_blank" rel="noopener">重学安卓</a> 很久了，最近在整理读书笔记，在此记录之。</p>
-<p>在此隆重推荐这位大佬 KunMinX</p>
-<p>本文记录Activity任务栈与返回栈相关内容的疑问与探索</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/11/29/relearn-task-back-stack/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/30/Xposed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2019/08/30/Xposed/" class="post-title-link" itemprop="url">【流水账】Xposed模块开发</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-30 17:18:57" itemprop="dateCreated datePublished" datetime="2019-08-30T17:18:57+08:00">2019-08-30</time>
+              <time title="创建时间：2020-04-09 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-09T00:10:35+08:00">2020-04-09</time>
             </span>
           
             
@@ -799,7 +709,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 17:45:48" itemprop="dateModified" datetime="2019-12-02T17:45:48+08:00">2019-12-02</time>
+                <time title="修改时间：2020-04-10 16:49:44" itemprop="dateModified" datetime="2020-04-10T16:49:44+08:00">2020-04-10</time>
               </span>
             
           
@@ -809,7 +719,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
 
                 
                 
@@ -818,7 +728,7 @@
           
 
           
-            <span id="/2019/08/30/Xposed/" class="post-meta-item leancloud_visitors" data-flag-title="【流水账】Xposed模块开发" title="阅读次数">
+            <span id="/2020/04/09/Jetpack-DataBinding/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -837,8 +747,1137 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/08/30/Xposed/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/30/Xposed/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/04/09/Jetpack-DataBinding/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/Jetpack-DataBinding/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>16k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>14 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><a href="https://juejin.im/post/5e834bb5f265da480d61668d" target="_blank" rel="noopener">LiveData 篇</a> 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/09/Jetpack-DataBinding/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/" class="post-title-link" itemprop="url">【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-09 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-09T00:10:35+08:00">2020-04-09</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:11:05" itemprop="dateModified" datetime="2020-08-28T10:11:05+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本系列文章介绍 Jetpack 组件库的更新<br><br>一直以来， fragment 的 api 都非常难用，官方也承认这一点。一个月前，fragment 中的 <code>onActivityCreated()</code> 被弃用了</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/31/Jetpack-LiveData/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/31/Jetpack-LiveData/" class="post-title-link" itemprop="url">【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-31 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-31T00:10:35+08:00">2020-03-31</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-20 17:10:31" itemprop="dateModified" datetime="2020-04-20T17:10:31+08:00">2020-04-20</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/31/Jetpack-LiveData/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/31/Jetpack-LiveData/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/31/Jetpack-LiveData/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>11k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>10 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>之前我们讨论过 <a href="https://juejin.im/post/5e786d415188255e00661a4e" target="_blank" rel="noopener">ViewModel 的职能边界</a> ，得益于 ViewModel 的生命周期更长，我们可以在 activity 重建后将数据传递给 activity ，也可以避免内存泄漏。但是如果不是每次需要就获取数据，而是当每次有新数据时通知我们，应该怎么办？</p>
+</blockquote>
+<p>本文介绍 <code>LiveData</code> ，一个 <strong>生命周期感知的，可观察的，数据持有者</strong>。同时还会简单分析 <code>LiveData</code> 的源码实现</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/31/Jetpack-LiveData/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/30/Jetpack-Lifecycle/" class="post-title-link" itemprop="url">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-30T00:10:35+08:00">2020-03-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-10 16:45:39" itemprop="dateModified" datetime="2020-04-10T16:45:39+08:00">2020-04-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/30/Jetpack-Lifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/30/Jetpack-Lifecycle/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/30/Jetpack-Lifecycle/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>10k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>9 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码</p>
+</blockquote>
+<p>本文介绍 <code>Lifecycle</code> 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment ，帮助您对 <code>Lifecycle</code> 有一个感性的认识</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/30/Jetpack-Lifecycle/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/23/Jetpack-ViewModel/" class="post-title-link" itemprop="url">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-23 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-23T00:10:35+08:00">2020-03-23</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:26:41" itemprop="dateModified" datetime="2020-03-24T09:26:41+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/23/Jetpack-ViewModel/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/23/Jetpack-ViewModel/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/23/Jetpack-ViewModel/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>11k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>10 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png" alt="目录"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 <code>Presenter</code> ）</p>
+</blockquote>
+<p>但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？</p>
+<ul>
+<li>开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库）</li>
+<li>由于 UI 数据的持有者的生命周期可能比 activity 长，因此开发者还需要避免出现内存泄漏的问题</li>
+</ul>
+<p>如何解决上述问题？ViewModel</p>
+<p><strong>本文重点介绍 ViewModel 的职责（what）以及重点功能的实现原理（how），即使您不使用 <code>Jetpack MVVM</code> 架构，也要了解一下 ViewModel</strong></p>
+<p>ViewModel 的原理部分要求您了解 activity 的启动流程，这部分内容网上文章很多，本文不再赘述</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/23/Jetpack-ViewModel/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/19/Jetpack-ViewModel-SaveState/" class="post-title-link" itemprop="url">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-19 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-19T00:10:35+08:00">2020-03-19</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:27:06" itemprop="dateModified" datetime="2020-03-24T09:27:06+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/19/Jetpack-ViewModel-SaveState/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/19/Jetpack-ViewModel-SaveState/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/19/Jetpack-ViewModel-SaveState/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>12k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>11 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家都知道 activity 有着一套 <code>onSaveInstanceState-onRestoreInstanceState</code> 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验</p>
+<p>在 androidx 下，提供了 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库帮助 activity 和 fragment 处理状态保存和恢复</p>
+</blockquote>
+<p>本文默认您对状态保存机制有一定了解，这部分内容请移步 <a href="https://developer.android.com/topic/libraries/architecture/saving-states" target="_blank" rel="noopener">Saving UI States</a></p>
+<p>此外，关于 android 下的进程管理，推荐 Ian Lake 的 <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
+<p>本文介绍了 androidx 下 <code>SavedState</code> 如何帮助 activity 和 fragment 处理状态的保存和恢复，同时介绍 <code>viewmodel-savedstate</code> 库，以及在开发过程中正确使用状态保存的姿势</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/19/Jetpack-ViewModel-SaveState/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/Jetpack-fragment-back-stack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/16/Jetpack-fragment-back-stack/" class="post-title-link" itemprop="url">【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-16 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-16T00:10:35+08:00">2020-03-16</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:27:49" itemprop="dateModified" datetime="2020-03-24T09:27:49+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/16/Jetpack-fragment-back-stack/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/16/Jetpack-fragment-back-stack/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/16/Jetpack-fragment-back-stack/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>7.5k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>7 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p><a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">上一篇</a> 我们介绍了 <code>OnBackPressedDispather</code> ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 <a href="https://github.com/Flywith24/Flywith24-Fragment-Demo" target="_blank" rel="noopener">demo</a></p>
+</blockquote>
+<p>如果您对 activity 对任务栈和返回栈不是很了解，可以移步  <a href="https://medium.com/androiddevelopers/tasks-and-the-back-stack-dbb7c3b0f6d4" target="_blank" rel="noopener">Tasks and the Back Stack</a></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/03/16/Jetpack-fragment-back-stack/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/Jetpack-OnBackPressedDispatcher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/03/14/Jetpack-OnBackPressedDispatcher/" class="post-title-link" itemprop="url">【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-14 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-14T00:10:35+08:00">2020-03-14</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-24 09:19:53" itemprop="dateModified" datetime="2020-03-24T09:19:53+08:00">2020-03-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/03/14/Jetpack-OnBackPressedDispatcher/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/03/14/Jetpack-OnBackPressedDispatcher/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/14/Jetpack-OnBackPressedDispatcher/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -876,923 +1915,12 @@
 
       
           <blockquote>
-<p>写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 <code>how to</code> 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。</p>
-<p>本篇博客是记录一些学习 <code>Xposed</code>模块开发时知识的整理。</p>
+<p>这两天在准备写 fragment 返回栈的文章，但是发现必须先介绍一下 OnBackPressedDispatcher ，所以这是一篇介绍 what 的文章，喜欢一手资料的可以移步 <a href="https://developer.android.google.cn/reference/kotlin/androidx/activity/OnBackPressedDispatcher" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/08/30/Xposed/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/iptabels/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2019/08/29/iptabels/" class="post-title-link" itemprop="url">【流水账】iptables 常用指令</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-29 10:10:35" itemprop="dateCreated datePublished" datetime="2019-08-29T10:10:35+08:00">2019-08-29</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 17:45:48" itemprop="dateModified" datetime="2019-12-02T17:45:48+08:00">2019-12-02</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ROM/" itemprop="url" rel="index"><span itemprop="name">ROM</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2019/08/29/iptabels/" class="post-meta-item leancloud_visitors" data-flag-title="【流水账】iptables 常用指令" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/08/29/iptabels/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/29/iptabels/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>7.1k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>6 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 <code>how to</code> 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。</p>
-<p>该文总结了 <code>iptables</code> 常用的指令。<code>iptables</code> 详细内容请看双印大佬 <a href="http://www.zsythink.net/archives/tag/iptables/page/2/" target="_blank" rel="noopener">iptables 详解系列</a></p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/08/29/iptabels/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/13/multi-project-one-module/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2019/04/13/multi-project-one-module/" class="post-title-link" itemprop="url">多个项目添加依赖同一个模块</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-13 15:05:24" itemprop="dateCreated datePublished" datetime="2019-04-13T15:05:24+08:00">2019-04-13</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 17:45:48" itemprop="dateModified" datetime="2019-12-02T17:45:48+08:00">2019-12-02</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2019/04/13/multi-project-one-module/" class="post-meta-item leancloud_visitors" data-flag-title="多个项目添加依赖同一个模块" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/04/13/multi-project-one-module/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/13/multi-project-one-module/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>912</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>1 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug</p>
-<p>因此我们需要引用module ，而不是复制module，实现方法如下</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/13/multi-project-one-module/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/Mac-decompile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2017/07/06/Mac-decompile/" class="post-title-link" itemprop="url">Mac下Android反编译初探</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-06 16:46:14" itemprop="dateCreated datePublished" datetime="2017-07-06T16:46:14+08:00">2017-07-06</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2017/07/06/Mac-decompile/" class="post-meta-item leancloud_visitors" data-flag-title="Mac下Android反编译初探" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/07/06/Mac-decompile/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/07/06/Mac-decompile/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>645</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>1 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>工作第四天，被要求学习逆向开发方面的知识，于是先将自己之前写的未经混淆的apk反编译，记录之。</p>
-</blockquote>
-<p><a href="http://blog.csdn.net/wj_november/article/details/51527286" target="_blank" rel="noopener">感谢该博文提供的思路</a></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/06/Mac-decompile/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/04/Handler/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2017/07/04/Handler/" class="post-title-link" itemprop="url">Handler深入分析</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-04 07:46:14" itemprop="dateCreated datePublished" datetime="2017-07-04T07:46:14+08:00">2017-07-04</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/app/" itemprop="url" rel="index"><span itemprop="name">app</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2017/07/04/Handler/" class="post-meta-item leancloud_visitors" data-flag-title="Handler深入分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/07/04/Handler/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/07/04/Handler/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>5k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>5 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/04/Handler/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/2-2-grade/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2017/06/18/2-2-grade/" class="post-title-link" itemprop="url">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2017-06-18 23:57:00" itemprop="dateCreated datePublished" datetime="2017-06-18T23:57:00+08:00">2017-06-18</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2017/06/18/2-2-grade/" class="post-meta-item leancloud_visitors" data-flag-title="2.2从教务系统查询成绩并计算绩点——山东建筑大学为例" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/06/18/2-2-grade/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/06/18/2-2-grade/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>6k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>5 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！</p>
-</blockquote>
-<p> <a href="http://blog.csdn.net/pleasecallmewhy/article/details/9305229" target="_blank" rel="noopener">感谢该博客提供的思路</a></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/06/18/2-2-grade/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/2-1-first-program/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2017/06/18/2-1-first-program/" class="post-title-link" itemprop="url">2.1开始第一个爬虫程序</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2017-06-18 10:05:00" itemprop="dateCreated datePublished" datetime="2017-06-18T10:05:00+08:00">2017-06-18</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2017/06/18/2-1-first-program/" class="post-meta-item leancloud_visitors" data-flag-title="2.1开始第一个爬虫程序" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/06/18/2-1-first-program/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/06/18/2-1-first-program/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>1.3k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>1 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1-安装IDE以及hello-world"><a href="#1-安装IDE以及hello-world" class="headerlink" title="1. 安装IDE以及hello world"></a>1. 安装IDE以及hello world</h3><blockquote>
-<p>一个优秀的IDE可以极大地提高工作效率，在这里我选择使用JetBrains公司的PyCharm。是不是有些眼熟？没错，IDEA 和Android Studio就是他们做的，JetBrains出品，必属精品。</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/06/18/2-1-first-program/#more" rel="contents">
+              <a class="btn" href="/2020/03/14/Jetpack-OnBackPressedDispatcher/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1822,7 +1950,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1858,7 +1986,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1883,7 +2011,9 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1936,7 +2066,15 @@
         
           
         
-        <span class="site-state-item-count">19</span>
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -2076,12 +2214,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">179k</span>
+    <span title="站点总字数">196k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:42</span>
+    <span title="站点阅读时长">2:58</span>
   
   
     <span class="post-meta-divider">|</span>

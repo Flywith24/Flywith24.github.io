@@ -284,7 +284,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/16/framework-op/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/Framework-Compile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -300,7 +300,1530 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2019/08/16/framework-op/" class="post-title-link" itemprop="url">【流水账】记录Framework开发的常用指令</a>
+              <a href="/2020/08/18/Framework-Compile/" class="post-title-link" itemprop="url">【折腾Framework】源码编译与烧写</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-18 14:11:46" itemprop="dateCreated datePublished" datetime="2020-08-18T14:11:46+08:00">2020-08-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:23:08" itemprop="dateModified" datetime="2020-08-28T10:23:08+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ROM/" itemprop="url" rel="index"><span itemprop="name">ROM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/08/18/Framework-Compile/" class="post-meta-item leancloud_visitors" data-flag-title="【折腾Framework】源码编译与烧写" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/18/Framework-Compile/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/Framework-Compile/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>环境搭建等内容网上资料很多，这里不再赘述。</p>
+<p>此处以 Pixel 3a &amp; Android 10 为例介绍如何编译 ROM 包并烧录</p>
+<p>手上没有真机的小伙伴可以选择制作模拟器，本文最后提供了基于 Android 10 编译的自定义 AVD 下载链接</p>
+<h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><p><a href="https://source.android.com/setup/build/initializing" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>这里推荐使用 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">清华镜像</a></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628155443.png" alt></p>
+<p>下载 <a href="https://mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar" target="_blank" rel="noopener">每月更新的初始化包</a> 并解压</p>
+<h2 id="下载驱动（可选）"><a href="#下载驱动（可选）" class="headerlink" title="下载驱动（可选）"></a>下载驱动（可选）</h2><p>如果要刷到真机上，需要下载相应机型的驱动，进入 <a href="https://developers.google.com/android/drivers" target="_blank" rel="noopener">该链接</a>，选择相应的机型对应的 Android 版本号和驱动</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628160058.png" alt></p>
+<p>我这里选择的是 Android 10.0.0（QQ3A.200605.002.A1）</p>
+<p>将两个驱动文件下载并解压，并执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./extract-qcom-sargo.sh</span><br><span class="line">./extract-google_devices-sargo.sh</span><br></pre></td></tr></table></figure>
+
+<p>点击 Enter 并输入 I ACCEPT 同意 License</p>
+<p>根据 Build 在 <a href="https://source.android.com/setup/start/build-numbers" target="_blank" rel="noopener">该链接</a> 中找到相匹配的分支，本例中对应 <code>android-10.0.0_r39</code></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628160259.png" alt="QQ3A.200605.002.A1 对应的分支"></p>
+<h2 id="选择分支"><a href="#选择分支" class="headerlink" title="选择分支"></a>选择分支</h2><p>执行完上述操作如果直接编译的话实际上是编译的 master 分支，我们还需要切换到想要编译的分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo init -u git://mirrors.ustc.edu.cn/aosp/platform/manifest -b android-10.0.0_r39 --depth=1</span><br><span class="line">repo sync -j8</span><br><span class="line">repo start android-10.0.0_r39 --all</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译与烧写"><a href="#编译与烧写" class="headerlink" title="编译与烧写"></a>编译与烧写</h2><p>在源码目录执行</p>
+<p><code>source build/envsetup.sh</code></p>
+<p><code>lunch</code> 进入菜单</p>
+<p>选择相应的版本</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200628162935.png" alt></p>
+<p>我这里选择的是 19</p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>接着便可以进行编译了，可以使用 <code>make -j</code> 命令，其中 j 代表的是编译 job 的数量</p>
+<p>执行（我这里指定了生成 log 文件）</p>
+<p><code>make -j32 2&gt;&amp;1 | tee build_20200628_1635.log</code></p>
+<p>编译成功后会出现一个 out 目录，ROM 镜像文件就在此处</p>
+<p>例如我的路径为：<code>~/aosp/out/target/product/sargo</code></p>
+<h2 id="烧写"><a href="#烧写" class="headerlink" title="烧写"></a>烧写</h2><p>设备进入 bootloader 并执行：<code>fastboot flashall -w</code>，其中 -w 代表清空数据</p>
+<p>烧写成功，开机！</p>
+<h2 id="制作自定义-AVD（Android-Virtual-Devices）-系统镜像"><a href="#制作自定义-AVD（Android-Virtual-Devices）-系统镜像" class="headerlink" title="制作自定义 AVD（Android Virtual Devices） 系统镜像"></a>制作自定义 AVD（Android Virtual Devices） 系统镜像</h2><p>很多小伙伴没有相应的真机，不过可以制作出自定义的 AVD 作为模拟器使用。</p>
+<p><code>lunch</code> 进入菜单时选择相应的模拟器，例如选择上图的 24，64 位的通用设备</p>
+<p>想要制作 AVD 系统镜像需要制作附加 <code>sdk</code> 和 <code>sdk_repo</code> 软件包</p>
+<p>执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make -j32 sdk sdk_repo</span><br></pre></td></tr></table></figure>
+
+<p>该操作可能会出现异常，例如</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818135050.png" alt></p>
+<p>这是由于没有编译这些工具导致的，解决办法是依次编译这些工具</p>
+<p>依次输入如下命令，后面工具视情况而定</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> make libaapt2_jni</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make dmtracedump</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make etc1tool</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make deployagent</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make aapt</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make split-select</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make bcc_compat</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make apksigner</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make dx</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span> make layoutlib-legacy</span><br></pre></td></tr></table></figure>
+
+<p>编译好相关工具我们再次执行 <code>make -j32 sdk sdk_repo</code></p>
+<p>编译成功后会在 <code>out/host/linux-x86/sdk/aosp_x86_64</code> 目录下生成 <code>sdk-repo-linux-system-images-eng.[username].zip</code> 文件</p>
+<p>按照官方文档中使用镜像的方式我没有成功</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818135851.png" alt></p>
+<p>这里我使用了一个取巧的方式</p>
+<p>我们在 Android Studio 创建 AVD 时可选的镜像一般有三种，这里还是以 Android 10 为例</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818140305.png" alt></p>
+<p>Google Play，Google APIs，和默认的</p>
+<p>它们会下载到 SDK/system-images/android-29 中</p>
+<p>Google APIs 版本对应的目录就是 google_apis</p>
+<p>我们可以将我们编译出的 AVD 镜像 copy 到其中的一个目录</p>
+<p>例如，我将自定义的 AVD 镜像放置在了这里：</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818140734.png" alt></p>
+<p>我们在创建模拟器时选择自定义的 AVD 镜像即可创建出自己编译 ROM  的模拟器</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200818141020.png" alt></p>
+<p>这里提供了我编译出来的自定义 AVD，不方便自己编译的小伙伴可以在此处下载</p>
+<p>链接：<a href="https://pan.baidu.com/s/1LIcuycoU4Ou42VsSBM_MuQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1LIcuycoU4Ou42VsSBM_MuQ</a><br>提取码：CAVD</p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/01/Tips-ProcessLifecycle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/07/01/Tips-ProcessLifecycle/" class="post-title-link" itemprop="url">【奇技淫巧】使用 ProcessLifecycle 优雅地监听应用前后台切换</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-07-01 14:11:46" itemprop="dateCreated datePublished" datetime="2020-07-01T14:11:46+08:00">2020-07-01</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:39:35" itemprop="dateModified" datetime="2020-08-28T10:39:35+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/07/01/Tips-ProcessLifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】使用 ProcessLifecycle 优雅地监听应用前后台切换" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/01/Tips-ProcessLifecycle/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/01/Tips-ProcessLifecycle/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>5.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>5 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很高兴见到你，又来到了「奇技淫巧」系列，本系列介绍一些「骚操作」，可能不适合用于生产，但可以开拓思路</p>
+<p>前些天在群里看到有人讨论通过维护 activity 栈来监听程序前后台切换的问题。其实单纯监听程序的前后台切换完全不需要维护 activity 栈，而现在比较主流的做法是使用 <code>registerActivityLifecycleCallbacks</code>。而今天我来介绍一下使用 ProcessLifecycleOwner 来实现这一功能</p>
+<h2 id="lifecycle-process-库"><a href="#lifecycle-process-库" class="headerlink" title="lifecycle-process 库"></a>lifecycle-process 库</h2><p>Android Jetpack Lifecycle 组件有一个可选库：lifecycle-process，它可以为整个 app 进程提供一个 ProcessLifecycleOwner</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701110431.png" alt="lifecycle-process 引入"></p>
+<p>该库十分简单，只有四个文件</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701110904.png" alt="lifecycle-process"></p>
+<p><code>ProcessLifecycleOwnerInitializer</code> 借助 ContentProvider 拿到 Context，用于初始化操作</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701112017.png" alt="init"></p>
+<p><code>EmptyActivityLifecycleCallbacks</code> 为 <code>Application.ActivityLifecycleCallbacks</code> 的实现类，内部为空实现</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701112219.png" alt="EmptyActivityLifecycleCallbacks"></p>
+<p><code>LifecycleDispatcher</code> 通过 ReportFragment 来 hook 宿主的生命周期事件</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701113143.png" alt></p>
+<p>核心逻辑都在 ProcessLifecycleOwner 中</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701113324.png" alt="ProcessLifecycleOwner "></p>
+<p>该类提供了整个 app 进程的 lifecycle</p>
+<p>可以将其视为所有 activity 的 LifecycleOwner ，其中 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_CREATE" target="_blank" rel="noopener">Lifecycle.Event.ON_CREATE</a> 只会分发一次，而 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_DESTROY" target="_blank" rel="noopener">Lifecycle.Event.ON_DESTROY</a> 则永远不会分发</p>
+<p>其它的生命周期事件将按以下规则分发：</p>
+<p><code>ProcessLifecycleOwner</code> 会分发 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_START" target="_blank" rel="noopener">Lifecycle.Event.ON_START</a> 和 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_RESUME" target="_blank" rel="noopener">Lifecycle.Event.ON_RESUME</a> 事件（在第一个 activity 移动到这些事件时）</p>
+<p><a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_PAUSE" target="_blank" rel="noopener">Lifecycle.Event.ON_PAUSE</a> 与 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle.Event#ON_STOP" target="_blank" rel="noopener">Lifecycle.Event.ON_STOP</a> 会在最后一个 activity 移动到这些状态后 <strong>延迟</strong> 分发，该延迟足够长，以确保由于配置更改等操作重建 activity 后不会分发任何事件</p>
+<p>对于监听应用在前后台切换且不需要毫秒级的精度的场景，这十分有用</p>
+<h2 id="ProcessLifecycleOwner-源码解析"><a href="#ProcessLifecycleOwner-源码解析" class="headerlink" title="ProcessLifecycleOwner  源码解析"></a>ProcessLifecycleOwner  源码解析</h2><p>根据上图我们得知 <code>ProcessLifecycleOwner</code>  实现了 LifecycleOwner 接口</p>
+<p>由于在 <code>ProcessLifecycleOwnerInitializer</code> 中初始化时传入了 Context，因此 <code>ProcessLifecycleOwner</code>  在 attach 方法中借助 Context 拿到了 Application 实例，并调用了 <code>registerActivityLifecycleCallbacks</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">attach</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">    mHandler = <span class="keyword">new</span> Handler();</span><br><span class="line">    mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);</span><br><span class="line">    Application app = (Application) context.getApplicationContext();</span><br><span class="line">    app.registerActivityLifecycleCallbacks(<span class="keyword">new</span> EmptyActivityLifecycleCallbacks() </span><br><span class="line">        <span class="meta">@RequiresApi</span>(<span class="number">29</span>)</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPreCreated</span><span class="params">(@NonNull Activity activity,</span></span></span><br><span class="line"><span class="function"><span class="params">                @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//我们需要 ProcessLifecycleOwner 刚好在第一个 activity 的 LifecycleOwner started/resumed 之前获取 ON_START 和 ON_RESUME。</span></span><br><span class="line">            <span class="comment">//activity 的 LifecycleOwner 通过在 onCreate() 中添加 activity 注册的 callback 来获取 started/resumed 状态。</span></span><br><span class="line">            <span class="comment">//通过在 onActivityPreCreated() 中添加我们自己的 activity 注册的 callback，我们首先获得了回调，同时与 Activity 的 onStart()/ onResume()回调相比仍具有正确的相对顺序</span></span><br><span class="line">  		   </span><br><span class="line">            activity.registerActivityLifecycleCallbacks(<span class="keyword">new</span> EmptyActivityLifecycl</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPostStarted</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">                    activityStarted();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPostResumed</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">                    activityResumed();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Activity activity, Bundle savedInstanceStat</span></span></span><br><span class="line"><span class="function"><span class="params">            //仅在API <span class="number">29</span> 之前使用 ReportFragment，在此之后，我们可以使用在 onActivityPreCreated()</span> 中注册的 onActivityPostStarted 和 onActivityPostResumed 回调</span></span><br><span class="line"><span class="function">            <span class="title">if</span> <span class="params">(Build.VERSION.SDK_INT &lt; <span class="number">29</span>)</span> </span>&#123;</span><br><span class="line">                ReportFragment.get(activity).setProcessListener(mInitializationLi</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPaused</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">            activityPaused();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityStopped</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">            activityStopped();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>内部维护了 Started 和 Resumed 的数量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> mStartedCounter = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> mResumedCounter = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> mPauseSent = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">boolean</span> mStopSent = <span class="keyword">true</span>;</span><br></pre></td></tr></table></figure>
+
+<p>并在 activityStarted 和 activityResumed 方法中对 这两个数值进行 ++，并更改 lifecycle 状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activityStarted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mStartedCounter++;</span><br><span class="line">    <span class="keyword">if</span> (mStartedCounter == <span class="number">1</span> &amp;&amp; mStopSent) &#123;</span><br><span class="line">        mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);</span><br><span class="line">        mStopSent = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activityResumed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mResumedCounter++;</span><br><span class="line">    <span class="keyword">if</span> (mResumedCounter == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mPauseSent) &#123;</span><br><span class="line">            mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);</span><br><span class="line">            mPauseSent = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mHandler.removeCallbacks(mDelayedPauseRunnable);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 activityPaused 和 activityStopped 方法对这两个数值进行 –</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activityPaused</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mResumedCounter--;</span><br><span class="line">    <span class="keyword">if</span> (mResumedCounter == <span class="number">0</span>) &#123;</span><br><span class="line">        mHandler.postDelayed(mDelayedPauseRunnable, TIMEOUT_MS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">activityStopped</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mStartedCounter--;</span><br><span class="line">    dispatchStopIfNeeded();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在这里我们看到了上文提到的延迟操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用 handler 进行延迟操作</span></span><br><span class="line">mHandler.postDelayed(mDelayedPauseRunnable, TIMEOUT_MS);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 延迟 700 ms</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> TIMEOUT_MS = <span class="number">700</span>; <span class="comment">//mls</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Runnable mDelayedPauseRunnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 根据需要分发事件</span></span><br><span class="line">        dispatchPauseIfNeeded();</span><br><span class="line">        dispatchStopIfNeeded();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispatchPauseIfNeeded</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mResumedCounter == <span class="number">0</span>) &#123;</span><br><span class="line">        mPauseSent = <span class="keyword">true</span>;</span><br><span class="line">        mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dispatchStopIfNeeded</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mStartedCounter == <span class="number">0</span> &amp;&amp; mPauseSent) &#123;</span><br><span class="line">        mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);</span><br><span class="line">        mStopSent = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>源码就解析到这里，接下来我们看看如何使用吧</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>首先引入该库</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">"androidx.lifecycle:lifecycle-process:2.3.0-alpha05"</span></span><br></pre></td></tr></table></figure>
+
+<p>由于我们要自定义 lifecycleObserver，因此还需引入</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation <span class="string">"androidx.lifecycle:lifecycle-common-java8:2.3.0-alpha05"</span></span><br></pre></td></tr></table></figure>
+
+<p>首先创建 <code>ProcessLifecycleObserver</code> 类，实现 <code>DefaultLifecycleObserver</code> 接口，在相应的生命周期中打印 log</p>
+<p>接着在自定义 Application 中加入</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200701121028.png" alt></p>
+<p>这样便完成了！</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/1/173089686a09e8f3?w=1854&h=999&f=gif&s=2823298" alt="演示"></p>
+<p><a href="https://github.com/Flywith24/ProcessLifecycle-Demo" target="_blank" rel="noopener">Demo 在这里</a></p>
+<h2 id="系列文章"><a href="#系列文章" class="headerlink" title="系列文章"></a>系列文章</h2><ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】AndroidStudio Nexus3.x搭建Maven私服遇到问题及解决方案</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">【奇技淫巧】什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】gradle依赖查找太麻烦？这个插件可能帮到你</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e967f35f265da47d77cd4c3" target="_blank" rel="noopener">【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ebdfb0b6fb9a0436153db22" target="_blank" rel="noopener">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ec50ae46fb9a047a862124f" target="_blank" rel="noopener">【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ecde219e51d457841190d08" target="_blank" rel="noopener">【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ed9c92ce51d45789b35afa9" target="_blank" rel="noopener">【奇技淫巧】巧用 kotlin 扩展函数和 typealias 封装 带网络状态和解决「粘性」事件的 LiveData</a></li>
+</ul>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/Tips-Navagion+DynamicFeatureModule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/" class="post-title-link" itemprop="url">【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-20 14:11:46" itemprop="dateCreated datePublished" datetime="2020-05-20T14:11:46+08:00">2020-05-20</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:36:26" itemprop="dateModified" datetime="2020-08-28T10:36:26+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/05/20/Tips-Navagion+DynamicFeatureModule/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/20/Tips-Navagion+DynamicFeatureModule/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2.2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>androidx navigation 2.3.0</code> 加入了对 <code>dynamic feature module</code> 的导航支持，因此我们利用这个来分离出多个功能 module 来实现模块化</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200520170621.png" alt="navigation 2.3.0 更新"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/Tips-Coil/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/05/18/Tips-Coil/" class="post-title-link" itemprop="url">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-18 14:11:46" itemprop="dateCreated datePublished" datetime="2020-05-18T14:11:46+08:00">2020-05-18</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:36:58" itemprop="dateModified" datetime="2020-08-28T10:36:58+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/05/18/Tips-Coil/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/18/Tips-Coil/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/18/Tips-Coil/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>5.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>5 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="新的图片加载库——Coil"><a href="#新的图片加载库——Coil" class="headerlink" title="新的图片加载库——Coil"></a>新的图片加载库——Coil</h2><p><a href="https://coil-kt.github.io/coil/" target="_blank" rel="noopener">Coil</a> 是 <a href="https://www.instacart.com/" target="_blank" rel="noopener">Instacart</a> 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，<code>Okhttp</code>，<code>androidx.lifecycle</code>。<code>Coil</code> 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停</p>
+<p>默认情况下 <code>Coil</code> 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro" target="_blank" rel="noopener">Coroutines</a>, <a href="https://github.com/square/okhttp/blob/master/okhttp/src/main/resources/META-INF/proguard/okhttp3.pro" target="_blank" rel="noopener">OkHttp</a> 和 <a href="https://github.com/square/okio/blob/master/okio/src/jvmMain/resources/META-INF/proguard/okio.pro" target="_blank" rel="noopener">Okio</a> 添加规则</p>
+<h2 id="Coil-的优势"><a href="#Coil-的优势" class="headerlink" title="Coil 的优势"></a>Coil 的优势</h2><ul>
+<li>快速：<code>Coil</code> 进行了很多优化，包括内存和磁盘缓存，对内存中的图像进行采样，重新使用位图，自动暂停/取消请求等等</li>
+<li>轻量：<code>Coil</code> 在您的APK中添加了约 2000 种方法（对于已经使用 <code>OkHttp</code> 和 <code>Coroutines</code> 的应用程序），与 <code>Picasso</code> 相当，远少于 <code>Glide</code> 和 <code>Fresco</code></li>
+<li>易用：<code>Coil</code> 的 API 利用 Kotlin 的特性简化了样板代码</li>
+<li>现代：<code>Coil</code> 是 <code>Kotlin-first</code>，使用现代化的库，例如 <code>Coroutines</code>, <code>OkHttp</code>, <code>Okio</code>, 以及 <code>AndroidX Lifecycles</code></li>
+</ul>
+<p><code>Coil</code> 是以下名称的缩写：<strong>Coroutine Image Loader</strong></p>
+<h2 id="Artifacts"><a href="#Artifacts" class="headerlink" title="Artifacts"></a>Artifacts</h2><p><code>Coil</code> 拥有 5 个 artifact 并发布在 <code>mavenCentral()</code></p>
+<ul>
+<li><code>io.coil-kt:coil</code>：依赖于  <code>io.coil-kt:coil-base</code> 并且包含了 <code>Coil</code> 的单例和  <code>ImageView.load</code> 的扩展函数</li>
+<li><code>io.coil-kt:coil-base</code>：base 库，<strong>不包含</strong> <code>Coil</code> 的单例和  <code>ImageView.load</code> 的扩展函数，如果使用依赖注入，则可以使用该库</li>
+<li><code>io.coil-kt:coil-gif</code>：引入一系列解码器以支持解码 gif</li>
+<li><code>io.coil-kt:coil-svg</code>：引入一系列解码器以支持 svg</li>
+<li><code>io.coil-kt:coil-video</code>：包括两个 <a href="https://coil-kt.github.io/coil/api/coil-base/coil.fetch/-fetcher" target="_blank" rel="noopener">fetchers</a> ，以支持从 Android 支持的任何视频格式中提取和解码帧</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通使用引用</span></span><br><span class="line">implementation <span class="string">"io.coil-kt:coil:0.11.0"</span></span><br><span class="line"><span class="comment">// 使用依赖注入时或者制作基于 coil 的库引用</span></span><br><span class="line">implementation <span class="string">"io.coil-kt:coil-base:0.11.0"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Java-8"><a href="#Java-8" class="headerlink" title="Java 8"></a>Java 8</h2><p><code>Coil</code> 要求 Java 8，要通过 D8 启用 Java 8 调试，请将以下内容添加到 Gradle 脚本</p>
+<p>Gradle (<code>.gradle</code>)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all &#123;</span><br><span class="line">    kotlinOptions &#123;</span><br><span class="line">        jvmTarget = <span class="string">"1.8"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Gradle Kotlin DSL (<code>.gradle.kts</code>)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility = JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility = JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.withType&lt;KotlinCompile&gt; &#123;</span><br><span class="line">    kotlinOptions &#123;</span><br><span class="line">        jvmTarget = <span class="string">"1.8"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="ImageView-扩展函数"><a href="#ImageView-扩展函数" class="headerlink" title="ImageView 扩展函数"></a>ImageView 扩展函数</h3><p><code>io.coil-kt:coil</code> 提供了 类型安全的 ImageView 扩展函数</p>
+<p>在 ImageView 中加载图片，只需调用 load 扩展函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// URL</span></span><br><span class="line">imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Resource</span></span><br><span class="line">imageView.load(R.drawable.image)</span><br><span class="line"></span><br><span class="line"><span class="comment">// File</span></span><br><span class="line">imageView.load(File(<span class="string">"/path/to/image.jpg"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// And more...</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的请求等价于：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(imageView.context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .target(imageView)</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+
+<p>可选的请求配置可以通过 lambda 来操作</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>) &#123;</span><br><span class="line">    crossfade(<span class="literal">true</span>)</span><br><span class="line">    placeholder(R.drawable.image)</span><br><span class="line">    transformations(CircleCropTransformation())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Image-Loaders¶"><a href="#Image-Loaders¶" class="headerlink" title="Image Loaders¶"></a>Image Loaders<a href="https://coil-kt.github.io/coil/#image-loaders" target="_blank" rel="noopener">¶</a></h3><p><code>ImageLoader</code> 是执行请求的服务类。 他们处理缓存，数据获取，图像解码，请求管理，bitmap pool，内存管理等。 可以使用 builder 来创建和配置新实例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader.Builder(context)</span><br><span class="line">    .availableMemoryPercentage(<span class="number">0.25</span>)</span><br><span class="line">    .crossfade(<span class="literal">true</span>)</span><br><span class="line">    .build()</span><br></pre></td></tr></table></figure>
+
+<p>imageView.load 使用单例 <code>ImageLoader</code> 执行 <code>LoadRequest</code> 。 可以使用以下方式访问单例 <code>ImageLoader</code>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br></pre></td></tr></table></figure>
+
+<p>（可选）您可以创建自己的ImageLoader实例，并通过依赖项注入将它们注入：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader(context)</span><br></pre></td></tr></table></figure>
+
+<p>当您创建单个 <code>ImageLoader</code> 并在整个应用程序中共享时，<code>Coil</code> 的性能最佳。 这是因为每个 <code>ImageLoader</code> 都有自己的内存缓存，bitmap pool 和网络监听</p>
+<h3 id="Requests¶"><a href="#Requests¶" class="headerlink" title="Requests¶"></a>Requests<a href="https://coil-kt.github.io/coil/#requests" target="_blank" rel="noopener">¶</a></h3><p>有两种 Request 类型</p>
+<ul>
+<li><a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-load-request/" target="_blank" rel="noopener"><code>LoadRequest</code></a> 是一个生命周期范围的 request，支持 <a href="https://coil-kt.github.io/coil/api/coil-base/coil.target/-target/" target="_blank" rel="noopener"><code>Target</code></a>，<a href="https://coil-kt.github.io/coil/api/coil-base/coil.transition/-transition/" target="_blank" rel="noopener"><code>Transition</code></a> 等等</li>
+<li><a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-get-request/" target="_blank" rel="noopener"><code>GetRequest</code></a> 挂起并返回  <a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-request-result/" target="_blank" rel="noopener"><code>RequestResult</code></a></li>
+</ul>
+<p>如果要加载到自定义 target 中，可以执行 <code>LoadRequest</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .target &#123; drawable -&gt;</span><br><span class="line">        <span class="comment">// Handle the result.</span></span><br><span class="line">    &#125;</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+
+<p>要强制获取图像，请执行GetRequest：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = GetRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .build()</span><br><span class="line"><span class="keyword">val</span> drawable = imageLoader.execute(request).drawable</span><br></pre></td></tr></table></figure>
+
+<h3 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h3><p>如果您使用的是 <code>io.coil-kt:coil</code> ，您可以使用以下任意方式设置 <code>ImageLoader</code> 的实例</p>
+<p>在 Application 中实现 <code>ImageLoaderFactory</code>（推荐）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> : <span class="type">Application</span></span>(), ImageLoaderFactory &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newImageLoader</span><span class="params">()</span></span>: ImageLoader &#123;</span><br><span class="line">        <span class="keyword">return</span> ImageLoader.Builder(context)</span><br><span class="line">            .crossfade(<span class="literal">true</span>)</span><br><span class="line">            .okHttpClient &#123;</span><br><span class="line">                OkHttpClient.Builder()</span><br><span class="line">                    .cache(CoilUtils.createDefaultCache(context))</span><br><span class="line">                    .build()</span><br><span class="line">            &#125;</span><br><span class="line">            .build()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用 Coil.setImageLoader</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader.Builder(context)</span><br><span class="line">    .crossfade(<span class="literal">true</span>)</span><br><span class="line">    .okHttpClient &#123;</span><br><span class="line">        OkHttpClient.Builder()</span><br><span class="line">            .cache(CoilUtils.createDefaultCache(context))</span><br><span class="line">            .build()</span><br><span class="line">    &#125;</span><br><span class="line">    .build()</span><br><span class="line">Coil.setImageLoader(imageLoader)</span><br></pre></td></tr></table></figure>
+
+<p>默认的 <code>ImageLoader</code> 可以通过这样取回</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br></pre></td></tr></table></figure>
+
+<p>设置默认的 <code>ImageLoader</code> 是可选的。 如果未设置，则 <code>Coil</code> 会延迟创建具有默认值的 <code>ImageLoader</code></p>
+<p>如果您使用的是 <code>io.coil-kt:coil-base</code>，您应创建自己的 <code>ImageLoader</code> 实例并通过依赖注入将它注入到 app 中</p>
+<blockquote>
+<p>注意：如果设置自定义OkHttpClient，则必须设置缓存实现，否则ImageLoader将没有磁盘缓存。 可以使用CoilUtils.createDefaultCache 创建默认的 Coil 缓存实例</p>
+</blockquote>
+<h2 id="支持的数据类型"><a href="#支持的数据类型" class="headerlink" title="支持的数据类型"></a>支持的数据类型</h2><p>ImageLoader 支持的数据类型为</p>
+<ul>
+<li>String (mapped to a Uri)</li>
+<li>HttpUrl</li>
+<li>Uri (<code>android.resource</code>, <code>content</code>, <code>file</code>, <code>http</code>, and <code>https</code> schemes only)</li>
+<li>File</li>
+<li>@DrawableRes Int</li>
+<li>Drawable</li>
+<li>Bitmap</li>
+</ul>
+<h2 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h2><p>如果要预加载到内存中，执行一个不带 target 的 <code>LoadRequest</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    <span class="comment">// 可选的，但是设置 ViewSizeResolver 可以通过限制预加载的大小来节省内存</span></span><br><span class="line">    .size(ViewSizeResolver(imageView))</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+
+<p>如果只想将网络图片预加载到磁盘中，可以为 request 关闭内存缓存</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .memoryCachePolicy(CachePolicy.DISABLED)</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+
+<h2 id="取消请求"><a href="#取消请求" class="headerlink" title="取消请求"></a>取消请求</h2><p><code>LoadRequest</code> 会自动取消在以下几种情况下</p>
+<ul>
+<li><p>关联的 view detached，</p>
+</li>
+<li><p>关联的 lifecycle destroyed</p>
+</li>
+<li><p>另一个 request  在相同的 view 中开启</p>
+</li>
+</ul>
+<p>此外，每个 <code>LoadRequest</code> 返回一个 <code>RequestDisposable</code>，可用于检查请求是否在运行中或处理该请求（有效地取消请求并释放其关联资源）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> disposable = imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cancel the request.</span></span><br><span class="line">disposable.dispose()</span><br></pre></td></tr></table></figure>
+
+<p><code>GetRequest</code> 仅当协程的上下文被取消时才会取消</p>
+<h2 id="图片采样"><a href="#图片采样" class="headerlink" title="图片采样"></a>图片采样</h2><p>假设磁盘上有一个 500x500 的映像，但是只需要以 100x100 的大小将其加载到内存中即可在视图中显示。 <code>Coil</code> 会将图像加载到内存中，但是如果您需要 500x500 的图像会怎样呢？ 从磁盘读取还有更好的「质量」，但是图像已经以 100x100 加载到内存中。 理想情况下，当我们从磁盘以 500x500 读取图像时，我们将使用 100x100 图像作为占位符。</p>
+<p>这正是 <code>Coil</code> 所做的，并且 <code>Coil</code> 自动为所有 <code>BitmapDrawables</code> 处理此过程。 与 <code>crossfade(true)</code> 搭配使用时，可以创建视觉效果，使图像细节看起来像淡入淡出，类似于渐进式 JPEG</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987" alt></p>
+<h2 id="使用要求"><a href="#使用要求" class="headerlink" title="使用要求"></a>使用要求</h2><ul>
+<li>AndroidX</li>
+<li>Min SDK 14+</li>
+<li>Compile SDK: 29+</li>
+<li><a href="https://coil-kt.github.io/coil/getting_started/#java-8" target="_blank" rel="noopener">Java 8+</a></li>
+</ul>
+<p>详细内容移步 <a href="https://coil-kt.github.io/coil/" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-StateLiveData/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/04/15/Tips-StateLiveData/" class="post-title-link" itemprop="url">【奇技淫巧】巧用 kotlin 扩展函数和 typealias 封装 LiveData</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-15 14:11:46" itemprop="dateCreated datePublished" datetime="2020-04-15T14:11:46+08:00">2020-04-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:40:56" itemprop="dateModified" datetime="2020-08-28T10:40:56+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/15/Tips-StateLiveData/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】巧用 kotlin 扩展函数和 typealias 封装 LiveData" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/15/Tips-StateLiveData/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/Tips-StateLiveData/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2.3k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="关于-LiveData-两个常用的姿势"><a href="#关于-LiveData-两个常用的姿势" class="headerlink" title="关于 LiveData 两个常用的姿势"></a>关于 LiveData 两个常用的姿势</h2><h3 id="使用包装类传递事件"><a href="#使用包装类传递事件" class="headerlink" title="使用包装类传递事件"></a>使用包装类传递事件</h3><p>我们在使用 LiveData 时可能会遇到「粘性」事件的问题，该问题可以使用包装类的方式解决。解决方案见 <a href="https://juejin.im/post/5b2b1b2cf265da5952314b63#heading-7" target="_blank" rel="noopener">[译] 在 SnackBar，Navigation 和其他事件中使用 LiveData（SingleLiveEvent 案例）</a></p>
+<p>使用时是这样的</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListViewModel</span> : <span class="type">ViewModel &#123;</span></span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> _navigateToDetails = MutableLiveData&lt;Event&lt;String&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> navigateToDetails : LiveData&lt;Event&lt;String&gt;&gt;</span><br><span class="line">        <span class="keyword">get</span>() = _navigateToDetails</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">userClicksOnButton</span><span class="params">(itemId: <span class="type">String</span>)</span></span> &#123;</span><br><span class="line">        _navigateToDetails.value = Event(itemId)  <span class="comment">// Trigger the event by setting a new Event as a new value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myViewModel.navigateToDetails.observe(<span class="keyword">this</span>, Observer &#123;</span><br><span class="line">    it.getContentIfNotHandled()?.let &#123; <span class="comment">// Only proceed if the event has never been handled</span></span><br><span class="line">        startActivity(DetailsActivity...)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>不过这样写甚是繁琐，我们可以使用更优雅的方式解决该问题</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//为 LiveData&lt;Event&lt;T&gt;&gt;提供类型别名，使用 EventLiveData&lt;T&gt; 即可</span></span><br><span class="line"><span class="keyword">typealias</span> EventMutableLiveData&lt;T&gt; = MutableLiveData&lt;Event&lt;T&gt;&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typealias</span> EventLiveData&lt;T&gt; = LiveData&lt;Event&lt;T&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>typealias</code> 关键字，我们可以提供一个类型别名，可以这样使用</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//等价于 MutableLiveData&lt;Event&lt;Boolean&gt;&gt;(Event(false))</span></span><br><span class="line"><span class="keyword">val</span> eventContent = EventMutableLiveData&lt;<span class="built_in">Boolean</span>&gt;(Event(<span class="literal">false</span>))</span><br></pre></td></tr></table></figure>
+
+<p>现在声明时不用多加一层泛型了，那么使用时还是很繁琐</p>
+<p>我们可以借助 kotlin 的 扩展函数更优雅的使用</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605115649.png" alt="event 扩展函数"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605121030.png" alt="使用"></p>
+<p>demo 中封装了两种形式的 LiveData，一种为 <code>LiveData&lt;Boolean&gt;</code>，一种为 <code>EventLiveData&lt;Boolean&gt;</code>，当屏幕旋转时，前者会再次回调结果，而后者由于事件已被处理而不执行 onChanged，我们通过 Toast 可观察到这一现象</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605121634.gif" alt></p>
+<p><a href="https://github.com/KunMinX/Jetpack-MVVM-Best-Practice" target="_blank" rel="noopener">java 版的可参考</a></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605122206.png" alt></p>
+<h3 id="封装带网络状态的数据"><a href="#封装带网络状态的数据" class="headerlink" title="封装带网络状态的数据"></a>封装带网络状态的数据</h3><p>很多时候我们在获取网络数据时要封装一层网络状态，例如：加载中，成功，失败</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605115950.png" alt></p>
+<p>在使用时我们遇到了和上面一样的问题，多层泛型用起来很麻烦</p>
+<p>我们依然可以使用 typealias + 扩展函数来优雅的处理该问题</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605120336.png" alt="typealias"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605120400.png" alt="扩展函数"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605120455.png" alt="使用"></p>
+<p>demo 截图</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200605120721.gif" alt="demo"></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p>demo <a href="https://github.com/Flywith24/WrapperLiveDataDemo" target="_blank" rel="noopener">在这</a>，如果感觉这个思路对你有帮助的话，点一颗小星星吧～ 😉</p>
+<p>另外我还将它传到了 JitPack 上，引入姿势如下：</p>
+<p><a href="https://jitpack.io/#Flywith24/WrapperLiveData" target="_blank" rel="noopener"><img src="https://jitpack.io/v/Flywith24/WrapperLiveData.svg" alt></a></p>
+<ol>
+<li><p>在项目根目录的 <code>build.gradle</code> 加入</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    maven &#123; url <span class="string">'https://jitpack.io'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="2">
+<li><p>添加依赖</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">  implementation <span class="string">'com.github.Flywith24:WrapperLiveData:$version'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="往期文章"><a href="#往期文章" class="headerlink" title="往期文章"></a>往期文章</h2><p>该系列主要介绍一些「骚操作」，它未必适合生产环境使用，但是是一些比较新颖的思路</p>
+<ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】AndroidStudio Nexus3.x搭建Maven私服遇到问题及解决方案</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">【奇技淫巧】什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】gradle依赖查找太麻烦？这个插件可能帮到你</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e967f35f265da47d77cd4c3" target="_blank" rel="noopener">【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ebdfb0b6fb9a0436153db22" target="_blank" rel="noopener">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</a></li>
+</ul>
+<ul>
+<li><p><a href="https://juejin.im/post/5ec50ae46fb9a047a862124f" target="_blank" rel="noopener">【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化</a></p>
+</li>
+<li><p><a href="https://juejin.im/post/5ecde219e51d457841190d08" target="_blank" rel="noopener">【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a></p>
+</li>
+</ul>
+<p>我的其他系列文章 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-Components-Jump/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/04/15/Tips-Components-Jump/" class="post-title-link" itemprop="url">【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-15 14:11:46" itemprop="dateCreated datePublished" datetime="2020-04-15T14:11:46+08:00">2020-04-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:36:40" itemprop="dateModified" datetime="2020-08-28T10:36:40+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/15/Tips-Components-Jump/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/15/Tips-Components-Jump/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/Tips-Components-Jump/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>越来越多的项目使用了组件化，组件之间的通信是一个比较重要的问题。<code>ARouter</code> 等路由方案为我们提供了解决办法。那么如果不使用 Router 如何实现组件间的界面跳转呢？</p>
+<h2 id="万能的-setClassName"><a href="#万能的-setClassName" class="headerlink" title="万能的 setClassName"></a>万能的 <code>setClassName</code></h2><p>从一个 Activity 跳转到另一个Activity 的最直接方法如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intent = Intent(<span class="keyword">this</span>, TestActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+
+<p>但是，采用这种方法，当原 activity 位于一个 module（例如 <code>FeatureA</code> ）中，而目标 activity 位于另一个 module（<code>FeatureB</code>）中时，该怎么办？</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200415110401.png" alt></p>
+<p>我们可以使用 Intent 的 <code>setClassName</code> 方法</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intent = Intent()</span><br><span class="line">intent.setClassName(<span class="keyword">this</span>, “com.flywith24.demo.TestActivity”)</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+
+<p>但是这种方式硬编码目标 activity 的完整类名，如果 activity 的类名被更改或者移动，而且没有更改硬编码，则编译可以通过，但是运行时崩溃</p>
+<p>如果可以自动生成 activity 完整类名就好了</p>
+<h2 id="使用插件"><a href="#使用插件" class="headerlink" title="使用插件"></a>使用插件</h2><p>我们知道 activity 作为 Android 的组件之一需要在 Manifest 文件中声明</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">”com.flywith24.demo.MainActivity”</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">”com.flywith24.demo.TestActivity”</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们的数据是从 Manifest 中获得的，那么就解决了硬编码的问题了</p>
+<p>有这样一个<a href="https://github.com/gaelmarhic/Quadrant" target="_blank" rel="noopener">插件</a> ，在 build 时会将所有在 Manifest 中声明的 activity 的完整类名以静态常量的形式罗列到一个静态类中</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> QuadrantConstants &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">val</span> MAIN_ACTIVITY: String = <span class="string">"com.gaelmarhic.quadrant.MainActivity"</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">val</span> SECONDARY_ACTIVITY: String = <span class="string">"com.gaelmarhic.quadrant.SecondaryActivity"</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">val</span> TERTIARY_ACTIVITY: String = <span class="string">"com.gaelmarhic.quadrant.TertiaryActivity"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样在使用时就避免了硬编码</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intent = Intent()</span><br><span class="line">intent.setClassName(context, QuadrantConstants.MAIN_ACTIVITY)</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用依赖注入"><a href="#使用依赖注入" class="headerlink" title="使用依赖注入"></a>使用依赖注入</h2><p>组件化中 <code>app</code> module 会依赖所有的功能 module ，因此如果我们使用依赖注入在 <code>app</code> 中将所有的目标 activity 的完整类名声明出来，也能达到解决硬编码的问题</p>
+<p>这里以 <a href="https://insert-koin.io/" target="_blank" rel="noopener">koin</a> 为例</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> : <span class="type">Application</span></span>() &#123;</span><br><span class="line">    <span class="keyword">val</span> myModule = module &#123;</span><br><span class="line">        single &#123; Feature2Activity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>.<span class="title">name</span> &#125;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate()</span><br><span class="line">        startKoin &#123;</span><br><span class="line">            androidContext(<span class="keyword">this</span><span class="symbol">@MyApplication</span>)</span><br><span class="line">            modules(myModule)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样通过 get() 方法即可拿到 <code>Feature2Activity</code> 的完整类名</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> intent = Intent()</span><br><span class="line">    .setClassName(<span class="keyword">this</span><span class="symbol">@Feature1Activity</span>, <span class="keyword">get</span>())</span><br><span class="line">    .putExtra(<span class="string">"key"</span>, <span class="string">"value"</span>)</span><br><span class="line">startActivity(intent)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p><a href="https://github.com/Flywith24/MultitableModuleApp" target="_blank" rel="noopener">Demo 地址</a></p>
+<p>各位有什么想法欢迎在评论区留言</p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-includeBuild/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/04/15/Tips-includeBuild/" class="post-title-link" itemprop="url">【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-15 14:11:46" itemprop="dateCreated datePublished" datetime="2020-04-15T14:11:46+08:00">2020-04-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:35:57" itemprop="dateModified" datetime="2020-08-28T10:35:57+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/15/Tips-includeBuild/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/15/Tips-includeBuild/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/Tips-includeBuild/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.4k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h2 id="buildSrc-的缺陷"><a href="#buildSrc-的缺陷" class="headerlink" title="buildSrc 的缺陷"></a>buildSrc 的缺陷</h2><p>Android 开发中统一不同 module 的依赖版本十分重要，传统的方式是使用 ext 的方式</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111409.png" alt="ext"></p>
+<p>之前我发过关于使用 buildSrc 简化项目中 gradle 代码的译文：<a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></p>
+<p>该种方式可以很好的管理 gradle 的公共配置，这其中当然包括依赖版本</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111722.gif" alt="配置依赖"></p>
+<p>如图，在使用依赖时有代码提示，而且可以点击进入查看</p>
+<p>但是由于 buildSrc 是对全局的所有 module 的配置，因此在构建速度上会慢一些。那么有没有一个更纯净的方式来配置依赖版本呢？</p>
+<p>今天我们来介绍一种新的方式</p>
+<h2 id="自定义-plugin-includeBuild"><a href="#自定义-plugin-includeBuild" class="headerlink" title="自定义 plugin + includeBuild"></a>自定义 plugin + includeBuild</h2><p>使用 <a href="https://docs.gradle.org/current/userguide/composite_builds.html" target="_blank" rel="noopener">Gradle Composite builds</a> 可以很容易解决这一问题</p>
+<p>我们新建一个 module，命名为 version ，并将原来的 buildSrc 的代码转移过来</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DependencyVersionPlugin</span> : <span class="type">Plugin</span>&lt;<span class="type">Project</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">apply</span><span class="params">(project: <span class="type">Project</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 version 的 build.gradle 文件加入</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gradlePlugin &#123;</span><br><span class="line">    plugins &#123;</span><br><span class="line">        version &#123;</span><br><span class="line">            id = <span class="string">'com.flywith24.version'</span></span><br><span class="line">            implementationClass = <span class="string">'com.flywith24.version.DependencyVersionPlugin'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 settings.gradle 加入 <code>includeBuild(&quot;version&quot;)</code> （<strong>重点</strong>）</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">includeBuild(<span class="string">"version"</span>)</span><br><span class="line"></span><br><span class="line">rootProject.name=<span class="string">'VersionControlDemo'</span></span><br><span class="line">include <span class="string">':app'</span></span><br><span class="line">include <span class="string">':lib'</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来在需要引用的 module 中引入该插件</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id <span class="string">"com.flywith24.version"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后我们就可以使用了</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527113952.png" alt="demo代码截图"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527114023.png" alt="demo代码截图"></p>
+<p><a href="https://github.com/Flywith24/VersionControlDemo" target="_blank" rel="noopener">demo 在这</a></p>
+<h2 id="往期文章"><a href="#往期文章" class="headerlink" title="往期文章"></a>往期文章</h2><p>该系列主要介绍一些「骚操作」，它未必适合生产环境使用，但是是一些比较新颖的思路</p>
+<ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】AndroidStudio Nexus3.x搭建Maven私服遇到问题及解决方案</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">【奇技淫巧】什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e481a28f265da570b3f235c" target="_blank" rel="noopener">【奇技淫巧】gradle依赖查找太麻烦？这个插件可能帮到你</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5e967f35f265da47d77cd4c3" target="_blank" rel="noopener">【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ebdfb0b6fb9a0436153db22" target="_blank" rel="noopener">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</a></li>
+</ul>
+<ul>
+<li><a href="https://juejin.im/post/5ec50ae46fb9a047a862124f" target="_blank" rel="noopener">【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化</a></li>
+</ul>
+<p>我的其他系列文章 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
+
+          
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/16/Framework-Option/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2019/08/16/Framework-Option/" class="post-title-link" itemprop="url">【流水账】记录Framework开发的常用指令</a>
             
           </h2>
         
@@ -351,7 +1874,7 @@
           
 
           
-            <span id="/2019/08/16/framework-op/" class="post-meta-item leancloud_visitors" data-flag-title="【流水账】记录Framework开发的常用指令" title="阅读次数">
+            <span id="/2019/08/16/Framework-Option/" class="post-meta-item leancloud_visitors" data-flag-title="【流水账】记录Framework开发的常用指令" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -370,8 +1893,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2019/08/16/framework-op/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/16/framework-op/" itemprop="commentCount"></span>
+    <a title="valine" href="/2019/08/16/Framework-Option/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/16/Framework-Option/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -415,7 +1938,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/08/16/framework-op/#more" rel="contents">
+              <a class="btn" href="/2019/08/16/Framework-Option/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -448,7 +1971,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Jetpack-DataBinding/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/Jetpack-fragment-savestate/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -464,7 +1987,7 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2020/04/09/Jetpack-DataBinding/" class="post-title-link" itemprop="url">【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？</a>
+              <a href="/2020/04/30/Jetpack-fragment-savestate/" class="post-title-link" itemprop="url">【Jetpack更新之Fragment】setRetainInstance 被弃用，那么 fragment 是如何保存状态的？</a>
             
           </h2>
         
@@ -481,7 +2004,7 @@
                 
               
 
-              <time title="创建时间：2020-04-09 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-09T00:10:35+08:00">2020-04-09</time>
+              <time title="创建时间：2020-04-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-30T00:10:35+08:00">2020-04-30</time>
             </span>
           
             
@@ -492,7 +2015,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-10 16:49:44" itemprop="dateModified" datetime="2020-04-10T16:49:44+08:00">2020-04-10</time>
+                <time title="修改时间：2020-08-28 10:06:52" itemprop="dateModified" datetime="2020-08-28T10:06:52+08:00">2020-08-28</time>
               </span>
             
           
@@ -511,7 +2034,7 @@
           
 
           
-            <span id="/2020/04/09/Jetpack-DataBinding/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？" title="阅读次数">
+            <span id="/2020/04/30/Jetpack-fragment-savestate/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Fragment】setRetainInstance 被弃用，那么 fragment 是如何保存状态的？" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -530,8 +2053,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/04/09/Jetpack-DataBinding/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/Jetpack-DataBinding/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/04/30/Jetpack-fragment-savestate/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/30/Jetpack-fragment-savestate/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -545,7 +2068,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>16k</span>
+              <span>641</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -555,7 +2078,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>14 分钟</span>
+              <span>1 分钟</span>
             </span>
           
 
@@ -568,13 +2091,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p><a href="https://juejin.im/post/5e834bb5f265da480d61668d" target="_blank" rel="noopener">LiveData 篇</a> 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了</p>
-</blockquote>
+          <p>我们都知道 fragment 中的 <code>setRetainInstance</code> 用于控制是否在 activity 保留 fragment 实例，具体内容可参见 <a href="https://www.wanandroid.com/wenda/show/12574" target="_blank" rel="noopener">WanAndroid 的每日一问：Fragment 是如何被存储与恢复的？</a></p>
+<p>但是该方法已于 <code>androidx fragment 1.3.0-alpha01</code> 弃用了</p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/04/09/Jetpack-DataBinding/#more" rel="contents">
+              <a class="btn" href="/2020/04/30/Jetpack-fragment-savestate/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -607,7 +2129,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/31/Jetpack-LiveData/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="杨云召">
@@ -623,7 +2145,7 @@
         
           <h2 class="post-title" itemprop="name headline">
               
-              <a href="/2020/03/31/Jetpack-LiveData/" class="post-title-link" itemprop="url">【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</a>
+              <a href="/2020/04/30/Jetpack-fragment-ResultAPI/" class="post-title-link" itemprop="url">【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势</a>
             
           </h2>
         
@@ -640,7 +2162,7 @@
                 
               
 
-              <time title="创建时间：2020-03-31 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-31T00:10:35+08:00">2020-03-31</time>
+              <time title="创建时间：2020-04-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-30T00:10:35+08:00">2020-04-30</time>
             </span>
           
             
@@ -651,7 +2173,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-20 17:10:31" itemprop="dateModified" datetime="2020-04-20T17:10:31+08:00">2020-04-20</time>
+                <time title="修改时间：2020-08-28 09:59:56" itemprop="dateModified" datetime="2020-08-28T09:59:56+08:00">2020-08-28</time>
               </span>
             
           
@@ -670,7 +2192,7 @@
           
 
           
-            <span id="/2020/03/31/Jetpack-LiveData/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香" title="阅读次数">
+            <span id="/2020/04/30/Jetpack-fragment-ResultAPI/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -689,8 +2211,8 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/03/31/Jetpack-LiveData/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/31/Jetpack-LiveData/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/04/30/Jetpack-fragment-ResultAPI/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/30/Jetpack-fragment-ResultAPI/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -704,7 +2226,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>11k</span>
+              <span>3.5k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -714,7 +2236,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>10 分钟</span>
+              <span>3 分钟</span>
             </span>
           
 
@@ -727,1146 +2249,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>之前我们讨论过 <a href="https://juejin.im/post/5e786d415188255e00661a4e" target="_blank" rel="noopener">ViewModel 的职能边界</a> ，得益于 ViewModel 的生命周期更长，我们可以在 activity 重建后将数据传递给 activity ，也可以避免内存泄漏。但是如果不是每次需要就获取数据，而是当每次有新数据时通知我们，应该怎么办？</p>
-</blockquote>
-<p>本文介绍 <code>LiveData</code> ，一个 <strong>生命周期感知的，可观察的，数据持有者</strong>。同时还会简单分析 <code>LiveData</code> 的源码实现</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>fragment 1.3.0-alpha04</code> 发布了，其中有很多变动，其中提供了 fragment 间传递数据的新方式</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200430090529.png" alt="1.3.0-alpha04 更新"></p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2020/03/31/Jetpack-LiveData/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/30/Jetpack-Lifecycle/" class="post-title-link" itemprop="url">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-30T00:10:35+08:00">2020-03-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-10 16:45:39" itemprop="dateModified" datetime="2020-04-10T16:45:39+08:00">2020-04-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/30/Jetpack-Lifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/30/Jetpack-Lifecycle/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/30/Jetpack-Lifecycle/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>10k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>9 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码</p>
-</blockquote>
-<p>本文介绍 <code>Lifecycle</code> 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment ，帮助您对 <code>Lifecycle</code> 有一个感性的认识</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/30/Jetpack-Lifecycle/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/23/Jetpack-ViewModel/" class="post-title-link" itemprop="url">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-23 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-23T00:10:35+08:00">2020-03-23</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:26:41" itemprop="dateModified" datetime="2020-03-24T09:26:41+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/23/Jetpack-ViewModel/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/23/Jetpack-ViewModel/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/23/Jetpack-ViewModel/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>11k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>10 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png" alt="目录"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 <code>Presenter</code> ）</p>
-</blockquote>
-<p>但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？</p>
-<ul>
-<li>开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库）</li>
-<li>由于 UI 数据的持有者的生命周期可能比 activity 长，因此开发者还需要避免出现内存泄漏的问题</li>
-</ul>
-<p>如何解决上述问题？ViewModel</p>
-<p><strong>本文重点介绍 ViewModel 的职责（what）以及重点功能的实现原理（how），即使您不使用 <code>Jetpack MVVM</code> 架构，也要了解一下 ViewModel</strong></p>
-<p>ViewModel 的原理部分要求您了解 activity 的启动流程，这部分内容网上文章很多，本文不再赘述</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/23/Jetpack-ViewModel/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/19/Jetpack-ViewModel-SaveState/" class="post-title-link" itemprop="url">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-19 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-19T00:10:35+08:00">2020-03-19</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:27:06" itemprop="dateModified" datetime="2020-03-24T09:27:06+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/19/Jetpack-ViewModel-SaveState/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/19/Jetpack-ViewModel-SaveState/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/19/Jetpack-ViewModel-SaveState/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>12k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>11 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>大家都知道 activity 有着一套 <code>onSaveInstanceState-onRestoreInstanceState</code> 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验</p>
-<p>在 androidx 下，提供了 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库帮助 activity 和 fragment 处理状态保存和恢复</p>
-</blockquote>
-<p>本文默认您对状态保存机制有一定了解，这部分内容请移步 <a href="https://developer.android.com/topic/libraries/architecture/saving-states" target="_blank" rel="noopener">Saving UI States</a></p>
-<p>此外，关于 android 下的进程管理，推荐 Ian Lake 的 <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
-<p>本文介绍了 androidx 下 <code>SavedState</code> 如何帮助 activity 和 fragment 处理状态的保存和恢复，同时介绍 <code>viewmodel-savedstate</code> 库，以及在开发过程中正确使用状态保存的姿势</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/19/Jetpack-ViewModel-SaveState/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/Jetpack-fragment-back-stack/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/16/Jetpack-fragment-back-stack/" class="post-title-link" itemprop="url">【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-16 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-16T00:10:35+08:00">2020-03-16</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:27:49" itemprop="dateModified" datetime="2020-03-24T09:27:49+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/16/Jetpack-fragment-back-stack/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/16/Jetpack-fragment-back-stack/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/16/Jetpack-fragment-back-stack/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>7.5k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>7 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p><a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">上一篇</a> 我们介绍了 <code>OnBackPressedDispather</code> ，那么今天我们来正式地从源码的角度看看 fragment 的返回栈吧。由于其主流程和生命周期差不多，因此本文将详细地分析返回栈相关的源码，并插入大量源码。建议将生命周期流程熟悉后阅读本文。文末提供单返回栈和多返回栈的 <a href="https://github.com/Flywith24/Flywith24-Fragment-Demo" target="_blank" rel="noopener">demo</a></p>
-</blockquote>
-<p>如果您对 activity 对任务栈和返回栈不是很了解，可以移步  <a href="https://medium.com/androiddevelopers/tasks-and-the-back-stack-dbb7c3b0f6d4" target="_blank" rel="noopener">Tasks and the Back Stack</a></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/16/Jetpack-fragment-back-stack/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/Jetpack-OnBackPressedDispatcher/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/14/Jetpack-OnBackPressedDispatcher/" class="post-title-link" itemprop="url">【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-14 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-14T00:10:35+08:00">2020-03-14</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:19:53" itemprop="dateModified" datetime="2020-03-24T09:19:53+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/14/Jetpack-OnBackPressedDispatcher/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/14/Jetpack-OnBackPressedDispatcher/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/14/Jetpack-OnBackPressedDispatcher/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>2.3k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>2 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>这两天在准备写 fragment 返回栈的文章，但是发现必须先介绍一下 OnBackPressedDispatcher ，所以这是一篇介绍 what 的文章，喜欢一手资料的可以移步 <a href="https://developer.android.google.cn/reference/kotlin/androidx/activity/OnBackPressedDispatcher" target="_blank" rel="noopener">官方文档</a></p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/14/Jetpack-OnBackPressedDispatcher/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/10/Jetpack-fragment-lifecycle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/10/Jetpack-fragment-lifecycle/" class="post-title-link" itemprop="url">【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-10 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-10T00:10:35+08:00">2020-03-10</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:19:13" itemprop="dateModified" datetime="2020-03-24T09:19:13+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/10/Jetpack-fragment-lifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/10/Jetpack-fragment-lifecycle/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/10/Jetpack-fragment-lifecycle/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>12k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>11 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>笔者看过不少源码分析类的文章，动辄贴上大段代码，这种方式很容易打断读者的思路，所以很多时候看过这类文章感叹好文好文，却感觉什么都没记住，亦或者默默加入收藏却不知何时能去细心地研读。</p>
-<p>所以本文不会过多介绍源码的细节，更多地是抛砖引玉，如果您看过本文后能够跟着本文的思路自己翻一下源码相信您就不会有我上述的体验了。</p>
-<p>本文默认您已对 fragment 的生命周期有所了解，并清楚fragment的缘起与职责。这部分基础内容可移步 <a href="https://developer.android.com/guide/components/fragments" target="_blank" rel="noopener">fragment 官方文档</a> </p>
-<p><strong>也即本文不会介绍 “what”，而是介绍 “how” 并且探讨一下 “why”</strong></p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/10/Jetpack-fragment-lifecycle/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/02/Jetpack-fragment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/03/02/Jetpack-fragment/" class="post-title-link" itemprop="url">【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-02 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-02T00:10:35+08:00">2020-03-02</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:17:29" itemprop="dateModified" datetime="2020-03-24T09:17:29+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/02/Jetpack-fragment/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/02/Jetpack-fragment/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/02/Jetpack-fragment/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>16k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>14 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>在 <code>Android Jetpack</code> 组件中，<code>fragment</code>作为视图控制器之一占有很重要的位置。但由于其bug众多，暗坑无数，以至于 Square 有这样一篇博客：<a href="https://developer.squareup.com/blog/advocating-against-android-fragments/" target="_blank" rel="noopener">Advocating Against Android Fragments</a>。github上的 <a href="https://github.com/YoKeyword/Fragmentation" target="_blank" rel="noopener">Fragmentation</a> 有着 9.4k 的star。</p>
-<p>而现在，<code>androidx fragment</code> 稳定版已来到 1.2.2，让我们总结一下<code>fragment</code>有哪些常见问题以及有哪些使用<code>fragment</code>的新姿势</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/03/02/Jetpack-fragment/#more" rel="contents">
+              <a class="btn" href="/2020/04/30/Jetpack-fragment-ResultAPI/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1896,7 +2284,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1932,7 +2320,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1957,7 +2345,9 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -2010,7 +2400,15 @@
         
           
         
-        <span class="site-state-item-count">19</span>
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -2150,12 +2548,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">179k</span>
+    <span title="站点总字数">196k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:42</span>
+    <span title="站点阅读时长">2:58</span>
   
   
     <span class="post-meta-divider">|</span>

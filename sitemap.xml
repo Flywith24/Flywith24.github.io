@@ -2,9 +2,93 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-StateLiveData/</loc>
+    
+    <lastmod>2020-08-28T02:40:56.501Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/07/01/Tips-ProcessLifecycle/</loc>
+    
+    <lastmod>2020-08-28T02:39:35.547Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/18/Tips-Coil/</loc>
+    
+    <lastmod>2020-08-28T02:36:58.693Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-Components-Jump/</loc>
+    
+    <lastmod>2020-08-28T02:36:40.600Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/20/Tips-Navagion+DynamicFeatureModule/</loc>
+    
+    <lastmod>2020-08-28T02:36:26.651Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
+    
+    <lastmod>2020-08-28T02:35:57.753Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
+    
+    <lastmod>2020-08-28T02:23:08.871Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/03/01/Jetpack-dependencies/</loc>
     
-    <lastmod>2020-08-27T09:52:40.085Z</lastmod>
+    <lastmod>2020-08-28T02:20:58.197Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
+    
+    <lastmod>2020-08-28T02:13:11.551Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/</loc>
+    
+    <lastmod>2020-08-28T02:11:05.863Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-savestate/</loc>
+    
+    <lastmod>2020-08-28T02:06:52.108Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/</loc>
+    
+    <lastmod>2020-08-28T02:02:34.629Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/</loc>
+    
+    <lastmod>2020-08-28T01:59:56.917Z</lastmod>
     
   </url>
   
@@ -107,7 +191,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/08/16/framework-op/</loc>
+    <loc>http://yoursite.com/2019/08/16/Framework-Option/</loc>
     
     <lastmod>2019-12-02T09:45:48.662Z</lastmod>
     

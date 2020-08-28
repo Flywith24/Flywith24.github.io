@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-StateLiveData/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/07/01/Tips-ProcessLifecycle/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/05/18/Tips-Coil/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-Components-Jump/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/05/20/Tips-Navagion+DynamicFeatureModule/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/03/01/Jetpack-dependencies/</loc>
-    <lastmod>2020-08-27</lastmod>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-savestate/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/</loc>
+    <lastmod>2020-08-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/</loc>
+    <lastmod>2020-08-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/03/31/Jetpack-LiveData/</loc>
     <lastmod>2020-04-20</lastmod>
@@ -37,7 +73,7 @@
     <loc>http://yoursite.com/2019/04/13/multi-project-one-module/</loc>
     <lastmod>2019-12-02</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/08/16/framework-op/</loc>
+    <loc>http://yoursite.com/2019/08/16/Framework-Option/</loc>
     <lastmod>2019-12-02</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/08/29/iptabels/</loc>

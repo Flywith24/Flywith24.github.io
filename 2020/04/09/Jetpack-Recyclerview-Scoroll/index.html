@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7785620b"
+    });
+  daovoice('update');
+  </script>
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: './public/search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="被我忽视的更新androidx recyclerview 1.2.0-alpha02 版本添加了新功能 MergeAdapter，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer 该版本中还有一个改动：RecyclerView.">
+<meta name="keywords" content="androidx,Jetpack,MVVM,RecyclerView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置">
+<meta property="og:url" content="http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/index.html">
+<meta property="og:site_name" content="杨云召 | 博客">
+<meta property="og:description" content="被我忽视的更新androidx recyclerview 1.2.0-alpha02 版本添加了新功能 MergeAdapter，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer 该版本中还有一个改动：RecyclerView.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512110411.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512111315.gif">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512111720.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512113141.gif">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512114332.gif">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512115048.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512140140.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512120004.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512141210.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512141445.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512143600.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512143459.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512143858.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512144501.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512144716.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512145152.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200508153754.jpg">
+<meta property="og:updated_time" content="2020-08-28T02:13:11.551Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置">
+<meta name="twitter:description" content="被我忽视的更新androidx recyclerview 1.2.0-alpha02 版本添加了新功能 MergeAdapter，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer 该版本中还有一个改动：RecyclerView.">
+<meta name="twitter:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png">
+  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
+  <link rel="canonical" href="http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置 | 杨云召 | 博客</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">杨云召 | 博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-commonweal">
+      
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+    
+
+</nav>
+  <div class="site-search">
+    
+  <div class="popup search-popup">
+  <div class="search-header">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <div class="search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="search-input">
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+  <div id="search-result"></div>
+</div>
+
+
+  </div>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-09 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-09T00:10:35+08:00">2020-04-09</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:13:11" itemprop="dateModified" datetime="2020-08-28T10:13:11+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/09/Jetpack-Recyclerview-Scoroll/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/09/Jetpack-Recyclerview-Scoroll/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/09/Jetpack-Recyclerview-Scoroll/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>3.2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>3 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="被我忽视的更新"><a href="#被我忽视的更新" class="headerlink" title="被我忽视的更新"></a>被我忽视的更新</h2><p><code>androidx recyclerview 1.2.0-alpha02</code> 版本添加了新功能 <a href="https://developer.android.com/reference/androidx/recyclerview/widget/MergeAdapter" target="_blank" rel="noopener">MergeAdapter</a>，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 <a href="https://juejin.im/post/5e86ffea51882573ba207a19" target="_blank" rel="noopener">【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer</a></p>
+<p>该版本中还有一个改动：<strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，帮助开发者恢复 RecyclerView 的状态</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png" alt="recyclerview update"></p>
+<p>我对这个功能并没有什么感觉。众所周知，Android 中的 View 内部是有着状态保存和恢复的方法的。RecyclerView 也是如此，它可以恢复自身已滚动的位置</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512110411.png" alt="View 内部恢复状态"></p>
+<p>有关状态保存的内容可以参见 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
+<p>真实情况也是如此</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111315.gif" alt="RecyclerView 内部可以恢复滚动位置"></p>
+<h2 id="意外发现"><a href="#意外发现" class="headerlink" title="意外发现"></a>意外发现</h2><p>最近看到 <a href="https://medium.com/@florina.muntenescu?source=post_page-----a8fbdc9a9334----------------------" target="_blank" rel="noopener">Florina Muntenescu</a> 的 <a href="https://medium.com/androiddevelopers/restore-recyclerview-scroll-position-a8fbdc9a9334" target="_blank" rel="noopener">Restore RecyclerView scroll position</a> ，其中介绍了 <strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，这勾起了我的兴趣</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111720.png" alt="意外发现"></p>
+<p>如文中描述，RecyclerView 在 activity/fragment 重建时失去滚动位置是因为 Adapter 中的数据是 <strong>异步</strong> 加载的，当 RecyclerView layout 时数据并没有加载，因此也恢复不了之前的位置状态。一个比较简单的例子是使用 Navigation 组件进行导航，返回时 fragment 中的 RecyclerView 由于再次调用接口获取数据，导致其滑动位置失去</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512113141.gif" alt="延迟加载数据，无法恢复滚动位置"></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>有几种方法可以保证 RecyclerView 恢复到正确的滚动位置，最好的办法是借助缓存，ViewModel 或 Repository 中缓存要显示的数据，确保始终在第一个布局传入前在 Adapter 上设置数据。也有一些其他的方案，这些方案要么太复杂，要么不够优雅</p>
+<p><code>recyclerview:1.2.0-alpha02</code> 中的解决方案是提供一个新的 Adapter 方法，该方法允许设置状态恢复策略，它有三个选项</p>
+<ul>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#ALLOW" target="_blank" rel="noopener">ALLOW</a></li>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT_WHEN_EMPTY" target="_blank" rel="noopener">PREVENT_WHEN_EMPTY</a></li>
+<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT" target="_blank" rel="noopener">PREVENT</a></li>
+</ul>
+<h3 id="ALLOW"><a href="#ALLOW" class="headerlink" title="ALLOW"></a>ALLOW</h3><p>这是 <strong>默认</strong> 的状态，它会立即恢复 RecyclerView 的状态，该种策略无法解决延迟加载的数据的问题，可以使用 <code>PREVENT_WHEN_EMPTY</code></p>
+<h3 id="PREVENT-WHEN-EMPTY"><a href="#PREVENT-WHEN-EMPTY" class="headerlink" title="PREVENT_WHEN_EMPTY"></a>PREVENT_WHEN_EMPTY</h3><p>仅当 Adapter 不为空（adapter.getItemCount() &gt; 0）时，才恢复 RecyclerView 状态。 如果您的数据是异步加载的，那么 RecyclerView 会一直等到数据加载完毕，然后状态才能恢复。 如果您有默认 item（例如 Header 或 加载指示器）作为适配器的一部分，则应该使用<code>PREVENT</code> 选项，除非使用 MergeAdapter 添加了默认 item。 MergeAdapter 等待所有适配器准备就绪，然后才恢复状态</p>
+<h3 id="PREVENT"><a href="#PREVENT" class="headerlink" title="PREVENT"></a>PREVENT</h3><p>状态不会恢复，直到配置了 <code>ALLOW</code> 或者 <code>PREVENT_WHEN_EMPTY</code></p>
+<p>使用方式如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY</span><br></pre></td></tr></table></figure>
+
+<p><strong>加入了上面的配置后即使是异步加载数据也能恢复 RecyclerView 的位置</strong></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512114332.gif" alt="设置 PREVENT_WHEN_EMPTY"></p>
+<h2 id="追踪引入过程"><a href="#追踪引入过程" class="headerlink" title="追踪引入过程"></a>追踪引入过程</h2><p>老规矩，我们沿着官方的 commit log 来看看其实现原理</p>
+<p>首先我们看看 <a href="https://issuetracker.google.com/issues/146365793" target="_blank" rel="noopener">IssueTracker 上提的 Feature</a></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512115048.png" alt="IssueTracker"></p>
+<p>表达的意思也很简单，就是当加载异步数据时 RecyclerView 的位置状态无法恢复，Adapter 应该提供相关的解决方案</p>
+<p>有意思的是，实现该功能时还重新实现了前一个版本的逻辑，我在 git commit log 中看到了 revert 操作</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512140140.png" alt="revert操作"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512120004.png" alt></p>
+<p>为了防止 <code>LayoutManager#onRestore</code> 执行多次，没有采用最开始的实现方式。但 Yigit Boyar (这个提交的开发者) 仍然希望使用最开始的实现方式，但是  <code>LayoutManager#onRestoreInstance</code> 的状态时 public ，因此只能选取一个折中的方案</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141210.png" alt="新的实现方案"></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141445.png" alt="无奈之举"></p>
+<p>过去，开发者会无意间调用 <code>onRestoreInstanceState(State)</code> 方法。例如，一些开发者已使用它来手动设置自己更新的状态，这样即使在此状态之前已恢复，在此处传递状态也将导致 LayoutManager 接收它并相应地更新其内部状态。因此，即使看起来好像很奇怪，也必须始终调用 <code>requestLayout</code> 来保留功能</p>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>接下来我们来分析这部分源码，内容很少，所以我们详细看下</p>
+<p>首先是引入 <code>StateRestorationPolicy</code>的枚举</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143600.png" alt></p>
+<p>然后需要提供 <code>setStateRestorationPolicy</code> 和 <code>getStateRestorationPolicy</code> 方法，此时我们还需要一个方法来判断是否要将 SavedState 传递给 LayoutManager</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143459.png" alt></p>
+<p>前面的 <code>setStateRestorationPolicy</code> 方法中 调用了 <code>notifyStateRestorationPolicyChanged</code>，而 <code>notifyStateRestorationPolicyChanged</code> 为静态类 <code>AdapterDataObservable</code> 中的方法，该类中的其他方法我们也很熟悉，均是刷新 Adapter 中数据的方法。</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143858.png" alt="notifyStateRestorationPolicyChanged"></p>
+<p>而 <code>notifyStateRestorationPolicyChanged</code> 中调用了 mObservers list 中元素的 <code>onStateRestorationPolicyChanged</code> 方法，通过源码我们得知该 list 中的元素类型为 <code>AdapterDataObserver</code>，因此还需要在 <code>AdapterDataObserver</code> 中加入 <code>onStateRestorationPolicyChanged</code> 方法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144501.png" alt="onStateRestorationPolicyChanged "></p>
+<p>该方法是个空实现，而 <code>RecyclerViewDataObserver</code> 重写了该方法</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144716.png" alt="RecyclerViewDataObserver "></p>
+<p>配置恢复策略以及恢复策略变化时的监听都有了，接下来要做的就是如果之前有待恢复的装则恢复之前的状态</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512145152.png" alt="恢复状态"></p>
+<blockquote>
+<p>注意：发布之前 <code>StateRestorationPolicy</code> 叫做 <code>StateRestorationStrategy</code>，后来命名为 <code>StateRestorationPolicy</code>，alpha 版本的库可能随时更改 API 的命名和删除 API，因此查看这部分源码的同学请注意</p>
+</blockquote>
+<p>至此，相关的源码都在这里了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>StateRestorationPolicy</code> 提供了 RecyclerView 异步加载数据恢复滚动位置的解决方案。原理就是通过配置 <code>StateRestorationPolicy</code> 来改变恢复策略，同时在策略改变时调用 <code>requestLayout</code> 方法。在 <code>dispatchLayoutStep2()</code> (该方法会在 onLayout 和 measure 方法中调用) 方法中恢复状态(如果 <code>canRestoreState()</code> 返回 true)</p>
+<p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo/tree/master/demo_recyclerview_scroll" target="_blank" rel="noopener">demo 地址</a></p>
+<p><strong>一点思考：我们都知道 ViewPager2 是使用 RecyclerView 实现的，那么借助本文介绍的 API 可以做点什么吗？</strong></p>
+<p>欢迎各位小伙伴在评论区留言，说说你的想法</p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200508153754.jpg" alt></p>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
+            
+              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
+            
+              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
+            
+              <a href="/tags/RecyclerView/" rel="tag"><i class="fa fa-tag"></i> RecyclerView</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/" rel="next" title="【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用">
+                  <i class="fa fa-chevron-left"></i> 【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/04/15/Tips-includeBuild/" rel="prev" title="【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild">
+                  【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/uploads/avatar.jpg"
+      alt="杨云召">
+  <p class="site-author-name" itemprop="name">杨云召</p>
+  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      博客推荐
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#被我忽视的更新"><span class="nav-number">1.</span> <span class="nav-text">被我忽视的更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#意外发现"><span class="nav-number">2.</span> <span class="nav-text">意外发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ALLOW"><span class="nav-number">3.1.</span> <span class="nav-text">ALLOW</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PREVENT-WHEN-EMPTY"><span class="nav-number">3.2.</span> <span class="nav-text">PREVENT_WHEN_EMPTY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PREVENT"><span class="nav-number">3.3.</span> <span class="nav-text">PREVENT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#追踪引入过程"><span class="nav-number">4.</span> <span class="nav-text">追踪引入过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">5.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于我"><span class="nav-number">7.</span> <span class="nav-text">关于我</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">杨云召</span>
+  
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_pv"></span>
+  </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">196k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:58</span>
+  
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
+  	
+  <span class="post-meta-divider">|</span>
+ 
+  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+  
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+            
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.url;
+            var time = item.time;
+            leancloudSelector(url).innerText = time;
+          }
+          for (var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+        //if (localhost.test(document.URL)) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+    
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
+    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
+    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: 'zh-cn' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/love.js"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
