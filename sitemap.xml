@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
+    
+    <lastmod>2020-08-28T02:47:17.265Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/04/15/Tips-StateLiveData/</loc>
     
     <lastmod>2020-08-28T02:40:56.501Z</lastmod>
@@ -40,13 +47,6 @@
     <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
     
     <lastmod>2020-08-28T02:35:57.753Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
-    
-    <lastmod>2020-08-28T02:23:08.871Z</lastmod>
     
   </url>
   
