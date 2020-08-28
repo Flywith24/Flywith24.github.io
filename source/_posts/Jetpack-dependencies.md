@@ -13,6 +13,8 @@ tags:
 
 <!-- more-->
 
+
+
 - [`jetpcak` 组件源码地址](https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev)
 - 查询 `jetpcak` 组件 版本: [Google's Maven Repository](https://maven.google.com/web/index.html)
 - 查看依赖树：在项目根目录下执行`./gradlew :app:dependencies`
@@ -37,78 +39,7 @@ dependencies {
 
 #### 依赖树
 
-``` groovy
-+--- androidx.appcompat:appcompat:1.1.0
-|    +--- androidx.annotation:annotation:1.1.0
-|    +--- androidx.core:core:1.1.0
-|    |    +--- androidx.annotation:annotation:1.1.0
-|    |    +--- androidx.lifecycle:lifecycle-runtime:2.0.0 -> 2.1.0
-|    |    |    +--- androidx.lifecycle:lifecycle-common:2.1.0
-|    |    |    |    \--- androidx.annotation:annotation:1.1.0
-|    |    |    +--- androidx.arch.core:core-common:2.1.0
-|    |    |    |    \--- androidx.annotation:annotation:1.1.0
-|    |    |    \--- androidx.annotation:annotation:1.1.0
-|    |    +--- androidx.versionedparcelable:versionedparcelable:1.1.0
-|    |    |    +--- androidx.annotation:annotation:1.1.0
-|    |    |    \--- androidx.collection:collection:1.0.0 -> 1.1.0
-|    |    |         \--- androidx.annotation:annotation:1.1.0
-|    |    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
-|    +--- androidx.cursoradapter:cursoradapter:1.0.0
-|    |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    +--- androidx.fragment:fragment:1.1.0
-|    |    +--- androidx.annotation:annotation:1.1.0
-|    |    +--- androidx.core:core:1.1.0 (*)
-|    |    +--- androidx.collection:collection:1.1.0 (*)
-|    |    +--- androidx.viewpager:viewpager:1.0.0
-|    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    |    +--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-|    |    |    \--- androidx.customview:customview:1.0.0
-|    |    |         +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    |         \--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-|    |    +--- androidx.loader:loader:1.0.0
-|    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    |    +--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-|    |    |    +--- androidx.lifecycle:lifecycle-livedata:2.0.0
-|    |    |    |    +--- androidx.arch.core:core-runtime:2.0.0
-|    |    |    |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    |    |    |    \--- androidx.arch.core:core-common:2.0.0 -> 2.1.0 (*)
-|    |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.0.0
-|    |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.1.0 (*)
-|    |    |    |    |    +--- androidx.arch.core:core-common:2.0.0 -> 2.1.0 (*)
-|    |    |    |    |    \--- androidx.arch.core:core-runtime:2.0.0 (*)
-|    |    |    |    \--- androidx.arch.core:core-common:2.0.0 -> 2.1.0 (*)
-|    |    |    \--- androidx.lifecycle:lifecycle-viewmodel:2.0.0 -> 2.1.0
-|    |    |         \--- androidx.annotation:annotation:1.1.0
-|    |    +--- androidx.activity:activity:1.0.0
-|    |    |    +--- androidx.annotation:annotation:1.1.0
-|    |    |    +--- androidx.core:core:1.1.0 (*)
-|    |    |    +--- androidx.lifecycle:lifecycle-runtime:2.1.0 (*)
-|    |    |    +--- androidx.lifecycle:lifecycle-viewmodel:2.1.0 (*)
-|    |    |    \--- androidx.savedstate:savedstate:1.0.0
-|    |    |         +--- androidx.annotation:annotation:1.1.0
-|    |    |         +--- androidx.arch.core:core-common:2.0.1 -> 2.1.0 (*)
-|    |    |         \--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.1.0 (*)
-|    |    \--- androidx.lifecycle:lifecycle-viewmodel:2.0.0 -> 2.1.0 (*)
-|    +--- androidx.appcompat:appcompat-resources:1.1.0
-|    |    +--- androidx.annotation:annotation:1.1.0
-|    |    +--- androidx.core:core:1.0.1 -> 1.1.0 (*)
-|    |    +--- androidx.vectordrawable:vectordrawable:1.1.0
-|    |    |    +--- androidx.annotation:annotation:1.1.0
-|    |    |    +--- androidx.core:core:1.1.0 (*)
-|    |    |    \--- androidx.collection:collection:1.1.0 (*)
-|    |    +--- androidx.vectordrawable:vectordrawable-animated:1.1.0
-|    |    |    +--- androidx.vectordrawable:vectordrawable:1.1.0 (*)
-|    |    |    +--- androidx.interpolator:interpolator:1.0.0
-|    |    |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    |    \--- androidx.collection:collection:1.1.0 (*)
-|    |    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
-|    +--- androidx.drawerlayout:drawerlayout:1.0.0
-|    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-|    |    +--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-|    |    \--- androidx.customview:customview:1.0.0 (*)
-|    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
-
-```
+![](https://gitee.com/flywith24/Album/raw/master/img/20200507093256.png)
 
 #### 传递依赖
 
@@ -152,91 +83,7 @@ dependencies {
 
 #### 依赖树
 
-``` groovy
- androidx.fragment:fragment-ktx:1.2.2
-     +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     +--- androidx.fragment:fragment:[1.2.2] -> 1.2.2
-     |    +--- androidx.annotation:annotation:1.1.0
-     |    +--- androidx.core:core:1.1.0
-     |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.lifecycle:lifecycle-runtime:2.0.0 -> 2.2.0
-     |    |    |    +--- androidx.lifecycle:lifecycle-common:2.2.0
-     |    |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    |    +--- androidx.arch.core:core-common:2.1.0
-     |    |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.versionedparcelable:versionedparcelable:1.1.0
-     |    |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    |    \--- androidx.collection:collection:1.0.0 -> 1.1.0
-     |    |    |         \--- androidx.annotation:annotation:1.1.0
-     |    |    \--- androidx.collection:collection:1.0.0 -> 1.1.0 (*)
-     |    +--- androidx.collection:collection:1.1.0 (*)
-     |    +--- androidx.viewpager:viewpager:1.0.0
-     |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    |    +--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-     |    |    \--- androidx.customview:customview:1.0.0
-     |    |         +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    |         \--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-     |    +--- androidx.loader:loader:1.0.0
-     |    |    +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    |    +--- androidx.core:core:1.0.0 -> 1.1.0 (*)
-     |    |    +--- androidx.lifecycle:lifecycle-livedata:2.0.0
-     |    |    |    +--- androidx.arch.core:core-runtime:2.0.0 -> 2.1.0
-     |    |    |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    |    |    \--- androidx.arch.core:core-common:[2.1.0] -> 2.1.0 (*)
-     |    |    |    +--- androidx.lifecycle:lifecycle-livedata-core:2.0.0 -> 2.2.0
-     |    |    |    |    +--- androidx.lifecycle:lifecycle-common:2.2.0 (*)
-     |    |    |    |    +--- androidx.arch.core:core-common:2.1.0 (*)
-     |    |    |    |    \--- androidx.arch.core:core-runtime:2.1.0 (*)
-     |    |    |    \--- androidx.arch.core:core-common:2.0.0 -> 2.1.0 (*)
-     |    |    \--- androidx.lifecycle:lifecycle-viewmodel:2.0.0 -> 2.2.0
-     |    |         \--- androidx.annotation:annotation:1.1.0
-     |    +--- androidx.activity:activity:1.1.0
-     |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.core:core:1.1.0 (*)
-     |    |    +--- androidx.lifecycle:lifecycle-runtime:2.2.0 (*)
-     |    |    +--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
-     |    |    +--- androidx.savedstate:savedstate:1.0.0
-     |    |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    |    +--- androidx.arch.core:core-common:2.0.1 -> 2.1.0 (*)
-     |    |    |    \--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.2.0 (*)
-     |    |    \--- androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0 -> 2.2.0
-     |    |         +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    |         +--- androidx.savedstate:savedstate:1.0.0 (*)
-     |    |         +--- androidx.lifecycle:lifecycle-livedata-core:2.2.0 (*)
-     |    |         \--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
-     |    +--- androidx.lifecycle:lifecycle-livedata-core:2.2.0 (*)
-     |    +--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
-     |    \--- androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0 (*)
-     +--- androidx.activity:activity-ktx:1.1.0
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    +--- androidx.activity:activity:[1.1.0] -> 1.1.0 (*)
-     |    +--- androidx.core:core-ktx:1.1.0
-     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.31 -> 1.3.61 (*)
-     |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    \--- androidx.core:core:1.1.0 (*)
-     |    +--- androidx.lifecycle:lifecycle-runtime-ktx:2.2.0
-     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0
-     |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0
-     |    |    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.50 -> 1.3.61
-     |    |    +--- androidx.lifecycle:lifecycle-runtime:2.2.0 (*)
-     |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    \--- androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0
-     |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |         +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0 (*)
-     |         \--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
-     +--- androidx.core:core-ktx:1.1.0 (*)
-     +--- androidx.collection:collection-ktx:1.1.0
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.20 -> 1.3.61 (*)
-     |    \--- androidx.collection:collection:1.1.0 (*)
-     +--- androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    \--- androidx.lifecycle:lifecycle-livedata-core:2.2.0 (*)
-     \--- androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0 (*)
-```
+![](https://gitee.com/flywith24/Album/raw/master/img/20200507093455.png)
 
 #### 传递依赖
 
@@ -256,6 +103,8 @@ dependencies {
 > 
 > [fragment build.grdle 源码地址](https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/fragment/fragment-ktx/build.gradle)
 
+
+
 ### Activity
 
 #### 引入
@@ -273,64 +122,16 @@ dependencies {
 
 > ⚠️ Note: The Kotlin dependant libraries of this version (activity-ktx) target Java 8 programming language bytecode. [Please read Use Java 8 language features to learn how to use it in your project.](https://developer.android.com/studio/write/java8-support)
 
+
+
 #### 依赖树
 
-``` groovy
-androidx.activity:activity-ktx:1.1.0
-     +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     +--- androidx.activity:activity:[1.1.0] -> 1.1.0
-     |    +--- androidx.annotation:annotation:1.1.0
-     |    +--- androidx.core:core:1.1.0
-     |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.lifecycle:lifecycle-runtime:2.0.0 -> 2.2.0
-     |    |    |    +--- androidx.lifecycle:lifecycle-common:2.2.0
-     |    |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    |    +--- androidx.arch.core:core-common:2.1.0
-     |    |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    |    \--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.versionedparcelable:versionedparcelable:1.1.0
-     |    |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    |    \--- androidx.collection:collection:1.0.0
-     |    |    |         \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |    |    \--- androidx.collection:collection:1.0.0 (*)
-     |    +--- androidx.lifecycle:lifecycle-runtime:2.2.0 (*)
-     |    +--- androidx.lifecycle:lifecycle-viewmodel:2.2.0
-     |    |    \--- androidx.annotation:annotation:1.1.0
-     |    +--- androidx.savedstate:savedstate:1.0.0
-     |    |    +--- androidx.annotation:annotation:1.1.0
-     |    |    +--- androidx.arch.core:core-common:2.0.1 -> 2.1.0 (*)
-     |    |    \--- androidx.lifecycle:lifecycle-common:2.0.0 -> 2.2.0 (*)
-     |    \--- androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0
-     |         +--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     |         +--- androidx.savedstate:savedstate:1.0.0 (*)
-     |         +--- androidx.lifecycle:lifecycle-livedata-core:2.2.0
-     |         |    +--- androidx.lifecycle:lifecycle-common:2.2.0 (*)
-     |         |    +--- androidx.arch.core:core-common:2.1.0 (*)
-     |         |    \--- androidx.arch.core:core-runtime:2.1.0
-     |         |         +--- androidx.annotation:annotation:1.1.0
-     |         |         \--- androidx.arch.core:core-common:[2.1.0] -> 2.1.0 (*)
-     |         \--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
-     +--- androidx.core:core-ktx:1.1.0
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.31 -> 1.3.61 (*)
-     |    +--- androidx.annotation:annotation:1.1.0
-     |    \--- androidx.core:core:1.1.0 (*)
-     +--- androidx.lifecycle:lifecycle-runtime-ktx:2.2.0
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0
-     |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    |    \--- org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0
-     |    |         +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-     |    |         \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.50 -> 1.3.61
-     |    +--- androidx.lifecycle:lifecycle-runtime:2.2.0 (*)
-     |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-     \--- androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0
-          +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.50 -> 1.3.61 (*)
-          +--- org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0 (*)
-          \--- androidx.lifecycle:lifecycle-viewmodel:2.2.0 (*)
+![](https://gitee.com/flywith24/Album/raw/master/img/20200507093743.png)
 
-```
+
 
 #### 依赖传递
+
 `org.jetbrains.kotlin:kotlin-stdlib:1.3.50`
 
 `androidx.core:core-ktx:1.1.0`
@@ -340,6 +141,8 @@ androidx.activity:activity-ktx:1.1.0
 `androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0`
 
 > [activity build.gradle 源码地址](https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/activity/activity-ktx/build.gradle)
+
+
 
 ### Core
 
@@ -359,28 +162,13 @@ dependencies {
 }
 ```
 
-#### 依赖树
-``` groovy
-androidx.core:core-ktx:1.2.0
-     +--- org.jetbrains.kotlin:kotlin-stdlib:1.3.41
-     |    +--- org.jetbrains.kotlin:kotlin-stdlib-common:1.3.41
-     |    \--- org.jetbrains:annotations:13.0
-     +--- androidx.annotation:annotation:1.1.0
-     \--- androidx.core:core:1.2.0
-          +--- androidx.annotation:annotation:1.1.0
-          +--- androidx.lifecycle:lifecycle-runtime:2.0.0
-          |    +--- androidx.lifecycle:lifecycle-common:2.0.0
-          |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-          |    +--- androidx.arch.core:core-common:2.0.0
-          |    |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-          |    \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-          +--- androidx.versionedparcelable:versionedparcelable:1.1.0
-          |    +--- androidx.annotation:annotation:1.1.0
-          |    \--- androidx.collection:collection:1.0.0
-          |         \--- androidx.annotation:annotation:1.0.0 -> 1.1.0
-          \--- androidx.collection:collection:1.0.0 (*)
 
-```
+
+#### 依赖树
+
+![](https://gitee.com/flywith24/Album/raw/master/img/20200507093859.png)
+
+
 
 ### Lifecycle
 
@@ -422,6 +210,16 @@ dependencies {
 > - ⚠️ **`lifecycle-extensions` 已废弃，如果使用 `LifecycleService ` 请依赖 `lifecycle-service`；如果使用 `ProcessLifecycleOwner` 请依赖 `lifecycle-process`。`lifecycle-extensionsl`不会有2.3.0版本**
 > - **2.1.0 后 `ViewModelProviders.of()` 被废弃。您可以在 `FragmentActivity` 或者 `Fragment` 使用 `ViewModelProvider(ViewModelStoreOwner)` 构造器来实现相同的功能。（`Fragment` 库 1.2.0以上）**
 
+
+
+#### 依赖树
+
+![livedata](https://gitee.com/flywith24/Album/raw/master/img/20200507094042.png)
+
+
+
+![viewmodel](https://gitee.com/flywith24/Album/raw/master/img/20200507094223.png)
+
 ### Navigation
 
 #### 引入
@@ -446,6 +244,18 @@ dependencies {
 }
 ```
 
+
+
+#### 依赖树
+
+![navigation](https://gitee.com/flywith24/Album/raw/master/img/20200507094643.png)
+
+
+
+![navigation-ui](https://gitee.com/flywith24/Album/raw/master/img/20200507094711.png)
+
+
+
 ### Paging
 
 #### 引入
@@ -463,6 +273,12 @@ dependencies {
   implementation "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use paging-rxjava2-ktx
 }
 ```
+
+#### 依赖树
+
+![paging](https://gitee.com/flywith24/Album/raw/master/img/20200507094857.png)
+
+
 
 ### Room
 
@@ -490,6 +306,14 @@ dependencies {
 ```
 
 > ⚠️ Note: For Kotlin-based apps, make sure you use kapt instead of annotationProcessor. You should also add the kotlin-kapt plugin.
+
+
+
+#### 依赖树
+
+![room](https://gitee.com/flywith24/Album/raw/master/img/20200507094945.png)
+
+
 
 ### 总结
 
@@ -557,7 +381,6 @@ val user: LiveData<User> = liveData {
     val data = database.loadUser() // loadUser is a suspend function.
     emit(data)
 }
-    
 ```
 
 #### 依赖关系
@@ -583,3 +406,19 @@ val user: LiveData<User> = liveData {
 
 
 
+
+## 关于我
+
+我是 [Flywith24](https://flywith24.gitee.io/)，我的博客内容已经分类整理 [在这里](https://github.com/Flywith24/BlogList)，点击右上角的 Watch 可以及时获取我的文章更新哦 😉
+
+
+
+- [掘金](https://juejin.im/user/57c7f6870a2b58006b1cfd6c)
+
+- [小专栏](https://xiaozhuanlan.com/detail)
+
+- [Github](https://github.com/Flywith24)
+
+  
+
+![](https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362)
