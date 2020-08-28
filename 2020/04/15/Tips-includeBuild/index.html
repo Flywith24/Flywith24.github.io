@@ -77,7 +77,7 @@
 <meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200527113952.png">
 <meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200527114023.png">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362">
-<meta property="og:updated_time" content="2020-08-28T02:35:57.753Z">
+<meta property="og:updated_time" content="2020-08-28T02:54:31.936Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild">
 <meta name="twitter:description" content="buildSrc 的缺陷Android 开发中统一不同 module 的依赖版本十分重要，传统的方式是使用 ext 的方式  之前我发过关于使用 buildSrc 简化项目中 gradle 代码的译文：什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin 该种方式可以很好的管理 gradle 的公共配置，这其中当然包括依赖版本  如图，在使用依赖时有">
@@ -340,7 +340,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 10:35:57" itemprop="dateModified" datetime="2020-08-28T10:35:57+08:00">2020-08-28</time>
+                <time title="修改时间：2020-08-28 10:54:31" itemprop="dateModified" datetime="2020-08-28T10:54:31+08:00">2020-08-28</time>
               </span>
             
           
@@ -432,6 +432,8 @@
 <p>如图，在使用依赖时有代码提示，而且可以点击进入查看</p>
 <p>但是由于 buildSrc 是对全局的所有 module 的配置，因此在构建速度上会慢一些。那么有没有一个更纯净的方式来配置依赖版本呢？</p>
 <p>今天我们来介绍一种新的方式</p>
+<a id="more"></a>
+
 <h2 id="自定义-plugin-includeBuild"><a href="#自定义-plugin-includeBuild" class="headerlink" title="自定义 plugin + includeBuild"></a>自定义 plugin + includeBuild</h2><p>使用 <a href="https://docs.gradle.org/current/userguide/composite_builds.html" target="_blank" rel="noopener">Gradle Composite builds</a> 可以很容易解决这一问题</p>
 <p>我们新建一个 module，命名为 version ，并将原来的 buildSrc 的代码转移过来</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DependencyVersionPlugin</span> : <span class="type">Plugin</span>&lt;<span class="type">Project</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">apply</span><span class="params">(project: <span class="type">Project</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

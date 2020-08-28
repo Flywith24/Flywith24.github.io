@@ -490,7 +490,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 10:13:11" itemprop="dateModified" datetime="2020-08-28T10:13:11+08:00">2020-08-28</time>
+                <time title="修改时间：2020-08-28 10:53:46" itemprop="dateModified" datetime="2020-08-28T10:53:46+08:00">2020-08-28</time>
               </span>
             
           
@@ -566,78 +566,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
-            <h2 id="被我忽视的更新"><a href="#被我忽视的更新" class="headerlink" title="被我忽视的更新"></a>被我忽视的更新</h2><p><code>androidx recyclerview 1.2.0-alpha02</code> 版本添加了新功能 <a href="https://developer.android.com/reference/androidx/recyclerview/widget/MergeAdapter" target="_blank" rel="noopener">MergeAdapter</a>，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 <a href="https://juejin.im/post/5e86ffea51882573ba207a19" target="_blank" rel="noopener">【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer</a></p>
+          <h2 id="被我忽视的更新"><a href="#被我忽视的更新" class="headerlink" title="被我忽视的更新"></a>被我忽视的更新</h2><p><code>androidx recyclerview 1.2.0-alpha02</code> 版本添加了新功能 <a href="https://developer.android.com/reference/androidx/recyclerview/widget/MergeAdapter" target="_blank" rel="noopener">MergeAdapter</a>，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 <a href="https://juejin.im/post/5e86ffea51882573ba207a19" target="_blank" rel="noopener">【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer</a></p>
 <p>该版本中还有一个改动：<strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，帮助开发者恢复 RecyclerView 的状态</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png" alt="recyclerview update"></p>
-<p>我对这个功能并没有什么感觉。众所周知，Android 中的 View 内部是有着状态保存和恢复的方法的。RecyclerView 也是如此，它可以恢复自身已滚动的位置</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512110411.png" alt="View 内部恢复状态"></p>
-<p>有关状态保存的内容可以参见 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
-<p>真实情况也是如此</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111315.gif" alt="RecyclerView 内部可以恢复滚动位置"></p>
-<h2 id="意外发现"><a href="#意外发现" class="headerlink" title="意外发现"></a>意外发现</h2><p>最近看到 <a href="https://medium.com/@florina.muntenescu?source=post_page-----a8fbdc9a9334----------------------" target="_blank" rel="noopener">Florina Muntenescu</a> 的 <a href="https://medium.com/androiddevelopers/restore-recyclerview-scroll-position-a8fbdc9a9334" target="_blank" rel="noopener">Restore RecyclerView scroll position</a> ，其中介绍了 <strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，这勾起了我的兴趣</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512111720.png" alt="意外发现"></p>
-<p>如文中描述，RecyclerView 在 activity/fragment 重建时失去滚动位置是因为 Adapter 中的数据是 <strong>异步</strong> 加载的，当 RecyclerView layout 时数据并没有加载，因此也恢复不了之前的位置状态。一个比较简单的例子是使用 Navigation 组件进行导航，返回时 fragment 中的 RecyclerView 由于再次调用接口获取数据，导致其滑动位置失去</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512113141.gif" alt="延迟加载数据，无法恢复滚动位置"></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>有几种方法可以保证 RecyclerView 恢复到正确的滚动位置，最好的办法是借助缓存，ViewModel 或 Repository 中缓存要显示的数据，确保始终在第一个布局传入前在 Adapter 上设置数据。也有一些其他的方案，这些方案要么太复杂，要么不够优雅</p>
-<p><code>recyclerview:1.2.0-alpha02</code> 中的解决方案是提供一个新的 Adapter 方法，该方法允许设置状态恢复策略，它有三个选项</p>
-<ul>
-<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#ALLOW" target="_blank" rel="noopener">ALLOW</a></li>
-<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT_WHEN_EMPTY" target="_blank" rel="noopener">PREVENT_WHEN_EMPTY</a></li>
-<li><a href="https://developer.android.com/reference/androidx/recyclerview/widget/RecyclerView.Adapter.StateRestorationPolicy#PREVENT" target="_blank" rel="noopener">PREVENT</a></li>
-</ul>
-<h3 id="ALLOW"><a href="#ALLOW" class="headerlink" title="ALLOW"></a>ALLOW</h3><p>这是 <strong>默认</strong> 的状态，它会立即恢复 RecyclerView 的状态，该种策略无法解决延迟加载的数据的问题，可以使用 <code>PREVENT_WHEN_EMPTY</code></p>
-<h3 id="PREVENT-WHEN-EMPTY"><a href="#PREVENT-WHEN-EMPTY" class="headerlink" title="PREVENT_WHEN_EMPTY"></a>PREVENT_WHEN_EMPTY</h3><p>仅当 Adapter 不为空（adapter.getItemCount() &gt; 0）时，才恢复 RecyclerView 状态。 如果您的数据是异步加载的，那么 RecyclerView 会一直等到数据加载完毕，然后状态才能恢复。 如果您有默认 item（例如 Header 或 加载指示器）作为适配器的一部分，则应该使用<code>PREVENT</code> 选项，除非使用 MergeAdapter 添加了默认 item。 MergeAdapter 等待所有适配器准备就绪，然后才恢复状态</p>
-<h3 id="PREVENT"><a href="#PREVENT" class="headerlink" title="PREVENT"></a>PREVENT</h3><p>状态不会恢复，直到配置了 <code>ALLOW</code> 或者 <code>PREVENT_WHEN_EMPTY</code></p>
-<p>使用方式如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY</span><br></pre></td></tr></table></figure>
-
-<p><strong>加入了上面的配置后即使是异步加载数据也能恢复 RecyclerView 的位置</strong></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512114332.gif" alt="设置 PREVENT_WHEN_EMPTY"></p>
-<h2 id="追踪引入过程"><a href="#追踪引入过程" class="headerlink" title="追踪引入过程"></a>追踪引入过程</h2><p>老规矩，我们沿着官方的 commit log 来看看其实现原理</p>
-<p>首先我们看看 <a href="https://issuetracker.google.com/issues/146365793" target="_blank" rel="noopener">IssueTracker 上提的 Feature</a></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512115048.png" alt="IssueTracker"></p>
-<p>表达的意思也很简单，就是当加载异步数据时 RecyclerView 的位置状态无法恢复，Adapter 应该提供相关的解决方案</p>
-<p>有意思的是，实现该功能时还重新实现了前一个版本的逻辑，我在 git commit log 中看到了 revert 操作</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512140140.png" alt="revert操作"></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512120004.png" alt></p>
-<p>为了防止 <code>LayoutManager#onRestore</code> 执行多次，没有采用最开始的实现方式。但 Yigit Boyar (这个提交的开发者) 仍然希望使用最开始的实现方式，但是  <code>LayoutManager#onRestoreInstance</code> 的状态时 public ，因此只能选取一个折中的方案</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141210.png" alt="新的实现方案"></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512141445.png" alt="无奈之举"></p>
-<p>过去，开发者会无意间调用 <code>onRestoreInstanceState(State)</code> 方法。例如，一些开发者已使用它来手动设置自己更新的状态，这样即使在此状态之前已恢复，在此处传递状态也将导致 LayoutManager 接收它并相应地更新其内部状态。因此，即使看起来好像很奇怪，也必须始终调用 <code>requestLayout</code> 来保留功能</p>
-<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><p>接下来我们来分析这部分源码，内容很少，所以我们详细看下</p>
-<p>首先是引入 <code>StateRestorationPolicy</code>的枚举</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143600.png" alt></p>
-<p>然后需要提供 <code>setStateRestorationPolicy</code> 和 <code>getStateRestorationPolicy</code> 方法，此时我们还需要一个方法来判断是否要将 SavedState 传递给 LayoutManager</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143459.png" alt></p>
-<p>前面的 <code>setStateRestorationPolicy</code> 方法中 调用了 <code>notifyStateRestorationPolicyChanged</code>，而 <code>notifyStateRestorationPolicyChanged</code> 为静态类 <code>AdapterDataObservable</code> 中的方法，该类中的其他方法我们也很熟悉，均是刷新 Adapter 中数据的方法。</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512143858.png" alt="notifyStateRestorationPolicyChanged"></p>
-<p>而 <code>notifyStateRestorationPolicyChanged</code> 中调用了 mObservers list 中元素的 <code>onStateRestorationPolicyChanged</code> 方法，通过源码我们得知该 list 中的元素类型为 <code>AdapterDataObserver</code>，因此还需要在 <code>AdapterDataObserver</code> 中加入 <code>onStateRestorationPolicyChanged</code> 方法</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144501.png" alt="onStateRestorationPolicyChanged "></p>
-<p>该方法是个空实现，而 <code>RecyclerViewDataObserver</code> 重写了该方法</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512144716.png" alt="RecyclerViewDataObserver "></p>
-<p>配置恢复策略以及恢复策略变化时的监听都有了，接下来要做的就是如果之前有待恢复的装则恢复之前的状态</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200512145152.png" alt="恢复状态"></p>
-<blockquote>
-<p>注意：发布之前 <code>StateRestorationPolicy</code> 叫做 <code>StateRestorationStrategy</code>，后来命名为 <code>StateRestorationPolicy</code>，alpha 版本的库可能随时更改 API 的命名和删除 API，因此查看这部分源码的同学请注意</p>
-</blockquote>
-<p>至此，相关的源码都在这里了</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>StateRestorationPolicy</code> 提供了 RecyclerView 异步加载数据恢复滚动位置的解决方案。原理就是通过配置 <code>StateRestorationPolicy</code> 来改变恢复策略，同时在策略改变时调用 <code>requestLayout</code> 方法。在 <code>dispatchLayoutStep2()</code> (该方法会在 onLayout 和 measure 方法中调用) 方法中恢复状态(如果 <code>canRestoreState()</code> 返回 true)</p>
-<p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo/tree/master/demo_recyclerview_scroll" target="_blank" rel="noopener">demo 地址</a></p>
-<p><strong>一点思考：我们都知道 ViewPager2 是使用 RecyclerView 实现的，那么借助本文介绍的 API 可以做点什么吗？</strong></p>
-<p>欢迎各位小伙伴在评论区留言，说说你的想法</p>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
-<ul>
-<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
-</li>
-<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
-</li>
-<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
-</li>
-</ul>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200508153754.jpg" alt></p>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/09/Jetpack-Recyclerview-Scoroll/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
       
     </div>

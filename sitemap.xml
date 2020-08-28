@@ -2,37 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
-    
-    <lastmod>2020-08-28T02:50:23.324Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2020/04/15/Tips-StateLiveData/</loc>
     
-    <lastmod>2020-08-28T02:40:56.501Z</lastmod>
+    <lastmod>2020-08-28T02:54:47.041Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2020/07/01/Tips-ProcessLifecycle/</loc>
     
-    <lastmod>2020-08-28T02:39:35.547Z</lastmod>
+    <lastmod>2020-08-28T02:54:38.811Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/05/18/Tips-Coil/</loc>
+    <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
     
-    <lastmod>2020-08-28T02:36:58.693Z</lastmod>
+    <lastmod>2020-08-28T02:54:31.936Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2020/04/15/Tips-Components-Jump/</loc>
     
-    <lastmod>2020-08-28T02:36:40.600Z</lastmod>
+    <lastmod>2020-08-28T02:54:16.133Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/18/Tips-Coil/</loc>
+    
+    <lastmod>2020-08-28T02:54:13.138Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
+    
+    <lastmod>2020-08-28T02:53:46.869Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
+    
+    <lastmod>2020-08-28T02:50:23.324Z</lastmod>
     
   </url>
   
@@ -44,23 +58,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
-    
-    <lastmod>2020-08-28T02:35:57.753Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2020/03/01/Jetpack-dependencies/</loc>
     
     <lastmod>2020-08-28T02:20:58.197Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
-    
-    <lastmod>2020-08-28T02:13:11.551Z</lastmod>
     
   </url>
   
