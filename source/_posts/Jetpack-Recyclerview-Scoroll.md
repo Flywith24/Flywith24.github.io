@@ -16,6 +16,8 @@ tags:
 
 该版本中还有一个改动：**`RecyclerView.Adapter` lazy state restoration**，帮助开发者恢复 RecyclerView 的状态
 
+<!-- more-->
+
 ![recyclerview update](https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png)
 
 

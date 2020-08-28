@@ -15,7 +15,7 @@ top: true
 
 我们在使用 LiveData 时可能会遇到「粘性」事件的问题，该问题可以使用包装类的方式解决。解决方案见 [[译] 在 SnackBar，Navigation 和其他事件中使用 LiveData（SingleLiveEvent 案例）](https://juejin.im/post/5b2b1b2cf265da5952314b63#heading-7)
 
-
+<!-- more-->
 
 使用时是这样的
 

@@ -16,7 +16,7 @@ top: true
 
 前些天在群里看到有人讨论通过维护 activity 栈来监听程序前后台切换的问题。其实单纯监听程序的前后台切换完全不需要维护 activity 栈，而现在比较主流的做法是使用 `registerActivityLifecycleCallbacks`。而今天我来介绍一下使用 ProcessLifecycleOwner 来实现这一功能
 
-
+<!-- more-->
 
 ## lifecycle-process 库
 

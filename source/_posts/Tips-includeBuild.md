@@ -35,7 +35,7 @@ Android 开发中统一不同 module 的依赖版本十分重要，传统的方�
 
 今天我们来介绍一种新的方式
 
-
+<!-- more-->
 
 ## 自定义 plugin + includeBuild
 
