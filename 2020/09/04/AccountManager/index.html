@@ -64,18 +64,28 @@
   };
 </script>
 
-  <meta name="description" content="不人云亦云，只求接近真相">
-<meta property="og:type" content="website">
-<meta property="og:title" content="杨云召 | 博客">
-<meta property="og:url" content="http://yoursite.com/categories/python/index.html">
+  <meta name="description" content="使用 AccountManager 实现系统内共享账号在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。 Android 为我们提供了AccountManager 来管理账号信息。 demo 地址 共享前提 两个 app 在一个用户组内 使用相同的签名（使用 debug 默认签名也可以共享） accountTy">
+<meta name="keywords" content="ROM,framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 AccountManager 实现系统内共享账号">
+<meta property="og:url" content="http://yoursite.com/2020/09/04/AccountManager/index.html">
 <meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="不人云亦云，只求接近真相">
+<meta property="og:description" content="使用 AccountManager 实现系统内共享账号在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。 Android 为我们提供了AccountManager 来管理账号信息。 demo 地址 共享前提 两个 app 在一个用户组内 使用相同的签名（使用 debug 默认签名也可以共享） accountTy">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904152225.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904152006.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904152029.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904151929.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904153019.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904153112.png">
+<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904154855.png">
+<meta property="og:updated_time" content="2020-09-04T09:55:51.782Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="杨云召 | 博客">
-<meta name="twitter:description" content="不人云亦云，只求接近真相">
+<meta name="twitter:title" content="使用 AccountManager 实现系统内共享账号">
+<meta name="twitter:description" content="使用 AccountManager 实现系统内共享账号在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。 Android 为我们提供了AccountManager 来管理账号信息。 demo 地址 共享前提 两个 app 在一个用户组内 使用相同的签名（使用 debug 默认签名也可以共享） accountTy">
+<meta name="twitter:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200904152225.png">
   <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/categories/python/">
+  <link rel="canonical" href="http://yoursite.com/2020/09/04/AccountManager/">
 
 
 <script id="page-configurations">
@@ -83,13 +93,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>分类: python | 杨云召 | 博客</title>
+  <title>使用 AccountManager 实现系统内共享账号 | 杨云召 | 博客</title>
   
 
 
@@ -243,30 +253,6 @@
 
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 </nav>
   <div class="site-search">
     
@@ -298,172 +284,273 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content ">
+          <div id="content" class="content page-post-detail">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>python<small>分类</small>
-        </h2>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/AccountManager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">使用 AccountManager 实现系统内共享账号
+
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-04 14:11:46 / 修改时间：17:55:51" itemprop="dateCreated datePublished" datetime="2020-09-04T14:11:46+08:00">2020-09-04</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ROM/" itemprop="url" rel="index"><span itemprop="name">ROM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/09/04/AccountManager/" class="post-meta-item leancloud_visitors" data-flag-title="使用 AccountManager 实现系统内共享账号" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/04/AccountManager/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/04/AccountManager/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>921</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="使用-AccountManager-实现系统内共享账号"><a href="#使用-AccountManager-实现系统内共享账号" class="headerlink" title="使用 AccountManager 实现系统内共享账号"></a>使用 AccountManager 实现系统内共享账号</h1><p>在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。</p>
+<p>Android 为我们提供了AccountManager 来管理账号信息。</p>
+<p><a href="https://github.com/Flywith24/AccountManagerDemo" target="_blank" rel="noopener">demo 地址</a></p>
+<h2 id="共享前提"><a href="#共享前提" class="headerlink" title="共享前提"></a>共享前提</h2><ol>
+<li>两个 app 在一个用户组内</li>
+<li>使用相同的签名（使用 debug 默认签名也可以共享）</li>
+<li>accountType 相同</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><blockquote>
+<p>AccountManager是一个面向应用程序开发的组件，它提供了一套对应于 IAccountManager 协议的应用程序接口；这组接口通过Binder机制与系统服务AccountManagerService进行通信，协作完成帐号相关的操作。同时，AccountManager接收authenticators 提供的回调，以便在帐号操作完成之后向<em>调用此帐号服务的业务</em>返回对应的接口，同时触发这个业务对结果的处理。<br>- authenticators 即注册帐号服务的app；<br>- 业务调用方 即使用authenticators提供的帐号服务的第三方，也可以是authenticator自己</p>
+<p>摘自：<a href="https://blog.csdn.net/dzkdxyx/article/details/78569867" target="_blank" rel="noopener">Android AccountManager帐号管理（一）</a></p>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>该项目中有两个 module ，app 对应注册账号服务的app，app1 对应使用账号服务的第三方应用</p>
+<ul>
+<li><p>在两个应用的 manifest 中加入 <code>&lt;uses-permission android:name=&quot;android.permission.GET_ACCOUNTS&quot; /&gt;</code> 权限</p>
+</li>
+<li><p>在 app 中创建 <code>authenticator.xml</code> 文件，注意 accountType 的配置，这里的应用名及 icon 会在设备的 设置 -&gt; 账号 中显示</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152225.png" alt></p>
+</li>
+<li><p>在 app 中注册一个 action 为“android.accounts.AccountAuthenticator”的 authenticator service，引入上一步创建的 xml 文件</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152006.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152029.png" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>在 app 中创建  authenticator</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904151929.png" alt></p>
+</li>
+</ul>
+<h2 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904153019.png" alt></p>
+<h2 id="删除账号"><a href="#删除账号" class="headerlink" title="删除账号"></a>删除账号</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904153112.png" alt></p>
+<h2 id="第三方-app-获取-用户，token-等信息"><a href="#第三方-app-获取-用户，token-等信息" class="headerlink" title="第三方 app 获取 用户，token 等信息"></a>第三方 app 获取 用户，token 等信息</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904154855.png" alt></p>
+
+    </div>
+    <div>
+    
+      <div>
+  
+  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
+      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
+        <section style="text-align: center;line-height: 30px" data-mid="">
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
+          </section>
+          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
+          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
+            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
+            </section>
+          </section>
+          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
+          </section>
+        </section>
+      </section>
+  </section>
+  
+</div>
+    
+    </div>
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
+        <p>微信支付</p>
       </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
 
       
 
-  
-  
-  
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/ROM/" rel="tag"><i class="fa fa-tag"></i> ROM</a>
+            
+              <a href="/tags/framework/" rel="tag"><i class="fa fa-tag"></i> framework</a>
+            
+          </div>
+        
 
-  
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/08/18/Framework-Compile/" rel="next" title="【折腾Framework】源码编译与烧写">
+                  <i class="fa fa-chevron-left"></i> 【折腾Framework】源码编译与烧写
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
     
-    <div class="collection-title">
-      <h2 class="archive-year" id="archive-year-2017">2017</h2>
-    </div>
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/18/2-2-grade/" itemprop="url">
-            
-              <span itemprop="name">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-18T23:57:00+08:00"
-              content="2017-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/18/2-1-first-program/" itemprop="url">
-            
-              <span itemprop="name">2.1开始第一个爬虫程序</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-18T10:05:00+08:00"
-              content="2017-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/05/1-1-use-function/" itemprop="url">
-            
-              <span itemprop="name">1.1使用函数</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-05T21:58:00+08:00"
-              content="2017-06-05">
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/05/0-indtall-python/" itemprop="url">
-            
-              <span itemprop="name">0.从零开始，Python的安装</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-05T21:09:00+08:00"
-              content="2017-06-05">
-          06-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    </div>
-
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -478,8 +565,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -697,6 +793,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-AccountManager-实现系统内共享账号"><span class="nav-number">1.</span> <span class="nav-text">使用 AccountManager 实现系统内共享账号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#共享前提"><span class="nav-number">1.1.</span> <span class="nav-text">共享前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">1.3.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建账号"><span class="nav-number">1.4.</span> <span class="nav-text">创建账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除账号"><span class="nav-number">1.5.</span> <span class="nav-text">删除账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三方-app-获取-用户，token-等信息"><span class="nav-number">1.6.</span> <span class="nav-text">第三方 app 获取 用户，token 等信息</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
     </div>
   </aside>
@@ -946,6 +1059,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
     
 
 <script>

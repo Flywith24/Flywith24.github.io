@@ -933,6 +933,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-includeBuild/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/04/15/Tips-includeBuild/" class="post-title-link" itemprop="url">【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color=49B1F5>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-15 14:11:46" itemprop="dateCreated datePublished" datetime="2020-04-15T14:11:46+08:00">2020-04-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-28 10:54:31" itemprop="dateModified" datetime="2020-08-28T10:54:31+08:00">2020-08-28</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/04/15/Tips-includeBuild/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/15/Tips-includeBuild/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/Tips-includeBuild/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.4k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="buildSrc-的缺陷"><a href="#buildSrc-的缺陷" class="headerlink" title="buildSrc 的缺陷"></a>buildSrc 的缺陷</h2><p>Android 开发中统一不同 module 的依赖版本十分重要，传统的方式是使用 ext 的方式</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111409.png" alt="ext"></p>
+<p>之前我发过关于使用 buildSrc 简化项目中 gradle 代码的译文：<a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></p>
+<p>该种方式可以很好的管理 gradle 的公共配置，这其中当然包括依赖版本</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111722.gif" alt="配置依赖"></p>
+<p>如图，在使用依赖时有代码提示，而且可以点击进入查看</p>
+<p>但是由于 buildSrc 是对全局的所有 module 的配置，因此在构建速度上会慢一些。那么有没有一个更纯净的方式来配置依赖版本呢？</p>
+<p>今天我们来介绍一种新的方式</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2020/04/15/Tips-includeBuild/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-StateLiveData/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1255,174 +1423,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/15/Tips-includeBuild/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/04/15/Tips-includeBuild/" class="post-title-link" itemprop="url">【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <i class="fa fa-thumb-tack"></i>
-            <font color=49B1F5>置顶</font>
-            <span class="post-meta-divider">|</span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-15 14:11:46" itemprop="dateCreated datePublished" datetime="2020-04-15T14:11:46+08:00">2020-04-15</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 10:54:31" itemprop="dateModified" datetime="2020-08-28T10:54:31+08:00">2020-08-28</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/04/15/Tips-includeBuild/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/15/Tips-includeBuild/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/15/Tips-includeBuild/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>1.4k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>1 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="buildSrc-的缺陷"><a href="#buildSrc-的缺陷" class="headerlink" title="buildSrc 的缺陷"></a>buildSrc 的缺陷</h2><p>Android 开发中统一不同 module 的依赖版本十分重要，传统的方式是使用 ext 的方式</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111409.png" alt="ext"></p>
-<p>之前我发过关于使用 buildSrc 简化项目中 gradle 代码的译文：<a href="https://juejin.im/post/5e22c2ce6fb9a02ff67d41c3" target="_blank" rel="noopener">什么？项目里gradle代码超过200行了！你可能需要 Kotlin+buildSrc Plugin</a></p>
-<p>该种方式可以很好的管理 gradle 的公共配置，这其中当然包括依赖版本</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200527111722.gif" alt="配置依赖"></p>
-<p>如图，在使用依赖时有代码提示，而且可以点击进入查看</p>
-<p>但是由于 buildSrc 是对全局的所有 module 的配置，因此在构建速度上会慢一些。那么有没有一个更纯净的方式来配置依赖版本呢？</p>
-<p>今天我们来介绍一种新的方式</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/15/Tips-includeBuild/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/16/Framework-Option/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1560,6 +1560,180 @@
             </div>
           
           <!--/noindex-->
+        
+      
+    </div>
+    <div>
+    
+    </div>
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/04/AccountManager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="杨云召">
+      <meta itemprop="description" content="不人云亦云，只求接近真相">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杨云召 | 博客">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+              
+              <a href="/2020/09/04/AccountManager/" class="post-title-link" itemprop="url">使用 AccountManager 实现系统内共享账号</a>
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-04 14:11:46 / 修改时间：17:55:51" itemprop="dateCreated datePublished" datetime="2020-09-04T14:11:46+08:00">2020-09-04</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ROM/" itemprop="url" rel="index"><span itemprop="name">ROM</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span id="/2020/09/04/AccountManager/" class="post-meta-item leancloud_visitors" data-flag-title="使用 AccountManager 实现系统内共享账号" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/04/AccountManager/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/04/AccountManager/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>921</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <h1 id="使用-AccountManager-实现系统内共享账号"><a href="#使用-AccountManager-实现系统内共享账号" class="headerlink" title="使用 AccountManager 实现系统内共享账号"></a>使用 AccountManager 实现系统内共享账号</h1><p>在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。</p>
+<p>Android 为我们提供了AccountManager 来管理账号信息。</p>
+<p><a href="https://github.com/Flywith24/AccountManagerDemo" target="_blank" rel="noopener">demo 地址</a></p>
+<h2 id="共享前提"><a href="#共享前提" class="headerlink" title="共享前提"></a>共享前提</h2><ol>
+<li>两个 app 在一个用户组内</li>
+<li>使用相同的签名（使用 debug 默认签名也可以共享）</li>
+<li>accountType 相同</li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><blockquote>
+<p>AccountManager是一个面向应用程序开发的组件，它提供了一套对应于 IAccountManager 协议的应用程序接口；这组接口通过Binder机制与系统服务AccountManagerService进行通信，协作完成帐号相关的操作。同时，AccountManager接收authenticators 提供的回调，以便在帐号操作完成之后向<em>调用此帐号服务的业务</em>返回对应的接口，同时触发这个业务对结果的处理。<br>- authenticators 即注册帐号服务的app；<br>- 业务调用方 即使用authenticators提供的帐号服务的第三方，也可以是authenticator自己</p>
+<p>摘自：<a href="https://blog.csdn.net/dzkdxyx/article/details/78569867" target="_blank" rel="noopener">Android AccountManager帐号管理（一）</a></p>
+</blockquote>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>该项目中有两个 module ，app 对应注册账号服务的app，app1 对应使用账号服务的第三方应用</p>
+<ul>
+<li><p>在两个应用的 manifest 中加入 <code>&lt;uses-permission android:name=&quot;android.permission.GET_ACCOUNTS&quot; /&gt;</code> 权限</p>
+</li>
+<li><p>在 app 中创建 <code>authenticator.xml</code> 文件，注意 accountType 的配置，这里的应用名及 icon 会在设备的 设置 -&gt; 账号 中显示</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152225.png" alt></p>
+</li>
+<li><p>在 app 中注册一个 action 为“android.accounts.AccountAuthenticator”的 authenticator service，引入上一步创建的 xml 文件</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152006.png" alt></p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904152029.png" alt></p>
+</li>
+</ul>
+<ul>
+<li><p>在 app 中创建  authenticator</p>
+<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904151929.png" alt></p>
+</li>
+</ul>
+<h2 id="创建账号"><a href="#创建账号" class="headerlink" title="创建账号"></a>创建账号</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904153019.png" alt></p>
+<h2 id="删除账号"><a href="#删除账号" class="headerlink" title="删除账号"></a>删除账号</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904153112.png" alt></p>
+<h2 id="第三方-app-获取-用户，token-等信息"><a href="#第三方-app-获取-用户，token-等信息" class="headerlink" title="第三方 app 获取 用户，token 等信息"></a>第三方 app 获取 用户，token 等信息</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200904154855.png" alt></p>
+
+          
         
       
     </div>
@@ -1738,164 +1912,6 @@
   </article>
 
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">
-              
-              <a href="/2020/04/30/Jetpack-fragment-ResultAPI/" class="post-title-link" itemprop="url">【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势</a>
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-04-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-04-30T00:10:35+08:00">2020-04-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 09:59:56" itemprop="dateModified" datetime="2020-08-28T09:59:56+08:00">2020-08-28</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/04/30/Jetpack-fragment-ResultAPI/" class="post-meta-item leancloud_visitors" data-flag-title="【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/04/30/Jetpack-fragment-ResultAPI/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/30/Jetpack-fragment-ResultAPI/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>3.5k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>3 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>fragment 1.3.0-alpha04</code> 发布了，其中有很多变动，其中提供了 fragment 间传递数据的新方式</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200430090529.png" alt="1.3.0-alpha04 更新"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2020/04/30/Jetpack-fragment-ResultAPI/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-    <div>
-    
-    </div>
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1936,7 +1952,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2164,12 +2180,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">196k</span>
+    <span title="站点总字数">197k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:58</span>
+    <span title="站点阅读时长">2:59</span>
   
   
     <span class="post-meta-divider">|</span>
