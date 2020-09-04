@@ -16,6 +16,8 @@ Android 为我们提供了AccountManager 来管理账号信息。
 
 [demo 地址](https://github.com/Flywith24/AccountManagerDemo)
 
+<!-- more-->
+
 ## 共享前提
 
 1. 两个 app 在一个用户组内
