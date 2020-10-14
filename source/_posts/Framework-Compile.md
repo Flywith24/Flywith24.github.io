@@ -1,13 +1,19 @@
 ---
 title: 【折腾Framework】源码编译与烧写
 date: 2020-08-18 14:11:46
+tags: [ROM,framework]
 categories: 
 - ROM
-tags: 
-- ROM
-- framework
-top: true
+keywords:编译，烧写，源码，Android
+image:https://pic.izhaoo.com/20191211070006.jpg
+top:100
 ---
+
+基于 Android 10 的源码编译与烧写。
+
+<!-- more-->
+
+image: https://gitee.com/flywith24/Album/raw/master/img/20201014213357.png
 
 ## 前言
 
@@ -16,8 +22,6 @@ top: true
 此处以 Pixel 3a & Android 10 为例介绍如何编译 ROM 包并烧录
 
 手上没有真机的小伙伴可以选择制作模拟器，本文最后提供了基于 Android 10 编译的自定义 AVD 下载链接
-
-<!-- more-->
 
 ## 编译环境
 
