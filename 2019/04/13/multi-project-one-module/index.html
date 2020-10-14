@@ -138,7 +138,7 @@ android Studio  中的项目在正常引用m...">
       <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
       
     </ul>
-    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
   </div>
 </nav>
   <main id="main">
@@ -226,6 +226,32 @@ android Studio  中的项目在正常引用m...">
   <div class="btn" id="comments-btn">查看评论</div>
   
   
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
 </section>
       
     </section>
@@ -282,7 +308,7 @@ android Studio  中的项目在正常引用m...">
     </a>
     
   </div>
-  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
 </footer>
   
       <div class="fab fab-plus">
@@ -297,7 +323,7 @@ android Studio  中的项目在正常引用m...">
     <i class="iconfont iconcaret-up"></i>
   </div>
   
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
