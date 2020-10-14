@@ -31,7 +31,6 @@ preview:
 # Menu
 menu:
   home: / || 首页
-  galleries: /galleries || 摄影
   archives: /archives || 归档
   tags: /tags || 标签
   categories: /categories || 分类
@@ -42,11 +41,11 @@ copyright: <p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  
 
 # Social
 social:
-  qq: tencent://message/?Menu=yes&uin=894519210 || iconQQ || '#12B7F5'
+  qq: tencent://message/?Menu=yes&uin=1032367864 || iconQQ || '#12B7F5'
   wechat: javascript:; || iconwechat-fill || '#09BB07'
   instagram: https://www.instagram.com/izhaoo/ || iconinstagram || '#DA2E76'
-  github: https://github.com/izhaoo || icongithub-fill || '#24292E'
-  email: mailto:izhaoo@163.com || iconmail
+  github: https://github.com/Flywith24 || icongithub-fill || '#24292E'
+  email: mailto:youngyunzhao@163.com || iconmail
 
 # Fab (FloatActionButton)
 fab:
@@ -67,8 +66,8 @@ post_image: /images/theme/post-image.jpg
 # Donate
 donate:
   enable: true
-  alipay: https://pic.izhaoo.com/alipay.jpg
-  wechat: https://pic.izhaoo.com/wechat.jpg
+  alipay: https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg
+  wechat: https://gitee.com/flywith24/Album/raw/master/img/20201014170303.png
 
 # Copyright
 post_copyright:
@@ -108,12 +107,18 @@ gitalk:
 
 # Valine
 valine:
-  appId:
-  appKey:
-  placeholder: 雁过留痕
-  avatar: mp
-  pageSize: 10
-  lang: zh-CN
+  enable: true # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version
+  appid: SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz # Your leancloud application appid
+  appkey: OYo7ITS4AzTvBUvb1yIY8oaf # Your leancloud application appkey
+  notify: false # Mail notifier. See: https://github.com/xCss/Valine/wiki
+  verify: false # Verification code
+  placeholder: ヾﾉ≧∀≦)o来啊，快活啊! # Comment box placeholder
+  avatar: mm # Gravatar style
+  guest_info: nick,mail,link # Custom comment header
+  pageSize: 10 # Pagination size
+  language: zh-cn # Language, available values: en, zh-cn
+  visitor: false # leancloud-counter-security is not supported for now. When visitor is set to be true, appid and appkey are recommended to be the same as leancloud_visitors' for counter compatibility. Article reading statistic https://valine.js.org/visitor.html
+  comment_count: true # If false, comment count will only be displayed in post page, not in home page
 
 # ChangYan
 changyan:
@@ -127,7 +132,7 @@ changyan:
 # Daovoice
 daovoice:
   enable: true
-  appId: abcdefg  # app_id
+  appId: 7785620b  # app_id
 
 # Lazyload
 lazyload:
