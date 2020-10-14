@@ -37,7 +37,7 @@ menu:
   about: /about || 关于
 
 # Copyright
-copyright: <p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p>
+copyright: <p>Copyright© 2017 - 2020</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p>
 
 # Social
 social:
@@ -105,20 +105,13 @@ gitalk:
   clientID:
   clientSecret:
 
-# Valine
 valine:
-  enable: true # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version
-  appid: SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz # Your leancloud application appid
-  appkey: OYo7ITS4AzTvBUvb1yIY8oaf # Your leancloud application appkey
-  notify: false # Mail notifier. See: https://github.com/xCss/Valine/wiki
-  verify: false # Verification code
-  placeholder: ヾﾉ≧∀≦)o来啊，快活啊! # Comment box placeholder
-  avatar: mm # Gravatar style
-  guest_info: nick,mail,link # Custom comment header
-  pageSize: 10 # Pagination size
-  language: zh-cn # Language, available values: en, zh-cn
-  visitor: false # leancloud-counter-security is not supported for now. When visitor is set to be true, appid and appkey are recommended to be the same as leancloud_visitors' for counter compatibility. Article reading statistic https://valine.js.org/visitor.html
-  comment_count: true # If false, comment count will only be displayed in post page, not in home page
+  appId: SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz
+  appKey: OYo7ITS4AzTvBUvb1yIY8oaf
+  placeholder: 期待你的留言                             
+  avatar: mp
+  pageSize: 10
+  lang: zh-CN
 
 # ChangYan
 changyan:
