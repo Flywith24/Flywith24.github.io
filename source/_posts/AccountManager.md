@@ -4,7 +4,7 @@ date: 2020-09-04 14:11:46
 tags: [ROM,framework]
 categories: 
 - ROM
-image: 
+image: https://gitee.com/flywith24/Album/raw/master/img/20201014232756.png
 ---
 
 使用 AccountManager 实现系统内共享账号
