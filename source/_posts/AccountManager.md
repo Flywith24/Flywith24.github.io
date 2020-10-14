@@ -1,22 +1,23 @@
 ---
 title: 使用 AccountManager 实现系统内共享账号
 date: 2020-09-04 14:11:46
+tags: [ROM,framework]
 categories: 
 - ROM
-tags: 
-- ROM
-- framework
+image: 
 ---
 
-# 使用 AccountManager 实现系统内共享账号
+使用 AccountManager 实现系统内共享账号
+
+<!-- more-->
+
+## 前言
 
 在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。
 
 Android 为我们提供了AccountManager 来管理账号信息。
 
 [demo 地址](https://github.com/Flywith24/AccountManagerDemo)
-
-<!-- more-->
 
 ## 共享前提
 
