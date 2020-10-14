@@ -4,11 +4,10 @@ date: 2019-08-16 14:11:46
 tags: [ROM,framework]
 categories: 
 - ROM
-image: https://gitee.com/flywith24/Album/raw/master/img/20201014220906.png
+image: https://gitee.com/flywith24/Album/raw/master/img/20201014234249.png
+top : true
 ---
 
-> 写博客是个好习惯，但是写的人水平参差不齐，我见过最搞笑的就是博文的内容是其他博客的链接。本着不误人子弟的原则，我写博客一向很克制。流水账系列是我平时的一些记录，是 `how to` 类型的文章，网上相关的资料一搜一大把，仅供自己记录查找。
->
 > 本篇博客是记录一些学习 `framework` 开发时知识的整理。
 
 <!-- more -->

@@ -7,6 +7,7 @@ categories:
 tags: 
 - handler
 - 异步
+image: 
 ---
 
 > 在android中我们可以有很多方式去实现异步，比如AsyncTask，Rxjava。不过它们底层都是使用的Handler，所以我们来研究一下Handelr的实现。
