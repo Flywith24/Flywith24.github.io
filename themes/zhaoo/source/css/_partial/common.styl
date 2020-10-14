@@ -1,0 +1,195 @@
+// Lazyload
+.lazyload
+  background url(hexo-config('lazyload.loadingImage')) no-repeat center
+// Loading
+.loading
+  position fixed
+  width 100%
+  height 100%
+  top 0
+  background url('/images/theme/loading.gif') no-repeat center
+  background-color $color-background
+  z-index 2019
+  overflow hidden
+// Preview
+@keyframes move-forever
+  0%
+    transform translate3d(-90px, 0, 0)
+  100%
+    transform translate3d(85px, 0, 0)
+@keyframes blink
+  0%
+    opacity 1
+  50%
+    opacity 0
+  100%
+    opacity 1
+.preview
+  .navbar
+    position absolute
+    display block
+    top 15px
+    right 15px
+    width 40px
+    height 40px
+    text-align center
+    line-height 40px
+    border-radius 50%
+    background-color rgba(0, 0, 0, 0.5)
+    opacity 0.5
+    cursor pointer
+    .iconfont
+      font-size 18px
+      color $color-white
+  .preview-image
+    z-index 40
+    height 90vh
+    width 100%
+    background-image url(hexo-config('preview.welcome_image'))
+    background-repeat no-repeat
+    background-size 100% 100%
+    background-attachment fixed
+    position relative
+    display flex
+    justify-content center
+    align-items center
+    .preview-motto, .preview-cursor
+      font-size 3.5em
+      font-family 'Quicksand', 'Vollkorn', serif
+      font-weight 300
+      color convert(hexo-config('preview.motto.color')) || #000000
+      margin 0
+      @media (max-width 768px)
+        font-size 1.5em
+        padding 15px
+        text-align center
+    .preview-cursor
+      opacity 1
+      animation-duration 1s
+      animation-iteration-count infinite
+      animation-name blink
+    .preview-overlay
+      width 100%
+      position absolute
+      bottom -1px
+      left 0
+      right 0
+      z-index 50
+      .preview-waves
+        position relative
+        width 100%
+        height 15vh
+        margin-bottom -7px
+        min-height 100px
+        max-height 150px
+        @media (max-width 768px)
+          height 40px
+          min-height 40px
+      .preview-parallax
+        > use
+          animation move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite
+        > use:nth-child(1)
+          animation-delay -2s
+          animation-duration 7s
+        > use:nth-child(2)
+          animation-delay -3s
+          animation-duration 10s
+        > use:nth-child(3)
+          animation-delay -4s
+          animation-duration 13s
+        > use:nth-child(4)
+          animation-delay -5s
+          animation-duration 20s
+  .preview-scroll
+    height 10vh
+    display flex
+    justify-content center
+    align-items center
+    i
+      font-size 32px
+// Fuction
+.substr-1, .substr-3
+  display -webkit-box
+  -webkit-box-orient vertical
+  overflow hidden
+.substr-1
+  -webkit-line-clamp 1
+.substr-3
+  -webkit-line-clamp 3
+.lock-screen
+  overflow hidden
+  padding-right 6px
+  height 100%
+  width 100%
+.blur
+  filter blur(10px)
+// Fab
+.fab
+  position fixed
+  bottom -50px
+  right 15px
+  width 45px
+  height 45px
+  line-height 45px
+  text-align center
+  border-radius 50%
+  background-color $color-default
+  color $color-white
+  transition $transition
+  box-shadow 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149)
+  i
+    font-size 1.5em
+.fab:hover
+  background-color $color-link
+  cursor pointer
+.fab-hide
+  bottom -50px
+.fab-show
+  bottom 15px
+.fab-plus
+  z-index 200
+.fab-plus-active
+  transform rotate(45deg)
+.fab-up
+  z-index 90
+  visibility hidden
+.fab-up-active
+  bottom 70px
+  visibility visible
+.fab-daovoice
+  z-index 10
+  visibility hidden
+.fab-daovoice-active
+  bottom 125px
+  visibility visible
+// Paginator
+.paginator
+  text-align center
+  margin-bottom 30px
+  span, a
+    display inline-block
+    margin 0 3px
+    width 30px
+    height 30px
+    line-height 30px
+  span, a:hover
+    background-color $color-default
+    color $color-white
+  .space
+    color $color-default
+    background-color rgba(0, 0, 0, 0)
+// Underline
+.underline
+  position relative
+  color $color-default !important
+.underline:before
+  content ''
+  position absolute
+  bottom -3px
+  width 100%
+  background $color-default
+  height 2px
+  transition transform 0.2s
+  transform scaleX(0)
+.underline:hover:before
+  transform scaleX(1)
