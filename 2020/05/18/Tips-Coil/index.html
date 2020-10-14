@@ -1,431 +1,164 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN">
 
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
 
+  
+  
+  <meta name="description" content="新的图片加载库——CoilCoil 是 Instaca..."> 
+  
+  <meta name="author" content="杨云召"> 
 
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
 
+  <link rel="stylesheet" href="/css/style.css">
 
-<html class="theme-next mist use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="generator" content="Hexo 3.9.0">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
 
   <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "7785620b"
-    });
-  daovoice('update');
-  </script>
-
-
-<link rel="stylesheet" href="/css/main.css?v=7.3.0">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.3.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
-    copycode: {"enable":true,"show_result":true,"style":"default"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
-    path: './public/search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170303.png'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
     }
-  };
-</script>
-
-  <meta name="description" content="新的图片加载库——CoilCoil 是 Instacart 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，Okhttp，androidx.lifecycle。Coil 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停 默认情况下 Coil 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 Coroutines, O">
-<meta name="keywords" content="Tips,奇技淫巧">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil">
-<meta property="og:url" content="http://yoursite.com/2020/05/18/Tips-Coil/index.html">
-<meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="新的图片加载库——CoilCoil 是 Instacart 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，Okhttp，androidx.lifecycle。Coil 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停 默认情况下 Coil 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 Coroutines, O">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362">
-<meta property="og:updated_time" content="2020-08-28T02:54:13.138Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil">
-<meta name="twitter:description" content="新的图片加载库——CoilCoil 是 Instacart 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，Okhttp，androidx.lifecycle。Coil 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停 默认情况下 Coil 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 Coroutines, O">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987">
-  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/2020/05/18/Tips-Coil/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil | 杨云召 | 博客</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
   </script>
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-
-  <div class="container sidebar-position-left">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">杨云召 | 博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-<nav class="site-nav">
   
-  <ul id="menu" class="menu">
-      
-      
-      
-        
-        <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-tags">
-      
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-archives">
-      
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-commonweal">
-      
-    
-
-    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        
-          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
-      </li>
-    
-  </ul>
-
-    
-
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
 </nav>
-  <div class="site-search">
-    
-  <div class="popup search-popup">
-  <div class="search-header">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <div class="search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="search-input">
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
     </div>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-  </div>
-  <div id="search-result"></div>
-</div>
-
-
-  </div>
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/Tips-Coil/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil
-
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <i class="fa fa-thumb-tack"></i>
-            <font color=49B1F5>置顶</font>
-            <span class="post-meta-divider">|</span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-05-18 14:11:46" itemprop="dateCreated datePublished" datetime="2020-05-18T14:11:46+08:00">2020-05-18</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 10:54:13" itemprop="dateModified" datetime="2020-08-28T10:54:13+08:00">2020-08-28</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tips/" itemprop="url" rel="index"><span itemprop="name">Tips</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/05/18/Tips-Coil/" class="post-meta-item leancloud_visitors" data-flag-title="【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
+    <ul class="menu-content">
       
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/05/18/Tips-Coil/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/18/Tips-Coil/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>5.9k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>5 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <h2 id="新的图片加载库——Coil"><a href="#新的图片加载库——Coil" class="headerlink" title="新的图片加载库——Coil"></a>新的图片加载库——Coil</h2><p><a href="https://coil-kt.github.io/coil/" target="_blank" rel="noopener">Coil</a> 是 <a href="https://www.instacart.com/" target="_blank" rel="noopener">Instacart</a> 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，<code>Okhttp</code>，<code>androidx.lifecycle</code>。<code>Coil</code> 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停</p>
-<p>默认情况下 <code>Coil</code> 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro" target="_blank" rel="noopener">Coroutines</a>, <a href="https://github.com/square/okhttp/blob/master/okhttp/src/main/resources/META-INF/proguard/okhttp3.pro" target="_blank" rel="noopener">OkHttp</a> 和 <a href="https://github.com/square/okio/blob/master/okio/src/jvmMain/resources/META-INF/proguard/okio.pro" target="_blank" rel="noopener">Okio</a> 添加规则</p>
-<a id="more"></a>
-
-<h2 id="Coil-的优势"><a href="#Coil-的优势" class="headerlink" title="Coil 的优势"></a>Coil 的优势</h2><ul>
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>五月 18, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5996</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="Coil-的优势"><a href="#Coil-的优势" class="headerlink" title="Coil 的优势"></a>Coil 的优势</h2><ul>
 <li>快速：<code>Coil</code> 进行了很多优化，包括内存和磁盘缓存，对内存中的图像进行采样，重新使用位图，自动暂停/取消请求等等</li>
 <li>轻量：<code>Coil</code> 在您的APK中添加了约 2000 种方法（对于已经使用 <code>OkHttp</code> 和 <code>Coroutines</code> 的应用程序），与 <code>Picasso</code> 相当，远少于 <code>Glide</code> 和 <code>Fresco</code></li>
 <li>易用：<code>Coil</code> 的 API 利用 Kotlin 的特性简化了样板代码</li>
@@ -440,33 +173,33 @@
 <li><code>io.coil-kt:coil-svg</code>：引入一系列解码器以支持 svg</li>
 <li><code>io.coil-kt:coil-video</code>：包括两个 <a href="https://coil-kt.github.io/coil/api/coil-base/coil.fetch/-fetcher" target="_blank" rel="noopener">fetchers</a> ，以支持从 Android 支持的任何视频格式中提取和解码帧</li>
 </ul>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 普通使用引用</span></span><br><span class="line">implementation <span class="string">"io.coil-kt:coil:0.11.0"</span></span><br><span class="line"><span class="comment">// 使用依赖注入时或者制作基于 coil 的库引用</span></span><br><span class="line">implementation <span class="string">"io.coil-kt:coil-base:0.11.0"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs groovy"><span class="hljs-comment">// 普通使用引用</span><br>implementation <span class="hljs-string">"io.coil-kt:coil:0.11.0"</span><br><span class="hljs-comment">// 使用依赖注入时或者制作基于 coil 的库引用</span><br>implementation <span class="hljs-string">"io.coil-kt:coil-base:0.11.0"</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="Java-8"><a href="#Java-8" class="headerlink" title="Java 8"></a>Java 8</h2><p><code>Coil</code> 要求 Java 8，要通过 D8 启用 Java 8 调试，请将以下内容添加到 Gradle 脚本</p>
 <p>Gradle (<code>.gradle</code>)</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all &#123;</span><br><span class="line">    kotlinOptions &#123;</span><br><span class="line">        jvmTarget = <span class="string">"1.8"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs groovy">android &#123;<br>    compileOptions &#123;<br>        sourceCompatibility JavaVersion.VERSION_1_8<br>        targetCompatibility JavaVersion.VERSION_1_8<br>    &#125;<br>&#125;<br><br>tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all &#123;<br>    kotlinOptions &#123;<br>        jvmTarget = <span class="hljs-string">"1.8"</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>Gradle Kotlin DSL (<code>.gradle.kts</code>)</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileOptions &#123;</span><br><span class="line">        sourceCompatibility = JavaVersion.VERSION_1_8</span><br><span class="line">        targetCompatibility = JavaVersion.VERSION_1_8</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">tasks.withType&lt;KotlinCompile&gt; &#123;</span><br><span class="line">    kotlinOptions &#123;</span><br><span class="line">        jvmTarget = <span class="string">"1.8"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">android &#123;<br>    compileOptions &#123;<br>        sourceCompatibility = JavaVersion.VERSION_1_8<br>        targetCompatibility = JavaVersion.VERSION_1_8<br>    &#125;<br>&#125;<br><br>tasks.withType&lt;KotlinCompile&gt; &#123;<br>    kotlinOptions &#123;<br>        jvmTarget = <span class="hljs-string">"1.8"</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="ImageView-扩展函数"><a href="#ImageView-扩展函数" class="headerlink" title="ImageView 扩展函数"></a>ImageView 扩展函数</h3><p><code>io.coil-kt:coil</code> 提供了 类型安全的 ImageView 扩展函数</p>
 <p>在 ImageView 中加载图片，只需调用 load 扩展函数</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// URL</span></span><br><span class="line">imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Resource</span></span><br><span class="line">imageView.load(R.drawable.image)</span><br><span class="line"></span><br><span class="line"><span class="comment">// File</span></span><br><span class="line">imageView.load(File(<span class="string">"/path/to/image.jpg"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// And more...</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// URL</span><br>imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br><br><span class="hljs-comment">// Resource</span><br>imageView.load(R.drawable.image)<br><br><span class="hljs-comment">// File</span><br>imageView.load(File(<span class="hljs-string">"/path/to/image.jpg"</span>))<br><br><span class="hljs-comment">// And more...</span><br></code></pre></td></tr></table></figure>
 
 <p>上面的请求等价于：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(imageView.context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .target(imageView)</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br><span class="hljs-keyword">val</span> request = LoadRequest.Builder(imageView.context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .target(imageView)<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
 
 <p>可选的请求配置可以通过 lambda 来操作</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>) &#123;</span><br><span class="line">    crossfade(<span class="literal">true</span>)</span><br><span class="line">    placeholder(R.drawable.image)</span><br><span class="line">    transformations(CircleCropTransformation())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>) &#123;<br>    crossfade(<span class="hljs-literal">true</span>)<br>    placeholder(R.drawable.image)<br>    transformations(CircleCropTransformation())<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="Image-Loaders¶"><a href="#Image-Loaders¶" class="headerlink" title="Image Loaders¶"></a>Image Loaders<a href="https://coil-kt.github.io/coil/#image-loaders" target="_blank" rel="noopener">¶</a></h3><p><code>ImageLoader</code> 是执行请求的服务类。 他们处理缓存，数据获取，图像解码，请求管理，bitmap pool，内存管理等。 可以使用 builder 来创建和配置新实例：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader.Builder(context)</span><br><span class="line">    .availableMemoryPercentage(<span class="number">0.25</span>)</span><br><span class="line">    .crossfade(<span class="literal">true</span>)</span><br><span class="line">    .build()</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader.Builder(context)<br>    .availableMemoryPercentage(<span class="hljs-number">0.25</span>)<br>    .crossfade(<span class="hljs-literal">true</span>)<br>    .build()<br></code></pre></td></tr></table></figure>
 
 <p>imageView.load 使用单例 <code>ImageLoader</code> 执行 <code>LoadRequest</code> 。 可以使用以下方式访问单例 <code>ImageLoader</code>：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br></code></pre></td></tr></table></figure>
 
 <p>（可选）您可以创建自己的ImageLoader实例，并通过依赖项注入将它们注入：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader(context)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader(context)<br></code></pre></td></tr></table></figure>
 
 <p>当您创建单个 <code>ImageLoader</code> 并在整个应用程序中共享时，<code>Coil</code> 的性能最佳。 这是因为每个 <code>ImageLoader</code> 都有自己的内存缓存，bitmap pool 和网络监听</p>
 <h3 id="Requests¶"><a href="#Requests¶" class="headerlink" title="Requests¶"></a>Requests<a href="https://coil-kt.github.io/coil/#requests" target="_blank" rel="noopener">¶</a></h3><p>有两种 Request 类型</p>
@@ -475,20 +208,20 @@
 <li><a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-get-request/" target="_blank" rel="noopener"><code>GetRequest</code></a> 挂起并返回  <a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-request-result/" target="_blank" rel="noopener"><code>RequestResult</code></a></li>
 </ul>
 <p>如果要加载到自定义 target 中，可以执行 <code>LoadRequest</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .target &#123; drawable -&gt;</span><br><span class="line">        <span class="comment">// Handle the result.</span></span><br><span class="line">    &#125;</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .target &#123; drawable -&gt;<br>        <span class="hljs-comment">// Handle the result.</span><br>    &#125;<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
 
 <p>要强制获取图像，请执行GetRequest：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = GetRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .build()</span><br><span class="line"><span class="keyword">val</span> drawable = imageLoader.execute(request).drawable</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = GetRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .build()<br><span class="hljs-keyword">val</span> drawable = imageLoader.execute(request).drawable<br></code></pre></td></tr></table></figure>
 
 <h3 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h3><p>如果您使用的是 <code>io.coil-kt:coil</code> ，您可以使用以下任意方式设置 <code>ImageLoader</code> 的实例</p>
 <p>在 Application 中实现 <code>ImageLoaderFactory</code>（推荐）</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> : <span class="type">Application</span></span>(), ImageLoaderFactory &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">newImageLoader</span><span class="params">()</span></span>: ImageLoader &#123;</span><br><span class="line">        <span class="keyword">return</span> ImageLoader.Builder(context)</span><br><span class="line">            .crossfade(<span class="literal">true</span>)</span><br><span class="line">            .okHttpClient &#123;</span><br><span class="line">                OkHttpClient.Builder()</span><br><span class="line">                    .cache(CoilUtils.createDefaultCache(context))</span><br><span class="line">                    .build()</span><br><span class="line">            &#125;</span><br><span class="line">            .build()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApplication</span> : <span class="hljs-type">Application</span></span>(), ImageLoaderFactory &#123;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">newImageLoader</span><span class="hljs-params">()</span></span>: ImageLoader &#123;<br>        <span class="hljs-keyword">return</span> ImageLoader.Builder(context)<br>            .crossfade(<span class="hljs-literal">true</span>)<br>            .okHttpClient &#123;<br>                OkHttpClient.Builder()<br>                    .cache(CoilUtils.createDefaultCache(context))<br>                    .build()<br>            &#125;<br>            .build()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>调用 Coil.setImageLoader</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = ImageLoader.Builder(context)</span><br><span class="line">    .crossfade(<span class="literal">true</span>)</span><br><span class="line">    .okHttpClient &#123;</span><br><span class="line">        OkHttpClient.Builder()</span><br><span class="line">            .cache(CoilUtils.createDefaultCache(context))</span><br><span class="line">            .build()</span><br><span class="line">    &#125;</span><br><span class="line">    .build()</span><br><span class="line">Coil.setImageLoader(imageLoader)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader.Builder(context)<br>    .crossfade(<span class="hljs-literal">true</span>)<br>    .okHttpClient &#123;<br>        OkHttpClient.Builder()<br>            .cache(CoilUtils.createDefaultCache(context))<br>            .build()<br>    &#125;<br>    .build()<br>Coil.setImageLoader(imageLoader)<br></code></pre></td></tr></table></figure>
 
 <p>默认的 <code>ImageLoader</code> 可以通过这样取回</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> imageLoader = Coil.imageLoader(context)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br></code></pre></td></tr></table></figure>
 
 <p>设置默认的 <code>ImageLoader</code> 是可选的。 如果未设置，则 <code>Coil</code> 会延迟创建具有默认值的 <code>ImageLoader</code></p>
 <p>如果您使用的是 <code>io.coil-kt:coil-base</code>，您应创建自己的 <code>ImageLoader</code> 实例并通过依赖注入将它注入到 app 中</p>
@@ -506,10 +239,10 @@
 <li>Bitmap</li>
 </ul>
 <h2 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h2><p>如果要预加载到内存中，执行一个不带 target 的 <code>LoadRequest</code></p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    <span class="comment">// 可选的，但是设置 ViewSizeResolver 可以通过限制预加载的大小来节省内存</span></span><br><span class="line">    .size(ViewSizeResolver(imageView))</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    <span class="hljs-comment">// 可选的，但是设置 ViewSizeResolver 可以通过限制预加载的大小来节省内存</span><br>    .size(ViewSizeResolver(imageView))<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
 
 <p>如果只想将网络图片预加载到磁盘中，可以为 request 关闭内存缓存</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> request = LoadRequest.Builder(context)</span><br><span class="line">    .<span class="keyword">data</span>(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line">    .memoryCachePolicy(CachePolicy.DISABLED)</span><br><span class="line">    .build()</span><br><span class="line">imageLoader.execute(request)</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .memoryCachePolicy(CachePolicy.DISABLED)<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
 
 <h2 id="取消请求"><a href="#取消请求" class="headerlink" title="取消请求"></a>取消请求</h2><p><code>LoadRequest</code> 会自动取消在以下几种情况下</p>
 <ul>
@@ -521,12 +254,12 @@
 </li>
 </ul>
 <p>此外，每个 <code>LoadRequest</code> 返回一个 <code>RequestDisposable</code>，可用于检查请求是否在运行中或处理该请求（有效地取消请求并释放其关联资源）</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> disposable = imageView.load(<span class="string">"https://www.example.com/image.jpg"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cancel the request.</span></span><br><span class="line">disposable.dispose()</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> disposable = imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br><br><span class="hljs-comment">// Cancel the request.</span><br>disposable.dispose()<br></code></pre></td></tr></table></figure>
 
 <p><code>GetRequest</code> 仅当协程的上下文被取消时才会取消</p>
 <h2 id="图片采样"><a href="#图片采样" class="headerlink" title="图片采样"></a>图片采样</h2><p>假设磁盘上有一个 500x500 的映像，但是只需要以 100x100 的大小将其加载到内存中即可在视图中显示。 <code>Coil</code> 会将图像加载到内存中，但是如果您需要 500x500 的图像会怎样呢？ 从磁盘读取还有更好的「质量」，但是图像已经以 100x100 加载到内存中。 理想情况下，当我们从磁盘以 500x500 读取图像时，我们将使用 100x100 图像作为占位符。</p>
 <p>这正是 <code>Coil</code> 所做的，并且 <code>Coil</code> 自动为所有 <code>BitmapDrawables</code> 处理此过程。 与 <code>crossfade(true)</code> 搭配使用时，可以创建视觉效果，使图像细节看起来像淡入淡出，类似于渐进式 JPEG</p>
-<p><img src="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987" alt></p>
+<p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987" src="/2020/05/18/Tips-Coil/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <h2 id="使用要求"><a href="#使用要求" class="headerlink" title="使用要求"></a>使用要求</h2><ul>
 <li>AndroidX</li>
 <li>Min SDK 14+</li>
@@ -543,655 +276,203 @@
 <li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
 </li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" alt></p>
-
-    </div>
-    <div>
-    
-      <div>
-  
-  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
-      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
-        <section style="text-align: center;line-height: 30px" data-mid="">
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
-          </section>
-          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
-          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
-          </section>
-        </section>
+<p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" src="/2020/05/18/Tips-Coil/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
       </section>
-  </section>
+      <section class="extra">
+        
+        <ul class="copyright">
   
-</div>
-    
-    </div>
-    
-    
-    
+  <li><strong>本文作者：</strong>杨云召</li>
+  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/05/18/Tips-Coil/index.html">http://yoursite.com/2020/05/18/Tips-Coil/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
         
-      
-        <div id="reward-container">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
         
-      
-      <div style="display: inline-block">
-        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
-        <p>微信支付</p>
-      </div>
-        
-      
-      <div style="display: inline-block">
-        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
-        <p>支付宝</p>
-      </div>
-
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
   </div>
-</div>
-
-      
-
-      <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/Tips/" rel="tag"><i class="fa fa-tag"></i> Tips</a>
-            
-              <a href="/tags/奇技淫巧/" rel="tag"><i class="fa fa-tag"></i> 奇技淫巧</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2020/04/30/Jetpack-fragment-ResultAPI/" rel="next" title="【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势">
-                  <i class="fa fa-chevron-left"></i> 【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/" rel="prev" title="【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化">
-                  【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
-        
-      </footer>
-    
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
   </div>
-  
-  
-  
-  </article>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tips/">Tips</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/奇技淫巧/">奇技淫巧</a></li></ul>
 
+        
+<nav class="nav">
+  
+    <a href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/"><i class="iconfont iconleft"></i>【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化</a>
+  
+  
+    <a href="/2020/04/30/Jetpack-fragment-ResultAPI/">【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
-
-
-          </div>
-          
-    
-    <div class="comments" id="comments"></div>
-  
-
-        </div>
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+</article>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/uploads/avatar.jpg"
-      alt="杨云召">
-  <p class="site-author-name" itemprop="name">杨云召</p>
-  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
-</div>
-  <nav class="site-state motion-element">
-      <div class="site-state-item site-state-posts">
-        
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">35</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
     
-      
-      
-      <div class="site-state-item site-state-categories">
-        
-          
-            <a href="/categories/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
-      </div>
     
-      
-      
-      <div class="site-state-item site-state-tags">
-        
-          
-            <a href="/tags/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
-      </div>
     
-  </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
     </a>
-  </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
-      </span>
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-      </span>
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
     
   </div>
-
-
-  <div class="links-of-blogroll motion-element links-of-blogroll-block">
-    <div class="links-of-blogroll-title">
-      <i class="fa  fa-fw fa-link"></i>
-      博客推荐
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
-        </li>
-      
-    </ul>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
   </div>
-
-        </div>
-      </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#新的图片加载库——Coil"><span class="nav-number">1.</span> <span class="nav-text">新的图片加载库——Coil</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Coil-的优势"><span class="nav-number">2.</span> <span class="nav-text">Coil 的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Artifacts"><span class="nav-number">3.</span> <span class="nav-text">Artifacts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-8"><span class="nav-number">4.</span> <span class="nav-text">Java 8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">5.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ImageView-扩展函数"><span class="nav-number">5.1.</span> <span class="nav-text">ImageView 扩展函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image-Loaders¶"><span class="nav-number">5.2.</span> <span class="nav-text">Image Loaders¶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Requests¶"><span class="nav-number">5.3.</span> <span class="nav-text">Requests¶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单例"><span class="nav-number">5.4.</span> <span class="nav-text">单例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持的数据类型"><span class="nav-number">6.</span> <span class="nav-text">支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预加载"><span class="nav-number">7.</span> <span class="nav-text">预加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消请求"><span class="nav-number">8.</span> <span class="nav-text">取消请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片采样"><span class="nav-number">9.</span> <span class="nav-text">图片采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用要求"><span class="nav-number">10.</span> <span class="nav-text">使用要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于我"><span class="nav-number">11.</span> <span class="nav-text">关于我</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">杨云召</span>
   
-  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-    本站访客数:<span id="busuanzi_value_site_pv"></span>
-  </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">197k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">2:59</span>
-  
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-  	
-  <span class="post-meta-divider">|</span>
- 
-  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
   </div>
-
   
-    
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
   
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 
-<script src="/js/utils.js?v=7.3.0"></script>
-  <script src="/js/motion.js?v=7.3.0"></script>
-
-
-  <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
-<script src="/js/next-boot.js?v=7.3.0"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 
 
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
 
 
 
-
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        //if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
 
 
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
 
 
 
-
-
-
-  <script src="/js/local-search.js?v=7.3.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script>
-<script src="/js/post-details.js?v=7.3.0"></script>
-
-
-    
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.indexOf(item) > -1;
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
-    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: 'zh-cn' || 'zh-cn',
-    path: location.pathname
-  });
-}, window.Valine);
+  daovoice('update');
 </script>
 
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>

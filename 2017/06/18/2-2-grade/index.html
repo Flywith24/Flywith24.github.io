@@ -1,443 +1,179 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN">
 
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.2从教务系统查询成绩并计算绩点——山东建筑大学为例 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
 
+  
+  
+  <meta name="description" content="
+前两天面试时被问到绩点是多少，但学校教务系统不提供绩..."> 
+  
+  <meta name="author" content="杨云召"> 
 
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
 
+  <link rel="stylesheet" href="/css/style.css">
 
-<html class="theme-next mist use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="generator" content="Hexo 3.9.0">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
 
   <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "7785620b"
-    });
-  daovoice('update');
-  </script>
-
-
-<link rel="stylesheet" href="/css/main.css?v=7.3.0">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.3.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
-    copycode: {"enable":true,"show_result":true,"style":"default"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
-    path: './public/search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170303.png'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
     }
-  };
-</script>
-
-  <meta name="description" content="前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！   感谢该博客提供的思路">
-<meta name="keywords" content="python,爬虫">
-<meta property="og:type" content="article">
-<meta property="og:title" content="2.2从教务系统查询成绩并计算绩点——山东建筑大学为例">
-<meta property="og:url" content="http://yoursite.com/2017/06/18/2-2-grade/index.html">
-<meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！   感谢该博客提供的思路">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-79a8f42d306c605c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-fdddcc6520d47f18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-0a6c714e2c2ff3a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-d757be497cda18ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-f72b7d8e3375dafc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-2a025613cb9cd840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-40ea67af08eb6ab1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-c30fa7de450e5621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-c2476106a0e29a70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-480626d6803e99fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-6a978cc4d4c27ba1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-b1573f6441632f38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-f6d0aff398d0089a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3155702-3d48f5287d16407e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-18T15:57:00.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2.2从教务系统查询成绩并计算绩点——山东建筑大学为例">
-<meta name="twitter:description" content="前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！   感谢该博客提供的思路">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3155702-79a8f42d306c605c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/2017/06/18/2-2-grade/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>2.2从教务系统查询成绩并计算绩点——山东建筑大学为例 | 杨云召 | 博客</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
   </script>
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-
-  <div class="container sidebar-position-left">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">杨云召 | 博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-<nav class="site-nav">
   
-  <ul id="menu" class="menu">
-      
-      
-      
-        
-        <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-tags">
-      
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-archives">
-      
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-commonweal">
-      
-    
-
-    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        
-          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
-      </li>
-    
-  </ul>
-
-    
-
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
 </nav>
-  <div class="site-search">
-    
-  <div class="popup search-popup">
-  <div class="search-header">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <div class="search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="search-input">
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
     </div>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-  </div>
-  <div id="search-result"></div>
-</div>
-
-
-  </div>
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/2-2-grade/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例
-
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2017-06-18 23:57:00" itemprop="dateCreated datePublished" datetime="2017-06-18T23:57:00+08:00">2017-06-18</time>
-            </span>
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2017/06/18/2-2-grade/" class="post-meta-item leancloud_visitors" data-flag-title="2.2从教务系统查询成绩并计算绩点——山东建筑大学为例" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
+    <ul class="menu-content">
       
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2017/06/18/2-2-grade/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/06/18/2-2-grade/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>6k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>5 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <blockquote>
-<p>前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！</p>
-</blockquote>
-<p> <a href="http://blog.csdn.net/pleasecallmewhy/article/details/9305229" target="_blank" rel="noopener">感谢该博客提供的思路</a></p>
-<a id="more"></a>
-
-<h3 id="1-准备"><a href="#1-准备" class="headerlink" title="1. 准备"></a>1. 准备</h3><p>HttpFox插件，是一款http协议分析插件，分析页面请求和响应的时间、内容、以及浏览器用到的COOKIE等。是火狐浏览器的插件。谷歌浏览器和Safari都有自带的分析工具，可是感觉太复杂，没有这款好用。不过火狐浏览器对学校的教务系统兼容性不是很好，我还下载了IE tab插件。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-79a8f42d306c605c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="插件的安装"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-fdddcc6520d47f18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>可以非常直观的查看相应的信息。<br>点击start是开始检测，点击stop暂停检测，点击clear清除内容。</p>
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>六月 18, 2017</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6064</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="1-准备"><a href="#1-准备" class="headerlink" title="1. 准备"></a>1. 准备</h3><p>HttpFox插件，是一款http协议分析插件，分析页面请求和响应的时间、内容、以及浏览器用到的COOKIE等。是火狐浏览器的插件。谷歌浏览器和Safari都有自带的分析工具，可是感觉太复杂，没有这款好用。不过火狐浏览器对学校的教务系统兼容性不是很好，我还下载了IE tab插件。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-79a8f42d306c605c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="插件的安装"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-fdddcc6520d47f18.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt><br>可以非常直观的查看相应的信息。<br>点击start是开始检测，点击stop暂停检测，点击clear清除内容。</p>
 <h3 id="2-探究过程"><a href="#2-探究过程" class="headerlink" title="2. 探究过程"></a>2. 探究过程</h3><p>下面就去山东建筑大学官网登录到数字校园综合信息门户，看一看在登录的时候，到底发送了那些信息。<br>先来到登录页面，把httpfox打开，clear之后，点击start开启检测：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-0a6c714e2c2ff3a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="开启检测"><br>输入完账号密码，确保httpfox处于开启状态，然后点击登录。<br>这个时候可以看到，httpfox检测到了好多信息：<br><img src="http://upload-images.jianshu.io/upload_images/3155702-d757be497cda18ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="捕捉到的信息"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-0a6c714e2c2ff3a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="开启检测"><br>输入完账号密码，确保httpfox处于开启状态，然后点击登录。<br>这个时候可以看到，httpfox检测到了好多信息：<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-d757be497cda18ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="捕捉到的信息"></p>
 <p>那么我们来分析一下这些数据</p>
 <p>看起来红框里的两条数据比较有意思，先看看这个post</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-f72b7d8e3375dafc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="post数据"></p>
-<p>PostData中我们看到了比较熟悉的词，username和password，学过java web的我们很清楚这段数据的含义，点击登录后将这用户名和你们提交到服务器比对。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-2a025613cb9cd840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="重定向到这里"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-f72b7d8e3375dafc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="post数据"></p>
+<p>PostData中我们看到了比较熟悉的词，username和password，学过java web的我们很清楚这段数据的含义，点击登录后将这用户名和你们提交到服务器比对。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-2a025613cb9cd840.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="重定向到这里"></p>
 <p>可以看到这里使用get的方式在链接上以?的方式显示的加上了参数，跳转到信息门户。<br>我们的post的数据就发送到了这个地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal<br></code></pre></td></tr></table></figure>
 
 <p>需要的post数据是用户名密码，也就是说我们需要输入这两种数据来模拟登录过程。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-40ea67af08eb6ab1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="进入到教务系统"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-c30fa7de450e5621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="点击成绩查询"><br>进入教务系统后点击成绩查询，我们看到请求的地址为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690</span><br></pre></td></tr></table></figure>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-40ea67af08eb6ab1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="进入到教务系统"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-c30fa7de450e5621.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="点击成绩查询"><br>进入教务系统后点击成绩查询，我们看到请求的地址为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690<br></code></pre></td></tr></table></figure>
 
 <p>我们整理一下整个过程的思路。</p>
 <ol>
@@ -448,673 +184,221 @@
 <p>ok，理顺思路后剩下的就只有编码问题了。</p>
 <h3 id="3-实验"><a href="#3-实验" class="headerlink" title="3. 实验"></a>3. 实验</h3><p>我们先来实验下是否能够获得查询成绩界面的源码</p>
 <p>我们先准备一个POST的数据，再准备一个cookie的接收，然后写出源码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># coding=utf-8</span><br><span class="line">import urllib</span><br><span class="line">import urllib2</span><br><span class="line">import cookielib</span><br><span class="line"></span><br><span class="line">cookie = cookielib.CookieJar()</span><br><span class="line">opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))</span><br><span class="line"></span><br><span class="line"># 需要的POST数据</span><br><span class="line">postdata = urllib.urlencode(&#123;</span><br><span class="line">    &apos;userName&apos;: &apos;20140216064&apos;,</span><br><span class="line">    &apos;password&apos;: &apos;*********&apos;</span><br><span class="line">&#125;)</span><br><span class="line"># 自定义一个请求</span><br><span class="line">req1 = urllib2.Request(</span><br><span class="line">    url=&apos;http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal&apos;,</span><br><span class="line">    data=postdata</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">req2 = urllib2.Request(</span><br><span class="line">    url=&apos;http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690&apos;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># 访问登录链接</span><br><span class="line">opener.open(req1)</span><br><span class="line">result = opener.open(req2)</span><br><span class="line"># 打印返回的内容</span><br><span class="line">print result.read()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs undefined"># coding=utf-8<br>import urllib<br>import urllib2<br>import cookielib<br><br>cookie = cookielib.CookieJar()<br>opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))<br><br># 需要的POST数据<br>postdata = urllib.urlencode(&#123;<br>    &apos;userName&apos;: &apos;20140216064&apos;,<br>    &apos;password&apos;: &apos;*********&apos;<br>&#125;)<br># 自定义一个请求<br>req1 = urllib2.Request(<br>    url=&apos;http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal&apos;,<br>    data=postdata<br>)<br><br>req2 = urllib2.Request(<br>    url=&apos;http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690&apos;<br>)<br><br># 访问登录链接<br>opener.open(req1)<br>result = opener.open(req2)<br># 打印返回的内容<br>print result.read()<br></code></pre></td></tr></table></figure>
 
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-c2476106a0e29a70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行结果"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-c2476106a0e29a70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="运行结果"></p>
 <p>很棒呦，看来跟我们预期的一样。</p>
 <h3 id="4-整理数据"><a href="#4-整理数据" class="headerlink" title="4. 整理数据"></a>4. 整理数据</h3><blockquote>
 <p>获得了成绩查询界面的源码后我们需要将数据进行整理，获得我们想要的数据，课程名称，学分，成绩。</p>
 </blockquote>
 <p>将网页源码贴到Sublime Text中，方便我们查看源码</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-480626d6803e99fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分析源码"><br><img src="http://upload-images.jianshu.io/upload_images/3155702-6a978cc4d4c27ba1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分析源码"><br>通过查看源码我们看到从这个<div>开始到3640行都是关于成绩的代码，而成绩是存放在这个table标签下。<br><img src="http://upload-images.jianshu.io/upload_images/3155702-b1573f6441632f38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="需要提取的信息"><br>红色框中分别为课程名，学分，以及成绩。这些是我们需要抽取出来的数据。<br>看到这里竟然有意外收获！注意黄色框被注释的部分，看来学校的教务系统有计算绩点的功能的，不知由于何种原因不用呢？</div></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-480626d6803e99fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="分析源码"><br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-6a978cc4d4c27ba1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="分析源码"><br>通过查看源码我们看到从这个<div>开始到3640行都是关于成绩的代码，而成绩是存放在这个table标签下。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-b1573f6441632f38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="需要提取的信息"><br>红色框中分别为课程名，学分，以及成绩。这些是我们需要抽取出来的数据。<br>看到这里竟然有意外收获！注意黄色框被注释的部分，看来学校的教务系统有计算绩点的功能的，不知由于何种原因不用呢？</div></p>
 <p>这里是这段程序中最困难的部分，我也踩了很多坑。我参照的博客是使用正则表达式来抽取想要的信息的，但我对正则表达式掌握的并不好，弄了好久也没写出合适的表达式，于是我果断放弃了使用正则表达式，采用BeautifulSoup来进行信息的筛选。<br><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html" target="_blank" rel="noopener">BeautifulSoup用法参考</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 将内容从页面源码中提取出来</span><br><span class="line">   def deal_data(self, myPage):</span><br><span class="line"></span><br><span class="line">       soup = BeautifulSoup(myPage)</span><br><span class="line"></span><br><span class="line">       # 从title属性为有效成绩的标签中获取所有class属性为t_con的TAG(tr标签)</span><br><span class="line">       trs = soup.find(attrs=&#123;&quot;title&quot;: &quot;有效成绩&quot;&#125;).findAll(attrs=&#123;&quot;class&quot;: &quot;t_con&quot;&#125;)</span><br><span class="line"></span><br><span class="line">       # 从tr标签中的td标签中获取需要的信息。下标为3，7，8的分别为课程名，学分，成绩</span><br><span class="line">       for tr in trs:</span><br><span class="line">           for index, td in enumerate(tr.findAll(&apos;td&apos;)):  # enumerate能在for循环中使用下标</span><br><span class="line"></span><br><span class="line">               if index == 3:</span><br><span class="line">                   print td.text</span><br><span class="line">               elif index == 7:</span><br><span class="line">                   self.weights.append(td.text.encode(&apos;utf8&apos;))</span><br><span class="line">                   print td.text</span><br><span class="line">               elif index == 8:</span><br><span class="line">                   self.points.append(td.text.encode(&apos;utf8&apos;))</span><br><span class="line">                   print td.text</span><br><span class="line"></span><br><span class="line">           print</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs undefined"># 将内容从页面源码中提取出来<br>   def deal_data(self, myPage):<br><br>       soup = BeautifulSoup(myPage)<br><br>       # 从title属性为有效成绩的标签中获取所有class属性为t_con的TAG(tr标签)<br>       trs = soup.find(attrs=&#123;&quot;title&quot;: &quot;有效成绩&quot;&#125;).findAll(attrs=&#123;&quot;class&quot;: &quot;t_con&quot;&#125;)<br><br>       # 从tr标签中的td标签中获取需要的信息。下标为3，7，8的分别为课程名，学分，成绩<br>       for tr in trs:<br>           for index, td in enumerate(tr.findAll(&apos;td&apos;)):  # enumerate能在for循环中使用下标<br><br>               if index == 3:<br>                   print td.text<br>               elif index == 7:<br>                   self.weights.append(td.text.encode(&apos;utf8&apos;))<br>                   print td.text<br>               elif index == 8:<br>                   self.points.append(td.text.encode(&apos;utf8&apos;))<br>                   print td.text<br><br>           print<br></code></pre></td></tr></table></figure>
 
 <p>整个逻辑我简单说一下，我觉得还可以改进。<br>首先查找title属性为”有效成绩“的标签，通过上文的截图我们可以知道这是那个div标签，之后在该div标签中定位class为t_con的tr标签。你也许会问为什么不直接定位到tr标签，因为后面的网页代码中还存在class 为t_con的tr标签，但不是我们需要的成绩。然后在每个tr标签下抽取下标为3，7，8的标签，这里我是把它存到数组里了。<br>接下来就清晰了，先打印成绩信息，然后计算绩点。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-f6d0aff398d0089a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行截图"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3155702-3d48f5287d16407e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行截图"><br>学渣一个，绩点低请忽略。</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-f6d0aff398d0089a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="运行截图"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-3d48f5287d16407e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/06/18/2-2-grade/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="运行截图"><br>学渣一个，绩点低请忽略。</p>
 <p>源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"># encoding=utf8</span><br><span class="line">import urllib</span><br><span class="line">import urllib2</span><br><span class="line">import cookielib</span><br><span class="line">import re</span><br><span class="line">import string</span><br><span class="line">from BeautifulSoup import BeautifulSoup</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(&apos;utf8&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class SDJZU_Crawler:</span><br><span class="line">    # 声明相关的属性</span><br><span class="line">    def __init__(self):</span><br><span class="line"></span><br><span class="line">        self.loginUrl = &apos;http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal&apos;  # 登录的url</span><br><span class="line">        self.resultUrl = &apos;http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690&apos;  # 查询成绩的url</span><br><span class="line">        self.cookieJar = cookielib.CookieJar()  # 初始化一个CookieJar来处理Cookie的信息</span><br><span class="line">        self.postdata = urllib.urlencode(&#123;&apos;userName&apos;: &apos;&apos;, &apos;password&apos;: &apos;&apos;&#125;)  # 登录需要POST的数据</span><br><span class="line">        self.weights = []  # 存储权重，也就是学分</span><br><span class="line">        self.points = []  # 存储分数，也就是成绩</span><br><span class="line">        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))</span><br><span class="line"></span><br><span class="line">    def sdjzu_init(self):</span><br><span class="line">        username = raw_input(&apos;请输入学号:&apos;)  # 这里不要用input，二者区别请自行查询</span><br><span class="line">        password = raw_input(&apos;请输入密码:&apos;)</span><br><span class="line">        self.postdata = urllib.urlencode(&#123;&apos;userName&apos;: username, &apos;password&apos;: password&#125;)  # 将用户名密码加入到POST中</span><br><span class="line">        # 初始化链接并且获取cookie</span><br><span class="line">        myRequest = urllib2.Request(url=self.loginUrl, data=self.postdata)  # 自定义一个请求</span><br><span class="line">        result = self.opener.open(myRequest)  # 访问登录页面，获取到必须的cookie的值</span><br><span class="line">        result = self.opener.open(self.resultUrl)  # 访问成绩页面，获得成绩的数据</span><br><span class="line">        self.deal_data(result.read())</span><br><span class="line">        self.calculate_gpa()</span><br><span class="line"></span><br><span class="line">    # 将内容从页面源码中提取出来</span><br><span class="line">    def deal_data(self, myPage):</span><br><span class="line"></span><br><span class="line">        soup = BeautifulSoup(myPage)</span><br><span class="line"></span><br><span class="line">        # 从title属性为有效成绩的标签中获取所有class属性为t_con的TAG(tr标签)</span><br><span class="line">        trs = soup.find(attrs=&#123;&quot;title&quot;: &quot;有效成绩&quot;&#125;).findAll(attrs=&#123;&quot;class&quot;: &quot;t_con&quot;&#125;)</span><br><span class="line"></span><br><span class="line">        # 从tr标签中的td标签中获取需要的信息。下标为3，7，8的分别为课程名，学分，成绩</span><br><span class="line">        for tr in trs:</span><br><span class="line">            for index, td in enumerate(tr.findAll(&apos;td&apos;)):  # enumerate能在for循环中使用下标</span><br><span class="line"></span><br><span class="line">                if index == 3:</span><br><span class="line">                    print td.text</span><br><span class="line">                elif index == 7:</span><br><span class="line">                    self.weights.append(td.text.encode(&apos;utf8&apos;))</span><br><span class="line">                    print td.text</span><br><span class="line">                elif index == 8:</span><br><span class="line">                    self.points.append(td.text.encode(&apos;utf8&apos;))</span><br><span class="line">                    print td.text</span><br><span class="line"></span><br><span class="line">            print</span><br><span class="line"></span><br><span class="line">    # 计算绩点，如果成绩还没出来，就不算该成绩，</span><br><span class="line">    def calculate_gpa(self):</span><br><span class="line">        point = 0.0  # 成绩</span><br><span class="line">        weight = 0.0  # 学分</span><br><span class="line">        for i in range(len(self.points)):</span><br><span class="line">            if self.points[i].isdigit() and (self.weights[i] != 0):</span><br><span class="line">                point += string.atof(self.points[i]) * string.atof(self.weights[i])  # 成绩*学分累加求和</span><br><span class="line">                weight += string.atof(self.weights[i])  # 学分累加求和</span><br><span class="line"></span><br><span class="line">        print &quot;绩点为：&quot;</span><br><span class="line">        print point / weight  # 输出绩点 值成绩*学分累加求和 / 学分累加求和</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调用</span><br><span class="line">mySpider = SDJZU_Crawler()</span><br><span class="line">mySpider.sdjzu_init()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs undefined"># encoding=utf8<br>import urllib<br>import urllib2<br>import cookielib<br>import re<br>import string<br>from BeautifulSoup import BeautifulSoup<br>import sys<br><br>reload(sys)<br>sys.setdefaultencoding(&apos;utf8&apos;)<br><br><br>class SDJZU_Crawler:<br>    # 声明相关的属性<br>    def __init__(self):<br><br>        self.loginUrl = &apos;http://urpe.sdjzu.edu.cn/loginPortalUrlForIndexLogin.portal&apos;  # 登录的url<br>        self.resultUrl = &apos;http://jwfw1.sdjzu.edu.cn/ssfw/jwnavmenu.do?menuItemWid=1E057E24ABAB4CAFE0540010E0235690&apos;  # 查询成绩的url<br>        self.cookieJar = cookielib.CookieJar()  # 初始化一个CookieJar来处理Cookie的信息<br>        self.postdata = urllib.urlencode(&#123;&apos;userName&apos;: &apos;&apos;, &apos;password&apos;: &apos;&apos;&#125;)  # 登录需要POST的数据<br>        self.weights = []  # 存储权重，也就是学分<br>        self.points = []  # 存储分数，也就是成绩<br>        self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookieJar))<br><br>    def sdjzu_init(self):<br>        username = raw_input(&apos;请输入学号:&apos;)  # 这里不要用input，二者区别请自行查询<br>        password = raw_input(&apos;请输入密码:&apos;)<br>        self.postdata = urllib.urlencode(&#123;&apos;userName&apos;: username, &apos;password&apos;: password&#125;)  # 将用户名密码加入到POST中<br>        # 初始化链接并且获取cookie<br>        myRequest = urllib2.Request(url=self.loginUrl, data=self.postdata)  # 自定义一个请求<br>        result = self.opener.open(myRequest)  # 访问登录页面，获取到必须的cookie的值<br>        result = self.opener.open(self.resultUrl)  # 访问成绩页面，获得成绩的数据<br>        self.deal_data(result.read())<br>        self.calculate_gpa()<br><br>    # 将内容从页面源码中提取出来<br>    def deal_data(self, myPage):<br><br>        soup = BeautifulSoup(myPage)<br><br>        # 从title属性为有效成绩的标签中获取所有class属性为t_con的TAG(tr标签)<br>        trs = soup.find(attrs=&#123;&quot;title&quot;: &quot;有效成绩&quot;&#125;).findAll(attrs=&#123;&quot;class&quot;: &quot;t_con&quot;&#125;)<br><br>        # 从tr标签中的td标签中获取需要的信息。下标为3，7，8的分别为课程名，学分，成绩<br>        for tr in trs:<br>            for index, td in enumerate(tr.findAll(&apos;td&apos;)):  # enumerate能在for循环中使用下标<br><br>                if index == 3:<br>                    print td.text<br>                elif index == 7:<br>                    self.weights.append(td.text.encode(&apos;utf8&apos;))<br>                    print td.text<br>                elif index == 8:<br>                    self.points.append(td.text.encode(&apos;utf8&apos;))<br>                    print td.text<br><br>            print<br><br>    # 计算绩点，如果成绩还没出来，就不算该成绩，<br>    def calculate_gpa(self):<br>        point = 0.0  # 成绩<br>        weight = 0.0  # 学分<br>        for i in range(len(self.points)):<br>            if self.points[i].isdigit() and (self.weights[i] != 0):<br>                point += string.atof(self.points[i]) * string.atof(self.weights[i])  # 成绩*学分累加求和<br>                weight += string.atof(self.weights[i])  # 学分累加求和<br><br>        print &quot;绩点为：&quot;<br>        print point / weight  # 输出绩点 值成绩*学分累加求和 / 学分累加求和<br><br><br># 调用<br>mySpider = SDJZU_Crawler()<br>mySpider.sdjzu_init()<br></code></pre></td></tr></table></figure>
 
 <p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">我的github地址</a></p>
-
-    </div>
-    <div>
-    
-      <div>
-  
-  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
-      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
-        <section style="text-align: center;line-height: 30px" data-mid="">
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
-          </section>
-          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
-          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
-          </section>
-        </section>
       </section>
-  </section>
+      <section class="extra">
+        
+        <ul class="copyright">
   
-</div>
-    
-    </div>
-    
-    
-    
+  <li><strong>本文作者：</strong>杨云召</li>
+  <li><strong>本文链接：</strong><a href="http://yoursite.com/2017/06/18/2-2-grade/index.html">http://yoursite.com/2017/06/18/2-2-grade/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
         
-      
-        <div id="reward-container">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
         
-      
-      <div style="display: inline-block">
-        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
-        <p>微信支付</p>
-      </div>
-        
-      
-      <div style="display: inline-block">
-        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
-        <p>支付宝</p>
-      </div>
-
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
   </div>
-</div>
-
-      
-
-      <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
-            
-              <a href="/tags/爬虫/" rel="tag"><i class="fa fa-tag"></i> 爬虫</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2017/06/18/2-1-first-program/" rel="next" title="2.1开始第一个爬虫程序">
-                  <i class="fa fa-chevron-left"></i> 2.1开始第一个爬虫程序
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2017/07/04/Handler/" rel="prev" title="Handler深入分析">
-                  Handler深入分析 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
-        
-      </footer>
-    
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
   </div>
-  
-  
-  
-  </article>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
 
+        
+<nav class="nav">
+  
+    <a href="/2017/07/04/Handler/"><i class="iconfont iconleft"></i>Handler深入分析</a>
+  
+  
+    <a href="/2017/06/18/2-1-first-program/">2.1开始第一个爬虫程序<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
-
-
-          </div>
-          
-    
-    <div class="comments" id="comments"></div>
-  
-
-        </div>
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+</article>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/uploads/avatar.jpg"
-      alt="杨云召">
-  <p class="site-author-name" itemprop="name">杨云召</p>
-  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
-</div>
-  <nav class="site-state motion-element">
-      <div class="site-state-item site-state-posts">
-        
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">35</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
     
-      
-      
-      <div class="site-state-item site-state-categories">
-        
-          
-            <a href="/categories/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
-      </div>
     
-      
-      
-      <div class="site-state-item site-state-tags">
-        
-          
-            <a href="/tags/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
-      </div>
     
-  </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
     </a>
-  </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
-      </span>
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-      </span>
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
     
   </div>
-
-
-  <div class="links-of-blogroll motion-element links-of-blogroll-block">
-    <div class="links-of-blogroll-title">
-      <i class="fa  fa-fw fa-link"></i>
-      博客推荐
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
-        </li>
-      
-    </ul>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
   </div>
-
-        </div>
-      </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-准备"><span class="nav-number">1.</span> <span class="nav-text">1. 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-探究过程"><span class="nav-number">2.</span> <span class="nav-text">2. 探究过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实验"><span class="nav-number">3.</span> <span class="nav-text">3. 实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-整理数据"><span class="nav-number">4.</span> <span class="nav-text">4. 整理数据</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">杨云召</span>
   
-  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-    本站访客数:<span id="busuanzi_value_site_pv"></span>
-  </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">197k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">2:59</span>
-  
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-  	
-  <span class="post-meta-divider">|</span>
- 
-  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
   </div>
-
   
-    
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
   
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 
-<script src="/js/utils.js?v=7.3.0"></script>
-  <script src="/js/motion.js?v=7.3.0"></script>
-
-
-  <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
-<script src="/js/next-boot.js?v=7.3.0"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 
 
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
 
 
 
-
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        //if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
 
 
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
 
 
 
-
-
-
-  <script src="/js/local-search.js?v=7.3.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script>
-<script src="/js/post-details.js?v=7.3.0"></script>
-
-
-    
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.indexOf(item) > -1;
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
-    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: 'zh-cn' || 'zh-cn',
-    path: location.pathname
-  });
-}, window.Valine);
+  daovoice('update');
 </script>
 
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>

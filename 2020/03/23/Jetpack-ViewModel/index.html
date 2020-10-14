@@ -1,454 +1,173 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN">
 
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
 
+  
+  
+  <meta name="description" content="
+前言
+Android 开发时，我们使用 activi..."> 
+  
+  <meta name="author" content="杨云召"> 
 
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
 
+  <link rel="stylesheet" href="/css/style.css">
 
-<html class="theme-next mist use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="generator" content="Hexo 3.9.0">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
 
   <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "7785620b"
-    });
-  daovoice('update');
-  </script>
-
-
-<link rel="stylesheet" href="/css/main.css?v=7.3.0">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.3.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
-    copycode: {"enable":true,"show_result":true,"style":"default"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
-    path: './public/search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170303.png'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
     }
-  };
-</script>
-
-  <meta name="description" content="前言 Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 Presenter ）  但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？  开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库">
-<meta name="keywords" content="androidx,Jetpack,MVVM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界">
-<meta property="og:url" content="http://yoursite.com/2020/03/23/Jetpack-ViewModel/index.html">
-<meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="前言 Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 Presenter ）  但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？  开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321135602.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321140300.gif">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321140641.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321144832.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321144949.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321152406.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200321155215.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200323114334.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200323160417.png">
-<meta property="og:updated_time" content="2020-03-24T01:26:41.168Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界">
-<meta name="twitter:description" content="前言 Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 Presenter ）  但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？  开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库">
-<meta name="twitter:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png">
-  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 | 杨云召 | 博客</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
   </script>
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-
-  <div class="container sidebar-position-left">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">杨云召 | 博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-<nav class="site-nav">
   
-  <ul id="menu" class="menu">
-      
-      
-      
-        
-        <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-tags">
-      
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-archives">
-      
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-commonweal">
-      
-    
-
-    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        
-          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
-      </li>
-    
-  </ul>
-
-    
-
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
 </nav>
-  <div class="site-search">
-    
-  <div class="popup search-popup">
-  <div class="search-header">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <div class="search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="search-input">
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
     </div>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-  </div>
-  <div id="search-result"></div>
-</div>
-
-
-  </div>
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界
-
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-23 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-23T00:10:35+08:00">2020-03-23</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-24 09:26:41" itemprop="dateModified" datetime="2020-03-24T09:26:41+08:00">2020-03-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/23/Jetpack-ViewModel/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
+    <ul class="menu-content">
       
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/23/Jetpack-ViewModel/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/23/Jetpack-ViewModel/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>11k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>10 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png" alt="目录"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 <code>Presenter</code> ）</p>
-</blockquote>
-<p>但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？</p>
-<ul>
-<li>开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库）</li>
-<li>由于 UI 数据的持有者的生命周期可能比 activity 长，因此开发者还需要避免出现内存泄漏的问题</li>
-</ul>
-<p>如何解决上述问题？ViewModel</p>
-<p><strong>本文重点介绍 ViewModel 的职责（what）以及重点功能的实现原理（how），即使您不使用 <code>Jetpack MVVM</code> 架构，也要了解一下 ViewModel</strong></p>
-<p>ViewModel 的原理部分要求您了解 activity 的启动流程，这部分内容网上文章很多，本文不再赘述</p>
-<a id="more"></a>
-
-
-
-<h2 id="ViewModel-的职责"><a href="#ViewModel-的职责" class="headerlink" title="ViewModel 的职责"></a>ViewModel 的职责</h2><p>我先上个 <a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener">视频</a> ，这个小姐姐表述的比文字更形象</p>
-<p><a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener"><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321135602.png" alt></a></p>
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 23, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11225</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="ViewModel-的职责"><a href="#ViewModel-的职责" class="headerlink" title="ViewModel 的职责"></a>ViewModel 的职责</h2><p>我先上个 <a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener">视频</a> ，这个小姐姐表述的比文字更形象</p>
+<p><a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener"><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321135602.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></a></p>
 <p><code>ViewModel</code> 主要用于存储 UI 数据以及生命周期感知的数据</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321140300.gif" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321140300.gif" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <blockquote>
 <p>图片来自 <a href="https://android.jlelse.eu/android-architecture-components-viewmodel-e74faddf5b94" target="_blank" rel="noopener">Android Architecture Components: ViewModel</a></p>
 </blockquote>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321140641.png" alt="ViewModel生命周期"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321140641.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="ViewModel生命周期"></p>
 <blockquote>
 <p><code>ViewModel</code> 的生命周期 ，图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#lifecycle" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
@@ -459,7 +178,7 @@
 </ul>
 <h3 id="Fragment-间共享数据"><a href="#Fragment-间共享数据" class="headerlink" title="Fragment 间共享数据"></a>Fragment 间共享数据</h3><p>一个 activity 中的两个或更多 fragment 需要相互通信是很常见的。例如您有一个片段，用户在其中从列表中选择一个 item，另一个片段显示了所选 item 的内容。 传统做法两个 fragment 都需要定义一些接口，并且宿主 activity 必须将两者绑定在一起。 此外，两个 fragment 都必须处理另一个 fragment 尚未创建或不可见的情况。</p>
 <p>可以通过使用 <code>ViewModel</code> 对象解决此问题。 这些 fragment 可以使用 activity 范围内共享一个 <code>ViewModel</code> 来处理此通信，如以下示例代码所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SharedViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MutableLiveData&lt;Item&gt; selected = <span class="keyword">new</span> MutableLiveData&lt;Item&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">select</span><span class="params">(Item item)</span> </span>&#123;</span><br><span class="line">        selected.setValue(item);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> LiveData&lt;Item&gt; <span class="title">getSelected</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> selected;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MasterFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SharedViewModel model;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCreated</span><span class="params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onViewCreated(view, savedInstanceState);</span><br><span class="line">        model = <span class="keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);</span><br><span class="line">        itemSelector.setOnClickListener(item -&gt; &#123;</span><br><span class="line">            model.select(item);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DetailFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewCreated</span><span class="params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onViewCreated(view, savedInstanceState);</span><br><span class="line">        SharedViewModel model = <span class="keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);</span><br><span class="line">        model.getSelected().observe(getViewLifecycleOwner(), &#123; item -&gt;</span><br><span class="line">           <span class="comment">// Update the UI.</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SharedViewModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ViewModel</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> MutableLiveData&lt;Item&gt; selected = <span class="hljs-keyword">new</span> MutableLiveData&lt;Item&gt;();<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">(Item item)</span> </span>&#123;<br>        selected.setValue(item);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> LiveData&lt;Item&gt; <span class="hljs-title">getSelected</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> selected;<br>    &#125;<br>&#125;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MasterFragment</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Fragment</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> SharedViewModel model;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onViewCreated(view, savedInstanceState);<br>        model = <span class="hljs-keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);<br>        itemSelector.setOnClickListener(item -&gt; &#123;<br>            model.select(item);<br>        &#125;);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DetailFragment</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Fragment</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onViewCreated(view, savedInstanceState);<br>        SharedViewModel model = <span class="hljs-keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);<br>        model.getSelected().observe(getViewLifecycleOwner(), &#123; item -&gt;<br>           <span class="hljs-comment">// Update the UI.</span><br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>由于 两个 fragment 使用的都是 activity 范围的 <code>ViewModel</code> （<code>ViewModelProvider</code> 构造器传入的 activity ），因此它们获得了相同的 ViewModel 实例，自然其持有的数据也是相同的，这也 <strong>保证了数据的一致性</strong></p>
@@ -475,12 +194,12 @@
 </ul>
 <h3 id="代替-Loader"><a href="#代替-Loader" class="headerlink" title="代替 Loader"></a>代替 Loader</h3><p><code>CursorLoader</code> 这样的 Loader 类经常用于使应用程序 UI 中的数据与数据库保持同步。您可以使用 <code>ViewModel</code> 和其他一些类来替换 Loader。 使用 <code>ViewModel</code> 可将视图控制器与数据加载操作分开，这意味着您在类之间的强引用较少。</p>
 <p>在使用 Loader 的一种常见方法中，应用程序可能会使用 <code>CursorLoader</code> 来观察数据库的内容。 当数据库中的值更改时，加载程序会自动触发数据的重新加载并更新 UI</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321144832.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321144832.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <blockquote>
 <p>图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#loaders" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
 <p><code>ViewModel</code> 与 <code>Room</code> 和 <code>LiveData</code> 一起使用以替换 Loader。 <code>ViewModel</code> 确保数据在设备配置更改后仍然存在。 当数据库发生更改时，<code>Room</code> 会通知 <code>LiveData</code> ，然后 <code>LiveData</code> 会使用修改后的数据更新 UI</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321144949.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321144949.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <blockquote>
 <p>图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#loaders" target="_blank" rel="noopener">官方文档</a></p>
 </blockquote>
@@ -517,48 +236,48 @@
 </li>
 </ul>
 <p>简单来说 <strong>ViewModelStoreOwner 持有 ViewModelStore 持有 ViewModel</strong></p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321152406.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321152406.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <h3 id="1-如何做到-activity-重建后-ViewModel-仍然存在？"><a href="#1-如何做到-activity-重建后-ViewModel-仍然存在？" class="headerlink" title="1. 如何做到 activity 重建后 ViewModel 仍然存在？"></a>1. 如何做到 activity 重建后 ViewModel 仍然存在？</h3><p>在 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a> 中我们提到了 androidx.core.app.ComponentActivity 的引入并探讨了其作为中间层的作用</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200321155215.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321155215.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>我们已经讲过 <code>SavedStateRegistryOwner</code> 和 <code>OnBackPressedDispatcherOwner</code> 这两种角色，而今天我们来聊一下</p>
 <p><code>ViewModelStoreOwner</code> 和 <code>HasDefaultViewModelProviderFactory</code> 。其中前者代表着 <code>ViewModelStore</code> 的作用域，后者来标记 <code>ViewModelStoreOwner</code> 拥有默认的 <code>ViewModelProvider.Factory</code></p>
 <p>那么 <code>ViewModel</code> 的逻辑肯定就在该类了</p>
 <p><code>ComponentActivity</code> 实现了 <code>ViewModelStoreOwner</code>  接口，意味着需要重写 <code>getViewModelStore()</code> 方法，该方法为 <code>ComponentActivity</code>  的 <code>mViewModelStore</code> 变量赋值。<strong>activity 重建后 ViewModel 仍然存在，只要保证 activity 重建后 mViewModelStore 变量值不变即可</strong></p>
 <p>顺着这个思路，我们来看一下 <code>getViewModelStore()</code> 的实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mViewModelStore == <span class="keyword">null</span>) &#123;</span><br><span class="line">        NonConfigurationInstances nc =</span><br><span class="line">                (NonConfigurationInstances) getLastNonConfigurationInstance();</span><br><span class="line">        <span class="keyword">if</span> (nc != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//核心，在该位置重置 mViewModelStore</span></span><br><span class="line">            mViewModelStore = nc.viewModelStore;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mViewModelStore == <span class="keyword">null</span>) &#123;</span><br><span class="line">            mViewModelStore = <span class="keyword">new</span> ViewModelStore();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mViewModelStore;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (mViewModelStore == <span class="hljs-keyword">null</span>) &#123;<br>        NonConfigurationInstances nc =<br>                (NonConfigurationInstances) getLastNonConfigurationInstance();<br>        <span class="hljs-keyword">if</span> (nc != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-comment">//核心，在该位置重置 mViewModelStore</span><br>            mViewModelStore = nc.viewModelStore;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (mViewModelStore == <span class="hljs-keyword">null</span>) &#123;<br>            mViewModelStore = <span class="hljs-keyword">new</span> ViewModelStore();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> mViewModelStore;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>即 <code>mViewModelStore</code> 的值由 <code>getLastNonConfigurationInstance()</code> 返回的 <code>NonConfigurationInstances</code> 对象中的 <code>viewModelStore</code> 赋值，如果此时还为空才去 new ViewModelStore 对象。因此我们只需找到 </p>
 <p><code>getLastNonConfigurationInstance</code> 中的 <code>NonConfigurationInstances</code> 在哪里保存的即可</p>
 <p><code>getLastNonConfigurationInstance</code> 为平台 activity 中的方法，返回 <code>mLastNonConfigurationInstances.activity</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getLastNonConfigurationInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mLastNonConfigurationInstances != <span class="keyword">null</span></span><br><span class="line">            ? mLastNonConfigurationInstances.activity : <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getLastNonConfigurationInstance</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mLastNonConfigurationInstances != <span class="hljs-keyword">null</span><br>            ? mLastNonConfigurationInstances.activity : <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>那么我们看一下 <code>mLastNonConfigurationInstances</code> 的赋值位置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//省略其他参数</span></span><br><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(NonConfigurationInstances lastNonConfigurationInstances)</span></span>&#123;</span><br><span class="line">	mLastNonConfigurationInstances = lastNonConfigurationInstances;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//省略其他参数</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">attach</span><span class="hljs-params">(NonConfigurationInstances lastNonConfigurationInstances)</span></span>&#123;<br>	mLastNonConfigurationInstances = lastNonConfigurationInstances;<br>    <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>了解过 activity 的启动流程的小伙伴肯定知道，这个 attach 方法是 <code>ActivityThread</code> 中的 <code>performLaunchActivity</code> 调用的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Activity <span class="title">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;</span><br><span class="line">    Activity activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);</span><br><span class="line">    <span class="comment">//省略其他参数</span></span><br><span class="line">    activity.attach(r.lastNonConfigurationInstances);</span><br><span class="line">    r.lastNonConfigurationInstances = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> Activity <span class="hljs-title">performLaunchActivity</span><span class="hljs-params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;<br>    Activity activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);<br>    <span class="hljs-comment">//省略其他参数</span><br>    activity.attach(r.lastNonConfigurationInstances);<br>    r.lastNonConfigurationInstances = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>深入追踪源码我们整理一下调用流程</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200323114334.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200323114334.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>由于 <code>ActivityThread</code> 中的 <code>ActivityClientRecord</code> 不受 activity 重建的影响，所以 activity 重建时 <code>mLastNonConfigurationInstances</code> 能够得到上一次的值，使得 <code>ViewModelStore</code> 值不变 ，问题1就解决了</p>
 <h3 id="2-如何做到-fragment-重建后-ViewModel-仍然存在？"><a href="#2-如何做到-fragment-重建后-ViewModel-仍然存在？" class="headerlink" title="2. 如何做到 fragment 重建后 ViewModel 仍然存在？"></a>2. 如何做到 fragment 重建后 ViewModel 仍然存在？</h3><p>对于问题2，有了上面的思路我们可以认定 fragment 重建后其内部的 <code>getViewModelStore()</code> 方法返回的对象是相同的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Fragment.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mFragmentManager.getViewModelStore(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Fragment.java</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mFragmentManager.getViewModelStore(<span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>可以看到 <code>getViewModelStore()</code> 内部调用的是 <code>mFragmentManager</code>（普通fragment 对应 activity 中的 <code>FragmentManager</code>，子 fragment 则对应父 fragment 的 <code>childFragmentManager</code>）的 <code>getViewModelStore()</code> 方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentManager.java</span></span><br><span class="line"><span class="keyword">private</span> FragmentManagerViewModel mNonConfig;</span><br><span class="line"></span><br><span class="line"><span class="function">ViewModelStore <span class="title">getViewModelStore</span><span class="params">(@NonNull Fragment f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mNonConfig.getViewModelStore(f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-keyword">private</span> FragmentManagerViewModel mNonConfig;<br><br><span class="hljs-function">ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">(@NonNull Fragment f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mNonConfig.getViewModelStore(f);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>而 FragmentManager 中的 getViewModelStore 使用的是 mNonConfig ，mNonConfig 竟然是个 ViewModel！</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentManagerViewModel.java</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, FragmentManagerViewModel&gt; mChildNonConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, ViewModelStore&gt; mViewModelStores = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManagerViewModel.java</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> HashMap&lt;String, FragmentManagerViewModel&gt; mChildNonConfigs = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> HashMap&lt;String, ViewModelStore&gt; mViewModelStores = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br></code></pre></td></tr></table></figure>
 
 <p><code>FragmentManagerViewModel</code> 管理着内部的 <code>ViewModelStore</code> 和 child 的 <code>FragmentManagerViewModel</code> 。因此保证 mNonConfig   值不变即能确保 fragment 中的 <code>getViewModelStore()</code>  不变。那么看看 mNonConfig  赋值的位置</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentManager.java</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">attachController</span><span class="params">(@NonNull FragmentHostCallback&lt;?&gt; host, @NonNull FragmentContainer container, @Nullable <span class="keyword">final</span> Fragment parent)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 嵌套 fragment 的情况，有父 fragment</span></span><br><span class="line">        mNonConfig = parent.mFragmentManager.getChildNonConfig(parent);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (host <span class="keyword">instanceof</span> ViewModelStoreOwner) &#123;</span><br><span class="line">        <span class="comment">// host 是 FragmentActivity.HostCallbacks</span></span><br><span class="line">        ViewModelStore viewModelStore = ((ViewModelStoreOwner) host).getViewModelStore();</span><br><span class="line">        mNonConfig = FragmentManagerViewModel.getInstance(viewModelStore);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mNonConfig = <span class="keyword">new</span> FragmentManagerViewModel(<span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// FragmentManagerViewModel.java</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> FragmentManagerViewModel <span class="title">getInstance</span><span class="params">(ViewModelStore viewModelStore)</span> </span>&#123;</span><br><span class="line">    ViewModelProvider viewModelProvider = <span class="keyword">new</span> ViewModelProvider(viewModelStore,</span><br><span class="line">            FACTORY);</span><br><span class="line">    <span class="keyword">return</span> viewModelProvider.get(FragmentManagerViewModel.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">attachController</span><span class="hljs-params">(@NonNull FragmentHostCallback&lt;?&gt; host, @NonNull FragmentContainer container, @Nullable <span class="hljs-keyword">final</span> Fragment parent)</span> </span>&#123;<br>    <span class="hljs-comment">//...</span><br>    <span class="hljs-keyword">if</span> (parent != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// 嵌套 fragment 的情况，有父 fragment</span><br>        mNonConfig = parent.mFragmentManager.getChildNonConfig(parent);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (host <span class="hljs-keyword">instanceof</span> ViewModelStoreOwner) &#123;<br>        <span class="hljs-comment">// host 是 FragmentActivity.HostCallbacks</span><br>        ViewModelStore viewModelStore = ((ViewModelStoreOwner) host).getViewModelStore();<br>        mNonConfig = FragmentManagerViewModel.getInstance(viewModelStore);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        mNonConfig = <span class="hljs-keyword">new</span> FragmentManagerViewModel(<span class="hljs-keyword">false</span>);<br>    &#125;<br>&#125;<br><br><br><span class="hljs-comment">// FragmentManagerViewModel.java</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> FragmentManagerViewModel <span class="hljs-title">getInstance</span><span class="hljs-params">(ViewModelStore viewModelStore)</span> </span>&#123;<br>    ViewModelProvider viewModelProvider = <span class="hljs-keyword">new</span> ViewModelProvider(viewModelStore,<br>            FACTORY);<br>    <span class="hljs-keyword">return</span> viewModelProvider.get(FragmentManagerViewModel.class);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>我们先看 fragment 的直接宿主是 activity （即没有嵌套）的情况，mNonConfig 由<code>FragmentManagerViewModel.getInstance(viewModelStore)</code> 赋值，而 getInstance 中使用的是 <code>ViewModelProvider</code> 获取 <code>ViewModel</code> ，根据我们上面的分析，<strong>只要保证作用域（viewModelStore）相同，即可获取相同的 <code>ViewModel</code> 实例</strong>，因此我们需要看一下 host 的 getViewModelStore 方法。经过一番寻找，host 是 <code>FragmentActivity.HostCallbacks</code> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentActivity.java 内部类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HostCallbacks</span> <span class="keyword">extends</span> <span class="title">FragmentHostCallback</span>&lt;<span class="title">FragmentActivity</span>&gt; <span class="keyword">implements</span> <span class="title">ViewModelStoreOwner</span>, <span class="title">OnBackPressedDispatcherOwner</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 宿主 activity 的 getViewModelStore</span></span><br><span class="line">    	<span class="keyword">return</span> FragmentActivity.<span class="keyword">this</span>.getViewModelStore();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentActivity.java 内部类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HostCallbacks</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FragmentHostCallback</span>&lt;<span class="hljs-title">FragmentActivity</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">ViewModelStoreOwner</span>, <span class="hljs-title">OnBackPressedDispatcherOwner</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 宿主 activity 的 getViewModelStore</span><br>    	<span class="hljs-keyword">return</span> FragmentActivity.<span class="hljs-keyword">this</span>.getViewModelStore();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>host 的 getViewModelStore 方法返回的是宿主 activity 的 <code>getViewModelStore()</code> ，而 activity 重建后其内部的 <code>mViewModelStore</code> 是不变的，因此即使 activity 重建，其内部的 FragmentManager 对象变化，但 FragmentManager 内部的  FragmentManagerViewModel 的实例（<code>mNonConfig</code>）不变，mNonConfig.getViewModelStore 不变，fragment 的 <code>getViewModelStore()</code> 亦不变，fragment 重建后其内部的 <code>ViewModel</code> 仍然存在</p>
 <p>对于嵌套 fragment ，mNonConfig 通过 parent.mFragmentManager.getChildNonConfig(parent) 获取</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// FragmentManager.java</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> FragmentManagerViewModel <span class="title">getChildNonConfig</span><span class="params">(@NonNull Fragment f)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mNonConfig.getChildNonConfig(f);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> FragmentManagerViewModel <span class="hljs-title">getChildNonConfig</span><span class="hljs-params">(@NonNull Fragment f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mNonConfig.getChildNonConfig(f);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>上文提到 <code>FragmentManagerViewModel</code> 管理着 mChildNonConfigs Map，因此子 fragment 重置后其内部的 mNonConfig 对象也是相同的</p>
 <p>至此问题 2 就解决了</p>
@@ -577,7 +296,7 @@
 </li>
 </ul>
 <h2 id="ViewModel-和-onSaveInstanceState"><a href="#ViewModel-和-onSaveInstanceState" class="headerlink" title="ViewModel 和 onSaveInstanceState"></a>ViewModel 和 onSaveInstanceState</h2><p><code>ViewModel</code> 和 <code>onSaveInstanceState</code> 的功能有些类似，但它们也有很多差异</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200323160417.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200323160417.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>从存储位置上来说，<code>ViewModel</code> 是在内存中，因此其读写速度更快，但当进程被系统杀死后，<code>ViewModel</code> 中的数据也不存在了。从数据存储的类型上来看，<code>ViewModel</code> 适合存储相对较重的数据，例如网络请求到的 list 数据，而 <code>onSaveInstanceState</code> 适合存储轻量可序列化的数据</p>
 <p>那么我们该如何使用呢？可以使用 <code>viewmodel-savedstate</code> 库，详情参考 <a href="https://juejin.im/post/5e738d12518825495d69cfb9#heading-10" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
 <hr>
@@ -588,656 +307,202 @@
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
 <li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
 </ul>
-
-    </div>
-    <div>
-    
-      <div>
-  
-  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
-      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
-        <section style="text-align: center;line-height: 30px" data-mid="">
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
-          </section>
-          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
-          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
-          </section>
-        </section>
       </section>
-  </section>
+      <section class="extra">
+        
+        <ul class="copyright">
   
-</div>
-    
-    </div>
-    
-    
-    
+  <li><strong>本文作者：</strong>杨云召</li>
+  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/index.html">http://yoursite.com/2020/03/23/Jetpack-ViewModel/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
         
-      
-        <div id="reward-container">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
         
-      
-      <div style="display: inline-block">
-        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
-        <p>微信支付</p>
-      </div>
-        
-      
-      <div style="display: inline-block">
-        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
-        <p>支付宝</p>
-      </div>
-
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
   </div>
-</div>
-
-      
-
-      <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
-            
-              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
-            
-              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2020/03/19/Jetpack-ViewModel-SaveState/" rel="next" title="【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析">
-                  <i class="fa fa-chevron-left"></i> 【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2020/03/30/Jetpack-Lifecycle/" rel="prev" title="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用">
-                  【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
-        
-      </footer>
-    
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
   </div>
-  
-  
-  
-  </article>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jetpack/">Jetpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVVM/">MVVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidx/">androidx</a></li></ul>
 
+        
+<nav class="nav">
+  
+    <a href="/2020/03/30/Jetpack-Lifecycle/"><i class="iconfont iconleft"></i>【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</a>
+  
+  
+    <a href="/2020/03/19/Jetpack-ViewModel-SaveState/">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
-
-
-          </div>
-          
-    
-    <div class="comments" id="comments"></div>
-  
-
-        </div>
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+</article>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/uploads/avatar.jpg"
-      alt="杨云召">
-  <p class="site-author-name" itemprop="name">杨云召</p>
-  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
-</div>
-  <nav class="site-state motion-element">
-      <div class="site-state-item site-state-posts">
-        
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">35</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
     
-      
-      
-      <div class="site-state-item site-state-categories">
-        
-          
-            <a href="/categories/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
-      </div>
     
-      
-      
-      <div class="site-state-item site-state-tags">
-        
-          
-            <a href="/tags/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
-      </div>
     
-  </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
     </a>
-  </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
-      </span>
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-      </span>
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
     
   </div>
-
-
-  <div class="links-of-blogroll motion-element links-of-blogroll-block">
-    <div class="links-of-blogroll-title">
-      <i class="fa  fa-fw fa-link"></i>
-      博客推荐
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
-        </li>
-      
-    </ul>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
   </div>
-
-        </div>
-      </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel-的职责"><span class="nav-number">2.</span> <span class="nav-text">ViewModel 的职责</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作为数据持有者"><span class="nav-number">2.1.</span> <span class="nav-text">作为数据持有者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment-间共享数据"><span class="nav-number">2.2.</span> <span class="nav-text">Fragment 间共享数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代替-Loader"><span class="nav-number">2.3.</span> <span class="nav-text">代替 Loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel-源码分析"><span class="nav-number">3.</span> <span class="nav-text">ViewModel 源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-如何做到-activity-重建后-ViewModel-仍然存在？"><span class="nav-number">3.1.</span> <span class="nav-text">1. 如何做到 activity 重建后 ViewModel 仍然存在？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-如何做到-fragment-重建后-ViewModel-仍然存在？"><span class="nav-number">3.2.</span> <span class="nav-text">2. 如何做到 fragment 重建后 ViewModel 仍然存在？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-如何控制作用域？"><span class="nav-number">3.3.</span> <span class="nav-text">3. 如何控制作用域？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-如何避免内存泄漏？"><span class="nav-number">3.4.</span> <span class="nav-text">4. 如何避免内存泄漏？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewModel-和-onSaveInstanceState"><span class="nav-number">4.</span> <span class="nav-text">ViewModel 和 onSaveInstanceState</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于我"><span class="nav-number">5.</span> <span class="nav-text">关于我</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">杨云召</span>
   
-  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-    本站访客数:<span id="busuanzi_value_site_pv"></span>
-  </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">197k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">2:59</span>
-  
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-  	
-  <span class="post-meta-divider">|</span>
- 
-  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
   </div>
-
   
-    
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
   
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 
-<script src="/js/utils.js?v=7.3.0"></script>
-  <script src="/js/motion.js?v=7.3.0"></script>
-
-
-  <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
-<script src="/js/next-boot.js?v=7.3.0"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 
 
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
 
 
 
-
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        //if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
 
 
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
 
 
 
-
-
-
-  <script src="/js/local-search.js?v=7.3.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script>
-<script src="/js/post-details.js?v=7.3.0"></script>
-
-
-    
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.indexOf(item) > -1;
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
-    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: 'zh-cn' || 'zh-cn',
-    path: location.pathname
-  });
-}, window.Valine);
+  daovoice('update');
 </script>
 
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>

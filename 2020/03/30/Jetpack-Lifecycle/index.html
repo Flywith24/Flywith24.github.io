@@ -1,453 +1,180 @@
+
+
 <!DOCTYPE html>
+<html lang="zh-CN">
 
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
 
+  
+  
+  <meta name="description" content="
+ Android 中有一个比较重要的概念：「生命周期..."> 
+  
+  <meta name="author" content="杨云召"> 
 
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
 
+  <link rel="stylesheet" href="/css/style.css">
 
-<html class="theme-next mist use-motion" lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="generator" content="Hexo 3.9.0">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
 
   <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "7785620b"
-    });
-  daovoice('update');
-  </script>
-
-
-<link rel="stylesheet" href="/css/main.css?v=7.3.0">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.3.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
-    copycode: {"enable":true,"show_result":true,"style":"default"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
-    path: './public/search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201014170303.png'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
     }
-  };
-</script>
-
-  <meta name="description" content="Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码  本文介绍 Lifecycle 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment">
-<meta name="keywords" content="androidx,Jetpack,MVVM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用">
-<meta property="og:url" content="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/index.html">
-<meta property="og:site_name" content="杨云召 | 博客">
-<meta property="og:description" content="Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码  本文介绍 Lifecycle 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200331214314.jpeg">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200331214054.jpeg">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200326095005.gif">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200326103024.jpg">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200326134237.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200326135029.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200326135636.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200327104836.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200327105352.png">
-<meta property="og:image" content="https://gitee.com/flywith24/Album/raw/master/img/20200327113340.png">
-<meta property="og:updated_time" content="2020-04-10T08:45:39.764Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用">
-<meta name="twitter:description" content="Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码  本文介绍 Lifecycle 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014">
-  <link rel="alternate" href="/atom.xml" title="杨云召 | 博客" type="application/atom+xml">
-  <link rel="canonical" href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用 | 杨云召 | 博客</title>
-  
-
-
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?820ce49036d6b5d08ea0cb1bf28a6a0a";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
   </script>
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-  <script type="text/javascript" color="0,0,0" opacity='0.5' zIndex="-1" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
-
-  <div class="container sidebar-position-left">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">杨云召 | 博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-<nav class="site-nav">
   
-  <ul id="menu" class="menu">
-      
-      
-      
-        
-        <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
 
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-tags">
-      
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-categories">
-      
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-archives">
-      
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-commonweal">
-      
-    
-
-    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>公益 404</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        
-          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
-      </li>
-    
-  </ul>
-
-    
-
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
 </nav>
-  <div class="site-search">
-    
-  <div class="popup search-popup">
-  <div class="search-header">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <div class="search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="search-input">
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
     </div>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-  </div>
-  <div id="search-result"></div>
-</div>
-
-
-  </div>
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="杨云召">
-      <meta itemprop="description" content="不人云亦云，只求接近真相">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="杨云召 | 博客">
-    </span>
-      <header class="post-header">
-
-        
-          <h2 class="post-title" itemprop="name headline">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用
-
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2020-03-30 00:10:35" itemprop="dateCreated datePublished" datetime="2020-03-30T00:10:35+08:00">2020-03-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-10 16:45:39" itemprop="dateModified" datetime="2020-04-10T16:45:39+08:00">2020-04-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Jetpack/" itemprop="url" rel="index"><span itemprop="name">Jetpack</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            <span id="/2020/03/30/Jetpack-Lifecycle/" class="post-meta-item leancloud_visitors" data-flag-title="【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
+    <ul class="menu-content">
       
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/03/30/Jetpack-Lifecycle/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/03/30/Jetpack-Lifecycle/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-          
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
-              
-              <span>10k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              
-              <span>9 分钟</span>
-            </span>
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <blockquote>
-<p> Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码</p>
-</blockquote>
-<p>本文介绍 <code>Lifecycle</code> 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment ，帮助您对 <code>Lifecycle</code> 有一个感性的认识</p>
-<a id="more"></a>
-
-<h2 id="万物基于-Lifecycle"><a href="#万物基于-Lifecycle" class="headerlink" title="万物基于 Lifecycle"></a>万物基于 <strong>Lifecycle</strong></h2><h3 id="手动管理生命周期的痛苦你不懂"><a href="#手动管理生命周期的痛苦你不懂" class="headerlink" title="手动管理生命周期的痛苦你不懂"></a>手动管理生命周期的痛苦你不懂</h3><p><img src="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014" alt="lifecycles"></p>
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 30, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>10167</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="万物基于-Lifecycle"><a href="#万物基于-Lifecycle" class="headerlink" title="万物基于 Lifecycle"></a>万物基于 <strong>Lifecycle</strong></h2><h3 id="手动管理生命周期的痛苦你不懂"><a href="#手动管理生命周期的痛苦你不懂" class="headerlink" title="手动管理生命周期的痛苦你不懂"></a>手动管理生命周期的痛苦你不懂</h3><p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="lifecycles"></p>
 <blockquote>
 <p> 鲁迅曾说过：万物基于 Lifecycle</p>
 </blockquote>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200331214314.jpeg" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200331214314.jpeg" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>哦不对</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200331214054.jpeg" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200331214054.jpeg" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>Android 中的视图控制器就有这么多生命周期的情况，所以处理好生命周期十分重要，否则会导致内存泄漏甚至是程序崩溃。这里引用 <a href="https://developer.android.com/topic/libraries/architecture/lifecycle" target="_blank" rel="noopener">官方文档</a> 的例子</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyLocationListener</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyLocationListener</span><span class="params">(Context context, Callback callback)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 连接系统的定位服务</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 与系统的定位服务断开连接</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyLocationListener myLocationListener;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">        myLocationListener = <span class="keyword">new</span> MyLocationListener(<span class="keyword">this</span>, (location) -&gt; &#123;</span><br><span class="line">            <span class="comment">// 更新 UI</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStart();</span><br><span class="line">        myLocationListener.start();</span><br><span class="line">        <span class="comment">//管理其他需要响应 activity 生命周期的组件</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStop();</span><br><span class="line">        myLocationListener.stop();</span><br><span class="line">        <span class="comment">//管理其他需要响应 activity 生命周期的组件</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyLocationListener</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MyLocationListener</span><span class="hljs-params">(Context context, Callback callback)</span> </span>&#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">start</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 连接系统的定位服务</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stop</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 与系统的定位服务断开连接</span><br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> MyLocationListener myLocationListener;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(...)</span> </span>&#123;<br>        myLocationListener = <span class="hljs-keyword">new</span> MyLocationListener(<span class="hljs-keyword">this</span>, (location) -&gt; &#123;<br>            <span class="hljs-comment">// 更新 UI</span><br>        &#125;);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStart</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onStart();<br>        myLocationListener.start();<br>        <span class="hljs-comment">//管理其他需要响应 activity 生命周期的组件</span><br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStop</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onStop();<br>        myLocationListener.stop();<br>        <span class="hljs-comment">//管理其他需要响应 activity 生命周期的组件</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>此示例看起来不错，在实际的应用程序中，您仍然会响应生命周期的当前状态而进行过多的调用来管理 UI 和其他组件。 管理多个组件会在生命周期方法中放置大量代码，例如 onStart() 和 onStop()，这使它们难以维护</p>
 <p>而且，不能保证组件在 activity 或 fragment 停止之前就已启动。 如果我们需要执行长时间运行的操作（例如onStart() 中的某些配置检查），则可能会导致争用情况，其中onStop() 方法在 onStart() 之前完成，从而使组件的生存期超过了所需的生存期。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> MyLocationListener myLocationListener;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">        myLocationListener = <span class="keyword">new</span> MyLocationListener(<span class="keyword">this</span>, location -&gt; &#123;</span><br><span class="line">            <span class="comment">// 更新 UI</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStart();</span><br><span class="line">        Util.checkUserStatus(result -&gt; &#123;</span><br><span class="line">            <span class="comment">// 如果在 activity 停止后调用此回调怎么办？</span></span><br><span class="line">            <span class="keyword">if</span> (result) &#123;</span><br><span class="line">                myLocationListener.start();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onStop();</span><br><span class="line">        myLocationListener.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> MyLocationListener myLocationListener;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(...)</span> </span>&#123;<br>        myLocationListener = <span class="hljs-keyword">new</span> MyLocationListener(<span class="hljs-keyword">this</span>, location -&gt; &#123;<br>            <span class="hljs-comment">// 更新 UI</span><br>        &#125;);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStart</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onStart();<br>        Util.checkUserStatus(result -&gt; &#123;<br>            <span class="hljs-comment">// 如果在 activity 停止后调用此回调怎么办？</span><br>            <span class="hljs-keyword">if</span> (result) &#123;<br>                myLocationListener.start();<br>            &#125;<br>        &#125;);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStop</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onStop();<br>        myLocationListener.stop();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>如果有所有的组件，都能感知外部的生命周期，能在相应的时机释放资源，并且在错过生命周期时能及时叫停异步的任务就好了，</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200326095005.gif" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200326095005.gif" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>我们不妨先思考一下，如果实现这样的想法，应该如何做</p>
 <h3 id="按照惯例的思考"><a href="#按照惯例的思考" class="headerlink" title="按照惯例的思考"></a>按照惯例的思考</h3><p>首先我们先来整理一下我们的需求</p>
 <ul>
@@ -463,22 +190,22 @@
 <p>观察者模式面向的需求是：A 对象（观察者）对 B 对象（被观察者）的某种变化高度敏感，需要在 B 变化的一瞬间做出反应。举个例子，新闻里喜闻乐见的警察抓小偷，警察需要在小偷伸手作案的时候实施抓捕。在这个例子里，警察是观察者，小偷是被观察者，警察需要时刻盯着小偷的一举一动，才能保证不会漏过任何瞬间。程序的观察者模式和这种真正的『观察』略有不同，观察者不需要时刻盯着被观察者（例如 A 不需要每过 2ms 就检查一次 B 的状态），而是采用<strong>注册</strong>(Register)<strong>或者称为</strong>订阅<strong>(Subscribe)</strong>的方式，告诉被观察者：我需要你的某某状态，你要在它变化的时候通知我。 Android 开发中一个比较典型的例子是点击监听器 <code>OnClickListener</code> 。对设置 <code>OnClickListener</code> 来说， <code>View</code> 是被观察者， <code>OnClickListener</code> 是观察者，二者通过 <code>setOnClickListener()</code> 方法达成订阅关系。订阅之后用户点击按钮的瞬间，Android Framework 就会将点击事件发送给已经注册的 <code>OnClickListener</code> 。采取这样被动的观察方式，既省去了反复检索状态的资源消耗，也能够得到最高的反馈速度。当然，这也得益于我们可以随意定制自己程序中的观察者和被观察者，而警察叔叔明显无法要求小偷『你在作案的时候务必通知我』。</p>
 </blockquote>
 <p>OnClickListener 的模式大致如下图：</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200326103024.jpg" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200326103024.jpg" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <blockquote>
 <p>上述描述及图片均来自 <a href="https://gank.io/post/560e15be2dca930e00da1083" target="_blank" rel="noopener">给 Android 开发者的 RxJava 详解</a></p>
 </blockquote>
 <p><strong>因此在生命周期组件的生命周期发生变化时告诉观察者，内部组件即可感知外部的生命周期</strong></p>
-<h3 id="引入-Lifecycle-后"><a href="#引入-Lifecycle-后" class="headerlink" title="引入 Lifecycle 后"></a>引入 Lifecycle 后</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyObserver</span> <span class="keyword">implements</span> <span class="title">LifecycleObserver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_RESUME)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_PAUSE)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">disconnectListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">myLifecycleOwner.getLifecycle().addObserver(<span class="keyword">new</span> MyObserver());</span><br></pre></td></tr></table></figure>
+<h3 id="引入-Lifecycle-后"><a href="#引入-Lifecycle-后" class="headerlink" title="引入 Lifecycle 后"></a>引入 Lifecycle 后</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyObserver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">LifecycleObserver</span> </span>&#123;<br>    <span class="hljs-meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_RESUME)<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">connectListener</span><span class="hljs-params">()</span> </span>&#123;<br>        ...<br>    &#125;<br><br>    <span class="hljs-meta">@OnLifecycleEvent</span>(Lifecycle.Event.ON_PAUSE)<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">disconnectListener</span><span class="hljs-params">()</span> </span>&#123;<br>        ...<br>    &#125;<br>&#125;<br><br>myLifecycleOwner.getLifecycle().addObserver(<span class="hljs-keyword">new</span> MyObserver());<br></code></pre></td></tr></table></figure>
 
-<h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200326134237.png" alt></p>
+<h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200326134237.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>这是 <a href="https://developer.android.com/reference/androidx/lifecycle/Lifecycle" target="_blank" rel="noopener">Lifecycle</a>  的结构，抽象类，其内部有两个枚举，分别代表着「事件」和「状态」，此外还有三个方法，添加/移除观察者，获取当前状态</p>
 <blockquote>
 <p><strong>注意，这里 State 中的枚举顺序是有意义的，后文详细介绍</strong></p>
 </blockquote>
 <p>其实现类为  <a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleRegistry" target="_blank" rel="noopener">LifecycleRegistry</a> ，可以处理多个观察者</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200326135029.png" alt="LifecycleRegistry"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200326135029.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="LifecycleRegistry"></p>
 <p>其内部持有当前的状态 mState ，LifecycleOwner 以及观察者的自定义列表，同时重写了父类的添加/删除观察者的方法</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200326135636.png" alt="LifecycleOwner"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200326135636.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="LifecycleOwner"></p>
 <p><a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleOwner" target="_blank" rel="noopener">LifecycleOwner</a> ，具有 Android 的生命周期，定制组件可以使用这些事件来处理生命周期更改，而无需在 Activity 或 Fragment 中实现任何代码</p>
 <p><a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleObserver" target="_blank" rel="noopener">LifecycleObserver</a> ，将一个类标记为 <code>LifecycleObserver</code>。 它没有任何方法，而是依赖于 OnLifecycleEvent 注解的方法</p>
 <p><a href="https://developer.android.com/reference/androidx/lifecycle/LifecycleEventObserver" target="_blank" rel="noopener">LifecycleEventObserver</a> ，可以接收任何生命周期更改并将其分派给接收方。</p>
@@ -490,30 +217,30 @@
 <p> implementation “androidx.lifecycle:lifecycle-common-java8:$lifecycle_version”</p>
 </blockquote>
 <h2 id="简单的源码分析"><a href="#简单的源码分析" class="headerlink" title="简单的源码分析"></a>简单的源码分析</h2><h3 id="activity-生命周期处理"><a href="#activity-生命周期处理" class="headerlink" title="activity 生命周期处理"></a>activity 生命周期处理</h3><p>首先我们还是来看 <strong>androidx.activity.ComponentActivity</strong> ，这个类我们这个系列的文章里提到多次，第一次提及是在 <a href="https://juejin.im/post/5e738d12518825495d69cfb9#heading-2" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a> ，感兴趣的小伙伴可以看看。</p>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200327104836.png" alt="ComponentActivity"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200327104836.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="ComponentActivity"></p>
 <p>其实现的接口大多数我们都已经探讨过了，今天我们来看看 LifecycleOwner</p>
 <blockquote>
 <p>ActivityResultCaller 为 activity 1.2.0-alpha02 推出的，旨在统一 onActivityResult ，这里暂时不讨论它</p>
 </blockquote>
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200327105352.png" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200327105352.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>既然实现了 <code>LifecycleOwner</code> 接口，必定重写 getLifecycle() 方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// androidx.activity.ComponentActivity.java</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> LifecycleRegistry mLifecycleRegistry = <span class="keyword">new</span> LifecycleRegistry(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Lifecycle <span class="title">getLifecycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mLifecycleRegistry;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// androidx.activity.ComponentActivity.java</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> LifecycleRegistry mLifecycleRegistry = <span class="hljs-keyword">new</span> LifecycleRegistry(<span class="hljs-keyword">this</span>);<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Lifecycle <span class="hljs-title">getLifecycle</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mLifecycleRegistry;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>其返回的 <code>Lifecycle</code> 为 实现类 <code>LifecycleRegistry</code> 的实例</p>
 <p>而 activity 操作生命周期是通过 <code>ReportFragment</code> 处理的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// androidx.activity.ComponentActivity.java</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    ReportFragment.injectIfNeededIn(<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ReportFragment</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">injectIfNeededIn</span><span class="params">(Activity activity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="number">29</span>) &#123;</span><br><span class="line">        <span class="comment">// api 29 及以上 直接注册正确的生命周期回调</span></span><br><span class="line">        activity.registerActivityLifecycleCallbacks(</span><br><span class="line">                <span class="keyword">new</span> LifecycleCallbacks());</span><br><span class="line">    &#125;</span><br><span class="line">    android.app.FragmentManager manager = activity.getFragmentManager();</span><br><span class="line">    <span class="keyword">if</span> (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == <span class="keyword">null</span>) &#123;</span><br><span class="line">        manager.beginTransaction().add(<span class="keyword">new</span> ReportFragment(), REPORT_FRAGMENT_TAG).commit();</span><br><span class="line">        manager.executePendingTransactions();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// androidx.activity.ComponentActivity.java</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>    ReportFragment.injectIfNeededIn(<span class="hljs-keyword">this</span>);<br>    <span class="hljs-comment">//...</span><br>&#125;<br><br><span class="hljs-comment">// ReportFragment</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">injectIfNeededIn</span><span class="hljs-params">(Activity activity)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (Build.VERSION.SDK_INT &gt;= <span class="hljs-number">29</span>) &#123;<br>        <span class="hljs-comment">// api 29 及以上 直接注册正确的生命周期回调</span><br>        activity.registerActivityLifecycleCallbacks(<br>                <span class="hljs-keyword">new</span> LifecycleCallbacks());<br>    &#125;<br>    android.app.FragmentManager manager = activity.getFragmentManager();<br>    <span class="hljs-keyword">if</span> (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == <span class="hljs-keyword">null</span>) &#123;<br>        manager.beginTransaction().add(<span class="hljs-keyword">new</span> ReportFragment(), REPORT_FRAGMENT_TAG).commit();<br>        manager.executePendingTransactions();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/flywith24/Album/raw/master/img/20200327113340.png" alt></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ReportFragment.java</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dispatch</span><span class="params">(@NonNull Activity activity, @NonNull Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (activity <span class="keyword">instanceof</span> LifecycleRegistryOwner) &#123;</span><br><span class="line">        ((LifecycleRegistryOwner) activity).getLifecycle().handleLifecycleEvent(event);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (activity <span class="keyword">instanceof</span> LifecycleOwner) &#123;</span><br><span class="line">        Lifecycle lifecycle = ((LifecycleOwner) activity).getLifecycle();</span><br><span class="line">        <span class="keyword">if</span> (lifecycle <span class="keyword">instanceof</span> LifecycleRegistry) &#123;</span><br><span class="line">            ((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dispatch</span><span class="params">(@NonNull Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; <span class="number">29</span>) &#123;</span><br><span class="line">        dispatch(getActivity(), event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line">    dispatch(Lifecycle.Event.ON_CREATE);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onStart();</span><br><span class="line">    dispatch(Lifecycle.Event.ON_START);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    dispatch(Lifecycle.Event.ON_RESUME);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause();</span><br><span class="line">    dispatch(Lifecycle.Event.ON_PAUSE);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onStop();</span><br><span class="line">    dispatch(Lifecycle.Event.ON_STOP);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    dispatch(Lifecycle.Event.ON_DESTROY);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200327113340.png" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// ReportFragment.java</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dispatch</span><span class="hljs-params">(@NonNull Activity activity, @NonNull Lifecycle.Event event)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (activity <span class="hljs-keyword">instanceof</span> LifecycleRegistryOwner) &#123;<br>        ((LifecycleRegistryOwner) activity).getLifecycle().handleLifecycleEvent(event);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (activity <span class="hljs-keyword">instanceof</span> LifecycleOwner) &#123;<br>        Lifecycle lifecycle = ((LifecycleOwner) activity).getLifecycle();<br>        <span class="hljs-keyword">if</span> (lifecycle <span class="hljs-keyword">instanceof</span> LifecycleRegistry) &#123;<br>            ((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dispatch</span><span class="hljs-params">(@NonNull Lifecycle.Event event)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (Build.VERSION.SDK_INT &lt; <span class="hljs-number">29</span>) &#123;<br>        dispatch(getActivity(), event);<br>    &#125;<br>&#125;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityCreated</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onActivityCreated(savedInstanceState);<br>    dispatch(Lifecycle.Event.ON_CREATE);<br>&#125;<br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStart</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onStart();<br>    dispatch(Lifecycle.Event.ON_START);<br>&#125;<br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onResume</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onResume();<br>    dispatch(Lifecycle.Event.ON_RESUME);<br>&#125;<br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onPause</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onPause();<br>    dispatch(Lifecycle.Event.ON_PAUSE);<br>&#125;<br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onStop</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onStop();<br>    dispatch(Lifecycle.Event.ON_STOP);<br>&#125;<br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDestroy</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onDestroy();<br>    dispatch(Lifecycle.Event.ON_DESTROY);<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// LifecycleCallbacks</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LifecycleCallbacks</span> <span class="keyword">implements</span> <span class="title">Application</span>.<span class="title">ActivityLifecycleCallbacks</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPostCreated</span><span class="params">(@NonNull Activity activity,</span></span></span><br><span class="line"><span class="function"><span class="params">            @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_CREATE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPostStarted</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_START);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPostResumed</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_RESUME);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPrePaused</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_PAUSE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPreStopped</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_STOP);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityPreDestroyed</span><span class="params">(@NonNull Activity activity)</span> </span>&#123;</span><br><span class="line">        dispatch(activity, Lifecycle.Event.ON_DESTROY);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// LifecycleCallbacks</span><br><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LifecycleCallbacks</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Application</span>.<span class="hljs-title">ActivityLifecycleCallbacks</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPostCreated</span><span class="hljs-params">(@NonNull Activity activity,<br>            @Nullable Bundle savedInstanceState)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_CREATE);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPostStarted</span><span class="hljs-params">(@NonNull Activity activity)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_START);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPostResumed</span><span class="hljs-params">(@NonNull Activity activity)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_RESUME);<br>    &#125;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPrePaused</span><span class="hljs-params">(@NonNull Activity activity)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_PAUSE);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPreStopped</span><span class="hljs-params">(@NonNull Activity activity)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_STOP);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onActivityPreDestroyed</span><span class="hljs-params">(@NonNull Activity activity)</span> </span>&#123;<br>        dispatch(activity, Lifecycle.Event.ON_DESTROY);<br>    &#125;<br>	<span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>在 activity 的 onCreate 方法中，调用了 <code>ReportFragment</code> 中的静态方法 <code>injectIfNeededIn()</code> 。而其内部，<strong>如果 api 29 及以上的设备上直接注册正确的生命周期回调，低版本通过启动 ReportFragment ，借助 fragment 各个生命周期来处理生命周期回调</strong></p>
 <h3 id="fragment-生命周期处理"><a href="#fragment-生命周期处理" class="headerlink" title="fragment 生命周期处理"></a>fragment 生命周期处理</h3><p>在 fragment 内部，每个生命周期节点调用 <code>handleLifecycleEvent</code> 方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Fragment.java</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Fragment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    initLifecycle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initLifecycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mLifecycleRegistry = <span class="keyword">new</span> LifecycleRegistry(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Lifecycle <span class="title">getLifecycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mLifecycleRegistry;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    onCreate(savedInstanceState);</span><br><span class="line">	mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performStart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    onStart();</span><br><span class="line">    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    onResume();</span><br><span class="line">    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);</span><br><span class="line">    onPause();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performStop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);</span><br><span class="line">    onStop();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);</span><br><span class="line">    onDestroy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Fragment.java</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Fragment</span><span class="hljs-params">()</span> </span>&#123;<br>    initLifecycle();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initLifecycle</span><span class="hljs-params">()</span> </span>&#123;<br>    mLifecycleRegistry = <span class="hljs-keyword">new</span> LifecycleRegistry(<span class="hljs-keyword">this</span>);<br>&#125;<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> Lifecycle <span class="hljs-title">getLifecycle</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mLifecycleRegistry;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>    onCreate(savedInstanceState);<br>	mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);    <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performStart</span><span class="hljs-params">()</span> </span>&#123;<br>    onStart();<br>    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performResume</span><span class="hljs-params">()</span> </span>&#123;<br>    onResume();<br>    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME);    <br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performPause</span><span class="hljs-params">()</span> </span>&#123;<br>    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE);<br>    onPause();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performStop</span><span class="hljs-params">()</span> </span>&#123;<br>    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);<br>    onStop();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performDestroy</span><span class="hljs-params">()</span> </span>&#123;<br>    mLifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);<br>    onDestroy();<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="Lifecycle-State-大小比较"><a href="#Lifecycle-State-大小比较" class="headerlink" title="Lifecycle State 大小比较"></a>Lifecycle State 大小比较</h3><p><code>Lifecycle.State</code>  中有一个 <code>isAtLeast</code> 方法，用于判断当前状态是否不小于传入的状态</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Lifecycle.State</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAtLeast</span><span class="params">(@NonNull State state)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> compareTo(state) &gt;= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Lifecycle.State</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isAtLeast</span><span class="hljs-params">(@NonNull State state)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> compareTo(state) &gt;= <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>枚举的 compareTo 方法其实是比较的枚举声明的顺序</strong></p>
 <p>而 State 的顺序为 DESTROYED -&gt; INITIALIZED -&gt; CREATED -&gt; STARTED -&gt; RESUMED</p>
@@ -530,656 +257,202 @@
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
 <li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
 </ul>
-
-    </div>
-    <div>
-    
-      <div>
-  
-  <section data-mpa-template-id="95" class="mpa-template" data-mpa-color="#ffffff">
-      <section style="margin-top: 30px;display: -webkit-box;display: flex;-webkit-box-pack: center;justify-content: center;-webkit-box-align: center;align-items: center" data-mid="t22">
-        <section style="text-align: center;line-height: 30px" data-mid="">
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(right, #141414, #f0f0f0);background: linear-gradient(to left, #141414, #f0f0f0);-webkit-transform: translate(0px, 12px);-ms-transform: translate(0px, 12px);transform: translate(0px, 12px)" data-mid="" data-contenteditable="false">
-          </section>
-          <section style="float: left;width: 4px;height: 4px;border-radius: 50%;padding: 3px;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 8px);-ms-transform: translate(0px, 8px);transform: translate(0px, 8px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="float: left;min-width: 50px;padding: 0 10px 0 10px;font-size: 16px;color: #4f4f4f;text-align: center;line-height: 30px" data-mid="">END</section>
-          <section style="float: left;padding: 3px;width: 4px;height: 4px;border-radius: 50%;background-color: #b1b1b1;text-align: center;-webkit-transform: translate(0px, 9px);-ms-transform: translate(0px, 9px);transform: translate(0px, 9px)" data-mid="" data-contenteditable="false">
-            <section style="width: 5px;height: 5px;border-radius: 50%;background-color: #141414" data-mid="">
-            </section>
-          </section>
-          <section style="display: inline-block;float: left;width: 95px;height: 2px;background: -webkit-linear-gradient(left, #141414, #f0f0f0);background: linear-gradient(to right, #141414, #f0f0f0);-webkit-transform: translate(-1px, 14px);-ms-transform: translate(-1px, 14px);transform: translate(-1px, 14px)" data-mid="" data-contenteditable="false">
-          </section>
-        </section>
       </section>
-  </section>
+      <section class="extra">
+        
+        <ul class="copyright">
   
-</div>
-    
-    </div>
-    
-    
-    
+  <li><strong>本文作者：</strong>杨云召</li>
+  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/index.html">http://yoursite.com/2020/03/30/Jetpack-Lifecycle/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
         
-      
-        <div id="reward-container">
-  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
         
-      
-      <div style="display: inline-block">
-        <img src="/uploads/wechatpay.png" alt="杨云召 微信支付">
-        <p>微信支付</p>
-      </div>
-        
-      
-      <div style="display: inline-block">
-        <img src="/uploads/alipay.jpg" alt="杨云召 支付宝">
-        <p>支付宝</p>
-      </div>
-
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014170158.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
   </div>
-</div>
-
-      
-
-      <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/androidx/" rel="tag"><i class="fa fa-tag"></i> androidx</a>
-            
-              <a href="/tags/Jetpack/" rel="tag"><i class="fa fa-tag"></i> Jetpack</a>
-            
-              <a href="/tags/MVVM/" rel="tag"><i class="fa fa-tag"></i> MVVM</a>
-            
-          </div>
-        
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2020/03/23/Jetpack-ViewModel/" rel="next" title="【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界">
-                  <i class="fa fa-chevron-left"></i> 【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界
-                </a>
-              
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2020/03/31/Jetpack-LiveData/" rel="prev" title="【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香">
-                  【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
-        
-      </footer>
-    
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
   </div>
-  
-  
-  
-  </article>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jetpack/">Jetpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVVM/">MVVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidx/">androidx</a></li></ul>
 
+        
+<nav class="nav">
+  
+    <a href="/2020/03/31/Jetpack-LiveData/"><i class="iconfont iconleft"></i>【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</a>
+  
+  
+    <a href="/2020/03/23/Jetpack-ViewModel/">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
   </div>
-
-
-          </div>
-          
-    
-    <div class="comments" id="comments"></div>
-  
-
-        </div>
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+</article>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/uploads/avatar.jpg"
-      alt="杨云召">
-  <p class="site-author-name" itemprop="name">杨云召</p>
-  <div class="site-description motion-element" itemprop="description">不人云亦云，只求接近真相</div>
-</div>
-  <nav class="site-state motion-element">
-      <div class="site-state-item site-state-posts">
-        
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">35</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
     
-      
-      
-      <div class="site-state-item site-state-categories">
-        
-          
-            <a href="/categories/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
-      </div>
     
-      
-      
-      <div class="site-state-item site-state-tags">
-        
-          
-            <a href="/tags/">
-          
-        
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">23</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
-      </div>
     
-  </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
     </a>
-  </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Flywith24" title="GitHub &rarr; https://github.com/Flywith24" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="mailto:youngyunzhao@163.com" title="E-Mail &rarr; mailto:youngyunzhao@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://weibo.com/youngyunzhao" title="Weibo &rarr; https://weibo.com/youngyunzhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://www.jianshu.com/u/3d5ad6043d66" title="简书 &rarr; https://www.jianshu.com/u/3d5ad6043d66" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>简书</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" title="掘金 &rarr; https://juejin.im/user/57c7f6870a2b58006b1cfd6c" rel="noopener" target="_blank"><i class="fa fa-fw fa-spinner"></i>掘金</a>
-      </span>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://segmentfault.com/u/fly_with24" title="SegmentFault &rarr; https://segmentfault.com/u/fly_with24" rel="noopener" target="_blank"><i class="fa fa-fw fa-meh-o"></i>SegmentFault</a>
-      </span>
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
     
-      <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/lovekobebryant8" title="Twitter &rarr; https://twitter.com/lovekobebryant8" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
-      </span>
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
     
   </div>
-
-
-  <div class="links-of-blogroll motion-element links-of-blogroll-block">
-    <div class="links-of-blogroll-title">
-      <i class="fa  fa-fw fa-link"></i>
-      博客推荐
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="http://gityuan.com/android/" title="http://gityuan.com/android/" rel="noopener" target="_blank">gityuan</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://blog.csdn.net/Luoshengyang" title="https://blog.csdn.net/Luoshengyang" rel="noopener" target="_blank">老罗Android之旅</a>
-        </li>
-      
-        <li class="links-of-blogroll-item">
-          <a href="https://me.csdn.net/innost" title="https://me.csdn.net/innost" rel="noopener" target="_blank">阿拉神农</a>
-        </li>
-      
-    </ul>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
   </div>
-
-        </div>
-      </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#万物基于-Lifecycle"><span class="nav-number">1.</span> <span class="nav-text">万物基于 Lifecycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#手动管理生命周期的痛苦你不懂"><span class="nav-number">1.1.</span> <span class="nav-text">手动管理生命周期的痛苦你不懂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按照惯例的思考"><span class="nav-number">1.2.</span> <span class="nav-text">按照惯例的思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式"><span class="nav-number">1.3.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入-Lifecycle-后"><span class="nav-number">1.4.</span> <span class="nav-text">引入 Lifecycle 后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码结构"><span class="nav-number">2.</span> <span class="nav-text">源码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的源码分析"><span class="nav-number">3.</span> <span class="nav-text">简单的源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#activity-生命周期处理"><span class="nav-number">3.1.</span> <span class="nav-text">activity 生命周期处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fragment-生命周期处理"><span class="nav-number">3.2.</span> <span class="nav-text">fragment 生命周期处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lifecycle-State-大小比较"><span class="nav-number">3.3.</span> <span class="nav-text">Lifecycle State 大小比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text"> 关于我</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank"> </a>&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">杨云召</span>
   
-  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-    本站访客数:<span id="busuanzi_value_site_pv"></span>
-  </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">197k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">2:59</span>
-  
-  
-    <span class="post-meta-divider">|</span>
-  
-
-  
-    <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a></div>
-  	
-  <span class="post-meta-divider">|</span>
- 
-  <a class="theme-link" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202000904">鲁公网安备 37011202000904号</a>
-</div>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
   </div>
-
   
-    
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
   
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 
-<script src="/js/utils.js?v=7.3.0"></script>
-  <script src="/js/motion.js?v=7.3.0"></script>
-
-
-  <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
-<script src="/js/next-boot.js?v=7.3.0"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 
 
 
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
 
 
 
-
-  
-  <script>
-  function leancloudSelector(url) {
-    return document.getElementById(url).querySelector('.leancloud-visitors-count');
-  }
-  if (CONFIG.page.isPost) {
-    function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
-
-      Counter('get', `/classes/Counter?${JSON.stringify({ where: url })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length > 0) {
-            var counter = results[0];
-            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
-              .then(response => response.json())
-              .then(() => {
-                leancloudSelector(url).innerText = counter.time + 1;
-              })
-            
-              .catch(error => {
-                console.log('Failed to save visitor count', error);
-              })
-          } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  } else {
-    function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
-      });
-
-      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
-        .then(response => response.json())
-        .then(({ results }) => {
-          if (results.length === 0) {
-            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
-              element.innerText = 0;
-            });
-            return;
-          }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            leancloudSelector(url).innerText = time;
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = leancloudSelector(url);
-            if (element.innerText == '') {
-              element.innerText = 0;
-            }
-          }
-        })
-        .catch(error => {
-          console.log('LeanCloud Counter Error', error);
-        });
-    }
-  }
-
-  fetch('https://app-router.leancloud.cn/2/route?appId=SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz')
-    .then(response => response.json())
-    .then(({ api_server }) => {
-      var Counter = (method, url, data) => {
-        return fetch(`https://${api_server}/1.1${url}`, {
-          method: method,
-          headers: {
-            'X-LC-Id': 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-            'X-LC-Key': 'OYo7ITS4AzTvBUvb1yIY8oaf',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      };
-      if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        //if (localhost.test(document.URL)) return;
-        addCount(Counter);
-      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
 
 
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
 
 
 
-
-
-
-  <script src="/js/local-search.js?v=7.3.0"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
-
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script>
-<script src="/js/post-details.js?v=7.3.0"></script>
-
-
-    
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(item => {
-    return GUEST.indexOf(item) > -1;
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
   });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz',
-    appKey: 'OYo7ITS4AzTvBUvb1yIY8oaf',
-    placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-    avatar: 'mm',
-    meta: guest,
-    pageSize: '10' || 10,
-    visitor: false,
-    lang: 'zh-cn' || 'zh-cn',
-    path: location.pathname
-  });
-}, window.Valine);
+  daovoice('update');
 </script>
 
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>
