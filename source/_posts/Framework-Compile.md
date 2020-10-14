@@ -5,7 +5,7 @@ tags: [ROM,framework]
 categories: 
 - ROM
 keywords: 编译，烧写，源码，Android
-image: https://gitee.com/flywith24/Album/raw/master/img/20201014213357.png
+image: https://gitee.com/flywith24/Album/raw/master/img/20201014220906.png
 top: 100
 ---
 
