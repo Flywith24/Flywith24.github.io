@@ -95,7 +95,7 @@ galleries:
 
 comments:
   enable: true
-  type: gitalk
+  type: valine
   button: false
 
 # Gitalk
@@ -103,8 +103,8 @@ gitalk:
   owner: Flywith24
   repo: Flywith24.github.io
   admin: Flywith24
-  clientID: 606fc2353e722e7e4d3d
-  clientSecret: 6f9719acb59c2f6167f4f0a638cdbdcb6829570b
+  clientID: 
+  clientSecret:
   lang: zh-CN
 
 valine:
