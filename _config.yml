@@ -7,7 +7,7 @@ title: 杨云召 | 博客
 subtitle:
 description: 不人云亦云，只求接近真相
 keywords:
-author: 杨云召
+author: 杨云召（Flywith24）
 language: zh-CN
 timezone:
 
@@ -129,7 +129,7 @@ live2d:
     width: 150
     height: 300
   mobile:
-    show: true
+    show: tfalse
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

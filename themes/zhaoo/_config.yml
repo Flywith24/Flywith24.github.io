@@ -37,7 +37,7 @@ menu:
   about: /about || 关于
 
 # Copyright
-copyright: <p>Copyright© 2017 - 2020</a>  |  Theme - <a target="_blank" href="https://github.com/izhaoo/hexo-theme-zhaoo">zhaoo</a></p>
+copyright: <p>Copyright© 2017 - 2020 ❤️ Flywith24</p>
 
 # Social
 social:
@@ -96,7 +96,7 @@ galleries:
 comments:
   enable: true
   type: valine
-  button: false
+  button: true
 
 # Gitalk
 gitalk:
