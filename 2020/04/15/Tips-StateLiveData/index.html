@@ -264,10 +264,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/29/Jetpack-fragment-setMaxLifecycle/"><i class="iconfont iconleft"></i>setMaxLifecycle 上位，setUserVisibleHint 被弃用</a>
+    <a href="/2020/04/15/Tips-Components-Jump/"><i class="iconfont iconleft"></i>Android 组件化不使用 Router 如何实现组件间 activity 跳转</a>
   
   
-    <a href="/2020/04/15/Tips-includeBuild/">除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild<i class="iconfont iconright"></i></a>
+    <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/">更优雅地恢复 recyclerview 的滚动位置<i class="iconfont iconright"></i></a>
   
 </nav>
 
@@ -276,28 +276,30 @@
       <section class="comments">
   
   
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<div id="gitalk" class="gitalk"></div>
-<script defer src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
   window.onload = function () {
-    var gitalk = new Gitalk({
-      clientID: '606fc2353e722e7e4d3d',
-      clientSecret: '6f9719acb59c2f6167f4f0a638cdbdcb6829570b',
-      id: window.location.pathname,
-      repo: 'Flywith24.github.io',
-      owner: 'Flywith24',
-      admin: 'Flywith24'
-    });
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
     if ( false ) {
       $("#comments-btn").on("click", function () {
         $(this).hide();
-        gitalk.render('gitalk');
+        loadValine();
       });
     } else {
-      gitalk.render('gitalk');
+      loadValine();
     }
-  }
+  };
 </script>
 
 </section>

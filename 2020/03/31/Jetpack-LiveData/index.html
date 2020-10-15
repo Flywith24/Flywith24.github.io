@@ -359,7 +359,7 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/"><i class="iconfont iconleft"></i>更优雅地恢复 recyclerview 的滚动位置</a>
+    <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/"><i class="iconfont iconleft"></i>终于动手了，onActivityCreated 被弃用</a>
   
   
     <a href="/2020/03/30/Jetpack-Lifecycle/">万物基于Lifecycle 默默无闻大作用<i class="iconfont iconright"></i></a>
@@ -371,28 +371,30 @@
       <section class="comments">
   
   
-<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-<div id="gitalk" class="gitalk"></div>
-<script defer src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
   window.onload = function () {
-    var gitalk = new Gitalk({
-      clientID: '606fc2353e722e7e4d3d',
-      clientSecret: '6f9719acb59c2f6167f4f0a638cdbdcb6829570b',
-      id: window.location.pathname,
-      repo: 'Flywith24.github.io',
-      owner: 'Flywith24',
-      admin: 'Flywith24'
-    });
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
     if ( false ) {
       $("#comments-btn").on("click", function () {
         $(this).hide();
-        gitalk.render('gitalk');
+        loadValine();
       });
     } else {
-      gitalk.render('gitalk');
+      loadValine();
     }
-  }
+  };
 </script>
 
 </section>
