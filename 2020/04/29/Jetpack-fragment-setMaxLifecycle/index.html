@@ -7,14 +7,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用 - 杨云召 | 博客</title>
+  <title>setMaxLifecycle 上位，setUserVisibleHint 被弃用 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="很多情况下，fragment 的生命周期上限应该低于 ..."> 
+  <meta name="description" content="setUserVisibleHint 被弃用
+
+
+很多..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -69,7 +72,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -98,7 +101,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用</div>
+  <div class="center">setMaxLifecycle 上位，setUserVisibleHint 被弃用</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -145,20 +148,29 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015102938.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用</h1>
+    <h1 class="head-title">setMaxLifecycle 上位，setUserVisibleHint 被弃用</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 29, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1682</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1707</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="setMaxLifecycle-出现始末"><a href="#setMaxLifecycle-出现始末" class="headerlink" title="setMaxLifecycle 出现始末"></a>setMaxLifecycle 出现始末</h2><p>该功能应如何实现的？我们沿着 <code>commit log</code> 来理一下官方的思路</p>
+        <p>很多情况下，fragment 的生命周期上限应该低于 FragmentManager/Activity。例如，<code>ViewPager</code> 屏幕外的界面不应被 <code>resumed</code></p>
+<p>理想状态下，可以通过以下 API 实现</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">supportFragmentManager<br>	  .beginTransaction()<br>      .setMaxLifecycle(fragment, Lifecycle.State.RESUMED)<br>      .commit()<br></code></pre></td></tr></table></figure>
+
+<p>将最大生命周期设置为 <code>Lifecycle.State.RESUMED</code> 将有效地消除限制（因为这是最高生命周期状态）</p>
+<p>这将允许废弃 <code>setUserVisibleHint()</code> API</p>
+<!-- more-->
+
+
+<h2 id="setMaxLifecycle-出现始末"><a href="#setMaxLifecycle-出现始末" class="headerlink" title="setMaxLifecycle 出现始末"></a>setMaxLifecycle 出现始末</h2><p>该功能应如何实现的？我们沿着 <code>commit log</code> 来理一下官方的思路</p>
 <p>将 <code>BackStackRecord</code> 的部分逻辑转移至父类 <code>FragmentTransaction</code> 中</p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200423094356.png" src="/2020/04/29/Jetpack-fragment-setMaxLifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200423101522.png" src="/2020/04/29/Jetpack-fragment-setMaxLifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
@@ -201,7 +213,7 @@
 <li><p>关于新的 API 下懒加载实现，请移步 <a href="https://juejin.im/post/5e232d01e51d455801624c06" target="_blank" rel="noopener">Androidx 下 Fragment 懒加载的新实现</a></p>
 </li>
 </ul>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -219,7 +231,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/index.html">http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/04/29/Jetpack-fragment-setMaxLifecycle/index.html">https://flywith24.gitee.io/2020/04/29/Jetpack-fragment-setMaxLifecycle/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -242,10 +254,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/30/Jetpack-fragment-ResultAPI/"><i class="iconfont iconleft"></i>【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势</a>
+    <a href="/2020/04/30/Jetpack-fragment-savestate/"><i class="iconfont iconleft"></i>setRetainInstance 被弃用，那么 fragment 是如何保存状态的？</a>
   
   
-    <a href="/2020/04/15/Tips-Components-Jump/">【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转<i class="iconfont iconright"></i></a>
+    <a href="/2020/04/15/Tips-includeBuild/">除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild<i class="iconfont iconright"></i></a>
   
 </nav>
 

@@ -7,15 +7,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？ - 杨云召 | 博客</title>
+  <title>数据驱动魔法师 何时迎来翻身日？ - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-LiveData 篇 我们提到 Android 开发..."> 
+  <meta name="description" content="Jetpack DataBinding 介绍。
+
+
+
+..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +73,7 @@ LiveData 篇 我们提到 Android 开发...">
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +102,7 @@ LiveData 篇 我们提到 Android 开发...">
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？</div>
+  <div class="center">数据驱动魔法师 何时迎来翻身日？</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +149,23 @@ LiveData 篇 我们提到 Android 开发...">
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015101935.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？</h1>
+    <h1 class="head-title">数据驱动魔法师 何时迎来翻身日？</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 09, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>16024</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>16048</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="他来了他来了"></p>
+        <blockquote>
+<p><a href="https://juejin.im/post/5e834bb5f265da480d61668d" target="_blank" rel="noopener">LiveData 篇</a> 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了</p>
+</blockquote>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="他来了他来了"></p>
 <p>他来了他来了，他欢快地走来了</p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402101727.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="DataBinding"></p>
 <p>然而，很多开发者对 DataBinding 存在偏见，「DataBinding 不是个好东西，在声明式编程中书写 UI 逻辑，既不可调试，也不便于察觉和追踪，万一出现问题就麻烦了。」</p>
@@ -399,7 +405,7 @@ LiveData 篇 我们提到 Android 开发...">
 </tbody></table>
 <h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 关于我</span></h2>
 
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
@@ -411,7 +417,7 @@ LiveData 篇 我们提到 Android 开发...">
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/04/09/Jetpack-DataBinding/index.html">http://yoursite.com/2020/04/09/Jetpack-DataBinding/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/04/09/Jetpack-DataBinding/index.html">https://flywith24.gitee.io/2020/04/09/Jetpack-DataBinding/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -434,10 +440,10 @@ LiveData 篇 我们提到 Android 开发...">
         
 <nav class="nav">
   
-    <a href="/2020/04/15/Tips-includeBuild/"><i class="iconfont iconleft"></i>【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild</a>
+    <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/"><i class="iconfont iconleft"></i>终于动手了，onActivityCreated 被弃用</a>
   
   
-    <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/">【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用<i class="iconfont iconright"></i></a>
+    <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/">更优雅地恢复 recyclerview 的滚动位置<i class="iconfont iconright"></i></a>
   
 </nav>
 

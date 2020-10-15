@@ -7,15 +7,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香 - 杨云召 | 博客</title>
+  <title>ViewModel的左膀右臂 数据驱动真的香 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="前言
-之前我们讨论过 ViewModel 的职能边界 ..."> 
+  <meta name="description" content="Jetpack LiveData 介绍。
+
+
+前言
+之..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +73,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +102,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</div>
+  <div class="center">ViewModel的左膀右臂 数据驱动真的香</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +149,24 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015101641.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</h1>
+    <h1 class="head-title">ViewModel的左膀右臂 数据驱动真的香</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 31, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11027</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11046</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="我们都是-Adapter"><a href="#我们都是-Adapter" class="headerlink" title="我们都是 Adapter"></a>我们都是 Adapter</h2><p>在谈 <code>LiveData</code> 前我们来思考一个问题</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>之前我们讨论过 <a href="https://juejin.im/post/5e786d415188255e00661a4e" target="_blank" rel="noopener">ViewModel 的职能边界</a> ，得益于 ViewModel 的生命周期更长，我们可以在 activity 重建后将数据传递给 activity ，也可以避免内存泄漏。但是如果不是每次需要就获取数据，而是当每次有新数据时通知我们，应该怎么办？</p>
+</blockquote>
+<p>本文介绍 <code>LiveData</code> ，一个 <strong>生命周期感知的，可观察的，数据持有者</strong>。同时还会简单分析 <code>LiveData</code> 的源码实现</p>
+<h2 id="我们都是-Adapter"><a href="#我们都是-Adapter" class="headerlink" title="我们都是 Adapter"></a>我们都是 Adapter</h2><p>在谈 <code>LiveData</code> 前我们来思考一个问题</p>
 <p><strong>Android 开发（亦或者说前端开发）的本质工作内容是什么？</strong></p>
 <p>对于应用层 app 开发者，开发者的工作主要工作就是 Adapter </p>
 <p>什么是 Adapter ，下图可能比较直观</p>
@@ -317,7 +324,7 @@
 <p>各位小伙伴如果有什么想法欢迎在评论区留言</p>
 <hr>
 <h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
@@ -329,7 +336,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/31/Jetpack-LiveData/index.html">http://yoursite.com/2020/03/31/Jetpack-LiveData/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/31/Jetpack-LiveData/index.html">https://flywith24.gitee.io/2020/03/31/Jetpack-LiveData/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -352,10 +359,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/"><i class="iconfont iconleft"></i>【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置</a>
+    <a href="/2020/04/09/Jetpack-Recyclerview-Scoroll/"><i class="iconfont iconleft"></i>更优雅地恢复 recyclerview 的滚动位置</a>
   
   
-    <a href="/2020/03/30/Jetpack-Lifecycle/">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/30/Jetpack-Lifecycle/">万物基于Lifecycle 默默无闻大作用<i class="iconfont iconright"></i></a>
   
 </nav>
 

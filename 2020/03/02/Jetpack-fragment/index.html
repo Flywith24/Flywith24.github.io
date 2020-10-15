@@ -7,15 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势 - 杨云召 | 博客</title>
+  <title>你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-在 Android Jetpack 组件中，frag..."> 
+  <meta name="description" content="Fragment 常见问题以及androidx下Fra..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +98,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</div>
+  <div class="center">你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +145,24 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015094256.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</h1>
+    <h1 class="head-title">你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 02, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>15860</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>15898</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="Fragment-常见的问题"><a href="#Fragment-常见的问题" class="headerlink" title="Fragment 常见的问题"></a>Fragment 常见的问题</h2><ul>
+        <blockquote>
+<p>在 <code>Android Jetpack</code> 组件中，<code>fragment</code>作为视图控制器之一占有很重要的位置。但由于其bug众多，暗坑无数，以至于 Square 有这样一篇博客：<a href="https://developer.squareup.com/blog/advocating-against-android-fragments/" target="_blank" rel="noopener">Advocating Against Android Fragments</a>。github上的 <a href="https://github.com/YoKeyword/Fragmentation" target="_blank" rel="noopener">Fragmentation</a> 有着 9.4k 的star。</p>
+<p>而现在，<code>androidx fragment</code> 稳定版已来到 1.2.2，让我们总结一下<code>fragment</code>有哪些常见问题以及有哪些使用<code>fragment</code>的新姿势</p>
+</blockquote>
+<h2 id="Fragment-常见的问题"><a href="#Fragment-常见的问题" class="headerlink" title="Fragment 常见的问题"></a>Fragment 常见的问题</h2><ul>
 <li><p>getSupportFragmentManager ， getParentFragmentManager 和 getChildFragmentManager</p>
 </li>
 <li><p>FragmentStateAdapter 和 FragmentPagerAdapter</p>
@@ -319,7 +322,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/02/Jetpack-fragment/index.html">http://yoursite.com/2020/03/02/Jetpack-fragment/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/02/Jetpack-fragment/index.html">https://flywith24.gitee.io/2020/03/02/Jetpack-fragment/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -342,10 +345,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/10/Jetpack-fragment-lifecycle/"><i class="iconfont iconleft"></i>【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</a>
+    <a href="/2020/03/10/Jetpack-fragment-lifecycle/"><i class="iconfont iconleft"></i>从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</a>
   
   
-    <a href="/2020/03/01/Jetpack-dependencies/">【背上Jetpack】Jetpack 主要依赖关系<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/01/Jetpack-dependencies/">Jetpack 主要依赖关系<i class="iconfont iconright"></i></a>
   
 </nav>
 

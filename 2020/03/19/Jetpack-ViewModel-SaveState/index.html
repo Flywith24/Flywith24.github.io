@@ -7,15 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析 - 杨云召 | 博客</title>
+  <title>绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="前言
-大家都知道 activity 有着一套 onSa..."> 
+  <meta name="description" content="绝不丢失的状态 androidx SaveState ..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +98,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</div>
+  <div class="center">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +145,29 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015095500.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</h1>
+    <h1 class="head-title">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 19, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>12267</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>12319</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="软件工程中没有什么是中间层解决不了的"><a href="#软件工程中没有什么是中间层解决不了的" class="headerlink" title="软件工程中没有什么是中间层解决不了的"></a>软件工程中没有什么是中间层解决不了的</h2><p>在分析 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库之前我们需要简单聊一聊 <code>ComponentActivity</code></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家都知道 activity 有着一套 <code>onSaveInstanceState-onRestoreInstanceState</code> 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验</p>
+<p>在 androidx 下，提供了 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库帮助 activity 和 fragment 处理状态保存和恢复</p>
+</blockquote>
+<p>本文默认您对状态保存机制有一定了解，这部分内容请移步 <a href="https://developer.android.com/topic/libraries/architecture/saving-states" target="_blank" rel="noopener">Saving UI States</a></p>
+<p>此外，关于 android 下的进程管理，推荐 Ian Lake 的 <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
+<p>本文介绍了 androidx 下 <code>SavedState</code> 如何帮助 activity 和 fragment 处理状态的保存和恢复，同时介绍 <code>viewmodel-savedstate</code> 库，以及在开发过程中正确使用状态保存的姿势</p>
+<!-- more-->
+
+<h2 id="软件工程中没有什么是中间层解决不了的"><a href="#软件工程中没有什么是中间层解决不了的" class="headerlink" title="软件工程中没有什么是中间层解决不了的"></a>软件工程中没有什么是中间层解决不了的</h2><p>在分析 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库之前我们需要简单聊一聊 <code>ComponentActivity</code></p>
 <p>androidx activity 1.0.0 时，<code>ComponentActivity</code> 成为了 <code>FragmentActivity</code> 和 <code>AppCompatActivity</code> 的基类。</p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318211230.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="androidx activity 1.0.0 "></p>
 <p>俗话说「百因必有果」，带着强烈的好奇心，我查了一下 ComponentActivity 引入的原因。</p>
@@ -300,7 +308,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/index.html">http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/19/Jetpack-ViewModel-SaveState/index.html">https://flywith24.gitee.io/2020/03/19/Jetpack-ViewModel-SaveState/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -323,10 +331,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/23/Jetpack-ViewModel/"><i class="iconfont iconleft"></i>【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</a>
+    <a href="/2020/03/23/Jetpack-ViewModel/"><i class="iconfont iconleft"></i>即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</a>
   
   
-    <a href="/2020/03/16/Jetpack-fragment-back-stack/">【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/16/Jetpack-fragment-back-stack/">从源码的角度看 Fragment 返回栈<i class="iconfont iconright"></i></a>
   
 </nav>
 

@@ -7,14 +7,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置 - 杨云召 | 博客</title>
+  <title>更优雅地恢复 recyclerview 的滚动位置 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="被我忽视的更新androidx recyclervie..."> 
+  <meta name="description" content="更优雅地恢复 recyclerview 的滚动位置
+
+..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -69,7 +71,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -98,7 +100,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置</div>
+  <div class="center">更优雅地恢复 recyclerview 的滚动位置</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -145,20 +147,24 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015103136.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置</h1>
+    <h1 class="head-title">更优雅地恢复 recyclerview 的滚动位置</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 09, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3227</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3255</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png" src="/2020/04/09/Jetpack-Recyclerview-Scoroll/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="recyclerview update"></p>
+        <h2 id="被我忽视的更新"><a href="#被我忽视的更新" class="headerlink" title="被我忽视的更新"></a>被我忽视的更新</h2><p><code>androidx recyclerview 1.2.0-alpha02</code> 版本添加了新功能 <a href="https://developer.android.com/reference/androidx/recyclerview/widget/MergeAdapter" target="_blank" rel="noopener">MergeAdapter</a>，帮助开发者更容易地为 RecyclerView 添加 Header 和 Footer。详情参见 <a href="https://juejin.im/post/5e86ffea51882573ba207a19" target="_blank" rel="noopener">【译】MergeAdapter 的使用 使用官方 API 为 Recyclerview 添加 Header 和 Footer</a></p>
+<p>该版本中还有一个改动：<strong><code>RecyclerView.Adapter</code> lazy state restoration</strong>，帮助开发者恢复 RecyclerView 的状态</p>
+<!-- more-->
+
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200512105548.png" src="/2020/04/09/Jetpack-Recyclerview-Scoroll/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="recyclerview update"></p>
 <p>我对这个功能并没有什么感觉。众所周知，Android 中的 View 内部是有着状态保存和恢复的方法的。RecyclerView 也是如此，它可以恢复自身已滚动的位置</p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200512110411.png" src="/2020/04/09/Jetpack-Recyclerview-Scoroll/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="View 内部恢复状态"></p>
 <p>有关状态保存的内容可以参见 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
@@ -215,7 +221,7 @@
 <p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo/tree/master/demo_recyclerview_scroll" target="_blank" rel="noopener">demo 地址</a></p>
 <p><strong>一点思考：我们都知道 ViewPager2 是使用 RecyclerView 实现的，那么借助本文介绍的 API 可以做点什么吗？</strong></p>
 <p>欢迎各位小伙伴在评论区留言，说说你的想法</p>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -231,7 +237,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/index.html">http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/04/09/Jetpack-Recyclerview-Scoroll/index.html">https://flywith24.gitee.io/2020/04/09/Jetpack-Recyclerview-Scoroll/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -254,10 +260,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/"><i class="iconfont iconleft"></i>【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用</a>
+    <a href="/2020/04/09/Jetpack-DataBinding/"><i class="iconfont iconleft"></i>数据驱动魔法师 何时迎来翻身日？</a>
   
   
-    <a href="/2020/03/31/Jetpack-LiveData/">【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/31/Jetpack-LiveData/">ViewModel的左膀右臂 数据驱动真的香<i class="iconfont iconright"></i></a>
   
 </nav>
 

@@ -7,14 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势 - 杨云召 | 博客</title>
+  <title>1.3.0-alpha04 来袭，Fragment 间通信的新姿势 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="前言fragment 1.3.0-alpha04 发布..."> 
+  <meta name="description" content="Fragment 间通信的新姿势 —— Result ..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -69,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -98,7 +98,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势</div>
+  <div class="center">1.3.0-alpha04 来袭，Fragment 间通信的新姿势</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -145,20 +145,24 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015102553.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势</h1>
+    <h1 class="head-title">1.3.0-alpha04 来袭，Fragment 间通信的新姿势</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 30, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3550</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>3583</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h3 id="API-更改"><a href="#API-更改" class="headerlink" title="API 更改"></a>API 更改</h3><p>首先我们介绍一下 API 更改</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>fragment 1.3.0-alpha04</code> 发布了，其中有很多变动，其中提供了 fragment 间传递数据的新方式</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200430090529.png" src="/2020/04/30/Jetpack-fragment-ResultAPI/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="1.3.0-alpha04 更新"></p>
+<!-- more-->
+
+<h3 id="API-更改"><a href="#API-更改" class="headerlink" title="API 更改"></a>API 更改</h3><p>首先我们介绍一下 API 更改</p>
 <ul>
 <li><code>startActivityForResult()</code>/<code>onActivityResult()</code> 和 <code>requestPermissions()</code>/<code>onRequestPermissionsResult()</code> 弃用</li>
 <li><code>prepareCall()</code> 重命名为 <code>registerForActivityResult()</code> </li>
@@ -206,7 +210,7 @@
 <p><a href="https://medium.com/@ianhlake" target="_blank" rel="noopener">Ian Lake</a> 在 <a href="https://www.youtube.com/watch?v=RS1IACnZLy4" target="_blank" rel="noopener">Fragments: Past, Present, and Future (Android Dev Summit ‘19)</a> 中提到了 fragment 间通信的问题，未来 fragment 会整合 fragment 自身和其内部 view 的生命周期，提供同一 FragmentManager 多返回栈的支持</p>
 <p>看到 <code>fragment result API</code> ，我突然有个想法，如果将其应用到 Navigation 中是否是解决 Navigation 跳转返回后状态重置的一个方法呢？</p>
 <p>各位小伙伴有什么想法欢迎评论区留言</p>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -224,7 +228,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/index.html">http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/04/30/Jetpack-fragment-ResultAPI/index.html">https://flywith24.gitee.io/2020/04/30/Jetpack-fragment-ResultAPI/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -247,10 +251,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/04/30/Jetpack-fragment-savestate/"><i class="iconfont iconleft"></i>【Jetpack更新之Fragment】setRetainInstance 被弃用，那么 fragment 是如何保存状态的？</a>
+    <a href="/2020/05/18/Tips-Coil/"><i class="iconfont iconleft"></i>新的图片加载库？基于Kotlin协程的图片加载库——Coil</a>
   
   
-    <a href="/2020/04/29/Jetpack-fragment-setMaxLifecycle/">【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用<i class="iconfont iconright"></i></a>
+    <a href="/2020/04/30/Jetpack-fragment-savestate/">setRetainInstance 被弃用，那么 fragment 是如何保存状态的？<i class="iconfont iconright"></i></a>
   
 </nav>
 

@@ -7,15 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack】AdroidX下使用Activity和Fragment的变化 - 杨云召 | 博客</title>
+  <title>AdroidX 下使用 Activity 和 Fragment 的变化 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-原文：How AndroidX changes th..."> 
+  <meta name="description" content="过去的一段时间，AndroidX 软件包下的 Acti..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +98,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack】AdroidX下使用Activity和Fragment的变化</div>
+  <div class="center">AdroidX 下使用 Activity 和 Fragment 的变化</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,9 +145,9 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015093624.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack】AdroidX下使用Activity和Fragment的变化</h1>
+    <h1 class="head-title">AdroidX 下使用 Activity 和 Fragment 的变化</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>二月 29, 2020</span
         class="post-info-item">
@@ -159,7 +158,12 @@
 </section>
     <section class="main">
       <section class="content">
-        <h3 id="在构造器中传入布局-ID"><a href="#在构造器中传入布局-ID" class="headerlink" title="在构造器中传入布局 ID"></a>在构造器中传入布局 ID</h3><p>从 <code>AndroidX</code>  <code>AppCompat 1.1.0</code> 和 <code>Fragment 1.1.0</code> ( 译者注：AppCompat 包含 Fragment，且 Fragment 包含 Activity，详情见<a href="https://juejin.im/post/5e567ee1518825494466a938" target="_blank" rel="noopener">【整理】Jetpack 主要组件的依赖及传递关系</a> )开始，您可以使用将 <code>layoutId</code> 作为参数的构造函数：</p>
+        <blockquote>
+<p>原文：<a href="https://medium.com/@miloszlewandowski/how-androidx-changes-the-way-we-work-with-activities-and-fragments-73b88d157678" target="_blank" rel="noopener">How AndroidX changes the way we work with Activities and Fragments</a></p>
+<p>作者：<a href="https://medium.com/@miloszlewandowski" target="_blank" rel="noopener">Miłosz Lewandowski</a></p>
+<p>译者：<a href="http://www.yangyunzhao.com/" target="_blank" rel="noopener">Flywith24</a></p>
+</blockquote>
+<h3 id="在构造器中传入布局-ID"><a href="#在构造器中传入布局-ID" class="headerlink" title="在构造器中传入布局 ID"></a>在构造器中传入布局 ID</h3><p>从 <code>AndroidX</code>  <code>AppCompat 1.1.0</code> 和 <code>Fragment 1.1.0</code> ( 译者注：AppCompat 包含 Fragment，且 Fragment 包含 Activity，详情见<a href="https://juejin.im/post/5e567ee1518825494466a938" target="_blank" rel="noopener">【整理】Jetpack 主要组件的依赖及传递关系</a> )开始，您可以使用将 <code>layoutId</code> 作为参数的构造函数：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyActivity</span> : <span class="hljs-type">AppCompatActivity</span></span>(R.layout.my_activity)<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFragmentActivity</span>: <span class="hljs-type">FragmentActivity</span></span>(R.layout.my_fragment_activity)<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyFragment</span> : <span class="hljs-type">Fragment</span></span>(R.layout.my_fragment)<br></code></pre></td></tr></table></figure>
 
 <p>这种方法可以减少 <code>Activity/Fragment</code> 中方法重写的数量，并使类更具可读性。 无需在 <code>Activity</code> 中重写 <code>onCreate()</code> 即可调用 <code>setContentView()</code> 方法。 另外，无需手动在<code>Fragment</code> 中重写 <code>onCreateView</code> 即可手动调用 <code>Inflater</code> 来扩展视图。</p>
@@ -193,7 +197,7 @@
 <h3 id="FragmentContainerView"><a href="#FragmentContainerView" class="headerlink" title="FragmentContainerView"></a>FragmentContainerView</h3><p>一件小而重要的事情。 如果您将 <code>FrameLayout</code> 用作 <code>Fragment</code> 的容器，则应改用 <code>FragmentContainerView</code> 。 它修复了一些动画 z轴索引顺序问题和窗口插入调度。 从 <code>AndroidX</code> <code>Fragment 1.2.0</code> 开始可以使用 <code>FragmentContainerView</code>。</p>
 <hr>
 <h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><hr>
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -208,7 +212,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/index.html">http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/02/29/Jetpack-androidx-activity-fragment/index.html">https://flywith24.gitee.io/2020/02/29/Jetpack-androidx-activity-fragment/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -231,7 +235,7 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/01/Jetpack-dependencies/"><i class="iconfont iconleft"></i>【背上Jetpack】Jetpack 主要依赖关系</a>
+    <a href="/2020/03/01/Jetpack-dependencies/"><i class="iconfont iconleft"></i>Jetpack 主要依赖关系</a>
   
   
     <a href="/2019/11/29/relearn-task-back-stack/">【重学Android读书笔记】Activity的任务栈与返回栈<i class="iconfont iconright"></i></a>

@@ -69,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -145,20 +145,23 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014232756.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
     <h1 class="head-title">使用 AccountManager 实现系统内共享账号</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>九月 04, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>955</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>958</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="共享前提"><a href="#共享前提" class="headerlink" title="共享前提"></a>共享前提</h2><ol>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在开发过程中我们可能遇到自家应用间共享账号的场景。例如 APP1 登录成功后，启动 APP2 时自动完成登录并与 APP1 共享账号信息。</p>
+<p>Android 为我们提供了AccountManager 来管理账号信息。</p>
+<p><a href="https://github.com/Flywith24/AccountManagerDemo" target="_blank" rel="noopener">demo 地址</a></p>
+<h2 id="共享前提"><a href="#共享前提" class="headerlink" title="共享前提"></a>共享前提</h2><ol>
 <li>两个 app 在一个用户组内</li>
 <li>使用相同的签名（使用 debug 默认签名也可以共享）</li>
 <li>accountType 相同</li>
@@ -193,7 +196,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/09/04/AccountManager/index.html">http://yoursite.com/2020/09/04/AccountManager/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/09/04/AccountManager/index.html">https://flywith24.gitee.io/2020/09/04/AccountManager/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -217,7 +220,7 @@
 <nav class="nav">
   
   
-    <a href="/2020/08/18/Framework-Compile/">【折腾Framework】源码编译与烧写<i class="iconfont iconright"></i></a>
+    <a href="/2020/08/18/Framework-Compile/">源码编译与烧写<i class="iconfont iconright"></i></a>
   
 </nav>
 

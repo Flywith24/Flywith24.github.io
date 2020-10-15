@@ -7,15 +7,19 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【折腾Framework】源码编译与烧写 - 杨云召 | 博客</title>
+  <title>源码编译与烧写 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
+  <meta name="keywords" content=", 编译，烧写，源码，Android"> 
   
-  <meta name="description" content="前言环境搭建等内容网上资料很多，这里不再赘述。
-此处以..."> 
+  <meta name="description" content="基于 Android 10 的源码编译与烧写。
+
+
+
+..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +74,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +103,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【折腾Framework】源码编译与烧写</div>
+  <div class="center">源码编译与烧写</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +150,23 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201014220906.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【折腾Framework】源码编译与烧写</h1>
+    <h1 class="head-title">源码编译与烧写</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>八月 18, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1943</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>1968</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><p><a href="https://source.android.com/setup/build/initializing" target="_blank" rel="noopener">官方文档</a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>环境搭建等内容网上资料很多，这里不再赘述。</p>
+<p>此处以 Pixel 3a &amp; Android 10 为例介绍如何编译 ROM 包并烧录</p>
+<p>手上没有真机的小伙伴可以选择制作模拟器，本文最后提供了基于 Android 10 编译的自定义 AVD 下载链接</p>
+<h2 id="编译环境"><a href="#编译环境" class="headerlink" title="编译环境"></a>编译环境</h2><p><a href="https://source.android.com/setup/build/initializing" target="_blank" rel="noopener">官方文档</a></p>
 <h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><p>这里推荐使用 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="noopener">清华镜像</a></p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200628155443.png" src="/2020/08/18/Framework-Compile/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
 <p>下载 <a href="https://mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar" target="_blank" rel="noopener">每月更新的初始化包</a> 并解压</p>
@@ -223,7 +230,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/08/18/Framework-Compile/index.html">http://yoursite.com/2020/08/18/Framework-Compile/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/08/18/Framework-Compile/index.html">https://flywith24.gitee.io/2020/08/18/Framework-Compile/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -249,7 +256,7 @@
     <a href="/2020/09/04/AccountManager/"><i class="iconfont iconleft"></i>使用 AccountManager 实现系统内共享账号</a>
   
   
-    <a href="/2020/07/01/Tips-ProcessLifecycle/">【奇技淫巧】使用 ProcessLifecycle 优雅地监听应用前后台切换<i class="iconfont iconright"></i></a>
+    <a href="/2020/07/01/Tips-ProcessLifecycle/">使用 ProcessLifecycle 优雅地监听应用前后台切换<i class="iconfont iconright"></i></a>
   
 </nav>
 

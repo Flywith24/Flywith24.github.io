@@ -7,15 +7,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用 - 杨云召 | 博客</title>
+  <title>万物基于Lifecycle 默默无闻大作用 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
- Android 中有一个比较重要的概念：「生命周期..."> 
+  <meta name="description" content="Jetpack Lifecycle 介绍。
+
+
+ An..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +72,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +101,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</div>
+  <div class="center">万物基于Lifecycle 默默无闻大作用</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +148,24 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015101301.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</h1>
+    <h1 class="head-title">万物基于Lifecycle 默默无闻大作用</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 30, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>10167</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>10188</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="万物基于-Lifecycle"><a href="#万物基于-Lifecycle" class="headerlink" title="万物基于 Lifecycle"></a>万物基于 <strong>Lifecycle</strong></h2><h3 id="手动管理生命周期的痛苦你不懂"><a href="#手动管理生命周期的痛苦你不懂" class="headerlink" title="手动管理生命周期的痛苦你不懂"></a>手动管理生命周期的痛苦你不懂</h3><p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="lifecycles"></p>
+        <blockquote>
+<p> Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码</p>
+</blockquote>
+<p>本文介绍 <code>Lifecycle</code> 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment ，帮助您对 <code>Lifecycle</code> 有一个感性的认识</p>
+<h2 id="万物基于-Lifecycle"><a href="#万物基于-Lifecycle" class="headerlink" title="万物基于 Lifecycle"></a>万物基于 <strong>Lifecycle</strong></h2><h3 id="手动管理生命周期的痛苦你不懂"><a href="#手动管理生命周期的痛苦你不懂" class="headerlink" title="手动管理生命周期的痛苦你不懂"></a>手动管理生命周期的痛苦你不懂</h3><p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/3/30/1712bbbbf69f3b1e?w=2407&h=5062&f=jpeg&s=2270014" src="/2020/03/30/Jetpack-Lifecycle/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="lifecycles"></p>
 <blockquote>
 <p> 鲁迅曾说过：万物基于 Lifecycle</p>
 </blockquote>
@@ -251,7 +257,7 @@
 <h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 关于我</span></h2>
 
 
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
@@ -263,7 +269,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/30/Jetpack-Lifecycle/index.html">http://yoursite.com/2020/03/30/Jetpack-Lifecycle/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/30/Jetpack-Lifecycle/index.html">https://flywith24.gitee.io/2020/03/30/Jetpack-Lifecycle/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -286,10 +292,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/31/Jetpack-LiveData/"><i class="iconfont iconleft"></i>【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香</a>
+    <a href="/2020/03/31/Jetpack-LiveData/"><i class="iconfont iconleft"></i>ViewModel的左膀右臂 数据驱动真的香</a>
   
   
-    <a href="/2020/03/23/Jetpack-ViewModel/">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/23/Jetpack-ViewModel/">即使您不使用MVVM也要了解ViewModel ViewModel的职能边界<i class="iconfont iconright"></i></a>
   
 </nav>
 

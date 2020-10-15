@@ -7,15 +7,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2 - 杨云召 | 博客</title>
+  <title>从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-笔者看过不少源码分析类的文章，动辄贴上大段代码，这种..."> 
+  <meta name="description" content="从源码角度看Fragment的启动流程及生命周期 基于..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +69,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +98,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</div>
+  <div class="center">从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +145,26 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015094458.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</h1>
+    <h1 class="head-title">从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 10, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>12547</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>12597</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <p>这里贴一下 androidx fragment 源码地址</p>
+        <blockquote>
+<p>笔者看过不少源码分析类的文章，动辄贴上大段代码，这种方式很容易打断读者的思路，所以很多时候看过这类文章感叹好文好文，却感觉什么都没记住，亦或者默默加入收藏却不知何时能去细心地研读。</p>
+<p>所以本文不会过多介绍源码的细节，更多地是抛砖引玉，如果您看过本文后能够跟着本文的思路自己翻一下源码相信您就不会有我上述的体验了。</p>
+<p>本文默认您已对 fragment 的生命周期有所了解，并清楚fragment的缘起与职责。这部分基础内容可移步 <a href="https://developer.android.com/guide/components/fragments" target="_blank" rel="noopener">fragment 官方文档</a> </p>
+<p><strong>也即本文不会介绍 “what”，而是介绍 “how” 并且探讨一下 “why”</strong></p>
+</blockquote>
+<p>这里贴一下 androidx fragment 源码地址</p>
 <p><a href="https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/fragment/" target="_blank" rel="noopener">androidx fragment 官方源码地址</a></p>
 <p>本文基于 androidx fragment 1.2.2 源码分析</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">"androidx.fragment:fragment-ktx:1.2.2"</span><br></code></pre></td></tr></table></figure>
@@ -295,7 +300,7 @@
 <p>强烈建议您自己亲自看一看源码，不然就变为我文章开头时说的状态了。</p>
 <hr>
 <h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -310,7 +315,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/10/Jetpack-fragment-lifecycle/index.html">http://yoursite.com/2020/03/10/Jetpack-fragment-lifecycle/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/10/Jetpack-fragment-lifecycle/index.html">https://flywith24.gitee.io/2020/03/10/Jetpack-fragment-lifecycle/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -333,10 +338,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/14/Jetpack-OnBackPressedDispatcher/"><i class="iconfont iconleft"></i>【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher</a>
+    <a href="/2020/03/14/Jetpack-OnBackPressedDispatcher/"><i class="iconfont iconleft"></i>Fragment返回栈预备篇 OnBackPressedDispatcher</a>
   
   
-    <a href="/2020/03/02/Jetpack-fragment/">【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/02/Jetpack-fragment/">你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势<i class="iconfont iconright"></i></a>
   
 </nav>
 

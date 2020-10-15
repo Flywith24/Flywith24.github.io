@@ -2,273 +2,273 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2020/09/04/AccountManager/</loc>
+    <loc>https://flywith24.gitee.io/2019/08/16/Framework-Option/</loc>
     
-    <lastmod>2020-09-04T10:00:42.044Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/15/Tips-StateLiveData/</loc>
-    
-    <lastmod>2020-08-28T02:54:47.041Z</lastmod>
+    <lastmod>2020-10-15T02:53:18.802Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/07/01/Tips-ProcessLifecycle/</loc>
+    <loc>https://flywith24.gitee.io/2020/08/18/Framework-Compile/</loc>
     
-    <lastmod>2020-08-28T02:54:38.811Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/15/Tips-includeBuild/</loc>
-    
-    <lastmod>2020-08-28T02:54:31.936Z</lastmod>
+    <lastmod>2020-10-15T02:52:53.009Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/15/Tips-Components-Jump/</loc>
+    <loc>https://flywith24.gitee.io/2020/04/15/Tips-StateLiveData/</loc>
     
-    <lastmod>2020-08-28T02:54:16.133Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/05/18/Tips-Coil/</loc>
-    
-    <lastmod>2020-08-28T02:54:13.138Z</lastmod>
+    <lastmod>2020-10-15T02:52:05.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
+    <loc>https://flywith24.gitee.io/2020/07/01/Tips-ProcessLifecycle/</loc>
     
-    <lastmod>2020-08-28T02:53:46.869Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/08/18/Framework-Compile/</loc>
-    
-    <lastmod>2020-08-28T02:50:23.324Z</lastmod>
+    <lastmod>2020-10-15T02:49:52.951Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/05/20/Tips-Navagion+DynamicFeatureModule/</loc>
+    <loc>https://flywith24.gitee.io/2020/05/20/Tips-Navagion+DynamicFeatureModule/</loc>
     
-    <lastmod>2020-08-28T02:36:26.651Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/01/Jetpack-dependencies/</loc>
-    
-    <lastmod>2020-08-28T02:20:58.197Z</lastmod>
+    <lastmod>2020-10-15T02:46:09.711Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/</loc>
+    <loc>https://flywith24.gitee.io/2020/04/15/Tips-includeBuild/</loc>
     
-    <lastmod>2020-08-28T02:11:05.863Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-savestate/</loc>
-    
-    <lastmod>2020-08-28T02:06:52.108Z</lastmod>
+    <lastmod>2020-10-15T02:42:15.114Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/29/Jetpack-fragment-setMaxLifecycle/</loc>
+    <loc>https://flywith24.gitee.io/2020/04/15/Tips-Components-Jump/</loc>
     
-    <lastmod>2020-08-28T02:02:34.629Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/30/Jetpack-fragment-ResultAPI/</loc>
-    
-    <lastmod>2020-08-28T01:59:56.917Z</lastmod>
+    <lastmod>2020-10-15T02:40:06.941Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/about/index.html</loc>
+    <loc>https://flywith24.gitee.io/2020/05/18/Tips-Coil/</loc>
+    
+    <lastmod>2020-10-15T02:38:00.947Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2019/04/13/multi-project-one-module/</loc>
+    
+    <lastmod>2020-10-15T02:34:30.791Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/02/29/Jetpack-androidx-activity-fragment/</loc>
+    
+    <lastmod>2020-10-15T02:33:48.753Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/09/Jetpack-DataBinding/</loc>
+    
+    <lastmod>2020-10-15T02:33:44.558Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/01/Jetpack-dependencies/</loc>
+    
+    <lastmod>2020-10-15T02:33:41.141Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/16/Jetpack-fragment-back-stack/</loc>
+    
+    <lastmod>2020-10-15T02:33:36.103Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/10/Jetpack-fragment-lifecycle/</loc>
+    
+    <lastmod>2020-10-15T02:33:31.929Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/30/Jetpack-fragment-savestate/</loc>
+    
+    <lastmod>2020-10-15T02:33:22.616Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/02/Jetpack-fragment/</loc>
+    
+    <lastmod>2020-10-15T02:33:08.385Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/30/Jetpack-Lifecycle/</loc>
+    
+    <lastmod>2020-10-15T02:32:57.036Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/31/Jetpack-LiveData/</loc>
+    
+    <lastmod>2020-10-15T02:32:53.477Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/14/Jetpack-OnBackPressedDispatcher/</loc>
+    
+    <lastmod>2020-10-15T02:32:44.883Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/19/Jetpack-ViewModel-SaveState/</loc>
+    
+    <lastmod>2020-10-15T02:32:34.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/03/23/Jetpack-ViewModel/</loc>
+    
+    <lastmod>2020-10-15T02:32:26.567Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/09/Jetpack-Recyclerview-Scoroll/</loc>
+    
+    <lastmod>2020-10-15T02:31:43.100Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/29/Jetpack-fragment-setMaxLifecycle/</loc>
+    
+    <lastmod>2020-10-15T02:29:42.052Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/30/Jetpack-fragment-ResultAPI/</loc>
+    
+    <lastmod>2020-10-15T02:26:02.014Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/</loc>
+    
+    <lastmod>2020-10-15T02:23:19.324Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2019/08/30/Xposed/</loc>
+    
+    <lastmod>2020-10-15T01:22:49.897Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2019/08/29/iptabels/</loc>
+    
+    <lastmod>2020-10-15T01:16:01.834Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/2020/09/04/AccountManager/</loc>
+    
+    <lastmod>2020-10-15T00:43:00.476Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/about/index.html</loc>
     
     <lastmod>2020-06-08T03:03:28.596Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/31/Jetpack-LiveData/</loc>
-    
-    <lastmod>2020-04-20T09:10:31.725Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/04/09/Jetpack-DataBinding/</loc>
-    
-    <lastmod>2020-04-10T08:49:44.485Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/30/Jetpack-Lifecycle/</loc>
-    
-    <lastmod>2020-04-10T08:45:39.764Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/16/Jetpack-fragment-back-stack/</loc>
-    
-    <lastmod>2020-03-24T01:27:49.102Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/19/Jetpack-ViewModel-SaveState/</loc>
-    
-    <lastmod>2020-03-24T01:27:06.469Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/23/Jetpack-ViewModel/</loc>
-    
-    <lastmod>2020-03-24T01:26:41.168Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/14/Jetpack-OnBackPressedDispatcher/</loc>
-    
-    <lastmod>2020-03-24T01:19:53.334Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/10/Jetpack-fragment-lifecycle/</loc>
-    
-    <lastmod>2020-03-24T01:19:13.928Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/02/Jetpack-fragment/</loc>
-    
-    <lastmod>2020-03-24T01:17:29.335Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/02/29/Jetpack-androidx-activity-fragment/</loc>
-    
-    <lastmod>2020-03-24T01:12:04.110Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
+    <loc>https://flywith24.gitee.io/tags/index.html</loc>
     
     <lastmod>2019-12-02T09:45:48.769Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/index.html</loc>
+    <loc>https://flywith24.gitee.io/categories/index.html</loc>
     
     <lastmod>2019-12-02T09:45:48.768Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/04/13/multi-project-one-module/</loc>
-    
-    <lastmod>2019-12-02T09:45:48.739Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/08/16/Framework-Option/</loc>
-    
-    <lastmod>2019-12-02T09:45:48.662Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/08/29/iptabels/</loc>
-    
-    <lastmod>2019-12-02T09:45:48.640Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/08/30/Xposed/</loc>
-    
-    <lastmod>2019-12-02T09:45:48.614Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/404/index.html</loc>
+    <loc>https://flywith24.gitee.io/404/index.html</loc>
     
     <lastmod>2019-12-02T09:45:48.598Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/29/relearn-task-back-stack/</loc>
+    <loc>https://flywith24.gitee.io/2019/11/29/relearn-task-back-stack/</loc>
     
     <lastmod>2019-11-29T09:42:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/07/06/Mac-decompile/</loc>
+    <loc>https://flywith24.gitee.io/2017/07/06/Mac-decompile/</loc>
     
     <lastmod>2017-07-06T08:46:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/07/04/Handler/</loc>
+    <loc>https://flywith24.gitee.io/2017/07/04/Handler/</loc>
     
     <lastmod>2017-07-03T23:46:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/18/2-2-grade/</loc>
+    <loc>https://flywith24.gitee.io/2017/06/18/2-2-grade/</loc>
     
     <lastmod>2017-06-18T15:57:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/18/2-1-first-program/</loc>
+    <loc>https://flywith24.gitee.io/2017/06/18/2-1-first-program/</loc>
     
     <lastmod>2017-06-18T02:05:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/05/1-1-use-function/</loc>
+    <loc>https://flywith24.gitee.io/2017/06/05/1-1-use-function/</loc>
     
     <lastmod>2017-06-05T13:58:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2017/06/05/0-indtall-python/</loc>
+    <loc>https://flywith24.gitee.io/2017/06/05/0-indtall-python/</loc>
     
     <lastmod>2017-06-05T13:09:00.000Z</lastmod>
     

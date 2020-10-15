@@ -7,16 +7,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 - 杨云召 | 博客</title>
+  <title>即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-前言
-Android 开发时，我们使用 activi..."> 
+  <meta name="description" content="Jetpack ViewModel 的职能边界。
+
+
+..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -71,7 +72,7 @@ Android 开发时，我们使用 activi...">
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -100,7 +101,7 @@ Android 开发时，我们使用 activi...">
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</div>
+  <div class="center">即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -147,20 +148,36 @@ Android 开发时，我们使用 activi...">
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015100650.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</h1>
+    <h1 class="head-title">即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 23, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11225</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11252</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <h2 id="ViewModel-的职责"><a href="#ViewModel-的职责" class="headerlink" title="ViewModel 的职责"></a>ViewModel 的职责</h2><p>我先上个 <a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener">视频</a> ，这个小姐姐表述的比文字更形象</p>
+        <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="目录"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 <code>Presenter</code> ）</p>
+</blockquote>
+<p>但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？</p>
+<ul>
+<li>开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库）</li>
+<li>由于 UI 数据的持有者的生命周期可能比 activity 长，因此开发者还需要避免出现内存泄漏的问题</li>
+</ul>
+<p>如何解决上述问题？ViewModel</p>
+<p><strong>本文重点介绍 ViewModel 的职责（what）以及重点功能的实现原理（how），即使您不使用 <code>Jetpack MVVM</code> 架构，也要了解一下 ViewModel</strong></p>
+<p>ViewModel 的原理部分要求您了解 activity 的启动流程，这部分内容网上文章很多，本文不再赘述</p>
+<!-- more-->
+
+
+
+<h2 id="ViewModel-的职责"><a href="#ViewModel-的职责" class="headerlink" title="ViewModel 的职责"></a>ViewModel 的职责</h2><p>我先上个 <a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener">视频</a> ，这个小姐姐表述的比文字更形象</p>
 <p><a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener"><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321135602.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></a></p>
 <p><code>ViewModel</code> 主要用于存储 UI 数据以及生命周期感知的数据</p>
 <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321140300.gif" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
@@ -301,7 +318,7 @@ Android 开发时，我们使用 activi...">
 <p>那么我们该如何使用呢？可以使用 <code>viewmodel-savedstate</code> 库，详情参考 <a href="https://juejin.im/post/5e738d12518825495d69cfb9#heading-10" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
 <hr>
 <h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
-<p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Fly_with24</a></p>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
 <ul>
 <li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
 <li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
@@ -313,7 +330,7 @@ Android 开发时，我们使用 activi...">
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/23/Jetpack-ViewModel/index.html">http://yoursite.com/2020/03/23/Jetpack-ViewModel/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/23/Jetpack-ViewModel/index.html">https://flywith24.gitee.io/2020/03/23/Jetpack-ViewModel/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -336,10 +353,10 @@ Android 开发时，我们使用 activi...">
         
 <nav class="nav">
   
-    <a href="/2020/03/30/Jetpack-Lifecycle/"><i class="iconfont iconleft"></i>【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用</a>
+    <a href="/2020/03/30/Jetpack-Lifecycle/"><i class="iconfont iconleft"></i>万物基于Lifecycle 默默无闻大作用</a>
   
   
-    <a href="/2020/03/19/Jetpack-ViewModel-SaveState/">【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析<i class="iconfont iconright"></i></a>
+    <a href="/2020/03/19/Jetpack-ViewModel-SaveState/">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析<i class="iconfont iconright"></i></a>
   
 </nav>
 

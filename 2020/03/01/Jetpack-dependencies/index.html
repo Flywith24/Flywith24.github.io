@@ -7,15 +7,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>【背上Jetpack】Jetpack 主要依赖关系 - 杨云召 | 博客</title>
+  <title>Jetpack 主要依赖关系 - 杨云召 | 博客</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="google" content="notranslate">
 
   
   
-  <meta name="description" content="
-在学习和使用 jetpack 组件时，总是被其 gr..."> 
+  <meta name="description" content="介绍 Jetpack 主要组件的依赖关系，初学必看。
+..."> 
   
   <meta name="author" content="杨云召"> 
 
@@ -70,7 +70,7 @@
       },
       motto: {
         api: '',
-        default: '我在开了灯的床头下，想问问自己的心啊。'
+        default: '不人云亦云，只求接近真相.'
       },
       galleries: {
         enable: true
@@ -99,7 +99,7 @@
 
 <nav class="navbar">
   <div class="left"></div>
-  <div class="center">【背上Jetpack】Jetpack 主要依赖关系</div>
+  <div class="center">Jetpack 主要依赖关系</div>
   <div class="right">
     <i class="iconfont iconmenu j-navbar-menu"></i>
   </div>
@@ -146,20 +146,23 @@
     <article class="article">
   <div class="wrap">
     <section class="head">
-  <img   class="lazyload" data-original="/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015093950.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
   <div class="head-mask">
-    <h1 class="head-title">【背上Jetpack】Jetpack 主要依赖关系</h1>
+    <h1 class="head-title">Jetpack 主要依赖关系</h1>
     <div class="head-info">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 01, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>9123</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>9147</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
-        <ul>
+        <blockquote>
+<p>在学习和使用 <code>jetpack</code> 组件时，总是被其 gradle 依赖搞的晕头转向，故在此整理 <code>jetpack</code> 主要组件的依赖，及传递关系</p>
+</blockquote>
+<ul>
 <li><a href="https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev" target="_blank" rel="noopener"><code>jetpcak</code> 组件源码地址</a></li>
 <li>查询 <code>jetpcak</code> 组件 版本: <a href="https://maven.google.com/web/index.html" target="_blank" rel="noopener">Google’s Maven Repository</a></li>
 <li>查看依赖树：在项目根目录下执行<code>./gradlew :app:dependencies</code></li>
@@ -296,7 +299,7 @@
 <li><p>如果想使用实现<code>LifecycleOwner</code> 的 <code>Service</code> ，需要引入 <code>lifecycle-service</code></p>
 </li>
 </ul>
-<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/" target="_blank" rel="noopener">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
 <ul>
 <li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
 </li>
@@ -312,7 +315,7 @@
         <ul class="copyright">
   
   <li><strong>本文作者：</strong>杨云召</li>
-  <li><strong>本文链接：</strong><a href="http://yoursite.com/2020/03/01/Jetpack-dependencies/index.html">http://yoursite.com/2020/03/01/Jetpack-dependencies/index.html</a></li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/01/Jetpack-dependencies/index.html">https://flywith24.gitee.io/2020/03/01/Jetpack-dependencies/index.html</a></li>
   <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
       rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
   
@@ -335,10 +338,10 @@
         
 <nav class="nav">
   
-    <a href="/2020/03/02/Jetpack-fragment/"><i class="iconfont iconleft"></i>【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</a>
+    <a href="/2020/03/02/Jetpack-fragment/"><i class="iconfont iconleft"></i>你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势</a>
   
   
-    <a href="/2020/02/29/Jetpack-androidx-activity-fragment/">【背上Jetpack】AdroidX下使用Activity和Fragment的变化<i class="iconfont iconright"></i></a>
+    <a href="/2020/02/29/Jetpack-androidx-activity-fragment/">AdroidX 下使用 Activity 和 Fragment 的变化<i class="iconfont iconright"></i></a>
   
 </nav>
 
