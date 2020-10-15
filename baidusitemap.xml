@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://flywith24.gitee.io/2019/08/30/Xposed/</loc>
+    <lastmod>2020-10-15</lastmod>
+  </url>  <url>
+    <loc>https://flywith24.gitee.io/2019/04/13/multi-project-one-module/</loc>
+    <lastmod>2020-10-15</lastmod>
+  </url>  <url>
     <loc>https://flywith24.gitee.io/2019/08/16/Framework-Option/</loc>
     <lastmod>2020-10-15</lastmod>
   </url>  <url>
@@ -23,9 +29,6 @@
     <lastmod>2020-10-15</lastmod>
   </url>  <url>
     <loc>https://flywith24.gitee.io/2020/05/18/Tips-Coil/</loc>
-    <lastmod>2020-10-15</lastmod>
-  </url>  <url>
-    <loc>https://flywith24.gitee.io/2019/04/13/multi-project-one-module/</loc>
     <lastmod>2020-10-15</lastmod>
   </url>  <url>
     <loc>https://flywith24.gitee.io/2020/02/29/Jetpack-androidx-activity-fragment/</loc>
@@ -74,9 +77,6 @@
     <lastmod>2020-10-15</lastmod>
   </url>  <url>
     <loc>https://flywith24.gitee.io/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/</loc>
-    <lastmod>2020-10-15</lastmod>
-  </url>  <url>
-    <loc>https://flywith24.gitee.io/2019/08/30/Xposed/</loc>
     <lastmod>2020-10-15</lastmod>
   </url>  <url>
     <loc>https://flywith24.gitee.io/2019/08/29/iptabels/</loc>

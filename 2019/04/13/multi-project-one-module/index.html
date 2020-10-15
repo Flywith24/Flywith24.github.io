@@ -153,7 +153,7 @@ android Studio 中的项目在正常引用 m...">
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 13, 2019</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>950</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>952</span>
     </div>
   </div>
 </section>
@@ -167,22 +167,24 @@ android Studio 中的项目在正常引用 m...">
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs undefined">implementation project(&apos;:baselib&apos;)<br></code></pre></td></tr></table></figure>
 
 <p>同步<code>gradle</code> ，此时我们发现<code>baselib</code>出现在<code>TestA</code>项目中。</p>
-<p><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/TestA%E7%9B%AE%E5%BD%95.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TestA目录.png"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015152826.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TestA目录.png"></p>
 <p>打开<code>TestA</code> 项目文件夹，我们发现了 <code>baselib</code> 文件夹，下面只有一个<code>baselib.iml</code>文件</p>
-<p><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/TesA%E5%8E%9F%E7%9B%AE%E5%BD%95.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TesA原目录.png"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015152858.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TesA原目录.png"></p>
 <p>在<code>baselib</code>中加入<code>Utils</code> 工具类</p>
-<p><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/baselib.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="baselib.png"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015152935.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="baselib.png"></p>
 <p>切换到<code>TestBase</code>中查看，代码是相同的。</p>
-<p><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/baselib.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TestBase目录.png"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153117.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="TestBase目录.png"></p>
 <p>这样就达到了<code>baselib</code>被修改后所有引用<code>baselib</code>的项目会同步变化。</p>
-<h4 id="git-同步管理"><a href="#git-同步管理" class="headerlink" title="git 同步管理"></a>git 同步管理</h4><blockquote>
+<h3 id="git-同步管理"><a href="#git-同步管理" class="headerlink" title="git 同步管理"></a>git 同步管理</h3><blockquote>
 <p>上述操作都是基于本地的，那么如何加入git管理呢</p>
 </blockquote>
 <p>将<code>TestA</code>和<code>TestBase</code>分别传至<code>github</code></p>
 <p>在<code>TestA</code>项目中打开<code>settings</code>，找到如下位置并将<code>TestBase</code>加入到<code>git</code>管理</p>
-<p><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/%E6%B7%BB%E5%8A%A0git.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="添加git.png"></p>
-<p>然后就可以同步管理这两个项目啦<br><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="同步管理.png"><br><img class="lazyload" data-original="%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96%E5%90%8C%E4%B8%80%E4%B8%AA%E6%A8%A1%E5%9D%97/gitlog.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="git log.png"></p>
-<p>参考：<br><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br><a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153140.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="添加git.png"></p>
+<p>然后就可以同步管理这两个项目啦</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153155.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="同步管理.png"></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153226.png" src="/2019/04/13/multi-project-one-module/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="git log.png"></p>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a href="https://www.jianshu.com/p/47156a6be8ce" target="_blank" rel="noopener">https://www.jianshu.com/p/47156a6be8ce</a><br><a href="https://blog.csdn.net/saintcs/article/details/78567612" target="_blank" rel="noopener">https://blog.csdn.net/saintcs/article/details/78567612</a></p>
       </section>
       <section class="extra">
         
