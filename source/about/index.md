@@ -1,6 +1,7 @@
 ---
 title: 关于博主
 date: 2018-08-20 14:40:07
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015111745.png
 ---
 
 ### 个人简介
