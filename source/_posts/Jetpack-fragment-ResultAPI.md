@@ -1,14 +1,19 @@
 ---
-title: 【Jetpack更新之Fragment】1.3.0-alpha04 来袭，Fragment 间通信的新姿势
+title: 1.3.0-alpha04 来袭，Fragment 间通信的新姿势
 date: 2020-04-30 00:10:35
 categories: 
-- Jetpack
+- Jetpack 更新
 tags: 
 - androidx
 - Jetpack
 - MVVM
 - Fragment
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015102553.png
 ---
+
+Fragment 间通信的新姿势 —— Result API
+
+<!-- more-->
 
 ## 前言
 

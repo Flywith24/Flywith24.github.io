@@ -1,13 +1,17 @@
 ---
-title: 【奇技淫巧】新的图片加载库？基于Kotlin协程的图片加载库——Coil
+title: 新的图片加载库？基于Kotlin协程的图片加载库——Coil
 date: 2020-05-18 14:11:46
 categories: 
-- Tips
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015103748.png
 ---
+
+新的图片加载库？基于 Kotlin 协程的图片加载库——Coil
+
+<!-- more-->
 
 ## 新的图片加载库——Coil
 
@@ -15,7 +19,7 @@ top: true
 
 默认情况下 `Coil` 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro), [OkHttp](https://github.com/square/okhttp/blob/master/okhttp/src/main/resources/META-INF/proguard/okhttp3.pro) 和 [Okio](https://github.com/square/okio/blob/master/okio/src/jvmMain/resources/META-INF/proguard/okio.pro) 添加规则
 
-<!-- more-->
+
 
 ## Coil 的优势
 

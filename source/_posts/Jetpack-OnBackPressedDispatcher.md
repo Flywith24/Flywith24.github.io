@@ -1,18 +1,20 @@
 ---
-title: 【背上Jetpack】Fragment返回栈预备篇 OnBackPressedDispatcher
+title: Fragment返回栈预备篇 OnBackPressedDispatcher
 date: 2020-03-14 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015094956.png
 ---
 
+Fragment 处理返回键的新姿势。
+<!-- more-->
 > 这两天在准备写 fragment 返回栈的文章，但是发现必须先介绍一下 OnBackPressedDispatcher ，所以这是一篇介绍 what 的文章，喜欢一手资料的可以移步 [官方文档](https://developer.android.google.cn/reference/kotlin/androidx/activity/OnBackPressedDispatcher)
 
 
-<!-- more-->
 
 ## 系列文章
 

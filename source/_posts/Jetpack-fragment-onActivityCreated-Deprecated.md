@@ -1,19 +1,22 @@
 ---
-title: 【Jetpack更新之Fragment】终于动手了，onActivityCreated 被弃用
+title: 终于动手了，onActivityCreated 被弃用
 date: 2020-04-09 00:10:35
 categories: 
-- Jetpack
+- Jetpack 更新
 tags: 
 - androidx
 - Jetpack
 - MVVM
 - Fragment
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015102314.png
 ---
 
+fragment 中的 `onActivityCreated()` 被弃用了
+
+<!-- more-->
 >本系列文章介绍 Jetpack 组件库的更新<br> 
 >一直以来， fragment 的 api 都非常难用，官方也承认这一点。一个月前，fragment 中的 `onActivityCreated()` 被弃用了
 
-<!-- more-->
 
 
 ## Fragment

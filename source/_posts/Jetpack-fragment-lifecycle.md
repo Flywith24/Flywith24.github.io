@@ -1,13 +1,17 @@
 ---
-title: 【背上Jetpack之Fragment】从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2
+title: 从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2
 date: 2020-03-10 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015094458.png
 ---
+
+从源码角度看Fragment的启动流程及生命周期 基于AndroidX Fragment1.2.2
+<!-- more-->
 
 > 笔者看过不少源码分析类的文章，动辄贴上大段代码，这种方式很容易打断读者的思路，所以很多时候看过这类文章感叹好文好文，却感觉什么都没记住，亦或者默默加入收藏却不知何时能去细心地研读。
 >
@@ -17,7 +21,7 @@ tags:
 >
 > **也即本文不会介绍 “what”，而是介绍 “how” 并且探讨一下 “why”**
 
-<!-- more-->
+
 
 这里贴一下 androidx fragment 源码地址
 

@@ -1,19 +1,22 @@
 ---
-title: 【背上Jetpack之Fragment】你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势
+title: 你真的会用Fragment吗？Fragment常见问题以及androidx下Fragment的使用新姿势
 date: 2020-03-02 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015094256.png
 ---
 
+Fragment 常见问题以及androidx下Fragment的使用新姿势
+<!-- more-->
 > 在 `Android Jetpack` 组件中，`fragment`作为视图控制器之一占有很重要的位置。但由于其bug众多，暗坑无数，以至于 Square 有这样一篇博客：[Advocating Against Android Fragments](https://developer.squareup.com/blog/advocating-against-android-fragments/)。github上的 [Fragmentation](https://github.com/YoKeyword/Fragmentation) 有着 9.4k 的star。
 >
 > 而现在，`androidx fragment` 稳定版已来到 1.2.2，让我们总结一下`fragment`有哪些常见问题以及有哪些使用`fragment`的新姿势
 
-<!-- more-->
+
 
 ## Fragment 常见的问题
 

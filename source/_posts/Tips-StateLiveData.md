@@ -1,21 +1,23 @@
 ---
-title: 【奇技淫巧】巧用 kotlin 扩展函数和 typealias 封装 LiveData
+title: 巧用 kotlin 扩展函数和 typealias 封装 LiveData
 date: 2020-04-15 14:11:46
 categories: 
-- Tips
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015105155.png
 ---
+
+巧用 kotlin 扩展函数和 typealias 封装 LiveData
+
+<!-- more-->
 
 ## 关于 LiveData 两个常用的姿势
 
 ### 使用包装类传递事件
 
 我们在使用 LiveData 时可能会遇到「粘性」事件的问题，该问题可以使用包装类的方式解决。解决方案见 [[译] 在 SnackBar，Navigation 和其他事件中使用 LiveData（SingleLiveEvent 案例）](https://juejin.im/post/5b2b1b2cf265da5952314b63#heading-7)
-
-<!-- more-->
 
 使用时是这样的
 

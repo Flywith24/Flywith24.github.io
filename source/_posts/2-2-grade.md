@@ -7,6 +7,7 @@ categories:
 tags: 
 - python
 - 爬虫
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015085822.png
 ---
 
 >前两天面试时被问到绩点是多少，但学校教务系统不提供绩点查询的功能，那么能不能写一个爬虫程序并计算出绩点呢？答案是肯定的！

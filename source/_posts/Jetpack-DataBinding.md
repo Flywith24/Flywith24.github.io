@@ -1,17 +1,21 @@
 ---
-title: 【背上Jetpack之DataBinding】数据驱动魔法师 何时迎来翻身日？
+title: 数据驱动魔法师 何时迎来翻身日？
 date: 2020-04-09 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015101935.png
 ---
+
+Jetpack DataBinding 介绍。
+<!-- more-->
 
 > [LiveData 篇](https://juejin.im/post/5e834bb5f265da480d61668d) 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了
 
-<!-- more-->
+
 
 ![他来了他来了](https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif)
 

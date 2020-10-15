@@ -1,14 +1,19 @@
 ---
-title: 【Jetpack更新之Recyclerview】更优雅地恢复 recyclerview 的滚动位置
+title: 更优雅地恢复 recyclerview 的滚动位置
 date: 2020-04-09 00:10:35
 categories: 
-- Jetpack
+- Jetpack 更新
 tags: 
 - androidx
 - Jetpack
 - MVVM
 - RecyclerView
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015103136.png
 ---
+
+更优雅地恢复 recyclerview 的滚动位置
+
+<!-- more-->
 
 ## 被我忽视的更新
 

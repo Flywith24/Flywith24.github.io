@@ -1,17 +1,17 @@
 ---
-title: 【背上Jetpack】Jetpack 主要依赖关系
+title: Jetpack 主要依赖关系
 date: 2020-03-01 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015093950.png
 ---
-
-> 在学习和使用 `jetpack` 组件时，总是被其 gradle 依赖搞的晕头转向，故在此整理 `jetpack` 主要组件的依赖，及传递关系
-
+介绍 Jetpack 主要组件的依赖关系，初学必看。
 <!-- more-->
+> 在学习和使用 `jetpack` 组件时，总是被其 gradle 依赖搞的晕头转向，故在此整理 `jetpack` 主要组件的依赖，及传递关系
 
 
 

@@ -1,25 +1,28 @@
 ---
-title: 【背上Jetpack】AdroidX下使用Activity和Fragment的变化
+title: AdroidX 下使用 Activity 和 Fragment 的变化
 date: 2020-02-29 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015093624.png
 ---
-
-> 原文：[How AndroidX changes the way we work with Activities and Fragments](https://medium.com/@miloszlewandowski/how-androidx-changes-the-way-we-work-with-activities-and-fragments-73b88d157678)
->
-> 作者：[Miłosz Lewandowski](https://medium.com/@miloszlewandowski)
->
-> 译者：[Fly_with24](http://www.yangyunzhao.com/)
 
 过去的一段时间，`AndroidX` 软件包下的 `Activity/Fragmet` 的 API 发生了很多变化。让我们看看它们是如何提升Android 的开发效率以及如何适应当下流行的编程规则和模式。
 
 本文中描述的所有功能现在都可以在稳定的 `AndroidX` 软件包中使用，它们在去年均已发布或移至稳定版本。
 
 <!-- more-->
+
+
+> 原文：[How AndroidX changes the way we work with Activities and Fragments](https://medium.com/@miloszlewandowski/how-androidx-changes-the-way-we-work-with-activities-and-fragments-73b88d157678)
+>
+> 作者：[Miłosz Lewandowski](https://medium.com/@miloszlewandowski)
+>
+> 译者：[Flywith24](http://www.yangyunzhao.com/)
+> 
 
 ### 在构造器中传入布局 ID
 

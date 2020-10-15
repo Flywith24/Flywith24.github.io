@@ -7,11 +7,12 @@ tags:
 - Android Studio
 - app
 - gradle
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015090545.png
 ---
 
-> android Studio  中的项目在正常引用module的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果module中进行了修改，那么每个项目中的module都要进行修改，这样增加了工作量，并且容易出现bug
+> android Studio 中的项目在正常引用 module 的时候是用复制到项目中的方式进行，单个项目调用还能适用，但是如果多个项目要引用同一个module的时候，如果 module 中进行了修改，那么每个项目中的 module 都要进行修改，这样增加了工作量，并且容易出现 bug
 >
-> 因此我们需要引用module ，而不是复制module，实现方法如下
+> 因此我们需要引用 module ，而不是复制 module，实现方法如下
 
 <!-- more -->
 

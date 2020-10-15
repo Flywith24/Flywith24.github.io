@@ -1,16 +1,18 @@
 ---
-title: 【背上Jetpack之Fragment】从源码的角度看Fragment 返回栈
+title: 从源码的角度看 Fragment 返回栈
 date: 2020-03-16 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
-
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015095213.png
 ---
 
+从源码的角度看 Fragment 返回栈。
 
+<!-- more-->
 
 ## 前言
 
@@ -20,7 +22,7 @@ tags:
 
 如果您对 activity 对任务栈和返回栈不是很了解，可以移步  [Tasks and the Back Stack](https://medium.com/androiddevelopers/tasks-and-the-back-stack-dbb7c3b0f6d4)
 
-<!-- more-->
+
 
 ## 小问号你是否有很多朋友？
 

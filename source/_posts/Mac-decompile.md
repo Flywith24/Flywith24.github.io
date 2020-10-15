@@ -6,6 +6,7 @@ categories:
 - app
 tags: 
 - 反编译
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015090052.png
 ---
 
 > 工作第四天，被要求学习逆向开发方面的知识，于是先将自己之前写的未经混淆的apk反编译，记录之。

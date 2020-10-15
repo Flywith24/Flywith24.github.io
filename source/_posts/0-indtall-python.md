@@ -7,6 +7,7 @@ categories:
 tags: 
 - python
 - 爬虫
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015085038.png
 ---
 
 > 这学期计算机网络课程有一个课程设计，要求使用Python写一个小程序。之前也没接触过Python，从优达学城里看到一个关于Python的课程，在此记录。

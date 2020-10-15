@@ -7,6 +7,7 @@ categories:
 tags: 
 - python
 - 爬虫
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015085629.png
 ---
 
 ### 1. 安装IDE以及hello world

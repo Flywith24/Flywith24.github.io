@@ -1,21 +1,22 @@
 ---
-title: 【背上Jetpack之LiveData】ViewModel的左膀右臂 数据驱动真的香
+title: ViewModel的左膀右臂 数据驱动真的香
 date: 2020-03-31 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015101641.png
 ---
+Jetpack LiveData 介绍。
+<!-- more-->
 
 ## 前言
 
 > 之前我们讨论过 [ViewModel 的职能边界](https://juejin.im/post/5e786d415188255e00661a4e) ，得益于 ViewModel 的生命周期更长，我们可以在 activity 重建后将数据传递给 activity ，也可以避免内存泄漏。但是如果不是每次需要就获取数据，而是当每次有新数据时通知我们，应该怎么办？
 
 本文介绍 `LiveData` ，一个 **生命周期感知的，可观察的，数据持有者**。同时还会简单分析 `LiveData` 的源码实现
-
-<!-- more-->
 
 
 

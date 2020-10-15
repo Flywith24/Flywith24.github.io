@@ -1,14 +1,18 @@
 ---
-title: 【背上Jetpack之ViewModel】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析
+title: 绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析
 date: 2020-03-19 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
-
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015095500.png
 ---
+
+绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析
+
+<!-- more-->
 
 ## 前言
 

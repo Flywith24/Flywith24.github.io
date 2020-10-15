@@ -1,21 +1,22 @@
 ---
-title: 【背上Jetpack之Lifecycle】万物基于Lifecycle 默默无闻大作用
+title: 万物基于Lifecycle 默默无闻大作用
 date: 2020-03-30 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015101301.png
 ---
-
+Jetpack Lifecycle 介绍。
+<!-- more-->
 >  Android 中有一个比较重要的概念：「生命周期」。刚毕业去面试，总会被问到「四大组件的生命周期」这类的问题。17年的 IO 大会上，Google 推出了 Lifecycle-Aware Components（生命周期感知组件），帮助开发者组织更好，更轻量，易于维护的代码
-
 
 
 本文介绍 `Lifecycle` 的职责以及简单分析 lifecycle 如何感知 activity 和 fragment ，帮助您对 `Lifecycle` 有一个感性的认识
 
-<!-- more-->
+
 
 ## 万物基于 **Lifecycle** 
 

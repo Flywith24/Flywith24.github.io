@@ -7,7 +7,7 @@ categories:
 tags: 
 - app
 - 重学Android
-
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015092807.png
 ---
 
 > 订阅 [重学安卓](https://xiaozhuanlan.com/topic/9074561823) 很久了，最近在整理读书笔记，在此记录之。

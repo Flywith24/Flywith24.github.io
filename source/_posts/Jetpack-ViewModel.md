@@ -1,16 +1,19 @@
 ---
-title: 【背上Jetpack之ViewModel】即使您不使用MVVM也要了解ViewModel ViewModel的职能边界
+title: 即使您不使用MVVM也要了解ViewModel ViewModel的职能边界
 date: 2020-03-23 00:10:35
 categories: 
-- Jetpack
+- 背上 Jetpack
 tags: 
 - androidx
 - Jetpack
 - MVVM
-
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015100650.png
 ---
 
+Jetpack ViewModel 的职能边界。
 
+
+<!-- more-->
 
 ![目录](https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png)
 

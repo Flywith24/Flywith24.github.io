@@ -1,14 +1,19 @@
 ---
-title: 【Jetpack更新之Fragment】setRetainInstance 被弃用，那么 fragment 是如何保存状态的？
+title: setRetainInstance 被弃用，那么 fragment 是如何保存状态的？
 date: 2020-04-30 00:10:35
 categories: 
-- Jetpack
+- Jetpack 更新
 tags: 
 - androidx
 - Jetpack
 - MVVM
 - Fragment
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015102738.png
 ---
+
+setRetainInstance 被弃用，那么 fragment 是如何保存状态的？
+
+<!-- more-->
 
 我们都知道 fragment 中的 `setRetainInstance` 用于控制是否在 activity 保留 fragment 实例，具体内容可参见 [WanAndroid 的每日一问：Fragment 是如何被存储与恢复的？](https://www.wanandroid.com/wenda/show/12574)
 
@@ -17,7 +22,7 @@ tags:
 但是该方法已于 `androidx fragment 1.3.0-alpha01` 弃用了
 
 
-<!-- more-->
+
 
 
 ![](https://gitee.com/flywith24/Album/raw/master/img/20200422093129.png)

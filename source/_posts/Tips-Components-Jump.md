@@ -1,19 +1,21 @@
 ---
-title: 【奇技淫巧】Android组件化不使用 Router 如何实现组件间 activity 跳转
+title: Android 组件化不使用 Router 如何实现组件间 activity 跳转
 date: 2020-04-15 14:11:46
 categories: 
-- Tips
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015103958.png
 ---
+
+Android组件化不使用 Router 如何实现组件间 activity 跳转
+
+<!-- more-->
 
 ## 前言
 
 越来越多的项目使用了组件化，组件之间的通信是一个比较重要的问题。`ARouter` 等路由方案为我们提供了解决办法。那么如果不使用 Router 如何实现组件间的界面跳转呢？
-
-<!-- more-->
 
 ## 万能的 `setClassName`
 

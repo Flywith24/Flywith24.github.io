@@ -7,6 +7,7 @@ categories:
 tags: 
 - python
 - 爬虫
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015085429.png
 ---
 
 > 我们编程时很容易疲劳，所以让我们来设计一个可以在一段时间后提醒你休息的小程序。比如每隔两个小时打开http://lines.frvr.com 此网站来玩一会儿小游戏。

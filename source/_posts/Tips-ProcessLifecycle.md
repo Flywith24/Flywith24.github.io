@@ -1,14 +1,17 @@
 ---
-title: 【奇技淫巧】使用 ProcessLifecycle 优雅地监听应用前后台切换
+title: 使用 ProcessLifecycle 优雅地监听应用前后台切换
 date: 2020-07-01 14:11:46
-categories: 
-- Tips
+categories:   
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015104945.png
 ---
 
+使用 ProcessLifecycle 优雅地监听应用前后台切换
+
+<!-- more-->
 
 ## 前言
 
@@ -16,7 +19,7 @@ top: true
 
 前些天在群里看到有人讨论通过维护 activity 栈来监听程序前后台切换的问题。其实单纯监听程序的前后台切换完全不需要维护 activity 栈，而现在比较主流的做法是使用 `registerActivityLifecycleCallbacks`。而今天我来介绍一下使用 ProcessLifecycleOwner 来实现这一功能
 
-<!-- more-->
+
 
 ## lifecycle-process 库
 

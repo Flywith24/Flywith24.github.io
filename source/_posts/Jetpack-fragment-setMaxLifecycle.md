@@ -1,14 +1,19 @@
 ---
-title: 【Jetpack更新之Fragment】setMaxLifecycle 上位，setUserVisibleHint 被弃用
+title: setMaxLifecycle 上位，setUserVisibleHint 被弃用
 date: 2020-04-29 00:10:35
 categories: 
-- Jetpack
+- Jetpack 更新
 tags: 
 - androidx
 - Jetpack
 - MVVM
 - Fragment
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015102938.png
 ---
+
+setUserVisibleHint 被弃用
+
+<!-- more-->
 
 很多情况下，fragment 的生命周期上限应该低于 FragmentManager/Activity。例如，`ViewPager` 屏幕外的界面不应被 `resumed`
 

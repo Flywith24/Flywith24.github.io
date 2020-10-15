@@ -1,19 +1,21 @@
 ---
-title: 【奇技淫巧】使用 Navigation + Dynamic Feature Module 实现模块化
+title: 使用 Navigation + Dynamic Feature Module 实现模块化
 date: 2020-05-20 14:11:46
 categories: 
-- Tips
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015104605.png
 ---
+
+使用 Navigation + Dynamic Feature Module 实现模块化
+
+<!-- more-->
 
 `androidx navigation 2.3.0` 加入了对 `dynamic feature module` 的导航支持，因此我们利用这个来分离出多个功能 module 来实现模块化
 
 ![navigation 2.3.0 更新](https://gitee.com/flywith24/Album/raw/master/img/20200520170621.png)
-
-<!-- more-->
 
 ## 国内基本不用的 dynamic feature module
 

@@ -1,13 +1,17 @@
 ---
-title: 【奇技淫巧】除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild
+title: 除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild
 date: 2020-04-15 14:11:46
 categories: 
-- Tips
+- 奇技淫巧
 tags: 
 - Tips
 - 奇技淫巧
-top: true
+image: https://gitee.com/flywith24/Album/raw/master/img/20201015104211.png
 ---
+
+除了 buildSrc 还能这样统一配置依赖版本？巧用 includeBuild
+
+<!-- more-->
 
 ## buildSrc 的缺陷
 
