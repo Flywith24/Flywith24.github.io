@@ -42,10 +42,11 @@ copyright: <p>Copyright© 2017 - 2020</a>  |  Theme - <a target="_blank" href="h
 # Social
 social:
   qq: tencent://message/?Menu=yes&uin=1032367864 || iconQQ || '#12B7F5'
-  wechat: javascript:; || iconwechat-fill || '#09BB07'
-  instagram: https://www.instagram.com/izhaoo/ || iconinstagram || '#DA2E76'
+  wechat: javascript:; || iconwechat-fill || '#8bc34a'
+  about: https://flywith24.gitee.io/about/ || iconheart || '#d32f2f'
   github: https://github.com/Flywith24 || icongithub-fill || '#24292E'
   email: mailto:youngyunzhao@163.com || iconmail
+
 
 # Fab (FloatActionButton)
 fab:
@@ -95,7 +96,7 @@ galleries:
 comments:
   enable: true
   type: valine
-  button: true
+  button: false
 
 # Gitalk
 gitalk:
