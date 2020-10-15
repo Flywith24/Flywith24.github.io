@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://flywith24.gitee.io/about/index.html</loc>
+    
+    <lastmod>2020-10-15T03:17:54.660Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/categories/index.html</loc>
+    
+    <lastmod>2020-10-15T03:14:49.199Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://flywith24.gitee.io/tags/index.html</loc>
+    
+    <lastmod>2020-10-15T03:13:25.175Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://flywith24.gitee.io/2019/08/16/Framework-Option/</loc>
     
     <lastmod>2020-10-15T02:53:18.802Z</lastmod>
@@ -194,27 +215,6 @@
     <loc>https://flywith24.gitee.io/2020/09/04/AccountManager/</loc>
     
     <lastmod>2020-10-15T00:43:00.476Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://flywith24.gitee.io/about/index.html</loc>
-    
-    <lastmod>2020-06-08T03:03:28.596Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://flywith24.gitee.io/tags/index.html</loc>
-    
-    <lastmod>2019-12-02T09:45:48.769Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://flywith24.gitee.io/categories/index.html</loc>
-    
-    <lastmod>2019-12-02T09:45:48.768Z</lastmod>
     
   </url>
   
