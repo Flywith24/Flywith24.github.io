@@ -67,7 +67,7 @@ public class Main implements IXposedHookLoadPackage {
 
 在 `src/main` 目录下创建assets目录，在该目录中创建 `xposed_ini` t文件，写入上面创建的 `Xposed` 的入口类，如下：
 
-![Xposed模块入口](【流水账】Xposed模块开发/入口.png)
+![Xposed模块入口](https://gitee.com/flywith24/Album/raw/master/img/20201015153323.png)
 
 ### XposedHelpers 常用方法
 

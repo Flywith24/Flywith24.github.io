@@ -24,7 +24,7 @@ image: https://gitee.com/flywith24/Album/raw/master/img/20201015092807.png
 
 根据大佬的代码以及文章描述，有个地方让我很疑惑。
 
-![问题](【重学Android读书笔记】Activity的任务栈与返回栈/问题.png)
+![问题](https://gitee.com/flywith24/Album/raw/master/img/20201015153417.png)
 
 我这里没有过滤当前使用的app，所以app1和app2产生的日志都显示了出来。
 
@@ -47,7 +47,7 @@ image: https://gitee.com/flywith24/Album/raw/master/img/20201015092807.png
 
 ##### 1. `app1` 依次打开 `SingleTaskOne` `SingleTaskTwo`
 
-![log1](【重学Android读书笔记】Activity的任务栈与返回栈/log1.png)
+![log1](https://gitee.com/flywith24/Album/raw/master/img/20201015153441.png)
 
 ```json
 ➜  Relearn-Android (master) adb shell
@@ -132,7 +132,7 @@ mLastFocusedStack=ActivityStack{
 
 ##### 2. 按下HOME键，打开 `app2` 依次打开 `StandardOneActivity` `StandardTwoActivity`
 
-![log2](【重学Android读书笔记】Activity的任务栈与返回栈/log2.png)
+![log2](https://gitee.com/flywith24/Album/raw/master/img/20201015153505.png)
 
 ```json
 Display #0 (activities from top to bottom):
@@ -225,7 +225,7 @@ mLastFocusedStack=ActivityStack{
 
 ##### 3. 接下来启动 `SingleTaskTwoActivity`
 
-![log3](【重学Android读书笔记】Activity的任务栈与返回栈/log3.png)
+![log3](https://gitee.com/flywith24/Album/raw/master/img/20201015153520.png)
 
 ```json
 sagit:/ $ dumpsys activity activities
@@ -410,11 +410,11 @@ Display #0 (activities from top to bottom):
 
 其中 `SingleTaskOneActivity`  与 `SingleTaskTwoActivity` 设置了相同的 `taskAffinity` ,`StandardOneActivity` ` 与 SingleTaskAActivity` 未设置 `taskAffinity`
 
-![log4](【重学Android读书笔记】Activity的任务栈与返回栈/log4.png)
+![log4](https://gitee.com/flywith24/Album/raw/master/img/20201015153552.png)
 
 接着按 HOME 键，打开 `app2` ，依次打开 `StandardOneActivity` -< `StandardOneActivity` -< `StandardTwoActivity`
 
-![log5](【重学Android读书笔记】Activity的任务栈与返回栈/log5.png)
+![log5](https://gitee.com/flywith24/Album/raw/master/img/20201015153602.png)
 
 此时堆栈信息
 
@@ -493,7 +493,7 @@ Display #0 (activities from top to bottom):
 
 最后在 `app2` 中启动  `app1` 的 `SingleTaskAActivity` 
 
-![log6](【重学Android读书笔记】Activity的任务栈与返回栈/log6.png)
+![log6](https://gitee.com/flywith24/Album/raw/master/img/20201015153613.png)
 
 此时堆栈信息
 
@@ -569,7 +569,7 @@ Display #0 (activities from top to bottom):
 
 接下来返回销毁的逻辑就很清晰了。
 
-![log7](【重学Android读书笔记】Activity的任务栈与返回栈/log7.png)
+![log7](https://gitee.com/flywith24/Album/raw/master/img/20201015153630.png)
 
 最后退到 `launcher` 界面
 

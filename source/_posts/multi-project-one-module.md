@@ -34,23 +34,27 @@ implementation project(':baselib')
 
 同步`gradle` ，此时我们发现`baselib`出现在`TestA`项目中。
 
-![TestA目录.png](多个项目添加依赖同一个模块/TestA目录.png)
+![TestA目录.png](https://gitee.com/flywith24/Album/raw/master/img/20201015152826.png)
 
 打开`TestA` 项目文件夹，我们发现了 `baselib` 文件夹，下面只有一个`baselib.iml`文件
 
-![TesA原目录.png](多个项目添加依赖同一个模块/TesA原目录.png)
+
+
+![TesA原目录.png](https://gitee.com/flywith24/Album/raw/master/img/20201015152858.png)
 
 在`baselib`中加入`Utils` 工具类
 
-![baselib.png](多个项目添加依赖同一个模块/baselib.png)
+![baselib.png](https://gitee.com/flywith24/Album/raw/master/img/20201015152935.png)
+
+
 
 切换到`TestBase`中查看，代码是相同的。
 
-![TestBase目录.png](多个项目添加依赖同一个模块/baselib.png)
+![TestBase目录.png](https://gitee.com/flywith24/Album/raw/master/img/20201015153117.png)
 
 这样就达到了`baselib`被修改后所有引用`baselib`的项目会同步变化。
 
-#### git 同步管理
+### git 同步管理
 
 > 上述操作都是基于本地的，那么如何加入git管理呢
 
@@ -58,13 +62,15 @@ implementation project(':baselib')
 
 在`TestA`项目中打开`settings`，找到如下位置并将`TestBase`加入到`git`管理
 
-![添加git.png](多个项目添加依赖同一个模块/添加git.png)
+![添加git.png](https://gitee.com/flywith24/Album/raw/master/img/20201015153140.png)
 
 然后就可以同步管理这两个项目啦
-![同步管理.png](多个项目添加依赖同一个模块/同步管理.png)
-![git log.png](多个项目添加依赖同一个模块/gitlog.png)
 
-参考：
+![同步管理.png](https://gitee.com/flywith24/Album/raw/master/img/20201015153155.png)
+
+![git log.png](https://gitee.com/flywith24/Album/raw/master/img/20201015153226.png)
+
+### 参考：
 [https://www.jianshu.com/p/47156a6be8ce](https://www.jianshu.com/p/47156a6be8ce)
 [https://blog.csdn.net/saintcs/article/details/78567612](https://blog.csdn.net/saintcs/article/details/78567612)
 
