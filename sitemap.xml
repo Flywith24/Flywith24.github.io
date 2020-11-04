@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://flywith24.gitee.io/about/index.html</loc>
+    
+    <lastmod>2020-11-04T05:33:24.415Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://flywith24.gitee.io/2019/08/30/Xposed/</loc>
     
     <lastmod>2020-10-15T07:33:29.140Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://flywith24.gitee.io/2019/04/13/multi-project-one-module/</loc>
     
     <lastmod>2020-10-15T07:32:55.843Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://flywith24.gitee.io/about/index.html</loc>
-    
-    <lastmod>2020-10-15T03:17:54.660Z</lastmod>
     
   </url>
   
