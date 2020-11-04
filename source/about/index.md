@@ -8,7 +8,7 @@ image: https://gitee.com/flywith24/Album/raw/master/img/20201015111745.png
 
 姓名：杨云召
 
-网名：Fly_with24
+网名：Flywith24
 
 职业：Android App ROM 开发
 
@@ -18,13 +18,13 @@ image: https://gitee.com/flywith24/Album/raw/master/img/20201015111745.png
 
 爱好：业余时间喜欢打篮球，养狗。偶像科比。
 
-未来计划：本人目前在济南从事Android App ROM开发工作，2021年计划去上海工作。
+未来计划：本人目前在济南从事 Android App ROM 开发工作，2021 年计划去上海工作。
 
 ### 工作经历
 
-2017.07-2019.08，大三实习 + 毕业工作。这期间主要从事Android app层的开发。
+2017.07-2019.08，大三实习 + 毕业工作。这期间主要从事 Android app 层的开发。
 
-2019.08-今，从事Android App 和 ROM层的开发。
+2019.08-今，从事 Android App 和 ROM 层的开发。
 
 ### 联系方式
 
@@ -34,8 +34,8 @@ qq：1032367864
 
 微信：Flywith24
 
-邮箱：youngyunzhao.@163.com
+邮箱：youngyunzhao@163.com
 
 Github：[https://github.com/Flywith24](https://github.com/Flywith24)
 
-![联系方式](index/im.png)
+![联系方式](https://gitee.com/flywith24/Album/raw/master/img/20201104133248.png)
