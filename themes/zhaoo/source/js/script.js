@@ -7,17 +7,11 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
     showMenu: function () {
       $(".menu").fadeIn(300);
       $("body").addClass("lock-screen");
-      $("main").addClass("blur");
-      $(".preview").addClass("blur");
-      $(".footer").addClass("blur");
       fn.hideFab();
     },
     hideMenu: function () {
       $(".menu").fadeOut(300);
       $("body").removeClass("lock-screen");
-      $("main").removeClass("blur");
-      $(".preview").removeClass("blur");
-      $(".footer").removeClass("blur");
     },
     activeFab: function () {
       $(".fab-up").addClass("fab-up-active");
@@ -89,6 +83,20 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
           })
         }, 500));
       },
+    },
+    motto: function () {
+      if (CONFIG.preview.motto.api) {
+        $.get(CONFIG.preview.motto.api, function (data) {
+          if (data) {
+            $("#motto").text(data);
+          }
+        });
+      }
+    },
+    background: function () {
+      if (CONFIG.preview.background.api) {
+        $(".preview-image").css("background-image", "url(" + CONFIG.preview.background.api + ")");
+      }
     }
   }
 
@@ -129,7 +137,7 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
       $(".fab-up .fab-daovoice").on("click", function () {
         fn.freezeFab();
       });
-      if (CONFIG.fab.alwaysShow) {
+      if (CONFIG.fab.always_show) {
         fn.showFab();
       } else {
         $(window).scroll(fn.scroolFab);
@@ -179,17 +187,6 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
         $(".donate .qrcode").hide();
       });
     },
-    motto: function () {
-      var text = CONFIG.motto.default;
-      if (CONFIG.motto.api) {
-        $.get(CONFIG.motto.api, function (data) {
-          if (data) {
-            text = data;
-          }
-        });
-      }
-      $("#motto").text(text);
-    },
     lazyload: function () {
       $("img.lazyload").lazyload({
         effect: "fadeIn",
@@ -221,6 +218,10 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
         fn.showMenu();
         $(".navbar").addClass("hide");
       });
+    },
+    preview: function () {
+      fn.background();
+      fn.motto();
     }
   }
 
@@ -231,7 +232,7 @@ console.log("%c Github %c", "background:#333333; color:#ffffff", "", "https://gi
     action.navbar();
     action.menu();
     action.scroolToTop();
-    action.motto();
+    action.preview();
     if (CONFIG.fancybox) {
       action.fancybox();
     }
