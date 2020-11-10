@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Handler深入分析 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="
+在android中我们可以有很多方式去实现异步，比如..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">Handler深入分析</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015084625.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">Handler深入分析</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>七月 04, 2017</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>5064</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h3 id="1-TreadLocal的使用"><a href="#1-TreadLocal的使用" class="headerlink" title="1. TreadLocal的使用"></a>1. TreadLocal的使用</h3><p>下面我们来写一个小demo，创建两个子线程，在两个子线程中分别为字符串result2，result3赋值，在主线程中调用两个子线程，并且为字符串result1赋值，最后打印输出结果。</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-2e352e80d8f708cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="主线程"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-3593c9860a191e71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="子线程1"></p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-106032139bef8248.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="子线程2"></p>
+<p>最后我们看一下打印结果</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-0fded8b582305652.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="测试结果"></p>
+<p>很明显，这不是我们想要的结果。看来线程之间相互影响了，那么有没有办法实现上述的功能呢？</p>
+<p>当然有，我们可以使用 TreadLocal</p>
+<blockquote>
+<p>我们可以把TreadLocal看做成一个容器，调用其中的set和get方法，可以设值和取值。下面我们看看是如何实现的。</p>
+</blockquote>
+<p>首先创建一个ThreadLocal对象，并设置泛型为String<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-b274968c0d87042d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="ThreadLocal"><br>这里不同的是首先将要打印的字串放入ThreadLocal中，然后从ThreadLocal中取出。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-b8a37fcc57787a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="主线程"></p>
+<p>子线程的操作也是类似的。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-9b8b4a3c8f495526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="子线程"></p>
+<p>下面我们看一下打印结果</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-71885237f2c74d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="运行结果"></p>
+<p>这样就完成了上述功能。那么这里说的ThreadLocal与Handler有什么关系呢？别急，往下看。</p>
+<h3 id="2-在子线程中创建Handelr"><a href="#2-在子线程中创建Handelr" class="headerlink" title="2. 在子线程中创建Handelr"></a>2. 在子线程中创建Handelr</h3><p>我们在子线程中创建一个Handler对象，然后运行程序。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-4673d3b294d1ff08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="子线程中创建Handler对象"></p>
+<p>可以看到运行时出现了异常</p>
+<blockquote>
+<p> java.lang.RuntimeException: Can’t create handler inside thread that has not called Looper.prepare()</p>
+</blockquote>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-42a0e89fbd6cfe2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="异常"><br>看字面意思是不能在调用Looper.prepare()之前在线程中创建handler。<br>那么我们在创建handler之前去调用Looper.prepare()。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-036e11a4312a1dd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="调用Looper.prepare()"><br>之后就能成功运行了。</p>
+<p>那么我们来研究一下为什么会这样。<br>鼠标放在Handler()上，win按住control+鼠标左键，Mac按住command+鼠标左键。进入Handler的构造器。<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-ddcf57bb316f4d6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="Handler构造器"><br>点击this</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-322cff8f6407b3f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="更进一步"></p>
+<p>我们找到了源头，如果looper为空则抛出这个异常。</p>
+<p>在这里从looper里取出mQueue赋值给mQueue</p>
+<p>然后我们看一下这个Looper.prepare方法，<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-8092676c88450ad6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="prepare"></p>
+<p>上方的注释说得很清楚，在真正开始这个loop之前，该方法为你提供了创建引用这个looper的handelr的机会。在调用完该方法后，应该确保调用了loop()方法，并且使用quit()方法去结束它。</p>
+<p>我们还看到如果多次调用prepare方法会抛出Only one Looper may be created per thread异常。<br>在这里我们看到了熟悉的身影，ThreadLocal。在这里使用ThreadLocal来存looper。</p>
+<p>看到这我们不禁要问，在主线程我们并没有调用prepare方法啊，没错，在主线程使用的是prepareMainLooper<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-28263341bcc4e038.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="prepareMainLooper"><br>可以看到这个main looper已经被android environment创建了，所以不需要自己调用该方法。</p>
+<p>下面我们来看一下在子线程中创建Handler的标准写法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreadLooper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> Handler mHandler;<br><br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">super</span>.run();<br>            Looper.prepare();<br>            mHandler = <span class="hljs-keyword">new</span> Handler() &#123;<br>                <span class="hljs-meta">@Override</span><br>                <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handleMessage</span><span class="hljs-params">(Message msg)</span> </span>&#123;<br>                &#125;<br>            &#125;;<br>            Looper.loop();<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-Message的发送和处理过程"><a href="#3-Message的发送和处理过程" class="headerlink" title="3. Message的发送和处理过程"></a>3. Message的发送和处理过程</h3><p>Handler里提供了几个消息入队的方法</p>
+<blockquote>
+<p>post()<br>postAtTime()<br>postDelayed()<br>postAtFrontOfQueue()<br>sendMessageAtTime(Message msg , long uptimeMillis)</p>
+</blockquote>
+<p>其中post()，postAtTime()，postDelayed()都会直接或间接调用sendMessageAtTime方法。</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-8f15bc3b507a098f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="post"><br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-1b8a08501a2a9251.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="postAtTime"><br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-c5ef6085b80726ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="postDelayed"><br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-dbe0fccf4cc81722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="sendMessageDelayed"><br>下面我们看一下sendMessageAtTime方法</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-678aac95b1c8ad85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="sendMessageAtTime"></p>
+<p>有两个参数，msg 和uptimeMillis ，如果消息队列为空，则打印警告，同时返回false。反之则调用enqueueMessage方法。</p>
+<p>下面看一下enqueueMessage</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-ba4cd0593a2e8df7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="enqueueMessage"><br>这里有两个比较重要的操作。<br>msg.target赋值为this，有两层含义，一是message的来源是当前handler，二是当前的handler来处理消息。<br>将消息加入到消息队列中，既然是队列就有顺序，那么根据什么来判断顺序呢？就是根据uptimeMillis,这个时间，时间短就在前面，长就在后面。</p>
+<p>细心的你可能发现刚刚我提到post()，postAtTime()，postDelayed()都会直接或间接调用sendMessageAtTime方法，那postAtFrontOfQueue()呢？<br>从字面上看该方法是将消息置于消息队列的最前边。是不是这样呢？我们看一下源码。</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-76f2c74c7c0a3e51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="postAtFrontOfQueue"><br>这里将入队的时间参数直接写死为0，那么肯定就是消息队列的最前边啦。</p>
+<p>我们再来分析下入队之后的过程，上文提到调用Looper.prepare()方法后应调用Looper.loop()方法开始消息的轮询。那么我们看看loop方法做了些什么。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Looper me = myLooper();<br>    <span class="hljs-keyword">if</span> (me == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"No Looper; Looper.prepare() wasn't called on this thread."</span>);<br>    &#125;<br>    <span class="hljs-keyword">final</span> MessageQueue queue = me.mQueue;<br><br>    <span class="hljs-comment">// Make sure the identity of this thread is that of the local process,</span><br>    <span class="hljs-comment">// and keep track of what that identity token actually is.</span><br>    Binder.clearCallingIdentity();<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> ident = Binder.clearCallingIdentity();<br><br>    <span class="hljs-keyword">for</span> (;;) &#123;<br>        Message msg = queue.next(); <span class="hljs-comment">// might block</span><br>        <span class="hljs-keyword">if</span> (msg == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-comment">// No message indicates that the message queue is quitting.</span><br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        <span class="hljs-comment">// This must be in a local variable, in case a UI event sets the logger</span><br>        <span class="hljs-keyword">final</span> Printer logging = me.mLogging;<br>        <span class="hljs-keyword">if</span> (logging != <span class="hljs-keyword">null</span>) &#123;<br>            logging.println(<span class="hljs-string">"&gt;&gt;&gt;&gt;&gt; Dispatching to "</span> + msg.target + <span class="hljs-string">" "</span> +<br>                    msg.callback + <span class="hljs-string">": "</span> + msg.what);<br>        &#125;<br><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> traceTag = me.mTraceTag;<br>        <span class="hljs-keyword">if</span> (traceTag != <span class="hljs-number">0</span> &amp;&amp; Trace.isTagEnabled(traceTag)) &#123;<br>            Trace.traceBegin(traceTag, msg.target.getTraceName(msg));<br>        &#125;<br>        <span class="hljs-keyword">try</span> &#123;<br>            msg.target.dispatchMessage(msg);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-keyword">if</span> (traceTag != <span class="hljs-number">0</span>) &#123;<br>                Trace.traceEnd(traceTag);<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (logging != <span class="hljs-keyword">null</span>) &#123;<br>            logging.println(<span class="hljs-string">"&lt;&lt;&lt;&lt;&lt; Finished to "</span> + msg.target + <span class="hljs-string">" "</span> + msg.callback);<br>        &#125;<br><br>        <span class="hljs-comment">// Make sure that during the course of dispatching the</span><br>        <span class="hljs-comment">// identity of the thread wasn't corrupted.</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> newIdent = Binder.clearCallingIdentity();<br>        <span class="hljs-keyword">if</span> (ident != newIdent) &#123;<br>            Log.wtf(TAG, <span class="hljs-string">"Thread identity changed from 0x"</span><br>                    + Long.toHexString(ident) + <span class="hljs-string">" to 0x"</span><br>                    + Long.toHexString(newIdent) + <span class="hljs-string">" while dispatching to "</span><br>                    + msg.target.getClass().getName() + <span class="hljs-string">" "</span><br>                    + msg.callback + <span class="hljs-string">" what="</span> + msg.what);<br>        &#125;<br><br>        msg.recycleUnchecked();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-5797c552356958b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="looper"><br>首先从ThreadLocal中取出looper并判断是否为空，之后将looper中的消息队列赋值，再然后进入一个死循环，循环内去不断寻找消息队列的下一项，没有消息发生阻塞。</p>
+<p>找到 msg.target.dispatchMessage(msg);这一行，<br>之前我们提到target就是handler对象，这里handler把消息派发出去，接下来就进入消息的处理了。</p>
+<p>进入到msg.target.dispatchMessage方法，<br><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-3d37b2fa8bb03c78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="dispatchMessage"><br>这里分三步<br>1.判断msg的回调是否为空<br> 如果不为空则直接该回调自己处理，反之判断自己的回调</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-5cabf5368375e861.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="message的回调"><br>把Runnable 封装成msg的callback</p>
+<p>2.判断自己的回调是否为空<br>3.调用handleMessage方法</p>
+<p><img class="lazyload" data-original="http://upload-images.jianshu.io/upload_images/3155702-ad49dc188525989f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" src="/2017/07/04/Handler/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="handleMessage"><br>这里由子类重写来处理message</p>
+<h3 id="4-Handler机制的总结"><a href="#4-Handler机制的总结" class="headerlink" title="4. Handler机制的总结"></a>4. Handler机制的总结</h3><blockquote>
+<p>Thread 负责业务逻辑<br>Handler 负责发送消息和处理消息<br>MessageQueue 负责保存消息<br>Looper 负责轮询消息队列</p>
+</blockquote>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2017/07/04/Handler/index.html">https://flywith24.gitee.io/2017/07/04/Handler/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/handler/">handler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异步/">异步</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2017/07/06/Mac-decompile/"><i class="iconfont iconleft"></i>Mac下Android反编译初探</a>
+  
+  
+    <a href="/2017/06/18/2-2-grade/">2.2从教务系统查询成绩并计算绩点——山东建筑大学为例<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

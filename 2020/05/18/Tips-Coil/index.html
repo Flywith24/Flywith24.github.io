@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>新的图片加载库？基于Kotlin协程的图片加载库——Coil - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="新的图片加载库？基于 Kotlin 协程的图片加载库—..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">新的图片加载库？基于Kotlin协程的图片加载库——Coil</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015103748.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">新的图片加载库？基于Kotlin协程的图片加载库——Coil</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>五月 18, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>6029</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="新的图片加载库——Coil"><a href="#新的图片加载库——Coil" class="headerlink" title="新的图片加载库——Coil"></a>新的图片加载库——Coil</h2><p><a href="https://coil-kt.github.io/coil/" target="_blank" rel="noopener">Coil</a> 是 <a href="https://www.instacart.com/" target="_blank" rel="noopener">Instacart</a> 团队研发的新的的图片加载库，它使用了很多高级功能，例如协程，<code>Okhttp</code>，<code>androidx.lifecycle</code>。<code>Coil</code> 还包括一些高级功能，例如图像采样，有效的内存使用以及请求的自动取消/暂停</p>
+<p>默认情况下 <code>Coil</code> 与 R8 完全兼容，开箱即用，不需要添加额外的规则。如果使用 Proguard ，您可能需要为 <a href="https://github.com/Kotlin/kotlinx.coroutines/blob/master/kotlinx-coroutines-core/jvm/resources/META-INF/proguard/coroutines.pro" target="_blank" rel="noopener">Coroutines</a>, <a href="https://github.com/square/okhttp/blob/master/okhttp/src/main/resources/META-INF/proguard/okhttp3.pro" target="_blank" rel="noopener">OkHttp</a> 和 <a href="https://github.com/square/okio/blob/master/okio/src/jvmMain/resources/META-INF/proguard/okio.pro" target="_blank" rel="noopener">Okio</a> 添加规则</p>
+<h2 id="Coil-的优势"><a href="#Coil-的优势" class="headerlink" title="Coil 的优势"></a>Coil 的优势</h2><ul>
+<li>快速：<code>Coil</code> 进行了很多优化，包括内存和磁盘缓存，对内存中的图像进行采样，重新使用位图，自动暂停/取消请求等等</li>
+<li>轻量：<code>Coil</code> 在您的APK中添加了约 2000 种方法（对于已经使用 <code>OkHttp</code> 和 <code>Coroutines</code> 的应用程序），与 <code>Picasso</code> 相当，远少于 <code>Glide</code> 和 <code>Fresco</code></li>
+<li>易用：<code>Coil</code> 的 API 利用 Kotlin 的特性简化了样板代码</li>
+<li>现代：<code>Coil</code> 是 <code>Kotlin-first</code>，使用现代化的库，例如 <code>Coroutines</code>, <code>OkHttp</code>, <code>Okio</code>, 以及 <code>AndroidX Lifecycles</code></li>
+</ul>
+<p><code>Coil</code> 是以下名称的缩写：<strong>Coroutine Image Loader</strong></p>
+<h2 id="Artifacts"><a href="#Artifacts" class="headerlink" title="Artifacts"></a>Artifacts</h2><p><code>Coil</code> 拥有 5 个 artifact 并发布在 <code>mavenCentral()</code></p>
+<ul>
+<li><code>io.coil-kt:coil</code>：依赖于  <code>io.coil-kt:coil-base</code> 并且包含了 <code>Coil</code> 的单例和  <code>ImageView.load</code> 的扩展函数</li>
+<li><code>io.coil-kt:coil-base</code>：base 库，<strong>不包含</strong> <code>Coil</code> 的单例和  <code>ImageView.load</code> 的扩展函数，如果使用依赖注入，则可以使用该库</li>
+<li><code>io.coil-kt:coil-gif</code>：引入一系列解码器以支持解码 gif</li>
+<li><code>io.coil-kt:coil-svg</code>：引入一系列解码器以支持 svg</li>
+<li><code>io.coil-kt:coil-video</code>：包括两个 <a href="https://coil-kt.github.io/coil/api/coil-base/coil.fetch/-fetcher" target="_blank" rel="noopener">fetchers</a> ，以支持从 Android 支持的任何视频格式中提取和解码帧</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs groovy"><span class="hljs-comment">// 普通使用引用</span><br>implementation <span class="hljs-string">"io.coil-kt:coil:0.11.0"</span><br><span class="hljs-comment">// 使用依赖注入时或者制作基于 coil 的库引用</span><br>implementation <span class="hljs-string">"io.coil-kt:coil-base:0.11.0"</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Java-8"><a href="#Java-8" class="headerlink" title="Java 8"></a>Java 8</h2><p><code>Coil</code> 要求 Java 8，要通过 D8 启用 Java 8 调试，请将以下内容添加到 Gradle 脚本</p>
+<p>Gradle (<code>.gradle</code>)</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs groovy">android &#123;<br>    compileOptions &#123;<br>        sourceCompatibility JavaVersion.VERSION_1_8<br>        targetCompatibility JavaVersion.VERSION_1_8<br>    &#125;<br>&#125;<br><br>tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all &#123;<br>    kotlinOptions &#123;<br>        jvmTarget = <span class="hljs-string">"1.8"</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Gradle Kotlin DSL (<code>.gradle.kts</code>)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">android &#123;<br>    compileOptions &#123;<br>        sourceCompatibility = JavaVersion.VERSION_1_8<br>        targetCompatibility = JavaVersion.VERSION_1_8<br>    &#125;<br>&#125;<br><br>tasks.withType&lt;KotlinCompile&gt; &#123;<br>    kotlinOptions &#123;<br>        jvmTarget = <span class="hljs-string">"1.8"</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="ImageView-扩展函数"><a href="#ImageView-扩展函数" class="headerlink" title="ImageView 扩展函数"></a>ImageView 扩展函数</h3><p><code>io.coil-kt:coil</code> 提供了 类型安全的 ImageView 扩展函数</p>
+<p>在 ImageView 中加载图片，只需调用 load 扩展函数</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-comment">// URL</span><br>imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br><br><span class="hljs-comment">// Resource</span><br>imageView.load(R.drawable.image)<br><br><span class="hljs-comment">// File</span><br>imageView.load(File(<span class="hljs-string">"/path/to/image.jpg"</span>))<br><br><span class="hljs-comment">// And more...</span><br></code></pre></td></tr></table></figure>
+
+<p>上面的请求等价于：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br><span class="hljs-keyword">val</span> request = LoadRequest.Builder(imageView.context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .target(imageView)<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
+
+<p>可选的请求配置可以通过 lambda 来操作</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>) &#123;<br>    crossfade(<span class="hljs-literal">true</span>)<br>    placeholder(R.drawable.image)<br>    transformations(CircleCropTransformation())<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Image-Loaders¶"><a href="#Image-Loaders¶" class="headerlink" title="Image Loaders¶"></a>Image Loaders<a href="https://coil-kt.github.io/coil/#image-loaders" target="_blank" rel="noopener">¶</a></h3><p><code>ImageLoader</code> 是执行请求的服务类。 他们处理缓存，数据获取，图像解码，请求管理，bitmap pool，内存管理等。 可以使用 builder 来创建和配置新实例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader.Builder(context)<br>    .availableMemoryPercentage(<span class="hljs-number">0.25</span>)<br>    .crossfade(<span class="hljs-literal">true</span>)<br>    .build()<br></code></pre></td></tr></table></figure>
+
+<p>imageView.load 使用单例 <code>ImageLoader</code> 执行 <code>LoadRequest</code> 。 可以使用以下方式访问单例 <code>ImageLoader</code>：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br></code></pre></td></tr></table></figure>
+
+<p>（可选）您可以创建自己的ImageLoader实例，并通过依赖项注入将它们注入：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader(context)<br></code></pre></td></tr></table></figure>
+
+<p>当您创建单个 <code>ImageLoader</code> 并在整个应用程序中共享时，<code>Coil</code> 的性能最佳。 这是因为每个 <code>ImageLoader</code> 都有自己的内存缓存，bitmap pool 和网络监听</p>
+<h3 id="Requests¶"><a href="#Requests¶" class="headerlink" title="Requests¶"></a>Requests<a href="https://coil-kt.github.io/coil/#requests" target="_blank" rel="noopener">¶</a></h3><p>有两种 Request 类型</p>
+<ul>
+<li><a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-load-request/" target="_blank" rel="noopener"><code>LoadRequest</code></a> 是一个生命周期范围的 request，支持 <a href="https://coil-kt.github.io/coil/api/coil-base/coil.target/-target/" target="_blank" rel="noopener"><code>Target</code></a>，<a href="https://coil-kt.github.io/coil/api/coil-base/coil.transition/-transition/" target="_blank" rel="noopener"><code>Transition</code></a> 等等</li>
+<li><a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-get-request/" target="_blank" rel="noopener"><code>GetRequest</code></a> 挂起并返回  <a href="https://coil-kt.github.io/coil/api/coil-base/coil.request/-request-result/" target="_blank" rel="noopener"><code>RequestResult</code></a></li>
+</ul>
+<p>如果要加载到自定义 target 中，可以执行 <code>LoadRequest</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .target &#123; drawable -&gt;<br>        <span class="hljs-comment">// Handle the result.</span><br>    &#125;<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
+
+<p>要强制获取图像，请执行GetRequest：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = GetRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .build()<br><span class="hljs-keyword">val</span> drawable = imageLoader.execute(request).drawable<br></code></pre></td></tr></table></figure>
+
+<h3 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h3><p>如果您使用的是 <code>io.coil-kt:coil</code> ，您可以使用以下任意方式设置 <code>ImageLoader</code> 的实例</p>
+<p>在 Application 中实现 <code>ImageLoaderFactory</code>（推荐）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApplication</span> : <span class="hljs-type">Application</span></span>(), ImageLoaderFactory &#123;<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">newImageLoader</span><span class="hljs-params">()</span></span>: ImageLoader &#123;<br>        <span class="hljs-keyword">return</span> ImageLoader.Builder(context)<br>            .crossfade(<span class="hljs-literal">true</span>)<br>            .okHttpClient &#123;<br>                OkHttpClient.Builder()<br>                    .cache(CoilUtils.createDefaultCache(context))<br>                    .build()<br>            &#125;<br>            .build()<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>调用 Coil.setImageLoader</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = ImageLoader.Builder(context)<br>    .crossfade(<span class="hljs-literal">true</span>)<br>    .okHttpClient &#123;<br>        OkHttpClient.Builder()<br>            .cache(CoilUtils.createDefaultCache(context))<br>            .build()<br>    &#125;<br>    .build()<br>Coil.setImageLoader(imageLoader)<br></code></pre></td></tr></table></figure>
+
+<p>默认的 <code>ImageLoader</code> 可以通过这样取回</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> imageLoader = Coil.imageLoader(context)<br></code></pre></td></tr></table></figure>
+
+<p>设置默认的 <code>ImageLoader</code> 是可选的。 如果未设置，则 <code>Coil</code> 会延迟创建具有默认值的 <code>ImageLoader</code></p>
+<p>如果您使用的是 <code>io.coil-kt:coil-base</code>，您应创建自己的 <code>ImageLoader</code> 实例并通过依赖注入将它注入到 app 中</p>
+<blockquote>
+<p>注意：如果设置自定义OkHttpClient，则必须设置缓存实现，否则ImageLoader将没有磁盘缓存。 可以使用CoilUtils.createDefaultCache 创建默认的 Coil 缓存实例</p>
+</blockquote>
+<h2 id="支持的数据类型"><a href="#支持的数据类型" class="headerlink" title="支持的数据类型"></a>支持的数据类型</h2><p>ImageLoader 支持的数据类型为</p>
+<ul>
+<li>String (mapped to a Uri)</li>
+<li>HttpUrl</li>
+<li>Uri (<code>android.resource</code>, <code>content</code>, <code>file</code>, <code>http</code>, and <code>https</code> schemes only)</li>
+<li>File</li>
+<li>@DrawableRes Int</li>
+<li>Drawable</li>
+<li>Bitmap</li>
+</ul>
+<h2 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h2><p>如果要预加载到内存中，执行一个不带 target 的 <code>LoadRequest</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    <span class="hljs-comment">// 可选的，但是设置 ViewSizeResolver 可以通过限制预加载的大小来节省内存</span><br>    .size(ViewSizeResolver(imageView))<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
+
+<p>如果只想将网络图片预加载到磁盘中，可以为 request 关闭内存缓存</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> request = LoadRequest.Builder(context)<br>    .<span class="hljs-keyword">data</span>(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br>    .memoryCachePolicy(CachePolicy.DISABLED)<br>    .build()<br>imageLoader.execute(request)<br></code></pre></td></tr></table></figure>
+
+<h2 id="取消请求"><a href="#取消请求" class="headerlink" title="取消请求"></a>取消请求</h2><p><code>LoadRequest</code> 会自动取消在以下几种情况下</p>
+<ul>
+<li><p>关联的 view detached，</p>
+</li>
+<li><p>关联的 lifecycle destroyed</p>
+</li>
+<li><p>另一个 request  在相同的 view 中开启</p>
+</li>
+</ul>
+<p>此外，每个 <code>LoadRequest</code> 返回一个 <code>RequestDisposable</code>，可用于检查请求是否在运行中或处理该请求（有效地取消请求并释放其关联资源）</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">val</span> disposable = imageView.load(<span class="hljs-string">"https://www.example.com/image.jpg"</span>)<br><br><span class="hljs-comment">// Cancel the request.</span><br>disposable.dispose()<br></code></pre></td></tr></table></figure>
+
+<p><code>GetRequest</code> 仅当协程的上下文被取消时才会取消</p>
+<h2 id="图片采样"><a href="#图片采样" class="headerlink" title="图片采样"></a>图片采样</h2><p>假设磁盘上有一个 500x500 的映像，但是只需要以 100x100 的大小将其加载到内存中即可在视图中显示。 <code>Coil</code> 会将图像加载到内存中，但是如果您需要 500x500 的图像会怎样呢？ 从磁盘读取还有更好的「质量」，但是图像已经以 100x100 加载到内存中。 理想情况下，当我们从磁盘以 500x500 读取图像时，我们将使用 100x100 图像作为占位符。</p>
+<p>这正是 <code>Coil</code> 所做的，并且 <code>Coil</code> 自动为所有 <code>BitmapDrawables</code> 处理此过程。 与 <code>crossfade(true)</code> 搭配使用时，可以创建视觉效果，使图像细节看起来像淡入淡出，类似于渐进式 JPEG</p>
+<p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/5/15/1721615615eb45ef?w=600&h=1067&f=gif&s=4714987" src="/2020/05/18/Tips-Coil/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h2 id="使用要求"><a href="#使用要求" class="headerlink" title="使用要求"></a>使用要求</h2><ul>
+<li>AndroidX</li>
+<li>Min SDK 14+</li>
+<li>Compile SDK: 29+</li>
+<li><a href="https://coil-kt.github.io/coil/getting_started/#java-8" target="_blank" rel="noopener">Java 8+</a></li>
+</ul>
+<p>详细内容移步 <a href="https://coil-kt.github.io/coil/" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>我是 <a href="https://flywith24.gitee.io/">Flywith24</a>，我的博客内容已经分类整理 <a href="https://github.com/Flywith24/BlogList" target="_blank" rel="noopener">在这里</a>，点击右上角的 Watch 可以及时获取我的文章更新哦 😉</p>
+<ul>
+<li><p><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></p>
+</li>
+<li><p><a href="https://xiaozhuanlan.com/detail" target="_blank" rel="noopener">小专栏</a></p>
+</li>
+<li><p><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></p>
+</li>
+</ul>
+<p><img class="lazyload" data-original="https://user-gold-cdn.xitu.io/2020/6/26/172ee567fb4fbf7e?w=1954&h=624&f=jpeg&s=115362" src="/2020/05/18/Tips-Coil/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/05/18/Tips-Coil/index.html">https://flywith24.gitee.io/2020/05/18/Tips-Coil/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tips/">Tips</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/奇技淫巧/">奇技淫巧</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/05/20/Tips-Navagion+DynamicFeatureModule/"><i class="iconfont iconleft"></i>使用 Navigation + Dynamic Feature Module 实现模块化</a>
+  
+  
+    <a href="/2020/04/30/Jetpack-fragment-savestate/">setRetainInstance 被弃用，那么 fragment 是如何保存状态的？<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

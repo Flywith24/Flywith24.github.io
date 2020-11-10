@@ -1,0 +1,638 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数据驱动魔法师 何时迎来翻身日？ - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="Jetpack DataBinding 介绍。
+
+
+
+..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">数据驱动魔法师 何时迎来翻身日？</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015101935.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">数据驱动魔法师 何时迎来翻身日？</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>四月 09, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>16048</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <blockquote>
+<p><a href="https://juejin.im/post/5e834bb5f265da480d61668d" target="_blank" rel="noopener">LiveData 篇</a> 我们提到 Android 开发的主要工作内容是将数据转换为 UI ，同时我们也介绍了数据驱动 UI 的思想，使用 ViewModel + LiveData，可以安全地在订阅者的生命周期内分发正确的数据。但是 activity 和 fragment 充斥着大量的模板代码，铺天盖地的 findViewById，以及各种 set （根据数据设置 UI）。如果能够消灭掉这些模板代码就好了</p>
+</blockquote>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402101708.gif" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="他来了他来了"></p>
+<p>他来了他来了，他欢快地走来了</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402101727.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="DataBinding"></p>
+<p>然而，很多开发者对 DataBinding 存在偏见，「DataBinding 不是个好东西，在声明式编程中书写 UI 逻辑，既不可调试，也不便于察觉和追踪，万一出现问题就麻烦了。」</p>
+ <img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402165235.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" style="zoom:200%;">
+
+<p>本文主要介绍 DataBinding 的解决的问题以及其背后的逻辑，带您对 DataBinding 有一个感性的认识。本文末尾会对各个 findViewById 的替代方案进行对比</p>
+<p>DataBinding 的相关资源</p>
+<ul>
+<li><a href="https://developer.android.com/topic/libraries/data-binding" target="_blank" rel="noopener">官方文档</a></li>
+<li><a href="https://codelabs.developers.google.com/codelabs/android-databinding/#0" target="_blank" rel="noopener">codelab</a></li>
+<li><a href="https://github.com/android/databinding-samples" target="_blank" rel="noopener">官方示例</a></li>
+</ul>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 数据驱动魔法师</span></h2>
+
+<p>DataBinding 允许使用声明性格式而不是通过编程方式将布局中的 UI 组件与数据源绑定</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// before</span><br>TextView textView = findViewById(R.id.sample_text);<br>textView.setText(viewModel.getUserName());<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">TextView</span><br>    <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@&#123;viewmodel.userName&#125;"</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>通过在布局文件中绑定组件，您可以删除 activity 中的许多设置 UI 调用，从而使它们更易于维护。 这也可以提高应用程序的性能，并有助于防止内存泄漏和空指针异常</p>
+<blockquote>
+<p>如果仅替换 findViewById 而不需要数据的绑定，可以使用 ViewBinding，它使用起来更简单，性能也更好。</p>
+<p>使用方法参见 <a href="https://juejin.im/post/5e4806f3e51d4526c550a2ef" target="_blank" rel="noopener">[译]深入研究ViewBinding 在 include, merge, adapter, fragment, activity 中使用</a></p>
+</blockquote>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> DataBinding 基础</span></h2>
+
+<p>详细内容参见 <a href="https://developer.android.com/topic/libraries/data-binding" target="_blank" rel="noopener">官方文档</a> ，这里只简单介绍 DataBinding</p>
+<h3 id="DataBinding-引入"><a href="#DataBinding-引入" class="headerlink" title="DataBinding 引入"></a>DataBinding 引入</h3><p>app build.gradle 中加入 </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs groovy">android &#123;<br>    ...<br>    dataBinding &#123;<br>        enabled = <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Android Studio 4.0</span><br>android &#123;<br>    ...<br>    buildFeatures &#123;<br>        dataBinding = <span class="hljs-literal">true</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>必须在 app module 中声明，声明后其他子 module 可直接使用 DataBinding</p>
+</blockquote>
+<p>使用 DataBinding 无需开发者手动引入库，android build gradle plugin 内部已经引入了</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402115116.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>DataBinding 中使用了注解，因此在构建速度上比 ViewBinding 差些（不过功能这么强大要啥自行车）</p>
+<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>DataBinding 布局文件略有不同，它们以 layout 的根标记开始，后跟一个 data 元素和一个 view 根元素。 view 元素是您的根将位于非绑定布局文件中的元素。 以下代码显示了一个示例布局文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">"http://schemas.android.com/apk/res/android"</span><br>        <span class="hljs-attr">xmlns:app</span>=<span class="hljs-string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">data</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">variable</span><br>            <span class="hljs-attr">name</span>=<span class="hljs-string">"viewmodel"</span><br>            <span class="hljs-attr">type</span>=<span class="hljs-string">"com.myapp.data.ViewModel"</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">data</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ConstraintLayout...</span> /&gt;</span> <span class="hljs-comment">&lt;!-- UI layout's root element --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="生成绑定类"><a href="#生成绑定类" class="headerlink" title="生成绑定类"></a>生成绑定类</h3><p>DataBinding 会为每个在布局声明 layout 标签的 xml 布局文件生成一个绑定类。 默认情况下，类的名称基于布局文件的名称。 上面的布局文件名是 activity_main.xml，因此相应的生成类是 ActivityMainBinding。 此类包含从布局属性（例如，viewmodel 变量）到布局视图的所有绑定，并且知道如何为绑定表达式分配值</p>
+<h3 id="配置绑定"><a href="#配置绑定" class="headerlink" title="配置绑定"></a>配置绑定</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>    <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>    <span class="hljs-comment">// before</span><br>    <span class="hljs-comment">// setContentView(R.layout.activity_main)</span><br>    <br>    <span class="hljs-comment">// after</span><br>    val binding : ActivityMainBinding =<br>    DataBindingUtil.setContentView(<span class="hljs-keyword">this</span>, R.layout.activity_main)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 使用DataBinding 解决的问题及实现原理</span></h2>
+
+
+
+<p>不知道你是否有这些烦恼：activity 和 fragment 中有着大量的模板代码，即使使用 ButterKnife 等工具写起代码来也很繁琐。而且 View id 与 View 的类型不匹配时，只有在运行期才能发现；旋转屏幕后如果新的布局中不存在之前 id 的 view ，可能还导致空指针异常；项目中使用各类 bus 通知 UI 刷新，但是有时 UI 的显示并不符合预期，而排查起来特别困难，因为数据源很多…</p>
+<p>不要慌，DataBinding 可以解决以下问题</p>
+<ul>
+<li><p>替换 findViewById ，减少模板代码</p>
+</li>
+<li><p>解决类型安全问题</p>
+</li>
+<li><p>解决空安全问题</p>
+</li>
+<li><p>保证了数据的一致性</p>
+</li>
+</ul>
+<h3 id="魔法的背后"><a href="#魔法的背后" class="headerlink" title="魔法的背后"></a>魔法的背后</h3><p>com.android.tools.build:gradle 插件中封装了 DataBinding 的魔法</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402162010.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>查看 com.android.tools.build:gradle:3.6.2 的源码，找到 DataBinding 配置项的类 DataBindingOptions</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// DataBindingOptions.java</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isEnabled</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// DataBinding 是否开启，对应上面在 build.gradle 中的配置</span><br>    <span class="hljs-keyword">return</span> enabled;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>它的调用者很多，在 TaskManager 中的 createDataBindingTasksIfNecessary</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// TaskManager </span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">createDataBindingTasksIfNecessary</span><span class="hljs-params">(@NonNull VariantScope scope)</span> </span>&#123;<br>    <span class="hljs-comment">// 是否开启 DataBinding</span><br>    <span class="hljs-keyword">boolean</span> dataBindingEnabled = extension.getDataBinding().isEnabled();<br>    <span class="hljs-keyword">boolean</span> viewBindingEnabled = extension.getViewBinding().isEnabled();<br>    <span class="hljs-keyword">if</span> (!dataBindingEnabled &amp;&amp; !viewBindingEnabled) &#123;<br>        <span class="hljs-comment">// DataBinding 和 ViewBinding 均未开启则直接 return</span><br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    createDataBindingMergeBaseClassesTask(scope);<br>    createDataBindingMergeArtifactsTask(scope);<br>    <span class="hljs-comment">//...</span><br>    <span class="hljs-comment">// 构建 DataBinding 相应绑定类</span><br>    taskFactory.register(<span class="hljs-keyword">new</span> DataBindingGenBaseClassesTask.CreationAction(scope));<br>&#125;<br><span class="hljs-comment">// CreationAction</span><br><span class="hljs-function">override fun <span class="hljs-title">handleProvider</span><span class="hljs-params">(taskProvider: TaskProvider&lt;out DataBindingGenBaseClassesTask&gt;)</span> </span>&#123;<br>    variantScope.artifacts.producesDir(<br>        <span class="hljs-comment">// DATA_BINDING_BASE_CLASS_SOURCE_OUT</span><br>        InternalArtifactType.DATA_BINDING_BASE_CLASS_SOURCE_OUT,<br>        BuildArtifactsHolder.OperationType.INITIAL,<br>        taskProvider,<br>        DataBindingGenBaseClassesTask::sourceOutFolder<br>	)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到生成 DataBinding 绑定类的 task 为 DataBindingGenBaseClassesTask，而InternalArtifactType.DATA_BINDING_BASE_CLASS_SOURCE_OUT 则对应着 build 目录生成的 DataBinding 类的</p>
+<p>data_binding_base_class_source_out 目录</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200402161451.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>这里可以简单看一下，感兴趣的小伙伴可以自己查看源码</p>
+<h3 id="DataBinding-如何解决上述问题的"><a href="#DataBinding-如何解决上述问题的" class="headerlink" title="DataBinding 如何解决上述问题的"></a>DataBinding 如何解决上述问题的</h3><p>我们可以查看 DataBinding 生成的绑定类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FragmentSingleChildBinding</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ViewBinding</span> </span>&#123;<br>  <span class="hljs-comment">// NonNull 注解标记</span><br>  <span class="hljs-comment">// 如果存在不同配置的不同布局文件（如横竖屏）且该控件不是存在于所有布局，该处使用 Nullable注解标记</span><br>  <span class="hljs-meta">@NonNull</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> MaterialButton button;<br>    <br>  <span class="hljs-comment">// 省略...</span><br>    <br>  <span class="hljs-meta">@NonNull</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> FragmentSingleChildBinding <span class="hljs-title">bind</span><span class="hljs-params">(@NonNull View rootView)</span> </span>&#123;<br>    String missingId;<br>    missingId: &#123;<br>      <span class="hljs-comment">//其内部也是使用 findViewById</span><br>      MaterialButton button = rootView.findViewById(R.id.button);<br>      <span class="hljs-keyword">if</span> (button == <span class="hljs-keyword">null</span>) &#123;<br>        missingId = <span class="hljs-string">"button"</span>;<br>        <span class="hljs-keyword">break</span> missingId;<br>      &#125;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> FragmentSingleChildBinding((MaterialButton) rootView, button);<br>    &#125;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">"Missing required view with ID: "</span>.concat(missingId));<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Binding 类内部的也是使用 findViewById ，因此 DataBinding 可以代替 findViewById ，并且减少模板代码</p>
+</li>
+<li><p>View 控件变量类型是固定的，因此不会出现类型安全问题</p>
+</li>
+<li><p>View 控件变量由空/非空注解修饰，（如果为 Nullable java 中会有 lint 警告，而 kotlin 直接调用时无法通过编译的）因此 不会出现空安全问题</p>
+</li>
+<li><p>通过声明式的配置，UI 完全来自唯一可信的数据源配置，保证了数据的一致性</p>
+</li>
+</ul>
+<blockquote>
+<p>注意：以上分析同样适用于 ViewBinding</p>
+</blockquote>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 感受魔法的魅力</span></h2>
+
+<p>这里简单展示一下 DataBinding 的「魔法」</p>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">"http://schemas.android.com/apk/res/android"</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">data</span>&gt;</span><br>      <br>   <span class="hljs-tag">&lt;/<span class="hljs-name">data</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span><br>       <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"vertical"</span><br>       <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"match_parent"</span><br>       <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"match_parent"</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">TextView</span><br>           <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/firstName"</span><br>           <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span><br>           /&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">TextView</span><br>           <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/lastName"</span><br>           <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span><br>           /&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">LinearLayout</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br><br>		<span class="hljs-comment">// Before Data Binding</span><br>		<span class="hljs-comment">//setContentView(R.layout.activity_main);</span><br>        <br>		<span class="hljs-comment">//TextView firstName = (TextView) findViewById(R.id.firstName);</span><br>		<span class="hljs-comment">//TextView lastName = (TextView) findViewById(R.id.lastName);</span><br><br>		<span class="hljs-comment">//firstName.setText("xxx");</span><br>		<span class="hljs-comment">//lastName.setText("xxx");</span><br><br><br>		<span class="hljs-comment">// After Data Binding</span><br>        ActivityMainBinding binding = DataBindingUtil.setContentView(<span class="hljs-keyword">this</span>, R.layout.activity_main);<br><br>        binding.firstName.setText(<span class="hljs-string">"xxx"</span>);<br>        binding.lastName.setText(<span class="hljs-string">"xxx"</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面展示了 DataBinding 的基础操作（单纯的替换 findViewById），如果仅使用 DataBinding 这部分功能，可以考虑使用 ViewBinding</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409114053.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h3 id="绑定数据"><a href="#绑定数据" class="headerlink" title="绑定数据"></a>绑定数据</h3><p>在之前的布局的基础上绑定数据</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">layout</span> <span class="hljs-attr">xmlns:android</span>=<span class="hljs-string">"http://schemas.android.com/apk/res/android"</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">data</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">variable</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"user"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"com.example.User"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">data</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">LinearLayout</span><br>       <span class="hljs-attr">android:orientation</span>=<span class="hljs-string">"vertical"</span><br>       <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"match_parent"</span><br>       <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"match_parent"</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">TextView</span> <br>           <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/firstName"</span>      <br>           <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@&#123;user.firstName&#125;"</span>/&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-name">TextView</span> <br>           <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/lastName"</span>      <br>           <span class="hljs-attr">android:layout_width</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:layout_height</span>=<span class="hljs-string">"wrap_content"</span><br>           <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@&#123;user.lastName&#125;"</span>/&gt;</span><br>   <span class="hljs-tag">&lt;/<span class="hljs-name">LinearLayout</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">layout</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        ActivityMainBinding binding = DataBindingUtil.setContentView(<span class="hljs-keyword">this</span>, R.layout.activity_main);<br>		binding.user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">"xxx"</span>,<span class="hljs-string">"xxx"</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这种方式也可以用在 recyclerview adapter 中，adapter 中的代码大大减少</p>
+<h3 id="Binding-Adapter"><a href="#Binding-Adapter" class="headerlink" title="Binding Adapter"></a>Binding Adapter</h3><p>您可能会好奇配置 <code>android:text=&quot;@{user.firstName}</code> 后内部发生了什么</p>
+<p>DataBinding 中使用 <code>Binding Adapter</code> 来处理，它主要处理「属性」和「事件」，前者如  <code>setText()</code> ，后者如 <code>setOnClickListener()</code>。上面的 <code>android:text</code> 实际上调用的是下面的方法</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409145551.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>DataBinding 中提供了很多 <code>Binding Adapter</code></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200410160031.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>如果官方提供的 <code>Binding Adapter</code> 不满足您的需求，您还可以自定义 <code>Binding Adapter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@BindingAdapter</span>(&#123;<span class="hljs-string">"imageUrl"</span>, <span class="hljs-string">"error"</span>&#125;)<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadImage</span><span class="hljs-params">(ImageView view, String url, Drawable error)</span> </span>&#123;<br>  Glide.with(view).load(url).error(error).into(view);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">ImageView</span> <span class="hljs-attr">app:imageUrl</span>=<span class="hljs-string">"@&#123;venue.imageUrl&#125;"</span> <span class="hljs-attr">app:error</span>=<span class="hljs-string">"@&#123;@drawable/venueError&#125;"</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="DadaBinding-LiveData"><a href="#DadaBinding-LiveData" class="headerlink" title="DadaBinding + LiveData"></a>DadaBinding + LiveData</h3><p>要将 LiveData 与 DataBinding 一起使用，需要指定生命周期所有者来定义 LiveData 对象的范围</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ViewModelActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AppCompatActivity</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(Bundle savedInstanceState)</span> </span>&#123;<br>        UserBinding binding = DataBindingUtil.setContentView(<span class="hljs-keyword">this</span>, R.layout.user);<br><br>        binding.setLifecycleOwner(<span class="hljs-keyword">this</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h3><p>使用单向 DataBinding，可以在属性上设置一个值，并设置一个对该属性的更改做出反应的监听器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">CheckBox</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/rememberMeCheckBox"</span><br>    <span class="hljs-attr">android:checked</span>=<span class="hljs-string">"@&#123;viewmodel.rememberMe&#125;"</span><br>    <span class="hljs-attr">android:onCheckedChanged</span>=<span class="hljs-string">"@&#123;viewmodel.rememberMeChanged&#125;"</span><br>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>使用双向绑定可以简化该过程</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">CheckBox</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/rememberMeCheckBox"</span><br>    <span class="hljs-attr">android:checked</span>=<span class="hljs-string">"@=&#123;viewmodel.rememberMe&#125;"</span><br>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>使用 <code>@={}</code> 接收对该属性的数据更改，并同时监听用户更新（注意，这里有 <code>=</code> ）</p>
+<p>那么究竟什么是双向绑定呢？</p>
+<p>所谓的「数据驱动」就是数据驱动视图的变化，而 DataBinding 的单向绑定就是如此。反过来讲，有些时候我们需要视图来驱动数据的变化（例如当我们在 EditText 上输入了文字，我们希望对应的 ViewModel 的 LiveData 的值能够及时响应该变化）</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409161036.jpg" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409110254.gif" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>如图，绿色部分为独立的 fragment ，内部存在两个 TextView，用于显示外部 fragment EditText 输入的文字</p>
+<p>如果实现上述功能，传统做法可能是使用 activity 级别的 ViewModel 进行两个 fragment 之间的通信，通过监听 EditText 文字的变化改变 ViewModel 中 LiveData 的值，并在绿色 fragment 中观察 LiveData 并显示到 TextView 中</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NormalViewModel</span> : <span class="hljs-type">ViewModel</span></span>() &#123;<br>    <span class="hljs-keyword">val</span> firstName = MutableLiveData&lt;String&gt;()<br>    <span class="hljs-keyword">val</span> lastName = MutableLiveData&lt;String&gt;()<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NormalDetailFragment</span> : <span class="hljs-type">Fragment</span></span>(R.layout.fragment_normal_detail) &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> mViewModel <span class="hljs-keyword">by</span> activityViewModels&lt;NormalViewModel&gt;()<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(view: <span class="hljs-type">View</span>, savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>        mViewModel.firstName.observe(viewLifecycleOwner) &#123;<br>            tvFirstName.text = it<br>        &#125;<br>        mViewModel.lastName.observe(viewLifecycleOwner) &#123;<br>            tvLastName.text = it<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NormalFragment</span> : <span class="hljs-type">Fragment</span></span>(R.layout.fragment_normal) &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> mViewModel <span class="hljs-keyword">by</span> activityViewModels&lt;NormalViewModel&gt;()<br><br>    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(view: <span class="hljs-type">View</span>, savedInstanceState: <span class="hljs-type">Bundle</span>?)</span></span> &#123;<br>        etFirstName.addTextChangedListener &#123;<br>            mViewModel.firstName.value = it.toString()<br>        &#125;<br>        etLastName.addTextChangedListener &#123;<br>            mViewModel.lastName.value = it.toString()<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>得益于 kotlin ，上面的代码以及很简洁了，如果使用 java 代码片段只会更长。</p>
+<p>不过使用 DataBinding，还可以更简洁</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">com.google.android.material.textview.MaterialTextView</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/tvFirstName"</span><br>    <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@&#123;vm.firstName&#125;"</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">com.google.android.material.textview.MaterialTextView</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/tvLastName"</span><br>    <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@&#123;vm.lastName&#125;"</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">com.google.android.material.textfield.TextInputEditText</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/etFirstName"</span><br>    <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@=&#123;vm.firstName&#125;"</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">com.google.android.material.textfield.TextInputEditText</span><br>    <span class="hljs-attr">android:id</span>=<span class="hljs-string">"@+id/etLastName"</span><br>    <span class="hljs-attr">android:text</span>=<span class="hljs-string">"@=&#123;vm.lastName&#125;"</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>只需配置好双向绑定（EditText 驱动 ViewModel 的 LiveData 的值变化，ViewModel 再驱动 TextView 显示数据），并在 fragment 通过固定的模板代码设置好 ViewModel 即可</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409112128.jpg" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>这里的魔法还是来自 Binding Adapter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// TextViewBindingAdapter.java</span><br><span class="hljs-meta">@BindingAdapter</span>(value = &#123;<span class="hljs-string">"android:beforeTextChanged"</span>, <span class="hljs-string">"android:onTextChanged"</span>,<br>        <span class="hljs-string">"android:afterTextChanged"</span>, <span class="hljs-string">"android:textAttrChanged"</span>&#125;, requireAll = <span class="hljs-keyword">false</span>)<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setTextWatcher</span><span class="hljs-params">(TextView view, <span class="hljs-keyword">final</span> BeforeTextChanged before,<br>        <span class="hljs-keyword">final</span> OnTextChanged on, <span class="hljs-keyword">final</span> AfterTextChanged after,<br>        <span class="hljs-keyword">final</span> InverseBindingListener textAttrChanged)</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> TextWatcher newValue;<br>    <span class="hljs-keyword">if</span> (before == <span class="hljs-keyword">null</span> &amp;&amp; after == <span class="hljs-keyword">null</span> &amp;&amp; on == <span class="hljs-keyword">null</span> &amp;&amp; textAttrChanged == <span class="hljs-keyword">null</span>) &#123;<br>        newValue = <span class="hljs-keyword">null</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        newValue = <span class="hljs-keyword">new</span> TextWatcher() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeTextChanged</span><span class="hljs-params">(CharSequence s, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> count, <span class="hljs-keyword">int</span> after)</span> </span>&#123;<br>                <span class="hljs-keyword">if</span> (before != <span class="hljs-keyword">null</span>) &#123;<br>                    before.beforeTextChanged(s, start, count, after);<br>                &#125;<br>            &#125;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onTextChanged</span><span class="hljs-params">(CharSequence s, <span class="hljs-keyword">int</span> start, <span class="hljs-keyword">int</span> before, <span class="hljs-keyword">int</span> count)</span> </span>&#123;<br>                <span class="hljs-keyword">if</span> (on != <span class="hljs-keyword">null</span>) &#123;<br>                    on.onTextChanged(s, start, before, count);<br>                &#125;<br>                <span class="hljs-keyword">if</span> (textAttrChanged != <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-comment">//通知发生变化</span><br>                    textAttrChanged.onChange();<br>                &#125;<br>            &#125;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">afterTextChanged</span><span class="hljs-params">(Editable s)</span> </span>&#123;<br>                <span class="hljs-keyword">if</span> (after != <span class="hljs-keyword">null</span>) &#123;<br>                    after.afterTextChanged(s);<br>                &#125;<br>            &#125;<br>        &#125;;<br>    &#125;<br>    <span class="hljs-keyword">final</span> TextWatcher oldValue = ListenerUtil.trackListener(view, newValue, R.id.textWatcher);<br>    <span class="hljs-keyword">if</span> (oldValue != <span class="hljs-keyword">null</span>) &#123;<br>        view.removeTextChangedListener(oldValue);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (newValue != <span class="hljs-keyword">null</span>) &#123;<br>        view.addTextChangedListener(newValue);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里使用 InverseBindingListener （调用 <code>textAttrChanged.onChange()</code>）来通知 LiveData 数据发生变化</p>
+<p>而变化后的值 通过 @InverseBindingAdapter 注解标记的方法处理，这里的 event 与上面的标记匹配（<code>android:textAttrChanged</code>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// TextViewBindingAdapter.java</span><br><span class="hljs-meta">@InverseBindingAdapter</span>(attribute = <span class="hljs-string">"android:text"</span>, event = <span class="hljs-string">"android:textAttrChanged"</span>)<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getTextString</span><span class="hljs-params">(TextView view)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> view.getText().toString();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>view 层变化通知数据变化，数据变化再通知 view 层变化，仿佛是个套娃</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409163420.jpg" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>因此避免这种死循环十分重要，setText 方法判断了新旧值是否相等来避免死循环</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409163541.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 总结</span></h2>
+
+<p>DataBinding 主要提供两部分功能</p>
+<ul>
+<li>替换 findViewById ，如果只用这部分功能可以使用 ViewBinding</li>
+<li>进行 data 和 UI 的绑定，使用「数据驱动」的思想解决了视图的一致性问题</li>
+</ul>
+<h3 id="各种-findViewById-替代方案对比"><a href="#各种-findViewById-替代方案对比" class="headerlink" title="各种 findViewById 替代方案对比"></a>各种 findViewById 替代方案对比</h3><ul>
+<li>findViewById </li>
+<li>Butterknife</li>
+<li>Kotlin Synthetics</li>
+<li>Data Binding</li>
+<li>View Binding</li>
+</ul>
+<h4 id="findViewById"><a href="#findViewById" class="headerlink" title="findViewById"></a>findViewById</h4><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409170514.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>findViewById 有两个问题</p>
+<ol>
+<li>当不能在 Activity/Fragment/ViewGroup 中定位到指定 id 的 View，会在运行期间崩溃，即非空安全</li>
+<li>如果某个 view 为 TextView 类型，而在使用中将其指定为其他类型不会在编译器报错，即非类型安全</li>
+</ol>
+<p>在 compileSdk 的 API 级别 26 中，对该方法的定义稍作更改以消除强制类型转换问题</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409171139.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>现在，开发人员无需在代码中手动转换 view 类型。 如果您引用 id 指向类型 TextView 的 View 并将其指定为 Button，则 Android SDK 会尝试查找具有提供的 id 的 Button，并且它将返回 Null，因为它将无法找到它</p>
+<p>但是在 Kotlin 中，您仍然需要提供诸如 findViewById<textview>(R.id.txtUsername) 之类的类型。 如果您不检查视图是否具有 null 安全，则可能出现 NullPointerException，但是此方法不会像以前那样抛出ClassCastException</textview></p>
+<h4 id="Butterknife"><a href="#Butterknife" class="headerlink" title="Butterknife"></a>Butterknife</h4><p><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="noopener">Butterknife</a> 是 <a href="https://medium.com/u/8ddd94878165?source=post_page-----98b8ef5b9249----------------------" target="_blank" rel="noopener">Jake Wharton</a> 大神写的替代 findViewById 的库，该库使用注解处理并生成 findViewById 代码</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409171316.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>它具有与 findViewById 几乎相似的问题。 但是，它在运行时添加了null 安全检查以避免 NullPointerException</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409171554.jpg" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>由于 DataBinding 和 ViewBinding 的出现，沃神已经宣布弃用该库</p>
+<h4 id="Kotlin-Synthetics"><a href="#Kotlin-Synthetics" class="headerlink" title="Kotlin Synthetics"></a>Kotlin Synthetics</h4><p>Kotlin 引入的最大功能之一是 Kotlin 扩展方法。 在它的帮助下，Kotlin Synthetics 诞生了。 Kotlin Synthetics 通过自动生成的 Kotlin 扩展方法，使开发人员可以从 xml 布局直接访问其内部的 view</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409171843.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>Kotlin Synthetics 第一次调用 findViewById 方法，然后默认情况下将 view 实例缓存在 HashMap 中。 可以通过Gradle 设置将此缓存配置更改为 SparseArray 或不缓存</p>
+<p>总体而言，Kotlin Synthetics 是一种很好的选择，因为它类型安全，并且通过 Kotlin 的 ？进行空检查。 它不需要开发人员的额外代码。 但这仅适用于 Kotlin 项目</p>
+<p>但是，在使用 Kotlin Synthetics 时遇到了一个小问题。 例如，如果将内容视图设置为布局，然后使用仅存在于其他布局中的 id ，则 IDE 可让您自动完成并添加新的 import 语句。 除非您专门检查以确保其 import 语句仅导入正确的 view，否则没有安全的方法来验证这不会导致运行时问题</p>
+<h4 id="DataBinding"><a href="#DataBinding" class="headerlink" title="DataBinding"></a>DataBinding</h4><p>DataBinding 在功能上比其他方法优越得多，因为它不仅为您提供类型安全和空安全的 view 引用，而且还允许您直接在 xml 布局内使用数据驱动视图变化</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200409172613.png" src="/2020/04/09/Jetpack-DataBinding/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h4 id="ViewBinding"><a href="#ViewBinding" class="headerlink" title="ViewBinding"></a>ViewBinding</h4><p>最近在 Android Studio 3.6 中引入的 ViewBinding 是 DataBinding 库的子集。 由于不需要注解处理，因此可以缩短构建时间。详细的使用可以参见 <a href="https://juejin.im/post/5e4806f3e51d4526c550a2ef" target="_blank" rel="noopener">这篇文章</a></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">findViewById</th>
+<th align="center">Butterknife</th>
+<th align="center">Kotlin Synthetics</th>
+<th align="center">DataBinding</th>
+<th align="center">ViewBinding</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一直空安全</td>
+<td align="center">❌</td>
+<td align="center">部分</td>
+<td align="center">部分</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">类型安全</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">样板代码</td>
+<td align="center"><font color="#CA0C16">多</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+<td align="center"><font color="#B77441">中等</font></td>
+<td align="center"><font color="#0DD613">少</font></td>
+</tr>
+<tr>
+<td align="center">构建时间</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+<td align="center">❌</td>
+<td align="center">✔️</td>
+</tr>
+<tr>
+<td align="center">支持语音</td>
+<td align="center">java/kotlin</td>
+<td align="center">java/kotlin</td>
+<td align="center">kotlin</td>
+<td align="center">java/kotlin</td>
+<td align="center">java/kotlin</td>
+</tr>
+</tbody></table>
+<h2 style="color: inherit; line-height: inherit; padding: 0px; margin: 1.6em 0px; font-weight: bold; border-bottom: 2px solid #9370DB; font-size: 1.3em;"><span style="font-size: inherit; line-height: inherit; margin: 0px; display: inline-block; font-weight: normal; background: #9370DB; color: rgb(255, 255, 255); padding: 3px 10px 1px; border-top-right-radius: 3px; border-top-left-radius: 3px; margin-right: 3px;"> 关于我</span></h2>
+
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
+<ul>
+<li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
+<li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
+<li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
+</ul>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/04/09/Jetpack-DataBinding/index.html">https://flywith24.gitee.io/2020/04/09/Jetpack-DataBinding/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jetpack/">Jetpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVVM/">MVVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidx/">androidx</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/04/09/Jetpack-fragment-onActivityCreated-Deprecated/"><i class="iconfont iconleft"></i>终于动手了，onActivityCreated 被弃用</a>
+  
+  
+    <a href="/2020/03/31/Jetpack-LiveData/">ViewModel的左膀右臂 数据驱动真的香<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

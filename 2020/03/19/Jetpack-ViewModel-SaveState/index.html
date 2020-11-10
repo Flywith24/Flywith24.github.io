@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="绝不丢失的状态 androidx SaveState ..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015095500.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 19, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>12319</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>大家都知道 activity 有着一套 <code>onSaveInstanceState-onRestoreInstanceState</code> 状态保存机制，旨在「系统资源回收」或「配置发生变化」保存状态，为用户提供更好的体验</p>
+<p>在 androidx 下，提供了 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库帮助 activity 和 fragment 处理状态保存和恢复</p>
+</blockquote>
+<p>本文默认您对状态保存机制有一定了解，这部分内容请移步 <a href="https://developer.android.com/topic/libraries/architecture/saving-states" target="_blank" rel="noopener">Saving UI States</a></p>
+<p>此外，关于 android 下的进程管理，推荐 Ian Lake 的 <a href="https://medium.com/androiddevelopers/who-lives-and-who-dies-process-priorities-on-android-cb151f39044f" target="_blank" rel="noopener">Who lives and who dies? Process priorities on Android</a></p>
+<p>本文介绍了 androidx 下 <code>SavedState</code> 如何帮助 activity 和 fragment 处理状态的保存和恢复，同时介绍 <code>viewmodel-savedstate</code> 库，以及在开发过程中正确使用状态保存的姿势</p>
+<!-- more-->
+
+<h2 id="软件工程中没有什么是中间层解决不了的"><a href="#软件工程中没有什么是中间层解决不了的" class="headerlink" title="软件工程中没有什么是中间层解决不了的"></a>软件工程中没有什么是中间层解决不了的</h2><p>在分析 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 库之前我们需要简单聊一聊 <code>ComponentActivity</code></p>
+<p>androidx activity 1.0.0 时，<code>ComponentActivity</code> 成为了 <code>FragmentActivity</code> 和 <code>AppCompatActivity</code> 的基类。</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318211230.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="androidx activity 1.0.0 "></p>
+<p>俗话说「百因必有果」，带着强烈的好奇心，我查了一下 ComponentActivity 引入的原因。</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318211823.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318211806.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>可以看到 <code>ComponentActivity</code> 继承了 androidx.core.app.ComponentActivity(在fragment库中)，并且最初仅实现了<code>LifecycleOwner</code> 接口</p>
+<p>我们创建的 activity 的继承关系现在变成了这样：</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318213053.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>那么回到最初的问题，为什么要引入 <code>ComponentActivity</code> ？其实看看现在 <code>ComponentActivity</code> 的类结构答案就很清楚了</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318213151.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><code>ComponentActivity</code> 实现了五个接口，代表着其除了 activity 还充当着五种角色。本着职能单一原则，官方通过建立一个中间层将部分功能分别交于专门的类来负责，OnBackPressedDispatcherOwner 就是我们讲 fragment 返回栈（<a href="https://juejin.im/post/5e6bae35f265da572a0d11ad" target="_blank" rel="noopener">【背上Jetpack之OnBackPressedDispatcher】Fragment 返回栈预备篇</a>）时提到的结构，而其中的 <code>SavedStateRegistryOwner</code> 则是我们今天要讲的主角  <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> 中的成员</p>
+<h2 id="SavedState"><a href="#SavedState" class="headerlink" title="SavedState"></a>SavedState</h2><p>引入 <a href="https://developer.android.com/jetpack/androidx/releases/savedstate" target="_blank" rel="noopener">SavedState</a> </p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">"androidx.savedstate:savedstate:1.0.0"</span><br></code></pre></td></tr></table></figure>
+
+<p>其实您不需要显示地声明，因为 activity 库内部已经引入了。jetpack 组件依赖关系可参考 <a href="https://juejin.im/post/5e567ee1518825494466a938" target="_blank" rel="noopener">【背上Jetpack】Jetpack 主要组件的依赖及传递关系</a></p>
+<p>这是一个很小的库</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318215718.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200318215746.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<blockquote>
+<p>图片来自 <a href="https://proandroiddev.com/viewmodels-state-persistence-savedstate-54d015acad82" target="_blank" rel="noopener">Android ViewModels: State persistence — SavedState</a></p>
+</blockquote>
+<h3 id="SavedStateProvider"><a href="#SavedStateProvider" class="headerlink" title="SavedStateProvider"></a>SavedStateProvider</h3><p>保存状态的组件，此状态将在以后恢复并使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">SavedStateProvider</span> </span>&#123;<br>    <span class="hljs-meta">@NonNull</span><br>    <span class="hljs-function">Bundle <span class="hljs-title">saveState</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="SavedStateRegistry"><a href="#SavedStateRegistry" class="headerlink" title="SavedStateRegistry"></a>SavedStateRegistry</h3><p>管理 <code>SavedStateProvider</code> 列表的组件，此注册表绑定了其所有者的生命周期（即 activity 或 fragment）。每次创建生命周期所有者都会创建一个新的实例</p>
+<p>创建注册表的所有者后（例如，在调用 activity 的 <code>onCreate(savedInstanceState)</code> 方法之后），将调用其 <code>performRestore(state)</code> 方法，以恢复系统杀死其所有者之前保存的任何状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performRestore</span><span class="hljs-params">(@NonNull Lifecycle lifecycle, @Nullable Bundle savedState)</span> </span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    <span class="hljs-keyword">if</span> (savedState != <span class="hljs-keyword">null</span>) &#123;<br>        mRestoredState = savedState.getBundle(SAVED_COMPONENTS_KEY);<br>    &#125;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>每个注册表的 <code>SavedStateProvider</code> 都由用于注册它的唯一密钥标识</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> SafeIterableMap&lt;String, SavedStateProvider&gt; mComponents = <span class="hljs-keyword">new</span> SafeIterableMap&lt;&gt;();<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerSavedStateProvider</span><span class="hljs-params">(@NonNull String key, @NonNull SavedStateProvider provider)</span> </span>&#123;<br>    SavedStateProvider previous = mComponents.putIfAbsent(key, provider);<br>    <span class="hljs-keyword">if</span> (previous != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">"SavedStateProvider with the given key is already registered"</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unregisterSavedStateProvider</span><span class="hljs-params">(@NonNull String key)</span> </span>&#123;<br>    mComponents.remove(key);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一旦完成注册，就可以通过<code>consumeRestoredStateForKey(key)</code> 来使用特定密钥的还原状态</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Bundle <span class="hljs-title">consumeRestoredStateForKey</span><span class="hljs-params">(@NonNull String key)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (mRestoredState != <span class="hljs-keyword">null</span>) &#123;<br>        Bundle result = mRestoredState.getBundle(key);<br>        <span class="hljs-comment">//调用后就会清空，第二次调用返回null</span><br>        mRestoredState.remove(key);<br>        <span class="hljs-keyword">if</span> (mRestoredState.isEmpty()) &#123;<br>            mRestoredState = <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>请注意，此方法检索保存的状态，然后清除其内部引用，这意味着用相同的键调用它两次将在第二次调用中返回 null</p>
+<p>一旦注册表恢复了其保存状态，则由提供者决定是否要求其恢复的数据。 如果没有，下次注册表的所有者被系统杀死时，未使用的还原数据将再次保存到保存状态</p>
+</blockquote>
+<p>已注册的 provider 能够在其所有者被系统杀死之前保存状态。 发生这种情况时，将调用其 <code>Bundle saveState()</code> 方法。 对于每个已注册的 <code>SavedStateProvider</code>，都可以像这样保存状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">savedState.putBundle(savedStateProviderKey, savedStateProvider.saveState());<br></code></pre></td></tr></table></figure>
+
+<p><code>performSave(outBundle)</code> 方法的源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">performSave</span><span class="hljs-params">(@NonNull Bundle outBundle)</span> </span>&#123;<br>    Bundle components = <span class="hljs-keyword">new</span> Bundle();<br>    <br>    <span class="hljs-comment">// 1.保存未使用的状态</span><br>    <span class="hljs-keyword">if</span> (mRestoredState != <span class="hljs-keyword">null</span>) &#123;<br>        components.putAll(mRestoredState);<br>    &#125;<br>    <br>    <span class="hljs-comment">// 2. 通过 SavedStateProvider 保存状态</span><br>    <span class="hljs-keyword">for</span> (Iterator&lt;Map.Entry&lt;String, SavedStateProvider&gt;&gt; it = mComponents.iteratorWithAdditions(); it.hasNext(); ) &#123;<br>        Map.Entry&lt;String, SavedStateProvider&gt; entry1 = it.next();<br>        components.putBundle(entry1.getKey(), entry1.getValue().saveState());<br>    &#125;<br>    <br>    <span class="hljs-comment">// 3. 将bundle 保存到 outBundle 对象中</span><br>    outBundle.putBundle(SAVED_COMPONENTS_KEY, components);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>执行状态保存将所有未使用的状态与注册表提供的状态合并。 此 outBundle 是 activity 的 <code>onSaveInstanceState</code> 中传入的 bundle 。</p>
+<h3 id="SavedStateRegistryController"><a href="#SavedStateRegistryController" class="headerlink" title="SavedStateRegistryController"></a>SavedStateRegistryController</h3><p>一个包装 <code>SavedStateRegistry</code> 并允许通过其2个主要方法对其进行控制的组件：performRestore(savedState) 和 <code>performSave(outBundle )</code>。 这两个方法将内部通过 <code>SavedStateRegistry</code> 中的方法处理 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SavedStateRegistryController</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SavedStateRegistryOwner mOwner;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SavedStateRegistry mRegistry;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">performRestore</span><span class="hljs-params">(@Nullable Bundle savedState)</span> </span>&#123;<br>        <span class="hljs-comment">// ...</span><br>        mRegistry.performRestore(lifecycle, savedState);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">performSave</span><span class="hljs-params">(@NonNull Bundle outBundle)</span> </span>&#123;<br>        mRegistry.performSave(outBundle);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="SavedStateRegistryOwner"><a href="#SavedStateRegistryOwner" class="headerlink" title="SavedStateRegistryOwner"></a>SavedStateRegistryOwner</h3><p>持有 <code>SavedStateRegistry</code> 的组件。 默认情况下，androidx 包中的<code>ComponentActivity</code> 和 <code>Fragment</code> 都实现此接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">SavedStateRegistryOwner</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">LifecycleOwner</span> </span>&#123;<br>    <span class="hljs-meta">@NonNull</span><br>    <span class="hljs-function">SavedStateRegistry <span class="hljs-title">getSavedStateRegistry</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Activity-的状态保存"><a href="#Activity-的状态保存" class="headerlink" title="Activity 的状态保存"></a>Activity 的状态保存</h2><p>这里我们要明确一件事情，activity 保存的状态究竟都有什么？</p>
+<p>这部分内容可以参见 <a href="https://developer.android.com/guide/components/activities/activity-lifecycle.html#saras" target="_blank" rel="noopener">官方文档</a> </p>
+<p>简单来说，<strong>activity 的状态保存分为 view 状态和成员状态</strong></p>
+<p>默认情况下，系统使用 Bundle 实例状态来保存有关 activity 布局中每个 View 对象的信息（例如，输入到 EditText 中的文本值或 recyclerview 的滚动位置）。 因此，如果 activity 实例被销毁并重新创建，则布局状态将恢复为之前的状态，而无需您执行任何代码。（<strong>注意，需要恢复状态的 view 需要配置 id</strong> ）</p>
+<p>这部分逻辑在 activity 中的 <code>onSaveInstanceState</code> 方法内实现</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319115543.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="onSaveInstanceState "></p>
+<blockquote>
+<p>不同平台 <code>onSaveInstanceState</code>  方法的执行时机稍有不同，android P 之前 <code>onSaveInstanceState</code> 执行在 <code>onStop</code> 之前，但不限于在 <code>onPause</code> 之前或之后。android P 及之后该方法在 <code>onStop</code> 后执行</p>
+</blockquote>
+<p>前面我们提到 <code>ComponentActivity</code> 实现了 <code>SavedStateRegistryOwner</code> ，下面我们来看一看 activity 如何利用该库来实现状态的保存与恢复</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ComponentActivity</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">androidx</span>.<span class="hljs-title">core</span>.<span class="hljs-title">app</span>.<span class="hljs-title">ComponentActivity</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SavedStateRegistryOwner</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SavedStateRegistryController mSavedStateRegistryController = SavedStateRegistryController.create(<span class="hljs-keyword">this</span>);<br>  <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onCreate</span><span class="hljs-params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onCreate(savedInstanceState);<br>        mSavedStateRegistryController.performRestore(savedInstanceState);<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br>  <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onSaveInstanceState</span><span class="hljs-params">(@NonNull Bundle outState)</span> </span>&#123;<br>        <span class="hljs-comment">// ...</span><br>        <span class="hljs-comment">//这里先调用父类的 onSaveInstanceState 保存 view 状态</span><br>        <span class="hljs-keyword">super</span>.onSaveInstanceState(outState);<br>        mSavedStateRegistryController.performSave(outState);<br>    &#125;<br>  <br>    <span class="hljs-meta">@NonNull</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> SavedStateRegistry <span class="hljs-title">getSavedStateRegistry</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> mSavedStateRegistryController.getSavedStateRegistry();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其内部持有 <code>SavedStateRegistryController</code> 的实例 <code>mSavedStateRegistryController</code> ，在 activity 的 <code>onCreate</code> 方法中 通过 controller 的 <code>performRestore</code> 方法来查询已保存的状态，在 <code>onSaveInstanceState</code> 中 使用 controller  的 <code>performSave</code> 方法来保存状态</p>
+<p><strong>除了 view 状态和成员状态，activity 还负责保存其内部的 fragment 的状态</strong>。<code>FragmentActivity</code> 的 <code>onSaveInstanceState</code> 方法有对其内部 fragment 的状态进行保存，并在 onCreate 方法中对已保存的 fragment 进行恢复。这解释了如果操作不当会导致 fragment 重叠的问题</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319140343.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319140801.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h2 id="Fragment-的状态保存"><a href="#Fragment-的状态保存" class="headerlink" title="Fragment 的状态保存"></a>Fragment 的状态保存</h2><p>androidx fragment 使用 <code>FragmentStateManager</code> 来处理 fragment 的状态保存</p>
+<p>其内部有四个保存相关的方法</p>
+<ul>
+<li><code>saveState</code></li>
+<li><code>saveBasicState</code></li>
+<li><code>saveViewState</code></li>
+<li><code>saveInstanceState</code></li>
+</ul>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319142729.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="FragmentStateManager"></p>
+<p>其调用链为 activity 通过 <code>FragmentController</code> 间接 调用 <code>FragmentManager</code> 的 <code>saveAllState</code>，接着依次调用后面的save 方法</p>
+<p>Fragment 的状态保存可分为 view 状态，成员状态，child fragment 状态</p>
+<p>关于 view 状态 , <code>FragmentStateManager</code> 提供了 <code>saveViewSate</code> 方法，它的调用有两处：</p>
+<ol>
+<li>在 activity 或父 fragment 触发状态保存时调用，即上述流程</li>
+<li>在 fragment 即将进入 <code>onDestroyView</code> 生命周期时调用，其位置在 <code>FragmentManager</code> moveToState 方法内部，这解释了为什么加入返回栈的 replace 操作在返回时 view 状态可以自动恢复</li>
+</ol>
+<p>关于成员状态，由 activity 中的状态机制处理，即上节内容</p>
+<p>关于 child  fragment 状态，fragment 的 <code>onCreate</code> 方法会调用 <code>restoreChildFragmentState</code> 来恢复 child  fragment 的状态，并在 <code>FragmentStateManager</code>  中的 <code>saveBasicState</code> 方法中 调用 <code>performSaveInstanceState</code> 来保存 child  fragment 的状态</p>
+<h2 id="Viewmodel-SavedState"><a href="#Viewmodel-SavedState" class="headerlink" title="Viewmodel-SavedState"></a>Viewmodel-SavedState</h2><p>2020-01-22，<code>ViewModel-SavedState 1.0.0</code> 正式版发布，02-05 发布了 <code>2.2.0</code> 正式版</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs groovy">implementation <span class="hljs-string">"androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0"</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>您不需要手动引入该库，因为 fragment 库以及内部引入该库</p>
+</blockquote>
+<p><code>Jetpack MVVM</code> 下 UI State 通常被 <code>ViewModel</code> 持有并存储，因此该模块出现了，配置该模块后，<code>ViewModel</code> 对象将通过其构造函数接收 <code>SavedStateHandle</code> 对象（键值映射），可让您保存状态并查询已保存的状态。 这些值将在系统终止进程后继续存在，并可以通过同一对象使用。</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319165450.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="ViewModel-SavedState"></p>
+<blockquote>
+<p>图片来自 <a href="https://proandroiddev.com/viewmodels-state-persistence-savedstate-54d015acad82" target="_blank" rel="noopener">Android ViewModels: State persistence — SavedState</a></p>
+</blockquote>
+<h3 id="SavedStateHandle"><a href="#SavedStateHandle" class="headerlink" title="SavedStateHandle"></a>SavedStateHandle</h3><p>内部持有已保存状态 key-value 的 map，允许读取和写入状态，这些状态在应用进程被杀死后仍然存在</p>
+<p><code>SavedStateHandle</code> 通过 <code>ViewModel</code> 的构造器传入，下面是其主要的主要的几个方法</p>
+<ul>
+<li>T get(String key)</li>
+<li>MutableLiveData<t> getLiveData(String key)</t></li>
+<li>void set(String key, T value)</li>
+</ul>
+<p><code>SavedStateHandle</code> 还包含 <code>SavedStateProvider</code> 的实例，用于帮助 <code>ViewModel</code> 的 owner 保存状态</p>
+<h3 id="AbstractSavedStateViewModelFactory"><a href="#AbstractSavedStateViewModelFactory" class="headerlink" title="AbstractSavedStateViewModelFactory"></a>AbstractSavedStateViewModelFactory</h3><p>一个实现 <code>ViewModelFactory.KeyedFactory</code> 的 <code>ViewModel Factory</code>，它会创建一个与实例化的请求的 ViewModel 关联的 <code>SavedStateHandle</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractSavedStateViewModelFactory</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ViewModelProvider</span>.<span class="hljs-title">KeyedFactory</span> </span>&#123;<br>  <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SavedStateRegistry mSavedStateRegistry;<br>  <br>    <span class="hljs-comment">// Default state used when the saved state is empty</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Bundle mDefaultArgs;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> &lt;T extends ViewModel&gt; <span class="hljs-function">T <span class="hljs-title">create</span><span class="hljs-params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;<br>        <span class="hljs-comment">// 读取保存的状态</span><br>        Bundle restoredState = mSavedStateRegistry.consumeRestoredStateForKey(key);<br>      <br>        <span class="hljs-comment">// 创建保存状态的 handle</span><br>        SavedStateHandle handle = SavedStateHandle.createHandle(restoredState, mDefaultArgs);<br>        <br>        <span class="hljs-comment">// ... </span><br>      <br>        <span class="hljs-comment">// 创建 viewModel</span><br>        T viewmodel = create(key, modelClass, handle);<br>      <br>        <span class="hljs-comment">// ... </span><br><br>        <span class="hljs-keyword">return</span> viewmodel;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="SavedStateViewModelFactory"><a href="#SavedStateViewModelFactory" class="headerlink" title="SavedStateViewModelFactory"></a>SavedStateViewModelFactory</h3><p><code>AbstractSavedStateViewModelFactory</code> 的具体实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SavedStateViewModelFactory</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSavedStateVMFactory</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SavedStateViewModelFactory</span><span class="hljs-params">(@NonNull Application application,<br>            @NonNull SavedStateRegistryOwner owner)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>(application, owner, <span class="hljs-keyword">null</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SavedStateViewModelFactory</span><span class="hljs-params">(@NonNull Application application, @NonNull SavedStateRegistryOwner owner, @Nullable Bundle defaultArgs)</span> </span>&#123;<br>        mSavedStateRegistry = owner.getSavedStateRegistry();<br>        mLifecycle = owner.getLifecycle();<br>        mDefaultArgs = defaultArgs;<br>        mApplication = application;<br>        mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);<br>    &#125;<br>    <br>	<span class="hljs-keyword">public</span> &lt;T extends ViewModel&gt; <span class="hljs-function">T <span class="hljs-title">create</span><span class="hljs-params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;<br>        <span class="hljs-keyword">boolean</span> isAndroidViewModel = AndroidViewModel.class.isAssignableFrom(modelClass);<br>        Constructor&lt;T&gt; constructor;<br>        <span class="hljs-keyword">if</span> (isAndroidViewModel) &#123;<br>            constructor = findMatchingConstructor(modelClass, ANDROID_VIEWMODEL_SIGNATURE);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            constructor = findMatchingConstructor(modelClass, VIEWMODEL_SIGNATURE);<br>        &#125;<br>        <span class="hljs-comment">// doesn't need SavedStateHandle</span><br>        <span class="hljs-keyword">if</span> (constructor == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> mFactory.create(modelClass);<br>        &#125;<br><br>        SavedStateHandleController controller = SavedStateHandleController.create(<br>                mSavedStateRegistry, mLifecycle, key, mDefaultArgs);        <br>        T viewmodel;<br>        <span class="hljs-keyword">if</span> (isAndroidViewModel) &#123;<br>            viewmodel = constructor.newInstance(mApplication, controller.getHandle());<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            viewmodel = constructor.newInstance(controller.getHandle());<br>        &#125;<br>        viewmodel.setTagIfAbsent(TAG_SAVED_STATE_HANDLE_CONTROLLER, controller);<br>        <span class="hljs-keyword">return</span> viewmodel;<br>        <span class="hljs-comment">//...</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319174431.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ViewModelProvider(<span class="hljs-keyword">this</span>).get(MyViewModel::<span class="hljs-class"><span class="hljs-keyword">class</span>.<span class="hljs-title">java</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p>在 activity 中创建 ViewModel 实例，传入 this （<code>SavedStateRegistryOwner</code> ）作为参数，该参数可以访问其 <code>SavedStateRegistry</code>，如果没有传入 factory 会通过 activity 重写的 <code>getDefaultViewModelProviderFactory</code> 方法来获取默认的 factory 。然后 factory 将使用保存的状态， 将其包装在 <code>SavedStateHandle</code> 中，并将其传递给 ViewModel。 ViewModel 可以读取和写入该 handle</p>
+<p>当 activity 的 <code>onSaveInstanceState(outState)</code> 方法被调用，其 <code>SavedStateRegistry</code> 的 <code>performSave(outState)</code> 方法将被执行，其内部的所有 <code>SavedStateProvider</code> 的 <code>saveState</code> 方法均被执行，一旦执行完毕，<code>outState</code> 就包含了已保存的状态</p>
+<p>当 app 被重启后，activity 和新的 registry  将被创建，activity 的 <code>onCreate(savedInstanceState)</code> 方法会被调用，然后 registry 的 <code>performRestore(savedInstanceState)</code> 将被调用以便恢复之前保存的状态</p>
+<h2 id="状态保存的正确姿势"><a href="#状态保存的正确姿势" class="headerlink" title="状态保存的正确姿势"></a>状态保存的正确姿势</h2><p><code>ViewModel</code> 构造器加入 <code>SavedStateHandle</code> 参数，并将想要保存的数据使用该 handle 保存</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WithSavedStateViewModel</span></span>(<span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> state: SavedStateHandle) : ViewModel() &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">val</span> key = <span class="hljs-string">"key"</span><br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">setValue</span><span class="hljs-params">(value: <span class="hljs-type">String</span>)</span></span> = state.<span class="hljs-keyword">set</span>(key, value)<br>    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">getValue</span><span class="hljs-params">()</span></span>: LiveData&lt;String&gt; = state.getLiveData(key)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>无需重写 <code>onSaveInstanceState/onRestoreInstanceState</code>  方法</strong></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319231231.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200319231451.png" src="/2020/03/19/Jetpack-ViewModel-SaveState/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="运行示意图"></p>
+<p><a href="https://github.com/Flywith24/Flywith24-Jetpack-Demo" target="_blank" rel="noopener">Demo 地址</a></p>
+<blockquote>
+<p>SavedState 仅适合保存轻量级的数据，重量级操作请考虑持sp，数据库等持久化方案</p>
+</blockquote>
+<hr>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
+<p>我是 <a href="http://www.yangyunzhao.com" target="_blank" rel="noopener">Fly_with24</a></p>
+<ul>
+<li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
+<li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
+<li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
+</ul>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/19/Jetpack-ViewModel-SaveState/index.html">https://flywith24.gitee.io/2020/03/19/Jetpack-ViewModel-SaveState/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jetpack/">Jetpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVVM/">MVVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidx/">androidx</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/03/23/Jetpack-ViewModel/"><i class="iconfont iconleft"></i>即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</a>
+  
+  
+    <a href="/2020/03/16/Jetpack-fragment-back-stack/">从源码的角度看 Fragment 返回栈<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

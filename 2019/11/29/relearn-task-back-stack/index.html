@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>【重学Android读书笔记】Activity的任务栈与返回栈 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="
+订阅 重学安卓 很久了，最近在整理读书笔记，在此记录..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">【重学Android读书笔记】Activity的任务栈与返回栈</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015092807.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">【重学Android读书笔记】Activity的任务栈与返回栈</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>十一月 29, 2019</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>24604</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>该专栏的代码地址： <a href="https://github.com/KunMinX/Relearn-Android" target="_blank" rel="noopener">https://github.com/KunMinX/Relearn-Android</a> </p>
+<h4 id="疑惑产生"><a href="#疑惑产生" class="headerlink" title="疑惑产生"></a>疑惑产生</h4><p>根据大佬的代码以及文章描述，有个地方让我很疑惑。</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153417.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="问题"></p>
+<p>我这里没有过滤当前使用的app，所以app1和app2产生的日志都显示了出来。</p>
+<p>大佬在评论区关于此的回答</p>
+<blockquote>
+<p><a href="https://xiaozhuanlan.com/u/kunminx" target="_blank" rel="noopener">KunMinX</a></p>
+<p>#40</p>
+<p><a href="https://xiaozhuanlan.com/topic/7812045693#reply2" target="_blank" rel="noopener">#2楼</a> <a href="https://xiaozhuanlan.com/u/2711412979" target="_blank" rel="noopener"><em>@</em>Sky63</a><br>大概明白你提到的、造成困扰的地方了。<br>D 和 C 是由 app1 启动，在 IDE 中可通过 app1 的视角观察到。同理，当 app2 的 B 唤起 D 时，你在回退 D 的时候能在 app2 和 app1 的视角中同时观察到 D 的销毁。而紧随其后再回退一次， 便能在 app1 中观察到 C 被销毁。再下一次才轮到 app2 中 B 被销毁。</p>
+</blockquote>
+<p>但是根据我操作看到的现象，D的销毁不是在不同app视角观察到的同一次销毁。通过上图可以看出两次销毁是有时间差的，而且经过我的二次确认，的确是关闭两次界面才出现了两次销毁Log。</p>
+<h4 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h4><p>通过 <code>adb shell</code> 中的 <code>dumpsys activity activities</code> 命令可以查看 activity 栈信息，故我截取了相关的输出，以下堆栈信息均经过精简。</p>
+<h5 id="1-app1-依次打开-SingleTaskOne-SingleTaskTwo"><a href="#1-app1-依次打开-SingleTaskOne-SingleTaskTwo" class="headerlink" title="1. app1 依次打开 SingleTaskOne SingleTaskTwo"></a>1. <code>app1</code> 依次打开 <code>SingleTaskOne</code> <code>SingleTaskTwo</code></h5><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153441.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log1"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs json">➜  Relearn-Android (master) adb shell<br>sagit:/ $ dumpsys activity activities<br>ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)<br>Display #0 (activities from top to bottom):<br><br>  Stack #2: type=standard mode=fullscreen<br>    Task id #3<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=2&#125;<br>        Run #1: ActivityRecord&#123;93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>        Run #0: ActivityRecord&#123;999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3&#125;<br><br>    mResumedActivity: ActivityRecord&#123;93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>    mLastPausedActivity: ActivityRecord&#123;999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3&#125;<br><br>  Stack #1: type=standard mode=fullscreen<br>    Task id #2<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2&#125;<br>        Run #1: ActivityRecord&#123;8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br>        Run #0: ActivityRecord&#123;d76e9a5 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br><br>  Stack #0: type=home mode=fullscreen<br><br>    Task id #1<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;94a7a01 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1&#125;<br>        Run #0: ActivityRecord&#123;7d6409 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;7d6409 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>  ResumedActivity:ActivityRecord&#123;<br>		93c0c72u0com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>  <br>  mFocusedStack=ActivityStack&#123;<br>  		3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks<br>  		&#125; <br>  mLastFocusedStack=ActivityStack&#123;<br>  		3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks<br>  		&#125;<br>  mCurTaskIdForUser=&#123;0=3&#125;<br>  mUserStackInFront=&#123;&#125;<br>  displayId=0 stacks=3<br>   mHomeStack=ActivityStack&#123;<br>   76ebae7 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks<br>   &#125;<br>  isHomeRecentsComponent=false  KeyguardController:<br>    mKeyguardShowing=false<br>    mAodShowing=false<br>    mKeyguardGoingAway=false<br>    mOccluded=false<br>    mDismissingKeyguardActivity=null<br>    mDismissalRequested=false<br>    mVisibilityTransactionDepth=0<br>  LockTaskController<br>    mLockTaskModeState=NONE<br>    mLockTaskModeTasks=<br>    mLockTaskPackages (userId:packages)=<br>      u0:[]<br></code></pre></td></tr></table></figure>
+
+<p>此时看到堆栈顺序为：<strong>Stack #2 -&lt; Stack #1 -&lt; Stack #0</strong> 其中 <code>Stack #0</code> 为 <code>launcher</code></p>
+<p>获取焦点的 <code>ActivityStack</code>：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">mFocusedStack=ActivityStack&#123;<br>  		3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125; <br>mLastFocusedStack=ActivityStack&#123;<br>  		3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="2-按下HOME键，打开-app2-依次打开-StandardOneActivity-StandardTwoActivity"><a href="#2-按下HOME键，打开-app2-依次打开-StandardOneActivity-StandardTwoActivity" class="headerlink" title="2. 按下HOME键，打开 app2 依次打开 StandardOneActivity StandardTwoActivity"></a>2. 按下HOME键，打开 <code>app2</code> 依次打开 <code>StandardOneActivity</code> <code>StandardTwoActivity</code></h5><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153505.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log2"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><code class="hljs json">Display #0 (activities from top to bottom):<br><br>  Stack #3: type=standard mode=fullscreen<br>    Task id #4<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;718157f #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4&#125;<br>        Run #3: ActivityRecord&#123;137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4&#125;<br>        Run #2: ActivityRecord&#123;648188e u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4&#125;<br>        Run #1: ActivityRecord&#123;f39ebe9 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4&#125;<br>        Run #0: ActivityRecord&#123;f02fff8 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4&#125;<br><br>    mResumedActivity: ActivityRecord&#123;137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4&#125;<br>    mLastPausedActivity: ActivityRecord&#123;648188e u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4&#125;<br><br>  Stack #0: type=home mode=fullscreen<br>    Task id #1<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;2094d95 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1&#125;<br>        Run #0: ActivityRecord&#123;a7fed1a u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;a7fed1a u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>  Stack #2: type=standard mode=fullscreen<br>    Task id #3<br>    <br>    Running activities (most recent first):<br>      TaskRecord&#123;9d79eaa #3 A=com.kunminx.task.c U=0 StackId=2 sz=2&#125;<br>        Run #1: ActivityRecord&#123;15d3e09 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>        Run #0: ActivityRecord&#123;20d177c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;15d3e09 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br><br>  Stack #1: type=standard mode=fullscreen<br>  isSleeping=false<br>  mBounds=Rect(0, 0 - 0, 0)<br><br>    Task id #2<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;e526e38 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2&#125;<br>        Run #1: ActivityRecord&#123;19055b2 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br>        Run #0: ActivityRecord&#123;5a647a6 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;19055b2 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br><br>  ResumedActivity: ActivityRecord&#123;137a584 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4&#125;<br><br>  mFocusedStack=ActivityStack&#123;<br>      dfe2e11 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125; <br>mLastFocusedStack=ActivityStack&#123;<br>    dfe2e11 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mCurTaskIdForUser=&#123;0=4&#125;<br>  mUserStackInFront=&#123;&#125;<br>  displayId=0 stacks=4<br>   mHomeStack=ActivityStack&#123;968fb76 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks&#125;<br>  isHomeRecentsComponent=false  KeyguardController:<br>    mKeyguardShowing=false<br>    mAodShowing=false<br>    mKeyguardGoingAway=false<br>    mOccluded=false<br>    mDismissingKeyguardActivity=null<br>    mDismissalRequested=false<br>    mVisibilityTransactionDepth=0<br>  LockTaskController<br>    mLockTaskModeState=NONE<br>    mLockTaskModeTasks=<br>    mLockTaskPackages (userId:packages)=<br>      u0:[]<br></code></pre></td></tr></table></figure>
+
+<p><strong>这里的堆栈顺序为 Stack #3 -&lt; Stack #0 -&lt; Stack #2 -&lt; Stack #1</strong></p>
+<p><code>Stack #0</code> 为home ，这里反应出点击home键，打开app2 的操作。此时 <code>Stack #3</code> 中有 4 个 <code>ActivityRecord</code></p>
+<p>当前获取焦点的 <code>ActivityStack</code> </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">  mFocusedStack=ActivityStack&#123;<br>      dfe2e11 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125; <br>mLastFocusedStack=ActivityStack&#123;<br>    dfe2e11 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mCurTaskIdForUser=&#123;0=4&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-接下来启动-SingleTaskTwoActivity"><a href="#3-接下来启动-SingleTaskTwoActivity" class="headerlink" title="3. 接下来启动 SingleTaskTwoActivity"></a>3. 接下来启动 <code>SingleTaskTwoActivity</code></h5><p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153520.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log3"></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs json">sagit:/ $ dumpsys activity activities<br>ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)<br>Display #0 (activities from top to bottom):<br><br>  Stack #2: type=standard mode=fullscreen<br>    Task id #3<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3&#125;<br>        Run #2: ActivityRecord&#123;55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>        Run #1: ActivityRecord&#123;93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>        Run #0: ActivityRecord&#123;999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3&#125;<br><br>    mResumedActivity: ActivityRecord&#123;55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br><br>  Stack #3: type=standard mode=fullscreen<br>    Task id #4<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;f14a51a #4 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4&#125;<br>        Run #3: ActivityRecord&#123;1838862 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4&#125;<br>        Run #2: ActivityRecord&#123;bdb3180 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4&#125;<br>        Run #1: ActivityRecord&#123;7b21450 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t4&#125;<br>        Run #0: ActivityRecord&#123;ff57abb u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t4&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;1838862 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t4&#125;<br><br>  Stack #0: type=home mode=fullscreen<br>    Task id #1<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;94a7a01 #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1&#125;<br>        Run #0: ActivityRecord&#123;7d6409 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;7d6409 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>  Stack #1: type=standard mode=fullscreen<br><br>    Task id #2<br>        <br>    Running activities (most recent first):<br>      TaskRecord&#123;d91b3e8 #2 A=com.kunminx.relearn_android U=0 StackId=1 sz=2&#125;<br>        Run #1: ActivityRecord&#123;8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br>        Run #0: ActivityRecord&#123;d76e9a5 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t2&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;8b59240 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t2&#125;<br><br>  ResumedActivity: ActivityRecord&#123;55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br><br>  mFocusedStack=ActivityStack&#123;<br>    3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125; <br>  mLastFocusedStack=ActivityStack&#123;<br>    3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mCurTaskIdForUser=&#123;0=4&#125;<br><br>  mUserStackInFront=&#123;&#125;<br>  displayId=0 stacks=4<br>   mHomeStack=ActivityStack&#123;<br>       76ebae7 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks&#125;<br>  isHomeRecentsComponent=false  KeyguardController:<br>    mKeyguardShowing=false<br>    mAodShowing=false<br>    mKeyguardGoingAway=false<br>    mOccluded=false<br>    mDismissingKeyguardActivity=null<br>    mDismissalRequested=false<br>    mVisibilityTransactionDepth=0<br>  LockTaskController<br>    mLockTaskModeState=NONE<br>    mLockTaskModeTasks=<br>    mLockTaskPackages (userId:packages)=<br>      u0:[]<br></code></pre></td></tr></table></figure>
+
+<p><strong>当前的堆栈顺序 Stack #2 -&lt; Stack #3 -&lt; Stack #0 -&lt;Stack #1</strong></p>
+<p>当前获取焦点的 <code>ActivityStack</code> </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">mFocusedStack=ActivityStack&#123;<br>  3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125; <br>mLastFocusedStack=ActivityStack&#123;<br>  3a870a6 stackId=2 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>mCurTaskIdForUser=&#123;0=4&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>Stack #2</code> 中 <code>TaskRecord</code>信息为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">TaskRecord&#123;4920da #3 A=com.kunminx.task.c U=0 StackId=2 sz=3&#125;<br>  Run #2: ActivityRecord&#123;55f799d u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>  Run #1: ActivityRecord&#123;93c0c72 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t3&#125;<br>  Run #0: ActivityRecord&#123;999111 u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t3&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="解惑"><a href="#解惑" class="headerlink" title="解惑"></a>解惑</h4><p><strong>关键的地方来了</strong></p>
+<p>的确有两个 <code>SingleTaskTwoActivity</code> 的 <code>ActivityRecord</code> ，栈顶的属于 <code>app2</code> 第二个属于 <code>app1</code></p>
+<p>由此看出这两个<code>ActivityRecord</code> 不是一个实例，所以这里 <code>app2</code> 启动的 <code>SingleTaskTwoActivity</code> 应该是 <code>app2</code> 自己的activity</p>
+<p>废话不说，翻代码！这里截取了 <code>BaseTaskActivity</code> 中的部分代码，<code>app1</code> 和 <code>app2</code>中的 <code>activity</code> 都继承了<code>BaseTaskActivity</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onClick</span><span class="hljs-params">(View v)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> i = v.getId();<br>        <span class="hljs-keyword">if</span> (i == R.id.btn_standard_one) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent(<span class="hljs-keyword">this</span>, StandardOneActivity.class);<br>            startActivityWithCheck(intent);<br><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i == R.id.btn_standard_two) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent(<span class="hljs-keyword">this</span>, StandardTwoActivity.class);<br>            startActivityWithCheck(intent);<br><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i == R.id.btn_singletask_one) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent(<span class="hljs-keyword">this</span>, SingleTaskOneActivity.class);<br>            startActivityWithCheck(intent);<br><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i == R.id.btn_singletask_two) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent(<span class="hljs-keyword">this</span>, SingleTaskTwoActivity.class);<br>            startActivityWithCheck(intent);<br><br>            <span class="hljs-comment">//以下测试结果证实：</span><br>            <span class="hljs-comment">//1.在 App2 中启动 App1 的 standard Activity，仍然遵守 standard 的特点：在启动它的 Activity 所在的任务中启动，也即跟随 App2。</span><br>            <span class="hljs-comment">//2.在 App2 中启动 App1 的 singleTop Activity，跟随状况同 standard。</span><br>            <span class="hljs-comment">//3.在 App2 中启动 App1 的 singleTask Activity，仍然处于 App1 的任务中，并不跟随 App2。</span><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i == R.id.btn_singletask_a) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent();<br>            ComponentName name = <span class="hljs-keyword">new</span> ComponentName(<br>                    <span class="hljs-string">"com.kunminx.relearn_android"</span>,<br>                    <span class="hljs-string">"com.kunminx.relearn_android.SingleTaskAActivity"</span>);<br>            intent.setComponent(name);<br>            startActivityWithCheck(intent);<br><br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (i == R.id.btn_singletask_b) &#123;<br>            Intent intent = <span class="hljs-keyword">new</span> Intent();<br>            ComponentName name = <span class="hljs-keyword">new</span> ComponentName(<br>                    <span class="hljs-string">"com.kunminx.relearn_android"</span>,<br>                    <span class="hljs-string">"com.kunminx.relearn_android.SingleTaskBActivity"</span>);<br>            intent.setComponent(name);<br>            startActivityWithCheck(intent);<br><br>        &#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看出这里 <code>app2</code> 启动<code>SingleTaskTwoActivity</code> 的确是自己的 <code>activity</code></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200616181623.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200616181658.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><strong>那么它为什么和<code>app1</code> 中的  <code>SingleTaskTwoActivity</code>  是同一个 <code>TaskRecord</code> 呢？</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">activity</span><br>    <span class="hljs-attr">android:name</span>=<span class="hljs-string">".test03_task_test.SingleTaskOneActivity"</span><br>    <span class="hljs-attr">android:launchMode</span>=<span class="hljs-string">"singleTask"</span><br>    <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">"com.kunminx.task.c"</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">activity</span><br>    <span class="hljs-attr">android:name</span>=<span class="hljs-string">".test03_task_test.SingleTaskTwoActivity"</span><br>    <span class="hljs-attr">android:launchMode</span>=<span class="hljs-string">"singleTask"</span><br>    <span class="hljs-attr">android:taskAffinity</span>=<span class="hljs-string">"com.kunminx.task.c"</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>它们有着共同的 <code>taskAffinity</code>。至此，我的疑惑已经得到了答案。</p>
+<h4 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h4><p>我试了以下 <code>app2</code> 中启动 <code>app1</code> 中的Activity的情况</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200616181712.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200616181808.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p><code>app1</code> 依次启动 <code>StandardOneActivity</code> -&lt; <code>SingleTaskOneActivity</code>  -&lt; <code>SingleTaskTwoActivity</code>  -&lt; <code>SingleTaskAActivity</code></p>
+<p>其中 <code>SingleTaskOneActivity</code>  与 <code>SingleTaskTwoActivity</code> 设置了相同的 <code>taskAffinity</code> ,<code>StandardOneActivity</code> <code>与 SingleTaskAActivity</code> 未设置 <code>taskAffinity</code></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153552.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log4"></p>
+<p>接着按 HOME 键，打开 <code>app2</code> ，依次打开 <code>StandardOneActivity</code> -&lt; <code>StandardOneActivity</code> -&lt; <code>StandardTwoActivity</code></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153602.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log5"></p>
+<p>此时堆栈信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs json">➜  Relearn-Android (master) adb shell<br>sagit:/ $ dumpsys activity activities<br>ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)<br>Display #0 (activities from top to bottom):<br><br>  Stack #3: type=standard mode=fullscreen<br>  isSleeping=false<br>  mBounds=Rect(0, 0 - 0, 0)<br>    Task id #48<br><br>    Running activities (most recent first):<br>      TaskRecord&#123;3b07175 #48 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4&#125;<br>        Run #3: ActivityRecord&#123;9cdafc6 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t48&#125;<br>        Run #2: ActivityRecord&#123;83db884 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t48&#125;<br>        Run #1: ActivityRecord&#123;71254 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t48&#125;<br>        Run #0: ActivityRecord&#123;7c135cf u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t48&#125;<br><br>    mResumedActivity: ActivityRecord&#123;9cdafc6 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t48&#125;<br>    mLastPausedActivity: ActivityRecord&#123;83db884 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t48&#125;<br><br>  Stack #0: type=home mode=fullscreen<br>    Running activities (most recent first):<br>      TaskRecord&#123;185017b #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1&#125;<br>        Run #0: ActivityRecord&#123;9fd4f88 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;9fd4f88 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>  Stack #1: type=standard mode=fullscreen<br>    Task id #46<br>    Running activities (most recent first):<br>      TaskRecord&#123;c374b98 #46 A=com.kunminx.relearn_android U=0 StackId=1 sz=3&#125;<br>        Run #2: ActivityRecord&#123;5afc3da u0 com.kunminx.relearn_android/.SingleTaskAActivity t46&#125;<br>        Run #1: ActivityRecord&#123;bb0363c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t46&#125;<br>        Run #0: ActivityRecord&#123;510711c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t46&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;5afc3da u0 com.kunminx.relearn_android/.SingleTaskAActivity t46&#125;<br><br>  Stack #2: type=standard mode=fullscreen<br>    Task id #47<br>    Running activities (most recent first):<br>      TaskRecord&#123;3387d6 #47 A=com.kunminx.task.c U=0 StackId=2 sz=2&#125;<br>        Run #1: ActivityRecord&#123;6375a1b u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t47&#125;<br>        Run #0: ActivityRecord&#123;e9850ca u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t47&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;6375a1b u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t47&#125;<br><br>  ResumedActivity: ActivityRecord&#123;9cdafc6 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t48&#125;<br><br>  mFocusedStack=ActivityStack&#123;ed83a57 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mLastFocusedStack=ActivityStack&#123;ed83a57 stackId=3 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mCurTaskIdForUser=&#123;0=48&#125;<br><br>  mUserStackInFront=&#123;&#125;<br>  displayId=0 stacks=4<br>   mHomeStack=ActivityStack&#123;a218944 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks&#125;<br>  isHomeRecentsComponent=false  KeyguardController:<br>    mKeyguardShowing=false<br>    mAodShowing=false<br>    mKeyguardGoingAway=false<br>    mOccluded=false<br>    mDismissingKeyguardActivity=null<br>    mDismissalRequested=false<br>    mVisibilityTransactionDepth=0<br>  LockTaskController<br>    mLockTaskModeState=NONE<br>    mLockTaskModeTasks=<br>    mLockTaskPackages (userId:packages)=<br>      u0:[]<br></code></pre></td></tr></table></figure>
+
+<p>最后在 <code>app2</code> 中启动  <code>app1</code> 的 <code>SingleTaskAActivity</code> </p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153613.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log6"></p>
+<p>此时堆栈信息</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs json">➜  Relearn-Android (master) adb shell<br>sagit:/ $ dumpsys activity activities<br>ACTIVITY MANAGER ACTIVITIES (dumpsys activity activities)<br>Display #0 (activities from top to bottom):<br><br>  Stack #1: type=standard mode=fullscreen<br>    Task id #46<br>    Running activities (most recent first):<br>      TaskRecord&#123;c374b98 #46 A=com.kunminx.relearn_android U=0 StackId=1 sz=3&#125;<br>        Run #2: ActivityRecord&#123;5afc3da u0 com.kunminx.relearn_android/.SingleTaskAActivity t46&#125;<br>        Run #1: ActivityRecord&#123;bb0363c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t46&#125;<br>        Run #0: ActivityRecord&#123;510711c u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.TestMainActivity t46&#125;<br><br>    mResumedActivity: ActivityRecord&#123;5afc3da u0 com.kunminx.relearn_android/.SingleTaskAActivity t46&#125;<br><br>  Stack #3: type=standard mode=fullscreen<br>    Task id #48<br>    Running activities (most recent first):<br>      TaskRecord&#123;3b07175 #48 A=com.kunminx.relearn_android_2 U=0 StackId=3 sz=4&#125;<br>        Run #3: ActivityRecord&#123;9cdafc6 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t48&#125;<br>        Run #2: ActivityRecord&#123;83db884 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t48&#125;<br>        Run #1: ActivityRecord&#123;71254 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardOneActivity t48&#125;<br>        Run #0: ActivityRecord&#123;7c135cf u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.TestMainActivity t48&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;9cdafc6 u0 com.kunminx.relearn_android_2/com.kunminx.basicfacttesting.test03_task_test.StandardTwoActivity t48&#125;<br><br>  Stack #0: type=home mode=fullscreen<br>    Task id #1<br>    Running activities (most recent first):<br>      TaskRecord&#123;185017b #1 I=com.miui.home/.launcher.Launcher U=0 StackId=0 sz=1&#125;<br>        Run #0: ActivityRecord&#123;9fd4f88 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;9fd4f88 u0 com.miui.home/.launcher.Launcher t1&#125;<br><br>  Stack #2: type=standard mode=fullscreen<br>    Task id #47<br>    Running activities (most recent first):<br>      TaskRecord&#123;3387d6 #47 A=com.kunminx.task.c U=0 StackId=2 sz=2&#125;<br>        Run #1: ActivityRecord&#123;6375a1b u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t47&#125;<br>        Run #0: ActivityRecord&#123;e9850ca u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskOneActivity t47&#125;<br><br>    mLastPausedActivity: ActivityRecord&#123;6375a1b u0 com.kunminx.relearn_android/com.kunminx.basicfacttesting.test03_task_test.SingleTaskTwoActivity t47&#125;<br><br>  ResumedActivity: ActivityRecord&#123;5afc3da u0 com.kunminx.relearn_android/.SingleTaskAActivity t46&#125;<br><br>  mFocusedStack=ActivityStack&#123;50922c2 stackId=1 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br>  mLastFocusedStack=ActivityStack&#123;50922c2 stackId=1 type=standard mode=fullscreen visible=true translucent=false, 1 tasks&#125;<br><br>  mCurTaskIdForUser=&#123;0=48&#125;<br>  mUserStackInFront=&#123;&#125;<br>  displayId=0 stacks=4<br>   mHomeStack=ActivityStack&#123;a218944 stackId=0 type=home mode=fullscreen visible=false translucent=true, 1 tasks&#125;<br>  isHomeRecentsComponent=false  KeyguardController:<br>    mKeyguardShowing=false<br>    mAodShowing=false<br>    mKeyguardGoingAway=false<br>    mOccluded=false<br>    mDismissingKeyguardActivity=null<br>    mDismissalRequested=false<br>    mVisibilityTransactionDepth=0<br>  LockTaskController<br>    mLockTaskModeState=NONE<br>    mLockTaskModeTasks=<br>    mLockTaskPackages (userId:packages)=<br>      u0:[]<br></code></pre></td></tr></table></figure>
+
+<p>此时 <code>app1</code> 的 <code>taskid</code> 46 的<code>TaskRecord</code> 转移到了 栈顶</p>
+<p>接下来返回销毁的逻辑就很清晰了。</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015153630.png" src="/2019/11/29/relearn-task-back-stack/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="log7"></p>
+<p>最后退到 <code>launcher</code> 界面</p>
+<p><strong><code>app1</code> 的 <code>TaskRecord</code> 转移到了 <code>app2</code> 的返回栈中</strong></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2019/11/29/relearn-task-back-stack/index.html">https://flywith24.gitee.io/2019/11/29/relearn-task-back-stack/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/app/">app</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/重学Android/">重学Android</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/02/29/Jetpack-androidx-activity-fragment/"><i class="iconfont iconleft"></i>AdroidX 下使用 Activity 和 Fragment 的变化</a>
+  
+  
+    <a href="/2019/08/30/Xposed/">【流水账】Xposed模块开发<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>

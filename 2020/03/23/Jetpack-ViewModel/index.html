@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>即使您不使用MVVM也要了解ViewModel ViewModel的职能边界 - 杨云召 | 博客</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate">
+
+  
+  
+  <meta name="description" content="Jetpack ViewModel 的职能边界。
+
+
+..."> 
+  
+  <meta name="author" content="杨云召（Flywith24）"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon-144x144.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  <link rel="stylesheet" href="/css/style.css">
+
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_hhodbqn7tit.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css">
+  
+
+  
+  
+  <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css">
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        loadingImage: '/images/theme/loading.gif',
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg',
+        wechat: 'https://gitee.com/flywith24/Album/raw/master/img/20201015112814.png'
+      },
+      motto: {
+        api: '',
+        default: '不人云亦云，只求接近真相.'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+</head></html>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</div>
+  <div class="right">
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015100650.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">即使您不使用MVVM也要了解ViewModel ViewModel的职能边界</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>三月 23, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>11252</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200324083031.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="目录"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>Android 开发时，我们使用 activity 和 fragment 作为视图控制器， 可能还会使用有一些类可以存储和提供 UI 数据（例如MVP中的 <code>Presenter</code> ）</p>
+</blockquote>
+<p>但是 当配置更改时（如旋转屏幕），activity 会重建，但对于 UI 数据的持有者呢？</p>
+<ul>
+<li>开发者需要重新保存相关的信息并传递给重建的 activity ，否则开发者必须再次获取数据（通过网络请求或本地数据库）</li>
+<li>由于 UI 数据的持有者的生命周期可能比 activity 长，因此开发者还需要避免出现内存泄漏的问题</li>
+</ul>
+<p>如何解决上述问题？ViewModel</p>
+<p><strong>本文重点介绍 ViewModel 的职责（what）以及重点功能的实现原理（how），即使您不使用 <code>Jetpack MVVM</code> 架构，也要了解一下 ViewModel</strong></p>
+<p>ViewModel 的原理部分要求您了解 activity 的启动流程，这部分内容网上文章很多，本文不再赘述</p>
+<!-- more-->
+
+
+
+<h2 id="ViewModel-的职责"><a href="#ViewModel-的职责" class="headerlink" title="ViewModel 的职责"></a>ViewModel 的职责</h2><p>我先上个 <a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener">视频</a> ，这个小姐姐表述的比文字更形象</p>
+<p><a href="https://www.bilibili.com/video/av97794796/" target="_blank" rel="noopener"><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321135602.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></a></p>
+<p><code>ViewModel</code> 主要用于存储 UI 数据以及生命周期感知的数据</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321140300.gif" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<blockquote>
+<p>图片来自 <a href="https://android.jlelse.eu/android-architecture-components-viewmodel-e74faddf5b94" target="_blank" rel="noopener">Android Architecture Components: ViewModel</a></p>
+</blockquote>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321140641.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="ViewModel生命周期"></p>
+<blockquote>
+<p><code>ViewModel</code> 的生命周期 ，图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#lifecycle" target="_blank" rel="noopener">官方文档</a></p>
+</blockquote>
+<h3 id="作为数据持有者"><a href="#作为数据持有者" class="headerlink" title="作为数据持有者"></a>作为数据持有者</h3><p><code>ViewModel</code> 能够实时进行配置更改。 这意味着即使在手机旋转后销毁并重新创建 activity 之后，您仍然拥有相同的 <code>ViewModel</code> 和相同的数据。 因此：</p>
+<ul>
+<li>您无需担心 UI 数据持有者的生命周期。 <code>ViewModel</code> 将由工厂自动创建，您无需自行创建和销毁</li>
+<li>数据将始终更新，旋转手机后，您将获得与以前相同的数据。 因此，您无需手动将数据传递给新的 activity 实例或再次调用网络或数据库来获取数据。 </li>
+</ul>
+<h3 id="Fragment-间共享数据"><a href="#Fragment-间共享数据" class="headerlink" title="Fragment 间共享数据"></a>Fragment 间共享数据</h3><p>一个 activity 中的两个或更多 fragment 需要相互通信是很常见的。例如您有一个片段，用户在其中从列表中选择一个 item，另一个片段显示了所选 item 的内容。 传统做法两个 fragment 都需要定义一些接口，并且宿主 activity 必须将两者绑定在一起。 此外，两个 fragment 都必须处理另一个 fragment 尚未创建或不可见的情况。</p>
+<p>可以通过使用 <code>ViewModel</code> 对象解决此问题。 这些 fragment 可以使用 activity 范围内共享一个 <code>ViewModel</code> 来处理此通信，如以下示例代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SharedViewModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ViewModel</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> MutableLiveData&lt;Item&gt; selected = <span class="hljs-keyword">new</span> MutableLiveData&lt;Item&gt;();<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">(Item item)</span> </span>&#123;<br>        selected.setValue(item);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> LiveData&lt;Item&gt; <span class="hljs-title">getSelected</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> selected;<br>    &#125;<br>&#125;<br><br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MasterFragment</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Fragment</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> SharedViewModel model;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onViewCreated(view, savedInstanceState);<br>        model = <span class="hljs-keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);<br>        itemSelector.setOnClickListener(item -&gt; &#123;<br>            model.select(item);<br>        &#125;);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DetailFragment</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Fragment</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onViewCreated</span><span class="hljs-params">(@NonNull View view, Bundle savedInstanceState)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>.onViewCreated(view, savedInstanceState);<br>        SharedViewModel model = <span class="hljs-keyword">new</span> ViewModelProvider(requireActivity()).get(SharedViewModel.class);<br>        model.getSelected().observe(getViewLifecycleOwner(), &#123; item -&gt;<br>           <span class="hljs-comment">// Update the UI.</span><br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由于 两个 fragment 使用的都是 activity 范围的 <code>ViewModel</code> （<code>ViewModelProvider</code> 构造器传入的 activity ），因此它们获得了相同的 ViewModel 实例，自然其持有的数据也是相同的，这也 <strong>保证了数据的一致性</strong></p>
+</blockquote>
+<p>这种方法具有以下优点：</p>
+<ul>
+<li><p>宿主 activity 无需执行任何操作，也无需了解此通信。</p>
+</li>
+<li><p>除 <code>SharedViewModel</code> 外，fragment 不需要彼此了解。 如果其中一个 fragment 消失了，则另一个继续照常工作。</p>
+</li>
+<li><p>每个 fragment 都有其自己的生命周期，并且不受另一个 fragment 的生命周期影响。 如果一个 fragment 替换了另一个 fragment，则 UI 可以继续正常工作而不会出现任何问题。</p>
+</li>
+</ul>
+<h3 id="代替-Loader"><a href="#代替-Loader" class="headerlink" title="代替 Loader"></a>代替 Loader</h3><p><code>CursorLoader</code> 这样的 Loader 类经常用于使应用程序 UI 中的数据与数据库保持同步。您可以使用 <code>ViewModel</code> 和其他一些类来替换 Loader。 使用 <code>ViewModel</code> 可将视图控制器与数据加载操作分开，这意味着您在类之间的强引用较少。</p>
+<p>在使用 Loader 的一种常见方法中，应用程序可能会使用 <code>CursorLoader</code> 来观察数据库的内容。 当数据库中的值更改时，加载程序会自动触发数据的重新加载并更新 UI</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321144832.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<blockquote>
+<p>图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#loaders" target="_blank" rel="noopener">官方文档</a></p>
+</blockquote>
+<p><code>ViewModel</code> 与 <code>Room</code> 和 <code>LiveData</code> 一起使用以替换 Loader。 <code>ViewModel</code> 确保数据在设备配置更改后仍然存在。 当数据库发生更改时，<code>Room</code> 会通知 <code>LiveData</code> ，然后 <code>LiveData</code> 会使用修改后的数据更新 UI</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321144949.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<blockquote>
+<p>图片来自 <a href="https://developer.android.com/topic/libraries/architecture/viewmodel#loaders" target="_blank" rel="noopener">官方文档</a></p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>ViewModel 可作为 UI 数据的持有者，在 activity/fragment 重建时 ViewModel 中的数据不受影响，同时可以避免内存泄漏</strong></li>
+<li><strong>可以通过 ViewModel 来进行 activity 和 fragment ，fragment 和 fragment 之间的通信，无需关心通信的对方是否存在，使用 application 范围的 ViewModel 可以进行全局通信</strong></li>
+<li><strong>可以代替 Loader</strong></li>
+</ul>
+<h2 id="ViewModel-源码分析"><a href="#ViewModel-源码分析" class="headerlink" title="ViewModel 源码分析"></a>ViewModel 源码分析</h2><p>分析源码时我们可以不计较细枝末节，只分析主要的逻辑即可。因此我们来思考几个问题，并从源码中寻找答案</p>
+<ul>
+<li><p>如何做到 activity 重建后 <code>ViewModel</code> 仍然存在？</p>
+</li>
+<li><p>如何做到 fragment 重建后 <code>ViewModel</code> 仍然存在？</p>
+</li>
+<li><p>如何控制作用域？（即保证相同作用域获取的 <code>ViewModel</code> 实例相同）</p>
+</li>
+<li><p>如何避免内存泄漏？</p>
+</li>
+</ul>
+<p>维持我们一贯的风格，我们先来大胆地猜一猜</p>
+<p>对于问题1 ：activity 有着 <code>saveInstanceState</code> 机制，因此可能通过该机制来处理（<strong>事实证明不是</strong>）</p>
+<p>对于问题2：可能 fragment 通过 宿主 activity 或 父 fragment 的帮助来确保 <code>ViewModel</code> 实例在重建后仍然存在</p>
+<p>对于问题3：实现一个类似单例的效果，相同作用域获取的对象是相同的</p>
+<p>对于问题4：避免 <code>ViewModel</code> 持有 view 或 context 的引用</p>
+<p>首先我们要先了解一下 <code>ViewModel</code> 的结构</p>
+<ul>
+<li><p><code>ViewModel</code>：抽象类，主要有 clear 方法，它是 final 级，不可修改，clear 方法中包含 onClear 钩子，开发者可重写 onClear 方法来自定义数据的清空</p>
+</li>
+<li><p><code>ViewModelStore</code>：内部维护一个 HashMap 以管理 <code>ViewModel</code></p>
+</li>
+<li><p><code>ViewModelStoreOwner</code>：接口，<code>ViewModelStore</code> 的作用域，实现类为 <code>ComponentActivity</code> 和 <code>Fragment</code>，此外还有 <code>FragmentActivity.HostCallbacks</code></p>
+</li>
+<li><p><code>ViewModelProvider</code>：用于创建 <code>ViewModel</code>，其构造方法有两个参数，第一个参数传入 <code>ViewModelStoreOwner</code> ，确定了 <code>ViewModelStore</code> 的作用域，第二个参数为 <code>ViewModelProvider.Factory</code>，用于初始化 <code>ViewModel</code> 对象，默认为 <code>getDefaultViewModelProviderFactory()</code> 方法获取的 factory</p>
+</li>
+</ul>
+<p>简单来说 <strong>ViewModelStoreOwner 持有 ViewModelStore 持有 ViewModel</strong></p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321152406.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<h3 id="1-如何做到-activity-重建后-ViewModel-仍然存在？"><a href="#1-如何做到-activity-重建后-ViewModel-仍然存在？" class="headerlink" title="1. 如何做到 activity 重建后 ViewModel 仍然存在？"></a>1. 如何做到 activity 重建后 ViewModel 仍然存在？</h3><p>在 <a href="https://juejin.im/post/5e738d12518825495d69cfb9" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a> 中我们提到了 androidx.core.app.ComponentActivity 的引入并探讨了其作为中间层的作用</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200321155215.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>我们已经讲过 <code>SavedStateRegistryOwner</code> 和 <code>OnBackPressedDispatcherOwner</code> 这两种角色，而今天我们来聊一下</p>
+<p><code>ViewModelStoreOwner</code> 和 <code>HasDefaultViewModelProviderFactory</code> 。其中前者代表着 <code>ViewModelStore</code> 的作用域，后者来标记 <code>ViewModelStoreOwner</code> 拥有默认的 <code>ViewModelProvider.Factory</code></p>
+<p>那么 <code>ViewModel</code> 的逻辑肯定就在该类了</p>
+<p><code>ComponentActivity</code> 实现了 <code>ViewModelStoreOwner</code>  接口，意味着需要重写 <code>getViewModelStore()</code> 方法，该方法为 <code>ComponentActivity</code>  的 <code>mViewModelStore</code> 变量赋值。<strong>activity 重建后 ViewModel 仍然存在，只要保证 activity 重建后 mViewModelStore 变量值不变即可</strong></p>
+<p>顺着这个思路，我们来看一下 <code>getViewModelStore()</code> 的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (mViewModelStore == <span class="hljs-keyword">null</span>) &#123;<br>        NonConfigurationInstances nc =<br>                (NonConfigurationInstances) getLastNonConfigurationInstance();<br>        <span class="hljs-keyword">if</span> (nc != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-comment">//核心，在该位置重置 mViewModelStore</span><br>            mViewModelStore = nc.viewModelStore;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (mViewModelStore == <span class="hljs-keyword">null</span>) &#123;<br>            mViewModelStore = <span class="hljs-keyword">new</span> ViewModelStore();<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> mViewModelStore;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>即 <code>mViewModelStore</code> 的值由 <code>getLastNonConfigurationInstance()</code> 返回的 <code>NonConfigurationInstances</code> 对象中的 <code>viewModelStore</code> 赋值，如果此时还为空才去 new ViewModelStore 对象。因此我们只需找到 </p>
+<p><code>getLastNonConfigurationInstance</code> 中的 <code>NonConfigurationInstances</code> 在哪里保存的即可</p>
+<p><code>getLastNonConfigurationInstance</code> 为平台 activity 中的方法，返回 <code>mLastNonConfigurationInstances.activity</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getLastNonConfigurationInstance</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mLastNonConfigurationInstances != <span class="hljs-keyword">null</span><br>            ? mLastNonConfigurationInstances.activity : <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>那么我们看一下 <code>mLastNonConfigurationInstances</code> 的赋值位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//省略其他参数</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">attach</span><span class="hljs-params">(NonConfigurationInstances lastNonConfigurationInstances)</span></span>&#123;<br>	mLastNonConfigurationInstances = lastNonConfigurationInstances;<br>    <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>了解过 activity 的启动流程的小伙伴肯定知道，这个 attach 方法是 <code>ActivityThread</code> 中的 <code>performLaunchActivity</code> 调用的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> Activity <span class="hljs-title">performLaunchActivity</span><span class="hljs-params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;<br>    Activity activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);<br>    <span class="hljs-comment">//省略其他参数</span><br>    activity.attach(r.lastNonConfigurationInstances);<br>    r.lastNonConfigurationInstances = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>深入追踪源码我们整理一下调用流程</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200323114334.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>由于 <code>ActivityThread</code> 中的 <code>ActivityClientRecord</code> 不受 activity 重建的影响，所以 activity 重建时 <code>mLastNonConfigurationInstances</code> 能够得到上一次的值，使得 <code>ViewModelStore</code> 值不变 ，问题1就解决了</p>
+<h3 id="2-如何做到-fragment-重建后-ViewModel-仍然存在？"><a href="#2-如何做到-fragment-重建后-ViewModel-仍然存在？" class="headerlink" title="2. 如何做到 fragment 重建后 ViewModel 仍然存在？"></a>2. 如何做到 fragment 重建后 ViewModel 仍然存在？</h3><p>对于问题2，有了上面的思路我们可以认定 fragment 重建后其内部的 <code>getViewModelStore()</code> 方法返回的对象是相同的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Fragment.java</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mFragmentManager.getViewModelStore(<span class="hljs-keyword">this</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到 <code>getViewModelStore()</code> 内部调用的是 <code>mFragmentManager</code>（普通fragment 对应 activity 中的 <code>FragmentManager</code>，子 fragment 则对应父 fragment 的 <code>childFragmentManager</code>）的 <code>getViewModelStore()</code> 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-keyword">private</span> FragmentManagerViewModel mNonConfig;<br><br><span class="hljs-function">ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">(@NonNull Fragment f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mNonConfig.getViewModelStore(f);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>而 FragmentManager 中的 getViewModelStore 使用的是 mNonConfig ，mNonConfig 竟然是个 ViewModel！</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManagerViewModel.java</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> HashMap&lt;String, FragmentManagerViewModel&gt; mChildNonConfigs = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> HashMap&lt;String, ViewModelStore&gt; mViewModelStores = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br></code></pre></td></tr></table></figure>
+
+<p><code>FragmentManagerViewModel</code> 管理着内部的 <code>ViewModelStore</code> 和 child 的 <code>FragmentManagerViewModel</code> 。因此保证 mNonConfig   值不变即能确保 fragment 中的 <code>getViewModelStore()</code>  不变。那么看看 mNonConfig  赋值的位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">attachController</span><span class="hljs-params">(@NonNull FragmentHostCallback&lt;?&gt; host, @NonNull FragmentContainer container, @Nullable <span class="hljs-keyword">final</span> Fragment parent)</span> </span>&#123;<br>    <span class="hljs-comment">//...</span><br>    <span class="hljs-keyword">if</span> (parent != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">// 嵌套 fragment 的情况，有父 fragment</span><br>        mNonConfig = parent.mFragmentManager.getChildNonConfig(parent);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (host <span class="hljs-keyword">instanceof</span> ViewModelStoreOwner) &#123;<br>        <span class="hljs-comment">// host 是 FragmentActivity.HostCallbacks</span><br>        ViewModelStore viewModelStore = ((ViewModelStoreOwner) host).getViewModelStore();<br>        mNonConfig = FragmentManagerViewModel.getInstance(viewModelStore);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        mNonConfig = <span class="hljs-keyword">new</span> FragmentManagerViewModel(<span class="hljs-keyword">false</span>);<br>    &#125;<br>&#125;<br><br><br><span class="hljs-comment">// FragmentManagerViewModel.java</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> FragmentManagerViewModel <span class="hljs-title">getInstance</span><span class="hljs-params">(ViewModelStore viewModelStore)</span> </span>&#123;<br>    ViewModelProvider viewModelProvider = <span class="hljs-keyword">new</span> ViewModelProvider(viewModelStore,<br>            FACTORY);<br>    <span class="hljs-keyword">return</span> viewModelProvider.get(FragmentManagerViewModel.class);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们先看 fragment 的直接宿主是 activity （即没有嵌套）的情况，mNonConfig 由<code>FragmentManagerViewModel.getInstance(viewModelStore)</code> 赋值，而 getInstance 中使用的是 <code>ViewModelProvider</code> 获取 <code>ViewModel</code> ，根据我们上面的分析，<strong>只要保证作用域（viewModelStore）相同，即可获取相同的 <code>ViewModel</code> 实例</strong>，因此我们需要看一下 host 的 getViewModelStore 方法。经过一番寻找，host 是 <code>FragmentActivity.HostCallbacks</code> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentActivity.java 内部类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HostCallbacks</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">FragmentHostCallback</span>&lt;<span class="hljs-title">FragmentActivity</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">ViewModelStoreOwner</span>, <span class="hljs-title">OnBackPressedDispatcherOwner</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ViewModelStore <span class="hljs-title">getViewModelStore</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">// 宿主 activity 的 getViewModelStore</span><br>    	<span class="hljs-keyword">return</span> FragmentActivity.<span class="hljs-keyword">this</span>.getViewModelStore();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>host 的 getViewModelStore 方法返回的是宿主 activity 的 <code>getViewModelStore()</code> ，而 activity 重建后其内部的 <code>mViewModelStore</code> 是不变的，因此即使 activity 重建，其内部的 FragmentManager 对象变化，但 FragmentManager 内部的  FragmentManagerViewModel 的实例（<code>mNonConfig</code>）不变，mNonConfig.getViewModelStore 不变，fragment 的 <code>getViewModelStore()</code> 亦不变，fragment 重建后其内部的 <code>ViewModel</code> 仍然存在</p>
+<p>对于嵌套 fragment ，mNonConfig 通过 parent.mFragmentManager.getChildNonConfig(parent) 获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// FragmentManager.java</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> FragmentManagerViewModel <span class="hljs-title">getChildNonConfig</span><span class="hljs-params">(@NonNull Fragment f)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mNonConfig.getChildNonConfig(f);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上文提到 <code>FragmentManagerViewModel</code> 管理着 mChildNonConfigs Map，因此子 fragment 重置后其内部的 mNonConfig 对象也是相同的</p>
+<p>至此问题 2 就解决了</p>
+<h3 id="3-如何控制作用域？"><a href="#3-如何控制作用域？" class="headerlink" title="3. 如何控制作用域？"></a>3. 如何控制作用域？</h3><p>对于问题3，我们知道 <code>ViewModelStoreOwner</code> 代表着作用域，其内部唯一的方法返回 <code>ViewModelStore</code> 对象，也即不同的作用域对应不同的 <code>ViewModelStore</code> ，而 <code>ViewModelStore</code>  内部维护着 <code>ViewModel</code> 的 HashMap ，因此只要保证相同作用域的 <code>ViewModelStore</code> 对象相同就能保证相同作用域获取到相同的 <code>ViewModel</code> 对象，而问题1我们已经解释了重建时如何保证 <code>ViewModelStore</code>  对象不变。</p>
+<p>因此问题3也解决了。</p>
+<h3 id="4-如何避免内存泄漏？"><a href="#4-如何避免内存泄漏？" class="headerlink" title="4. 如何避免内存泄漏？"></a>4. 如何避免内存泄漏？</h3><p>对于问题4，由于 <code>ViewModel</code> 的设计，使得 activity/fragment 依赖它，而 <code>ViewModel</code> 不依赖视图控制器。因此只要不让 <code>ViewModel</code> 持有 context 或 view 的引用，就不会造成内存泄漏</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>简单的总结一下：</p>
+<ul>
+<li><p><strong>activity 重建后 mViewModelStore 通过 ActivityThread 的一系列方法能够保持不变，从而当 activity 重建时 ViewModel 中的数据不受影响</strong></p>
+</li>
+<li><p><strong>通过宿主 activity 范围内共享的 FragmentManagerViewModel 来存储 fragment 的 ViewModelStore 和子fragment 的 FragmentManagerViewModel ，而 activity 重建后 FragmentManagerViewModel  中的数据不受影响，因此 fragment 内部的 ViewModel 的数据也不受影响</strong></p>
+</li>
+<li><p><strong>通过同一 ViewModelStoreOwner 获取的 ViewModelStore 相同，从而保证同一作用域通过 ViewModelProvider 获取的ViewModel 对象是相同的</strong></p>
+</li>
+<li><p><strong>通过单向依赖（视图控制器持有 ViewModel ）来解决内存泄漏的问题</strong></p>
+</li>
+</ul>
+<h2 id="ViewModel-和-onSaveInstanceState"><a href="#ViewModel-和-onSaveInstanceState" class="headerlink" title="ViewModel 和 onSaveInstanceState"></a>ViewModel 和 onSaveInstanceState</h2><p><code>ViewModel</code> 和 <code>onSaveInstanceState</code> 的功能有些类似，但它们也有很多差异</p>
+<p><img class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20200323160417.png" src="/2020/03/23/Jetpack-ViewModel/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt></p>
+<p>从存储位置上来说，<code>ViewModel</code> 是在内存中，因此其读写速度更快，但当进程被系统杀死后，<code>ViewModel</code> 中的数据也不存在了。从数据存储的类型上来看，<code>ViewModel</code> 适合存储相对较重的数据，例如网络请求到的 list 数据，而 <code>onSaveInstanceState</code> 适合存储轻量可序列化的数据</p>
+<p>那么我们该如何使用呢？可以使用 <code>viewmodel-savedstate</code> 库，详情参考 <a href="https://juejin.im/post/5e738d12518825495d69cfb9#heading-10" target="_blank" rel="noopener">【背上Jetpack】绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析</a></p>
+<hr>
+<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><hr>
+<p>我是 <a href="https://flywith24.gitee.io/">Fly_with24</a></p>
+<ul>
+<li><a href="https://juejin.im/user/57c7f6870a2b58006b1cfd6c" target="_blank" rel="noopener">掘金</a></li>
+<li><a href="https://www.jianshu.com/u/3d5ad6043d66" target="_blank" rel="noopener">简书</a></li>
+<li><a href="https://github.com/Flywith24" target="_blank" rel="noopener">Github</a></li>
+</ul>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>杨云召（Flywith24）</li>
+  <li><strong>本文链接：</strong><a href="https://flywith24.gitee.io/2020/03/23/Jetpack-ViewModel/index.html">https://flywith24.gitee.io/2020/03/23/Jetpack-ViewModel/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://gitee.com/flywith24/Album/raw/master/img/20201015113301.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jetpack/">Jetpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MVVM/">MVVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidx/">androidx</a></li></ul>
+
+        
+<nav class="nav">
+  
+    <a href="/2020/03/30/Jetpack-Lifecycle/"><i class="iconfont iconleft"></i>万物基于Lifecycle 默默无闻大作用</a>
+  
+  
+    <a href="/2020/03/19/Jetpack-ViewModel-SaveState/">绝不丢失的状态 androidx SaveState ViewModel-SaveState 分析<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+<div id="valine"></div>
+<script defer src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+  window.onload = function () {
+    var loadValine = function () {
+      new Valine({
+        el: '#valine',
+        app_id: "SHA3gzCcxFlqaPcGRnX4UgET-gzGzoHsz",
+        app_key: "OYo7ITS4AzTvBUvb1yIY8oaf",
+        placeholder: "期待你的留言",
+        avatar: "mp",
+        pageSize: "10",
+        lang: "zh-CN",
+      });
+    }
+    if ( true ) {
+      $("#comments-btn").on("click", function () {
+        $(this).hide();
+        loadValine();
+      });
+    } else {
+      loadValine();
+    }
+  };
+</script>
+
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1032367864 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#8bc34a'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://flywith24.gitee.io/about/ " target="_blank" onMouseOver="this.style.color= '#d32f2f'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconheart "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/Flywith24 " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:youngyunzhao@163.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Copyright© 2017 - 2020 ❤️ Flywith24</p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":"tfalse"},"log":false});</script></body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+<script src="https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/modules.js"></script>
+<script src="/js/zui.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "7785620b"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
